@@ -100,13 +100,6 @@
       font-size: 2rem;
     }
 
-    .project {
-      padding: 1.5rem;
-      background: rgba(0,0,0,0.03);
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-    }
-
     footer {
       text-align: center;
       padding: 1rem;
@@ -160,6 +153,74 @@
         height: 220px;
       }
     }
+
+    /* Carousel Styles */
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      max-width: 100%;
+      margin-top: 1rem;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 400px;
+      position: relative;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 20px;
+      border-radius: 6px;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      font-size: 24px;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .carousel-btn.left {
+      left: 10px;
+    }
+
+    .carousel-btn.right {
+      right: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .carousel-slide {
+        height: 250px;
+      }
+
+      .carousel-caption {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -192,13 +253,23 @@
 
   <section id="projects">
     <h2>Projects</h2>
-    <div class="project">
-      <h3>Project Name</h3>
-      <p>Description of what the project does, the technologies used, and a link if available.</p>
-    </div>
-    <div class="project">
-      <h3>Another Project</h3>
-      <p>This could be a case study or even a fun side project. Briefly explain its purpose.</p>
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <img src="images/project1.jpg" alt="Project 1" />
+          <div class="carousel-caption">Project 1 - Web Design</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/project2.jpg" alt="Project 2" />
+          <div class="carousel-caption">Project 2 - App UI</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/project3.jpg" alt="Project 3" />
+          <div class="carousel-caption">Project 3 - Branding</div>
+        </div>
+      </div>
+      <button class="carousel-btn left">&#10094;</button>
+      <button class="carousel-btn right">&#10095;</button>
     </div>
   </section>
 
@@ -224,6 +295,26 @@
     const currentTheme = html.getAttribute("data-theme");
     html.setAttribute("data-theme", currentTheme === "light" ? "dark" : "light");
   }
+
+  const track = document.querySelector('.carousel-track');
+  const slides = Array.from(track.children);
+  const nextButton = document.querySelector('.carousel-btn.right');
+  const prevButton = document.querySelector('.carousel-btn.left');
+  let currentSlide = 0;
+
+  function updateSlidePosition() {
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  nextButton.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlidePosition();
+  });
+
+  prevButton.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlidePosition();
+  });
 </script>
 
 </body>
