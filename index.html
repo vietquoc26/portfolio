@@ -7,9 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
+    tailwind.config = { darkMode: 'class' }
   </script>
   <style>
     .fade-in {
@@ -24,19 +22,16 @@
       }
     }
     @keyframes fadeUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
     .fade-delay-1 { animation-delay: 0.2s; }
     .fade-delay-2 { animation-delay: 0.4s; }
     .fade-delay-3 { animation-delay: 0.6s; }
     .fade-delay-4 { animation-delay: 0.8s; }
+    #btn-en.bg-white, #btn-vi.bg-white {
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
   </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans">
@@ -45,7 +40,10 @@
 <nav class="flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
   <div class="flex items-center gap-4">
     <img src="logo.png" alt="Logo" class="h-14 w-14 rounded-full" />
-    <button onclick="switchLanguage()" class="bg-green-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-green-600 transition">VI 🇻🇳</button>
+    <div class="flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1">
+      <button onclick="setLanguage('en')" id="btn-en" class="px-3 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 transition">🇺🇸</button>
+      <button onclick="setLanguage('vi')" id="btn-vi" class="px-3 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 transition">🇻🇳</button>
+    </div>
   </div>
   <div class="flex gap-6">
     <a href="#skills" class="hover:underline" data-i18n="skills">Skills</a>
@@ -151,6 +149,8 @@
         <div class="p-4">
           <span class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full text-[12px] font-semibold">ARTIFICIAL INTELLIGENCE</span>
           <h3 class="mt-2 text-lg font-semibold">What Is an AI Assistant? A Deep Dive into Intelligent Digital Helpers</h3>
+          <a href="#" class="inline-block mt-4 bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300" data-i18n="Read More">Read More</a>
+
         </div>
       </div>
       <div class="rounded-xl overflow-hidden shadow-md bg-white dark:bg-gray-800">
@@ -158,6 +158,8 @@
         <div class="p-4">
           <span class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full text-[12px] font-semibold">ARTIFICIAL INTELLIGENCE</span>
           <h3 class="mt-2 text-lg font-semibold">Sure-Fire Tips For Optimizing Your AI Chatbot</h3>
+          <a href="#" class="inline-block mt-4 bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300" data-i18n="Read More">Read More</a>
+
         </div>
       </div>
       <div class="rounded-xl overflow-hidden shadow-md bg-white dark:bg-gray-800">
@@ -165,11 +167,41 @@
         <div class="p-4">
           <span class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full text-[12px] font-semibold">ARTIFICIAL INTELLIGENCE</span>
           <h3 class="mt-2 text-lg font-semibold">Effective Chatbot Strategy: 8 Key Steps for Successful Implementation</h3>
+         <a href="#" class="inline-block mt-4 bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300" data-i18n="Read More">Read More</a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- i18next Language Update -->
+<script>
+  i18next.init({
+    lng: 'en',
+    resources: {
+      en: {
+        translation: {
+          ...,
+          "readMore": "Read More",
+          "SEO Optimization": "SEO Optimization",
+          "Content Marketing": "Content Marketing",
+          "Facebook Ads": "Facebook Ads"
+        }
+      },
+      vi: {
+        translation: {
+          ...,
+          "readMore": "Đọc thêm",
+          "SEO Optimization": "Tối ưu SEO",
+          "Content Marketing": "Tiếp thị nội dung",
+          "Facebook Ads": "Quảng cáo Facebook"
+        }
+      }
+    }
+  }, function(err, t) {
+    updateContent();
+  });
+</script>
 
 <!-- Contact Section -->
 <section id="contact" class="py-16 bg-gray-100 dark:bg-gray-800">
@@ -229,7 +261,11 @@
           "name": "Name",
           "email": "Email",
           "message": "Message",
-          "send": "Send Message"
+          "send": "Send Message",
+          "readMore": "Read More",
+          "SEO Optimization": "SEO Optimization",
+          "Content Marketing": "Content Marketing",
+          "Facebook Ads": "Facebook Ads"
         }},
         vi: { translation: {
           "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
@@ -243,11 +279,16 @@
           "name": "Họ tên",
           "email": "Email",
           "message": "Tin nhắn",
-          "send": "Gửi tin nhắn"
+          "send": "Gửi tin nhắn",
+          "readMore": "Đọc thêm",
+          "SEO Optimization": "Tối ưu SEO",
+          "Content Marketing": "Tiếp thị nội dung",
+          "Facebook Ads": "Quảng cáo Facebook"
         }}
       }
     }, function(err, t) {
       updateContent();
+      highlightActiveLang(i18next.language);
     });
 
     function updateContent() {
@@ -256,10 +297,21 @@
       });
     }
 
-    window.switchLanguage = function () {
-      const newLang = i18next.language === 'en' ? 'vi' : 'en';
-      i18next.changeLanguage(newLang, updateContent);
+    window.setLanguage = function(lang) {
+      i18next.changeLanguage(lang, () => {
+        updateContent();
+        highlightActiveLang(lang);
+      });
     };
+
+    function highlightActiveLang(lang) {
+      const btnEn = document.getElementById('btn-en');
+      const btnVi = document.getElementById('btn-vi');
+      btnEn.classList.toggle('bg-white', lang === 'en');
+      btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
+      btnVi.classList.toggle('bg-white', lang === 'vi');
+      btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+    }
   });
 </script>
 
