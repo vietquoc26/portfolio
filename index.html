@@ -23,6 +23,16 @@
         transform: translateY(0);
       }
     }
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
     .fade-delay-1 { animation-delay: 0.2s; }
     .fade-delay-2 { animation-delay: 0.4s; }
     .fade-delay-3 { animation-delay: 0.6s; }
@@ -31,12 +41,12 @@
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans">
 
-<!-- Language Toggle -->
-<button onclick="switchLanguage()" class="fixed top-5 left-5 z-50 bg-green-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-green-600 transition">VI 🇻🇳</button>
-
 <!-- Navbar -->
 <nav class="flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
-  <img src="logo.png" alt="Logo" class="h-14 w-14 rounded-full" />
+  <div class="flex items-center gap-4">
+    <img src="logo.png" alt="Logo" class="h-14 w-14 rounded-full" />
+    <button onclick="switchLanguage()" class="bg-green-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-green-600 transition">VI 🇻🇳</button>
+  </div>
   <div class="flex gap-6">
     <a href="#skills" class="hover:underline" data-i18n="skills">Skills</a>
     <a href="#about" class="hover:underline" data-i18n="about">About</a>
@@ -49,7 +59,7 @@
 <!-- Hero Section -->
 <section class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-10">
   <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
-    <div>
+    <div class="fade-in fade-delay-1" style="animation-name: fadeUp;">
       <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="greeting">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
       <p class="text-lg text-gray-600 dark:text-gray-300" data-i18n="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.</p>
     </div>
@@ -93,7 +103,7 @@
 <section id="about" class="py-16 bg-gray-50 dark:bg-gray-800">
   <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
     <div class="fade-in fade-delay-1">
-      <img src="Avatar.jpg" alt="About Image" class="rounded-xl shadow-md">
+      <img src="Avatar.jpg" alt="About Image" class="rounded-full shadow-lg w-64 h-64 object-cover mx-auto">
     </div>
     <div>
       <h2 class="text-3xl font-bold mb-4" data-i18n="about">About Me</h2>
@@ -126,6 +136,36 @@
         <h3 class="text-xl font-semibold mb-2">Project C</h3>
         <p class="text-gray-600 dark:text-gray-300 mb-4">Built a funnel with 25% lead conversion rate.</p>
         <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section id="blogs" class="py-16 bg-white dark:bg-gray-900">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold mb-10 text-center" data-i18n="blogs">Latest Blog Posts</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="rounded-xl overflow-hidden shadow-md bg-white dark:bg-gray-800">
+        <img src="blog1.jpg" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <span class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full text-[12px] font-semibold">ARTIFICIAL INTELLIGENCE</span>
+          <h3 class="mt-2 text-lg font-semibold">What Is an AI Assistant? A Deep Dive into Intelligent Digital Helpers</h3>
+        </div>
+      </div>
+      <div class="rounded-xl overflow-hidden shadow-md bg-white dark:bg-gray-800">
+        <img src="blog2.jpg" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <span class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full text-[12px] font-semibold">ARTIFICIAL INTELLIGENCE</span>
+          <h3 class="mt-2 text-lg font-semibold">Sure-Fire Tips For Optimizing Your AI Chatbot</h3>
+        </div>
+      </div>
+      <div class="rounded-xl overflow-hidden shadow-md bg-white dark:bg-gray-800">
+        <img src="blog3.jpg" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <span class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full text-[12px] font-semibold">ARTIFICIAL INTELLIGENCE</span>
+          <h3 class="mt-2 text-lg font-semibold">Effective Chatbot Strategy: 8 Key Steps for Successful Implementation</h3>
+        </div>
       </div>
     </div>
   </div>
@@ -184,6 +224,7 @@
           "about": "About Me",
           "aboutDesc": "I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.",
           "projects": "Outstanding Projects",
+          "blogs": "Latest Blog Posts",
           "contact": "Contact Me",
           "name": "Name",
           "email": "Email",
@@ -197,6 +238,7 @@
           "about": "Giới thiệu bản thân",
           "aboutDesc": "Tôi là Việt, chuyên gia Digital Marketing với hơn 5 năm kinh nghiệm trong SEO, quảng cáo hiệu suất và phát triển thương hiệu.",
           "projects": "Dự án nổi bật",
+          "blogs": "Bài viết mới nhất",
           "contact": "Liên hệ",
           "name": "Họ tên",
           "email": "Email",
