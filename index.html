@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Viet | Digital Marketer</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS Library -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
   <style>
     /* Carousel Styles */
     .carousel-track {
@@ -18,10 +23,11 @@
   </style>
 </head>
 <body class="bg-white text-gray-800 font-sans">
+
   <!-- Header Section -->
   <section class="min-h-screen flex items-center justify-center bg-gray-100 p-10">
     <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
-      <div>
+      <div data-aos="fade-up" data-aos-duration="1000">
         <h1 class="text-4xl md:text-6xl font-bold mb-4">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
         <p class="text-lg text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.</p>
       </div>
@@ -53,13 +59,13 @@
   <!-- About Me Section (2-column) -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
-      <div>
+      <div data-aos="fade-right" data-aos-duration="1000">
         <h2 class="text-3xl font-bold mb-4">About Me</h2>
         <p class="text-lg text-gray-700 leading-relaxed">
           I’m Viet, a seasoned digital marketer with a passion for data-driven strategies and impactful storytelling. With over 5 years of experience helping businesses grow their digital presence, I specialize in SEO, performance ads, and brand development.
         </p>
       </div>
-      <div class="flex justify-center">
+      <div class="flex justify-center" data-aos="fade-left" data-aos-duration="1000">
         <img src="https://via.placeholder.com/400x300" alt="About Viet" class="rounded-lg shadow-md" />
       </div>
     </div>
@@ -68,19 +74,19 @@
   <!-- Outstanding Projects -->
   <section class="py-16 bg-white">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-10 text-center">Outstanding Projects</h2>
+      <h2 class="text-3xl font-bold mb-10 text-center" data-aos="fade-up">Outstanding Projects</h2>
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="border rounded-lg shadow-md p-4">
+        <div class="border rounded-lg shadow-md p-4" data-aos="zoom-in" data-aos-delay="100">
           <img src="https://via.placeholder.com/300x200" alt="Project 1" class="rounded mb-4">
           <h3 class="text-xl font-semibold">Project A</h3>
           <p class="text-gray-600">Social media campaign with 300% engagement increase.</p>
         </div>
-        <div class="border rounded-lg shadow-md p-4">
+        <div class="border rounded-lg shadow-md p-4" data-aos="zoom-in" data-aos-delay="200">
           <img src="https://via.placeholder.com/300x200" alt="Project 2" class="rounded mb-4">
           <h3 class="text-xl font-semibold">Project B</h3>
           <p class="text-gray-600">Optimized SEO to reach top 3 Google rankings.</p>
         </div>
-        <div class="border rounded-lg shadow-md p-4">
+        <div class="border rounded-lg shadow-md p-4" data-aos="zoom-in" data-aos-delay="300">
           <img src="https://via.placeholder.com/300x200" alt="Project 3" class="rounded mb-4">
           <h3 class="text-xl font-semibold">Project C</h3>
           <p class="text-gray-600">Lead generation funnel with 25% conversion rate.</p>
@@ -105,6 +111,9 @@
       if (currentIndex >= slides.length) currentIndex = 0;
       track.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
+
+    // Initialize AOS
+    AOS.init();
   </script>
 </body>
 </html>
