@@ -7,129 +7,158 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
   <script>
-    tailwind.config = { darkMode: 'class' };
+    tailwind.config = {
+      darkMode: 'class',
+    }
   </script>
+  <style>
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-delay-1 { animation-delay: 0.2s; }
+    .fade-delay-2 { animation-delay: 0.4s; }
+    .fade-delay-3 { animation-delay: 0.6s; }
+    .fade-delay-4 { animation-delay: 0.8s; }
+  </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans">
 
+<!-- Language Toggle -->
+<button onclick="switchLanguage()" class="fixed top-5 left-5 z-50 bg-green-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-green-600 transition">VI 🇻🇳</button>
+
 <!-- Navbar -->
 <nav class="flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
-  <div class="flex items-center gap-4">
-    <img src="logo.png" alt="Logo" class="h-14 w-14 rounded-full" />
-    <button onclick="switchLanguage()" class="bg-green-500 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition">VI 🇻🇳</button>
-  </div>
+  <img src="logo.png" alt="Logo" class="h-14 w-14 rounded-full" />
   <div class="flex gap-6">
-    <a href="#skills" data-i18n="skills" class="hover:underline">Skills</a>
-    <a href="#about" data-i18n="about" class="hover:underline">About</a>
-    <a href="#projects" data-i18n="projects" class="hover:underline">Projects</a>
-    <a href="#blogs" data-i18n="blogs" class="hover:underline">Blogs</a>
-    <a href="#contact" data-i18n="contact" class="hover:underline">Contact</a>
+    <a href="#skills" class="hover:underline" data-i18n="skills">Skills</a>
+    <a href="#about" class="hover:underline" data-i18n="about">About</a>
+    <a href="#projects" class="hover:underline" data-i18n="projects">Projects</a>
+    <a href="#contact" class="hover:underline" data-i18n="contact">Contact</a>
     <button id="themeToggle" class="ml-4 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
   </div>
 </nav>
 
-<!-- Header -->
-<section class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-10" id="header">
+<!-- Hero Section -->
+<section class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-10">
   <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
     <div>
-      <h1 class="text-5xl font-bold mb-4">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="greeting">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300" data-i18n="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.</p>
     </div>
     <div class="flex justify-center">
-      <img src="hero section.png" alt="Viet" class="rounded-xl shadow-lg" />
+      <img src="hero section.png" alt="Viet" class="rounded-xl shadow-lg transition-transform duration-300 hover:scale-105" />
     </div>
   </div>
 </section>
 
-<!-- Skills (List Toggle) -->
+<!-- Skills Section -->
 <section id="skills" class="py-16 bg-white dark:bg-gray-900">
-  <div class="max-w-4xl mx-auto px-6">
-    <h2 class="text-3xl font-bold mb-6 text-center" data-i18n="skills">Skills</h2>
+  <div class="max-w-5xl mx-auto px-6">
+    <h2 class="text-3xl font-bold mb-8 text-center" data-i18n="skills">My Skills</h2>
     <div class="space-y-4">
-      <details class="bg-gray-100 dark:bg-gray-700 p-4 rounded shadow cursor-pointer">
-        <summary class="flex justify-between items-center font-medium text-lg">SEO Optimization</summary>
-        <p class="mt-2 text-gray-700 dark:text-gray-300">Experienced in keyword strategy, on-page and off-page SEO.</p>
-      </details>
-      <details class="bg-gray-100 dark:bg-gray-700 p-4 rounded shadow cursor-pointer">
-        <summary class="flex justify-between items-center font-medium text-lg">Content Marketing</summary>
-        <p class="mt-2 text-gray-700 dark:text-gray-300">Plan and execute effective content strategies across platforms.</p>
-      </details>
+      <div class="border rounded-md p-4 bg-gray-100 dark:bg-gray-800">
+        <div class="flex justify-between items-center cursor-pointer" onclick="toggleSkill(1)">
+          <span class="font-semibold text-black dark:text-white" data-i18n="SEO Optimization">SEO Optimization</span>
+          <span id="arrow-1" class="transform transition-transform duration-300">▼</span>
+        </div>
+        <div id="skill-1" class="mt-2 text-gray-600 dark:text-gray-300 hidden">Boost search visibility using white-hat techniques and on-page best practices.</div>
+      </div>
+      <div class="border rounded-md p-4 bg-gray-100 dark:bg-gray-800">
+        <div class="flex justify-between items-center cursor-pointer" onclick="toggleSkill(2)">
+          <span class="font-semibold text-black dark:text-white" data-i18n="Content Marketing">Content Marketing</span>
+          <span id="arrow-2" class="transform transition-transform duration-300">▼</span>
+        </div>
+        <div id="skill-2" class="mt-2 text-gray-600 dark:text-gray-300 hidden">Plan and create compelling content strategies for blogs, socials & more.</div>
+      </div>
+      <div class="border rounded-md p-4 bg-gray-100 dark:bg-gray-800">
+        <div class="flex justify-between items-center cursor-pointer" onclick="toggleSkill(3)">
+          <span class="font-semibold text-black dark:text-white" data-i18n="Facebook Ads">Facebook Ads</span>
+          <span id="arrow-3" class="transform transition-transform duration-300">▼</span>
+        </div>
+        <div id="skill-3" class="mt-2 text-gray-600 dark:text-gray-300 hidden">Create optimized campaigns that convert across Facebook platforms.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- About -->
+<!-- About Section -->
 <section id="about" class="py-16 bg-gray-50 dark:bg-gray-800">
-  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
-    <div>
-      <img src="Avatar.jpg" alt="About Me" class="rounded shadow" />
+  <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+    <div class="fade-in fade-delay-1">
+      <img src="Avatar.jpg" alt="About Image" class="rounded-xl shadow-md">
     </div>
     <div>
       <h2 class="text-3xl font-bold mb-4" data-i18n="about">About Me</h2>
-      <p class="text-lg text-gray-700 dark:text-gray-300">I’m Viet, a seasoned digital marketer with a passion for data-driven strategies and impactful storytelling.</p>
+      <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed" data-i18n="aboutDesc">
+        I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.
+      </p>
     </div>
   </div>
 </section>
 
-<!-- Projects -->
+<!-- Projects Section -->
 <section id="projects" class="py-16 bg-white dark:bg-gray-900">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold mb-10 text-center" data-i18n="projects">Outstanding Projects</h2>
+    <h2 class="text-3xl font-bold mb-10 text-center fade-in fade-delay-1" data-i18n="projects">Outstanding Projects</h2>
     <div class="grid md:grid-cols-3 gap-8">
-      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300">
+      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-1">
         <img src="https://via.placeholder.com/300x200" alt="Project A" class="rounded mb-4 w-full">
         <h3 class="text-xl font-semibold mb-2">Project A</h3>
         <p class="text-gray-600 dark:text-gray-300 mb-4">Social campaign that boosted engagement by 300%.</p>
+        <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+      </div>
+      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-2">
+        <img src="https://via.placeholder.com/300x200" alt="Project B" class="rounded mb-4 w-full">
+        <h3 class="text-xl font-semibold mb-2">Project B</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Ranked top 3 on Google through on-page SEO.</p>
+        <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+      </div>
+      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-3">
+        <img src="https://via.placeholder.com/300x200" alt="Project C" class="rounded mb-4 w-full">
+        <h3 class="text-xl font-semibold mb-2">Project C</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Built a funnel with 25% lead conversion rate.</p>
         <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Blogs -->
-<section id="blogs" class="py-16 bg-gray-50 dark:bg-gray-800">
-  <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-3xl font-bold mb-10 text-center" data-i18n="blogs">Blogs</h2>
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="rounded overflow-hidden shadow-md bg-white dark:bg-gray-900 transition hover:shadow-xl">
-        <img src="https://via.placeholder.com/400x220" class="w-full object-cover" alt="Blog 1">
-        <div class="p-4">
-          <span class="text-xs text-pink-700 bg-pink-100 px-2 py-1 rounded-full uppercase tracking-wide" data-i18n="category">Artificial Intelligence</span>
-          <h3 class="text-lg font-semibold mt-2" data-i18n="blog1">What Is an AI Assistant? A Deep Dive into Intelligent Digital Helpers</h3>
-        </div>
+<!-- Contact Section -->
+<section id="contact" class="py-16 bg-gray-100 dark:bg-gray-800">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-3xl font-bold mb-6 text-center" data-i18n="contact">Contact Me</h2>
+    <form class="space-y-6">
+      <div>
+        <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1" data-i18n="name">Name</label>
+        <input type="text" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:border-gray-700" />
       </div>
-      <div class="rounded overflow-hidden shadow-md bg-white dark:bg-gray-900 transition hover:shadow-xl">
-        <img src="https://via.placeholder.com/400x220" class="w-full object-cover" alt="Blog 2">
-        <div class="p-4">
-          <span class="text-xs text-pink-700 bg-pink-100 px-2 py-1 rounded-full uppercase tracking-wide" data-i18n="category">Artificial Intelligence</span>
-          <h3 class="text-lg font-semibold mt-2" data-i18n="blog2">Sure-Fire Tips For Optimizing Your AI Chatbot</h3>
-        </div>
+      <div>
+        <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1" data-i18n="email">Email</label>
+        <input type="email" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:border-gray-700" />
       </div>
-      <div class="rounded overflow-hidden shadow-md bg-white dark:bg-gray-900 transition hover:shadow-xl">
-        <img src="https://via.placeholder.com/400x220" class="w-full object-cover" alt="Blog 3">
-        <div class="p-4">
-          <span class="text-xs text-pink-700 bg-pink-100 px-2 py-1 rounded-full uppercase tracking-wide" data-i18n="category">Artificial Intelligence</span>
-          <h3 class="text-lg font-semibold mt-2" data-i18n="blog3">Effective Chatbot Strategy: 8 Key Steps for Successful Implementation</h3>
-        </div>
+      <div>
+        <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1" data-i18n="message">Message</label>
+        <textarea class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:border-gray-700" rows="5"></textarea>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- Contact -->
-<section id="contact" class="py-16 bg-white dark:bg-gray-900">
-  <div class="max-w-xl mx-auto px-6 text-center">
-    <h2 class="text-3xl font-bold mb-6" data-i18n="contact">Contact</h2>
-    <form class="space-y-4">
-      <input type="text" placeholder="Your Name" class="w-full p-3 border rounded bg-gray-100 dark:bg-gray-800" />
-      <input type="email" placeholder="Your Email" class="w-full p-3 border rounded bg-gray-100 dark:bg-gray-800" />
-      <textarea rows="4" placeholder="Your Message" class="w-full p-3 border rounded bg-gray-100 dark:bg-gray-800"></textarea>
-      <button class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 transition">Send Message</button>
+      <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md" data-i18n="send">Send Message</button>
     </form>
   </div>
 </section>
 
-<!-- Language + Dark Mode Scripts -->
+<!-- Footer -->
+<footer class="bg-gray-100 dark:bg-gray-900 text-center py-6 mt-16 text-gray-600 dark:text-gray-400">
+  © 2025 Viet – Digital Marketer. All rights reserved.
+</footer>
+
+<!-- Scripts -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('themeToggle');
@@ -137,30 +166,42 @@
       document.documentElement.classList.toggle('dark');
     });
 
+    window.toggleSkill = function(index) {
+      const content = document.getElementById(`skill-${index}`);
+      const arrow = document.getElementById(`arrow-${index}`);
+      const isHidden = content.classList.contains('hidden');
+      content.classList.toggle('hidden');
+      arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    };
+
     i18next.init({
       lng: 'en',
       resources: {
         en: { translation: {
-          "skills": "Skills",
+          "greeting": "Hello, I'm Viet,\nProfessional Digital Marketer",
+          "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.",
+          "skills": "My Skills",
           "about": "About Me",
-          "projects": "Projects",
-          "contact": "Contact",
-          "blogs": "Blogs",
-          "category": "Artificial Intelligence",
-          "blog1": "What Is an AI Assistant? A Deep Dive into Intelligent Digital Helpers",
-          "blog2": "Sure-Fire Tips For Optimizing Your AI Chatbot",
-          "blog3": "Effective Chatbot Strategy: 8 Key Steps for Successful Implementation"
+          "aboutDesc": "I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.",
+          "projects": "Outstanding Projects",
+          "contact": "Contact Me",
+          "name": "Name",
+          "email": "Email",
+          "message": "Message",
+          "send": "Send Message"
         }},
         vi: { translation: {
-          "skills": "Kỹ năng",
-          "about": "Giới thiệu",
-          "projects": "Dự án",
+          "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
+          "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.",
+          "skills": "Kỹ năng của tôi",
+          "about": "Giới thiệu bản thân",
+          "aboutDesc": "Tôi là Việt, chuyên gia Digital Marketing với hơn 5 năm kinh nghiệm trong SEO, quảng cáo hiệu suất và phát triển thương hiệu.",
+          "projects": "Dự án nổi bật",
           "contact": "Liên hệ",
-          "blogs": "Bài viết",
-          "category": "Trí tuệ nhân tạo",
-          "blog1": "Trợ lý AI là gì? Lợi ích và cách ứng dụng",
-          "blog2": "Mẹo tối ưu hóa chatbot AI hiệu quả",
-          "blog3": "Chiến lược chatbot thành công: 8 bước triển khai"
+          "name": "Họ tên",
+          "email": "Email",
+          "message": "Tin nhắn",
+          "send": "Gửi tin nhắn"
         }}
       }
     }, function(err, t) {
