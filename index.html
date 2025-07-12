@@ -39,17 +39,17 @@
 <!-- Navbar -->
 <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
   <div class="flex justify-between items-center max-w-7xl mx-auto">
-    <!-- Logo + Language Switch -->
+    <!-- Logo + Language -->
     <div class="flex items-center gap-4">
       <img src="logo.png" alt="Logo" class="h-12 w-12 rounded-full" />
       <div class="flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1">
-        <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600">🇺🇸</button>
-        <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600">🇻🇳</button>
+        <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇺🇸</button>
+        <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇻🇳</button>
       </div>
     </div>
 
-    <!-- Hamburger Icon -->
-    <button id="menu-toggle" class="text-3xl md:hidden focus:outline-none text-gray-800 dark:text-white">
+    <!-- Hamburger -->
+    <button id="menu-toggle" class="text-3xl md:hidden text-gray-800 dark:text-white">
       ☰
     </button>
 
@@ -63,8 +63,8 @@
     </div>
   </div>
 
-  <!-- Mobile Nav -->
-  <div id="mobile-menu" class="md:hidden hidden mt-4 flex-col gap-4 px-2 text-center">
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden flex flex-col mt-3 text-center">
     <a href="#skills" class="block py-2 hover:underline" data-i18n="skills">Skills</a>
     <a href="#about" class="block py-2 hover:underline" data-i18n="about">About</a>
     <a href="#projects" class="block py-2 hover:underline" data-i18n="projects">Projects</a>
@@ -72,6 +72,7 @@
     <button class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded" onclick="document.documentElement.classList.toggle('dark')">🌓</button>
   </div>
 </nav>
+
 
 <!-- Hero Section -->
 <section class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-10">
@@ -256,6 +257,14 @@
     themeToggle.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
     });
+      // 🍔 Hamburger menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
 
     window.toggleSkill = function(index) {
       const content = document.getElementById(`skill-${index}`);
