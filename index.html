@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Viet | Digital Marketer</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -30,155 +31,195 @@
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans">
 
-  <!-- Dark Mode & Toggle Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const themeToggle = document.getElementById('themeToggle');
-      themeToggle.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-      });
+<!-- Language Toggle -->
+<button onclick="switchLanguage()" class="fixed top-5 left-5 z-50 bg-green-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-green-600 transition">VI 🇻🇳</button>
 
-      window.toggleSkill = function(index) {
-        const content = document.getElementById(`skill-${index}`);
-        const arrow = document.getElementById(`arrow-${index}`);
-        const isHidden = content.classList.contains('hidden');
-        content.classList.toggle('hidden');
-        arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
-      };
+<!-- Navbar -->
+<nav class="flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
+  <img src="logo.png" alt="Logo" class="h-14 w-14 rounded-full" />
+  <div class="flex gap-6">
+    <a href="#skills" class="hover:underline" data-i18n="skills">Skills</a>
+    <a href="#about" class="hover:underline" data-i18n="about">About</a>
+    <a href="#projects" class="hover:underline" data-i18n="projects">Projects</a>
+    <a href="#contact" class="hover:underline" data-i18n="contact">Contact</a>
+    <button id="themeToggle" class="ml-4 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-10">
+  <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
+    <div>
+      <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="greeting">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300" data-i18n="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.</p>
+    </div>
+    <div class="flex justify-center">
+      <img src="hero section.png" alt="Viet" class="rounded-xl shadow-lg transition-transform duration-300 hover:scale-105" />
+    </div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="py-16 bg-white dark:bg-gray-900">
+  <div class="max-w-5xl mx-auto px-6">
+    <h2 class="text-3xl font-bold mb-8 text-center" data-i18n="skills">My Skills</h2>
+    <div class="space-y-4">
+      <div class="border rounded-md p-4 bg-gray-100 dark:bg-gray-800">
+        <div class="flex justify-between items-center cursor-pointer" onclick="toggleSkill(1)">
+          <span class="font-semibold text-black dark:text-white" data-i18n="SEO Optimization">SEO Optimization</span>
+          <span id="arrow-1" class="transform transition-transform duration-300">▼</span>
+        </div>
+        <div id="skill-1" class="mt-2 text-gray-600 dark:text-gray-300 hidden">Boost search visibility using white-hat techniques and on-page best practices.</div>
+      </div>
+      <div class="border rounded-md p-4 bg-gray-100 dark:bg-gray-800">
+        <div class="flex justify-between items-center cursor-pointer" onclick="toggleSkill(2)">
+          <span class="font-semibold text-black dark:text-white" data-i18n="Content Marketing">Content Marketing</span>
+          <span id="arrow-2" class="transform transition-transform duration-300">▼</span>
+        </div>
+        <div id="skill-2" class="mt-2 text-gray-600 dark:text-gray-300 hidden">Plan and create compelling content strategies for blogs, socials & more.</div>
+      </div>
+      <div class="border rounded-md p-4 bg-gray-100 dark:bg-gray-800">
+        <div class="flex justify-between items-center cursor-pointer" onclick="toggleSkill(3)">
+          <span class="font-semibold text-black dark:text-white" data-i18n="Facebook Ads">Facebook Ads</span>
+          <span id="arrow-3" class="transform transition-transform duration-300">▼</span>
+        </div>
+        <div id="skill-3" class="mt-2 text-gray-600 dark:text-gray-300 hidden">Create optimized campaigns that convert across Facebook platforms.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-16 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+    <div class="fade-in fade-delay-1">
+      <img src="Avatar.jpg" alt="About Image" class="rounded-xl shadow-md">
+    </div>
+    <div>
+      <h2 class="text-3xl font-bold mb-4" data-i18n="about">About Me</h2>
+      <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed" data-i18n="aboutDesc">
+        I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="py-16 bg-white dark:bg-gray-900">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold mb-10 text-center fade-in fade-delay-1" data-i18n="projects">Outstanding Projects</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-1">
+        <img src="https://via.placeholder.com/300x200" alt="Project A" class="rounded mb-4 w-full">
+        <h3 class="text-xl font-semibold mb-2">Project A</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Social campaign that boosted engagement by 300%.</p>
+        <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+      </div>
+      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-2">
+        <img src="https://via.placeholder.com/300x200" alt="Project B" class="rounded mb-4 w-full">
+        <h3 class="text-xl font-semibold mb-2">Project B</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Ranked top 3 on Google through on-page SEO.</p>
+        <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+      </div>
+      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-3">
+        <img src="https://via.placeholder.com/300x200" alt="Project C" class="rounded mb-4 w-full">
+        <h3 class="text-xl font-semibold mb-2">Project C</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Built a funnel with 25% lead conversion rate.</p>
+        <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-16 bg-gray-100 dark:bg-gray-800">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-3xl font-bold mb-6 text-center" data-i18n="contact">Contact Me</h2>
+    <form class="space-y-6">
+      <div>
+        <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1" data-i18n="name">Name</label>
+        <input type="text" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:border-gray-700" />
+      </div>
+      <div>
+        <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1" data-i18n="email">Email</label>
+        <input type="email" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:border-gray-700" />
+      </div>
+      <div>
+        <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1" data-i18n="message">Message</label>
+        <textarea class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:border-gray-700" rows="5"></textarea>
+      </div>
+      <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md" data-i18n="send">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-100 dark:bg-gray-900 text-center py-6 mt-16 text-gray-600 dark:text-gray-400">
+  © 2025 Viet – Digital Marketer. All rights reserved.
+</footer>
+
+<!-- Scripts -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
     });
-  </script>
 
-  <!-- Navbar -->
-  <nav class="bg-white dark:bg-gray-800 shadow-md fixed w-full z-50 fade-in fade-delay-1">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <img src="logo.png" alt="Logo" class="h-14 w-14 rounded-full" />
-      <ul class="flex space-x-6">
-        <li><a href="#skills" class="hover:underline">Skills</a></li>
-        <li><a href="#about" class="hover:underline">About</a></li>
-        <li><a href="#projects" class="hover:underline">Projects</a></li>
-        <li><a href="#contact" class="hover:underline">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+    window.toggleSkill = function(index) {
+      const content = document.getElementById(`skill-${index}`);
+      const arrow = document.getElementById(`arrow-${index}`);
+      const isHidden = content.classList.contains('hidden');
+      content.classList.toggle('hidden');
+      arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    };
 
-  <!-- Dark Mode Toggle -->
-  <button id="themeToggle" class="fixed top-5 right-5 z-50 bg-gray-300 dark:bg-gray-700 p-2 rounded-full shadow-md">🌓</button>
+    i18next.init({
+      lng: 'en',
+      resources: {
+        en: { translation: {
+          "greeting": "Hello, I'm Viet,\nProfessional Digital Marketer",
+          "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.",
+          "skills": "My Skills",
+          "about": "About Me",
+          "aboutDesc": "I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.",
+          "projects": "Outstanding Projects",
+          "contact": "Contact Me",
+          "name": "Name",
+          "email": "Email",
+          "message": "Message",
+          "send": "Send Message"
+        }},
+        vi: { translation: {
+          "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
+          "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.",
+          "skills": "Kỹ năng của tôi",
+          "about": "Giới thiệu bản thân",
+          "aboutDesc": "Tôi là Việt, chuyên gia Digital Marketing với hơn 5 năm kinh nghiệm trong SEO, quảng cáo hiệu suất và phát triển thương hiệu.",
+          "projects": "Dự án nổi bật",
+          "contact": "Liên hệ",
+          "name": "Họ tên",
+          "email": "Email",
+          "message": "Tin nhắn",
+          "send": "Gửi tin nhắn"
+        }}
+      }
+    }, function(err, t) {
+      updateContent();
+    });
 
-  <!-- Header Section -->
-  <section class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-10 pt-28">
-    <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
-      <div class="fade-in fade-delay-1">
-        <h1 class="text-4xl md:text-6xl font-bold mb-4">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
-        <p class="text-lg text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.</p>
-      </div>
-      <div class="flex justify-center fade-in fade-delay-2">
-        <img src="hero section.png" alt="Viet" class="rounded-xl shadow-lg transition-transform duration-300 hover:scale-105" />
-      </div>
-    </div>
-  </section>
+    function updateContent() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.innerText = i18next.t(el.getAttribute('data-i18n'));
+      });
+    }
 
-  <!-- Skills Section -->
-  <section id="skills" class="py-16 bg-white dark:bg-gray-900">
-    <div class="max-w-4xl mx-auto px-6 fade-in fade-delay-1">
-      <h2 class="text-3xl font-bold mb-8 text-center">My Skills</h2>
-      <div class="space-y-4">
-        <div class="fade-in fade-delay-2">
-          <button onclick="toggleSkill(0)" class="flex items-center justify-between w-full text-left font-semibold text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 transition-all duration-300">
-            <span>🧠 SEO Optimization</span>
-            <span id="arrow-0" class="transform transition-transform duration-300">&#9660;</span>
-          </button>
-          <div id="skill-0" class="mt-2 text-gray-700 dark:text-gray-300 hidden">
-            Improve search engine visibility through technical and content SEO.
-          </div>
-        </div>
-        <div class="fade-in fade-delay-3">
-          <button onclick="toggleSkill(1)" class="flex items-center justify-between w-full text-left font-semibold text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 transition-all duration-300">
-            <span>✍️ Content Marketing</span>
-            <span id="arrow-1" class="transform transition-transform duration-300">&#9660;</span>
-          </button>
-          <div id="skill-1" class="mt-2 text-gray-700 dark:text-gray-300 hidden">
-            Create engaging content that drives traffic and builds trust.
-          </div>
-        </div>
-        <div class="fade-in fade-delay-4">
-          <button onclick="toggleSkill(2)" class="flex items-center justify-between w-full text-left font-semibold text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800 transition-all duration-300">
-            <span>📊 Facebook Ads</span>
-            <span id="arrow-2" class="transform transition-transform duration-300">&#9660;</span>
-          </button>
-          <div id="skill-2" class="mt-2 text-gray-700 dark:text-gray-300 hidden">
-            Targeted campaigns that convert leads across social platforms.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    window.switchLanguage = function () {
+      const newLang = i18next.language === 'en' ? 'vi' : 'en';
+      i18next.changeLanguage(newLang, updateContent);
+    };
+  });
+</script>
 
-  <!-- About Section -->
-  <section id="about" class="py-16 bg-gray-50 dark:bg-gray-800">
-    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
-      <div class="flex justify-center fade-in fade-delay-1">
-        <img src="Avatar.jpg" alt="About Viet" class="rounded-lg shadow-md" />
-      </div>
-      <div class="fade-in fade-delay-2">
-        <h2 class="text-3xl font-bold mb-4">About Me</h2>
-        <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-          I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="py-16 bg-white dark:bg-gray-900">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-10 text-center fade-in fade-delay-1">Outstanding Projects</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-1">
-          <img src="https://via.placeholder.com/300x200" alt="Project A" class="rounded mb-4">
-          <h3 class="text-xl font-semibold">Project A</h3>
-          <p class="text-gray-600 dark:text-gray-300">Social campaign that boosted engagement by 300%.</p>
-        </div>
-        <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-2">
-          <img src="https://via.placeholder.com/300x200" alt="Project B" class="rounded mb-4">
-          <h3 class="text-xl font-semibold">Project B</h3>
-          <p class="text-gray-600 dark:text-gray-300">Ranked top 3 on Google through on-page SEO.</p>
-        </div>
-        <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-3">
-          <img src="https://via.placeholder.com/300x200" alt="Project C" class="rounded mb-4">
-          <h3 class="text-xl font-semibold">Project C</h3>
-          <p class="text-gray-600 dark:text-gray-300">Built a funnel with 25% lead conversion rate.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-16 bg-gray-50 dark:bg-gray-800 fade-in fade-delay-1">
-    <div class="max-w-3xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-6 text-center">Contact Me</h2>
-      <form class="grid gap-6">
-        <div>
-          <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1">Name</label>
-          <input type="text" class="w-full border border-gray-300 p-3 rounded-md focus:ring focus:ring-blue-200" />
-        </div>
-        <div>
-          <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1">Email</label>
-          <input type="email" class="w-full border border-gray-300 p-3 rounded-md focus:ring focus:ring-blue-200" />
-        </div>
-        <div>
-          <label class="block text-gray-700 dark:text-gray-300 font-medium mb-1">Message</label>
-          <textarea rows="5" class="w-full border border-gray-300 p-3 rounded-md focus:ring focus:ring-blue-200"></textarea>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md">
-            Send Message
-          </button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-100 dark:bg-gray-900 text-center py-6 mt-16 text-gray-600 dark:text-gray-400">
-    © 2025 Viet – Digital Marketer. All rights reserved.
-  </footer>
+</body>
+</html>
