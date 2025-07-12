@@ -6,8 +6,6 @@
   <title>Viet | Digital Marketer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
-  <!-- ✅ Font Awesome CDN for social icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
     tailwind.config = { darkMode: 'class' }
   </script>
@@ -41,17 +39,17 @@
 <!-- Navbar -->
 <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
   <div class="flex justify-between items-center max-w-7xl mx-auto">
-    <!-- Logo + Language -->
+    <!-- Logo + Language Switch -->
     <div class="flex items-center gap-4">
       <img src="logo.png" alt="Logo" class="h-12 w-12 rounded-full" />
       <div class="flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1">
-        <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇺🇸</button>
-        <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇻🇳</button>
+        <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600">🇺🇸</button>
+        <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600">🇻🇳</button>
       </div>
     </div>
 
-    <!-- Hamburger -->
-    <button id="menu-toggle" class="text-3xl md:hidden text-gray-800 dark:text-white">
+    <!-- Hamburger Icon -->
+    <button id="menu-toggle" class="text-3xl md:hidden focus:outline-none text-gray-800 dark:text-white">
       ☰
     </button>
 
@@ -65,8 +63,8 @@
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="md:hidden hidden flex flex-col mt-3 text-center">
+  <!-- Mobile Nav -->
+  <div id="mobile-menu" class="md:hidden hidden mt-4 flex-col gap-4 px-2 text-center">
     <a href="#skills" class="block py-2 hover:underline" data-i18n="skills">Skills</a>
     <a href="#about" class="block py-2 hover:underline" data-i18n="about">About</a>
     <a href="#projects" class="block py-2 hover:underline" data-i18n="projects">Projects</a>
@@ -75,35 +73,18 @@
   </div>
 </nav>
 
-
 <!-- Hero Section -->
 <section class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-10">
   <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
-    <!-- Text Content -->
     <div class="fade-in fade-delay-1" style="animation-name: fadeUp;">
       <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="greeting">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6" data-i18n="intro">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.
-      </p>
-      <!-- Buttons -->
-      <div class="flex flex-wrap gap-4 mb-4">
-  <a href="#projects" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-all" data-i18n="projects">Projects</a>
-  <a href="#contact" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-all" data-i18n="contact">Contact Me</a>
-</div>
-      <!-- Social Icons -->
-      <div class="flex gap-4 text-2xl text-gray-600 dark:text-gray-300">
-        <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn" class="hover:text-blue-600 transition-all"><i class="fab fa-linkedin"></i></a>
-        <a href="https://facebook.com/" target="_blank" aria-label="Facebook" class="hover:text-blue-500 transition-all"><i class="fab fa-facebook"></i></a>
-      </div>
+      <p class="text-lg text-gray-600 dark:text-gray-300" data-i18n="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.</p>
     </div>
-
-    <!-- Image -->
     <div class="flex justify-center">
       <img src="hero section.png" alt="Viet" class="rounded-xl shadow-lg transition-transform duration-300 hover:scale-105" />
     </div>
   </div>
 </section>
-
 
 <!-- Skills Section -->
 <section id="skills" class="py-16 bg-white dark:bg-gray-900">
@@ -275,14 +256,6 @@
     themeToggle.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
     });
-      // 🍔 Hamburger menu toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', function () {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
 
     window.toggleSkill = function(index) {
       const content = document.getElementById(`skill-${index}`);
@@ -312,8 +285,6 @@
           "SEO Optimization": "SEO Optimization",
           "Content Marketing": "Content Marketing",
           "Facebook Ads": "Facebook Ads"
-          "projects": "Projects",
-"contact": "Contact Me",
         }},
         vi: { translation: {
           "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
@@ -332,9 +303,6 @@
           "SEO Optimization": "Tối ưu SEO",
           "Content Marketing": "Tiếp thị nội dung",
           "Facebook Ads": "Quảng cáo Facebook"
-          "projects": "Dự án",
-"contact": "Liên hệ",
-
         }}
       }
     }, function(err, t) {
