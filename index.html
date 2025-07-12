@@ -38,18 +38,19 @@
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans">
 
 <!-- Navbar -->
-<nav class="flex justify-between items-center px-6 py-4 bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
-  <div class="flex items-center gap-4">
-    <img src="logo.png" alt="Logo" class="h-14 w-14 rounded-full" />
-    <div class="flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1">
-      <button onclick="setLanguage('en')" id="btn-en" class="px-3 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 transition">🇺🇸</button>
-      <button onclick="setLanguage('vi')" id="btn-vi" class="px-3 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-600 transition">🇻🇳</button>
+<nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
+  <div class="flex justify-between items-center max-w-7xl mx-auto">
+    <!-- Logo + Language -->
+    <div id="logo-lang" class="flex items-center gap-4">
+      <img src="logo.png" alt="Logo" class="h-12 w-12 rounded-full" />
+      <div class="flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1">
+        <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇺🇸</button>
+        <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇻🇳</button>
+      </div>
     </div>
-  </div>
-     <!-- Hamburger -->
-    <button id="menu-toggle" class="text-3xl md:hidden text-gray-800 dark:text-white">
-      ☰
-    </button>
+
+    <!-- Hamburger Button -->
+    <button id="menu-toggle" class="text-3xl md:hidden text-gray-800 dark:text-white">☰</button>
 
     <!-- Desktop Nav -->
     <div id="nav-links" class="hidden md:flex gap-6 items-center">
@@ -61,7 +62,7 @@
     </div>
   </div>
 
-  <!-- Mobile Menu -->
+  <!-- Mobile Nav -->
   <div id="mobile-menu" class="md:hidden hidden flex flex-col mt-3 text-center">
     <a href="#skills" class="block py-2 hover:underline" data-i18n="skills">Skills</a>
     <a href="#about" class="block py-2 hover:underline" data-i18n="about">About</a>
@@ -270,15 +271,20 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-    });
-     // 🍔 Hamburger menu toggle
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+      });
+    }
+
+    // Hamburger toggle logic
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    if (menuToggle && mobileMenu) {
+    const logoLang = document.getElementById('logo-lang');
+    if (menuToggle && mobileMenu && logoLang) {
       menuToggle.addEventListener('click', function () {
         mobileMenu.classList.toggle('hidden');
+        logoLang.classList.toggle('hidden');
       });
     }
 
@@ -290,6 +296,7 @@
       arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
     };
 
+    // i18n logic remains unchanged
     i18next.init({
       lng: 'en',
       resources: {
