@@ -6,6 +6,7 @@
   <title>Viet | Digital Marketer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
     tailwind.config = { darkMode: 'class' }
   </script>
@@ -57,10 +58,29 @@
 <!-- Hero Section -->
 <section class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-10">
   <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
+    <!-- Text Column -->
     <div class="fade-in fade-delay-1" style="animation-name: fadeUp;">
-      <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="greeting">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300" data-i18n="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.</p>
+      <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="greeting">
+        Hello, I'm Viet,<br/>Professional Digital Marketer
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6" data-i18n="intro">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.
+      </p>
+
+      <!-- Buttons -->
+      <div class="flex flex-wrap gap-4 mb-6">
+        <a href="#projects" class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300" data-i18n="projects">Projects</a>
+        <a href="#contact" class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300" data-i18n="contact">Contact Me</a>
+      </div>
+
+      <!-- Social Icons -->
+      <div class="flex gap-4 text-2xl text-blue-600 dark:text-blue-400">
+        <a href="https://facebook.com" target="_blank" class="hover:text-blue-800"><i class="fab fa-facebook"></i></a>
+        <a href="https://linkedin.com" target="_blank" class="hover:text-blue-800"><i class="fab fa-linkedin"></i></a>
+      </div>
     </div>
+
+    <!-- Image Column -->
     <div class="flex justify-center">
       <img src="hero section.png" alt="Viet" class="rounded-xl shadow-lg transition-transform duration-300 hover:scale-105" />
     </div>
