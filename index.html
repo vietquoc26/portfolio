@@ -1,322 +1,110 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name | Portfolio</title>
+  <title>Viet | Digital Marketer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --bg-light: #ffffff;
-      --text-light: #111111;
-      --bg-dark: #1e1e1e;
-      --text-dark: #f0f0f0;
-      --accent: #007acc;
-    }
-
-    [data-theme="light"] {
-      background-color: var(--bg-light);
-      color: var(--text-light);
-    }
-
-    [data-theme="dark"] {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 2rem;
-    }
-
-    header {
-      text-align: center;
-      padding: 2rem 1rem;
-      background-color: var(--accent);
-      color: white;
-    }
-
-    nav {
-      margin-top: 1rem;
-    }
-
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-    }
-
-    .toggle-darkmode {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      border: 2px solid #ccc;
-      cursor: pointer;
-      background-color: white;
-    }
-
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      animation: fadeIn 1s ease-in;
-      margin-bottom: 4rem;
-    }
-
-    <img src="images/Avatar.jpg" alt="My photo" />
-
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    }
-
-    .hero-text {
-      text-align: center;
-      max-width: 600px;
-    }
-
-    section {
-      margin-bottom: 4rem;
-    }
-
-    h2 {
-      margin-bottom: 1rem;
-      font-size: 2rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      border-top: 1px solid #ccc;
-    }
-
-    form input, form textarea, form button {
-      width: 100%;
-      max-width: 500px;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-
-    form button {
-      background-color: var(--accent);
-      color: white;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    form button:hover {
-      background-color: #005fa3;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (min-width: 768px) {
-      .hero {
-        flex-direction: row;
-        align-items: center;
-        text-align: left;
-        justify-content: space-between;
-      }
-
-      .hero-text {
-        max-width: 600px;
-        text-align: left;
-      }
-
-      .hero img {
-        width: 220px;
-        height: 220px;
-      }
-    }
-
     /* Carousel Styles */
-    .carousel-container {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-      max-width: 100%;
-      margin-top: 1rem;
-    }
-
     .carousel-track {
       display: flex;
       transition: transform 0.5s ease-in-out;
     }
-
     .carousel-slide {
       min-width: 100%;
-      height: 400px;
-      position: relative;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .carousel-caption {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      color: white;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 10px 20px;
-      border-radius: 6px;
-    }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: none;
-      font-size: 24px;
-      padding: 10px;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    .carousel-btn.left {
-      left: 10px;
-    }
-
-    .carousel-btn.right {
-      right: 10px;
-    }
-
-    @media (max-width: 768px) {
-      .carousel-slide {
-        height: 250px;
-      }
-
-      .carousel-caption {
-        font-size: 14px;
-      }
+      flex-shrink: 0;
     }
   </style>
 </head>
-<body>
-
-<button class="toggle-darkmode" onclick="toggleTheme()">🌗 Theme</button>
-
-<header>
-  <h1>Your Name</h1>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
-<div class="container">
-
-  <section class="hero">
-    <img src="https://via.placeholder.com/220" alt="Your photo" />
-    <div class="hero-text">
-      <h2>Hi, I'm [Your Name]</h2>
-      <p>A creative developer/designer building digital experiences that delight users and solve real-world problems.</p>
+<body class="bg-white text-gray-800 font-sans">
+  <!-- Header Section -->
+  <section class="min-h-screen flex items-center justify-center bg-gray-100 p-10">
+    <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
+      <div>
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">Hello, I'm Viet,<br/>Professional Digital Marketer</h1>
+        <p class="text-lg text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac neque nec justo.</p>
+      </div>
+      <div class="flex justify-center">
+        <img src="https://via.placeholder.com/400" alt="Viet" class="rounded-xl shadow-lg" />
+      </div>
     </div>
   </section>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>I’m passionate about clean design, clear code, and meaningful experiences. I specialize in [skills] and love collaborating on projects that have impact.</p>
+  <!-- Skills Carousel -->
+  <section class="py-16 bg-white">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold">My Skills</h2>
+    </div>
+    <div class="relative max-w-4xl mx-auto overflow-hidden">
+      <div id="carousel" class="carousel-track">
+        <div class="carousel-slide text-center p-10 bg-gray-100 rounded-xl mx-4">SEO Optimization</div>
+        <div class="carousel-slide text-center p-10 bg-gray-100 rounded-xl mx-4">Content Marketing</div>
+        <div class="carousel-slide text-center p-10 bg-gray-100 rounded-xl mx-4">Facebook Ads</div>
+        <div class="carousel-slide text-center p-10 bg-gray-100 rounded-xl mx-4">Google Analytics</div>
+      </div>
+      <div class="flex justify-center mt-4 gap-4">
+        <button onclick="moveCarousel(-1)" class="bg-blue-500 text-white px-4 py-2 rounded">←</button>
+        <button onclick="moveCarousel(1)" class="bg-blue-500 text-white px-4 py-2 rounded">→</button>
+      </div>
+    </div>
   </section>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="carousel-container">
-      <div class="carousel-track">
-        <div class="carousel-slide">
-          <img src="images/project1.jpg" alt="Project 1" />
-          <div class="carousel-caption">Project 1 - Web Design</div>
+  <!-- About Me Section (2-column) -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="text-3xl font-bold mb-4">About Me</h2>
+        <p class="text-lg text-gray-700 leading-relaxed">
+          I’m Viet, a seasoned digital marketer with a passion for data-driven strategies and impactful storytelling. With over 5 years of experience helping businesses grow their digital presence, I specialize in SEO, performance ads, and brand development.
+        </p>
+      </div>
+      <div class="flex justify-center">
+        <img src="https://via.placeholder.com/400x300" alt="About Viet" class="rounded-lg shadow-md" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Outstanding Projects -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-10 text-center">Outstanding Projects</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="border rounded-lg shadow-md p-4">
+          <img src="https://via.placeholder.com/300x200" alt="Project 1" class="rounded mb-4">
+          <h3 class="text-xl font-semibold">Project A</h3>
+          <p class="text-gray-600">Social media campaign with 300% engagement increase.</p>
         </div>
-        <div class="carousel-slide">
-          <img src="images/project2.jpg" alt="Project 2" />
-          <div class="carousel-caption">Project 2 - App UI</div>
+        <div class="border rounded-lg shadow-md p-4">
+          <img src="https://via.placeholder.com/300x200" alt="Project 2" class="rounded mb-4">
+          <h3 class="text-xl font-semibold">Project B</h3>
+          <p class="text-gray-600">Optimized SEO to reach top 3 Google rankings.</p>
         </div>
-        <div class="carousel-slide">
-          <img src="images/project3.jpg" alt="Project 3" />
-          <div class="carousel-caption">Project 3 - Branding</div>
+        <div class="border rounded-lg shadow-md p-4">
+          <img src="https://via.placeholder.com/300x200" alt="Project 3" class="rounded mb-4">
+          <h3 class="text-xl font-semibold">Project C</h3>
+          <p class="text-gray-600">Lead generation funnel with 25% conversion rate.</p>
         </div>
       </div>
-      <button class="carousel-btn left">&#10094;</button>
-      <button class="carousel-btn right">&#10095;</button>
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send</button>
-    </form>
-  </section>
+  <!-- Footer -->
+  <footer class="bg-gray-100 text-center py-6 mt-16 text-gray-600">
+    © 2025 Viet – Digital Marketer. All rights reserved.
+  </footer>
 
-</div>
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const track = document.getElementById('carousel');
 
-<footer>
-  <p>© 2025 Your Name. All rights reserved.</p>
-</footer>
-
-<script>
-  function toggleTheme() {
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute("data-theme");
-    html.setAttribute("data-theme", currentTheme === "light" ? "dark" : "light");
-  }
-
-  const track = document.querySelector('.carousel-track');
-  const slides = Array.from(track.children);
-  const nextButton = document.querySelector('.carousel-btn.right');
-  const prevButton = document.querySelector('.carousel-btn.left');
-  let currentSlide = 0;
-
-  function updateSlidePosition() {
-    track.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }
-
-  nextButton.addEventListener('click', () => {
-    currentSlide = (currentSlide + 1) % slides.length;
-    updateSlidePosition();
-  });
-
-  prevButton.addEventListener('click', () => {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    updateSlidePosition();
-  });
-</script>
-
+    function moveCarousel(direction) {
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = slides.length - 1;
+      if (currentIndex >= slides.length) currentIndex = 0;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+  </script>
 </body>
 </html>
