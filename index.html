@@ -30,11 +30,29 @@
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans">
 
+  <!-- Dark Mode & Toggle Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeToggle = document.getElementById('themeToggle');
+      themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+      });
+
+      window.toggleSkill = function(index) {
+        const content = document.getElementById(`skill-${index}`);
+        const arrow = document.getElementById(`arrow-${index}`);
+        const isHidden = content.classList.contains('hidden');
+        content.classList.toggle('hidden');
+        arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+      };
+    });
+  </script>
+
   <!-- Navbar -->
   <nav class="bg-white dark:bg-gray-800 shadow-md fixed w-full z-50 fade-in fade-delay-1">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <img src="https://via.placeholder.com/40" alt="Logo" class="h-10 w-10 rounded-full" />
-<ul class="flex space-x-6">
+      <ul class="flex space-x-6">
         <li><a href="#skills" class="hover:underline">Skills</a></li>
         <li><a href="#about" class="hover:underline">About</a></li>
         <li><a href="#projects" class="hover:underline">Projects</a></li>
@@ -159,3 +177,8 @@
       </form>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 dark:bg-gray-900 text-center py-6 mt-16 text-gray-600 dark:text-gray-400">
+    © 2025 Viet – Digital Marketer. All rights reserved.
+  </footer>
