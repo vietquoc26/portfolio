@@ -443,35 +443,23 @@
 </script>
 
 <script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzGNVH3FEGBEaeGo09Bdt12W37N_ycaMBUuNbs8lycAMg3YhaDn_hFfKw4wTBVgN1IikA/exec'; // Replace this!
-
-  document.getElementById('contactForm').addEventListener('submit', function (e) {
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', e => {
     e.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.querySelector('input[placeholder*="phone"]').value.trim();
-    const message = document.querySelector('textarea').value.trim();
-
-    fetch(scriptURL, {
+    const formData = new FormData(form);
+    fetch('https://script.google.com/macros/s/AKfycbxOlQnHuK8DYfvl5peLmsA5k1J93VfdhT5KGScxIC54gxSw1qD2APPjE18H_4EPLR4B/exec', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, phone, message })
+      body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data.result === "success") {
-        alert("✅ Message sent successfully!");
-        document.getElementById('contactForm').reset();
-      } else {
-        alert("❌ Error: " + data.error);
-      }
+    .then(response => response.text())
+    .then(text => {
+      alert("Form submitted successfully!");
+      form.reset();
     })
     .catch(error => {
-      alert("❌ Network error. Try again later.");
-      console.error('Error:', error);
+      alert("There was an error. Please try again.");
+      console.error(error);
     });
   });
 </script>
