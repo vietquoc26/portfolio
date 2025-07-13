@@ -441,6 +441,37 @@
     }
   });
 </script>
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      phone: form.querySelector('input[type="text"]').value.trim(),
+      message: form.querySelector('textarea').value.trim(),
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbzGpTG7f-BXsqJZqgV4Xl5F-_wkAi3gQNjto3EVRbwrGi0RbMBLvFS-_Ff5UnwjyEQ1NA/exec", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.result === "success") {
+          alert("Message sent successfully!");
+          form.reset();
+        } else {
+          alert("Failed to send message. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error!", error.message);
+        alert("There was an error. Please try again.");
+      });
+  });
+</script>
 
 </body>
 </html>
