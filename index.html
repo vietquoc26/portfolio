@@ -441,37 +441,41 @@
     }
   });
 </script>
+
 <script>
-  document.getElementById("contactForm").addEventListener("submit", function (e) {
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyPok8BhC4M7YTyzinZm9R8eHIYdMkhw6XYm1TP8sOiQwlTgeZXLHq7ZZDQt7ASaUdr1g/exec'; // Replace this!
+
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const form = e.target;
-    const data = {
-      name: form.name.value.trim(),
-      email: form.email.value.trim(),
-      phone: form.querySelector('input[type="text"]').value.trim(),
-      message: form.querySelector('textarea').value.trim(),
-    };
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.querySelector('input[placeholder*="phone"]').value.trim();
+    const message = document.querySelector('textarea').value.trim();
 
-    fetch("https://script.google.com/macros/s/AKfycbzXiEa8Bjm12xcGYdrRu1p5_O5-EVzzts2ehL0sET6g7wWHVD1fZM1gGkELVOwYY7X4JQ/exec", {
-      method: "POST",
-      body: JSON.stringify(data),
+    fetch(scriptURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, phone, message })
     })
-      .then((res) => res.json())
-      .then((response) => {
-        if (response.result === "success") {
-          alert("Message sent successfully!");
-          form.reset();
-        } else {
-          alert("Failed to send message. Please try again.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error!", error.message);
-        alert("There was an error. Please try again.");
-      });
+    .then(response => response.json())
+    .then(data => {
+      if (data.result === "success") {
+        alert("✅ Message sent successfully!");
+        document.getElementById('contactForm').reset();
+      } else {
+        alert("❌ Error: " + data.error);
+      }
+    })
+    .catch(error => {
+      alert("❌ Network error. Try again later.");
+      console.error('Error:', error);
+    });
   });
 </script>
+
 
 </body>
 </html>
