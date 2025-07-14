@@ -442,30 +442,6 @@
   });
 </script>
 
-<script>
-  const form = document.getElementById('contactForm'); // corrected ID
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-
-    fetch('https://script.google.com/macros/s/AKfycbyDNs2zsMSYSFG-CdHMXqyGz3IFE4LnQ1sXLk-tpNrk8CrqAkRCRKc35SKYc76tdiVW/exec', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.text())
-    .then(text => {
-      alert("Form submitted successfully!");
-      form.reset();
-    })
-    .catch(error => {
-      alert("There was an error. Please try again.");
-      console.error(error);
-    });
-  });
-</script>
-
 
 
 </body>
