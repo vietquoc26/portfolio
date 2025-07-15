@@ -130,7 +130,7 @@
 
     <!-- Image Column -->
     <div class="flex justify-center">
-      <img src="hero section.png" alt="Viet" class="rounded-xl shadow-lg transition-transform duration-300 hover:scale-105" />
+      <img src="hero section.png" loading="lazy" alt="Viet" class="rounded-xl shadow-lg transition-transform duration-300 hover:scale-105" />
     </div>
   </div>
 </section>
@@ -235,10 +235,10 @@
     <!-- Left Image with Decoration -->
     <div class="relative">
       <!-- Yellow Bar (on top) -->
-      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-3 bg-yellow-400 rounded rotate-[-5deg] z-20 md:left-24 md:-translate-x-0"></div>
-      
+     <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-72 h-4 bg-yellow-400 rounded-full rotate-[-5deg] z-20 md:left-24 md:-translate-x-0 md:w-80 md:h-5"></div>
+
       <!-- Image (behind the bar) -->
-      <img src="Avatar.jpg" alt="Viet working" class="rounded-full shadow-xl w-80 h-80 object-cover z-10 relative mx-auto md:mx-0">
+      <img src="Avatar.jpg" loading="lazy" alt="Viet working" class="rounded-full shadow-xl w-80 h-80 object-cover z-10 relative mx-auto md:mx-0">
     </div>
 
     <!-- Right Content -->
@@ -413,6 +413,26 @@
 <footer class="bg-gray-100 dark:bg-gray-900 text-center py-6 mt-16 text-gray-600 dark:text-gray-400">
   © 2025 Viet – Digital Marketer. All rights reserved.
 </footer>
+
+<!-- Elegant Scroll to Top Button -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-6 right-6 z-50 hidden group p-3 rounded-full shadow-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:scale-110 transition-transform duration-300"
+        id="scrollTopBtn"
+        aria-label="Scroll to top">
+  <svg class="w-5 h-5 transition-transform group-hover:-translate-y-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+  </svg>
+</button>
+
+<!-- Scroll Button Script -->
+<script>
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  window.addEventListener("scroll", () => {
+    scrollBtn.classList.toggle("hidden", window.scrollY < 300);
+  });
+</script>
+
+
 
 <!-- Scripts -->
 <script>
