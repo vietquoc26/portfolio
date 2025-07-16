@@ -15,6 +15,16 @@
   <script>
     tailwind.config = { darkMode: 'class' }
   </script>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      overflow: hidden; /* Optional: prevents scrolling if you want the chatbot fixed */
+      -webkit-overflow-scrolling: touch; /* Improves smooth scrolling on iOS */
+    }
+  </style>
+  
   <style>
     /* Chatbot animation keyframes */
     @keyframes slideFadeIn {
@@ -450,7 +460,7 @@
 </div>
     <!-- Chatbot Window -->
 <div id="chatbot-window"
-     class="hidden fixed bottom-[110px] right-4 md:right-6 w-[90%] max-w-[380px] h-[480px] bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700">
+     class="hidden fixed bottom-[110px] right-4 md:right-6 w-[90%] max-w-[380px] max-h-[80vh] bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700">
 
   <!-- Header with Close Button -->
   <div class="bg-blue-600 text-white px-4 py-3 font-semibold text-lg flex justify-between items-center">
