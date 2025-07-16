@@ -89,24 +89,6 @@
   </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans">
-  
-<!-- Left Side Navigation Bar (Text Only with Line and Animation) -->
-<nav id="side-nav" class="fixed left-2 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col items-start gap-2 bg-transparent animate-side-fade-in border-l-2 border-gray-300 dark:border-gray-600 pl-3">
-  <a href="#skills" class="text-sm text-gray-500 hover:text-blue-500 transition" title="Skills">Skills</a>
-  <a href="#about" class="text-sm text-gray-500 hover:text-blue-500 transition" title="About">About</a>
-  <a href="#projects" class="text-sm text-gray-500 hover:text-blue-500 transition" title="Projects">Projects</a>
-  <a href="#blogs" class="text-sm text-gray-500 hover:text-blue-500 transition" title="Blogs">Blogs</a>
-  <a href="#contact" class="text-sm text-gray-500 hover:text-blue-500 transition" title="Contact">Contact</a>
-</nav>
-
-<!-- Mobile Scroll Nav (Text Only, Middle Right with Vertical Line) -->
-<div class="md:hidden fixed top-1/2 right-0 transform -translate-y-1/2 z-40 flex flex-col gap-2 text-sm text-gray-600 dark:text-gray-300 border-l-2 border-gray-300 dark:border-gray-600 pl-3">
-  <a href="#skills" class="hover:text-blue-500">Skills</a>
-  <a href="#about" class="hover:text-blue-500">About</a>
-  <a href="#projects" class="hover:text-blue-500">Projects</a>
-  <a href="#blogs" class="hover:text-blue-500">Blogs</a>
-  <a href="#contact" class="hover:text-blue-500">Contact</a>
-</div>
 
 <!-- Navbar -->
 <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
@@ -303,33 +285,91 @@
 
 
 
+  <!-- Projects Section Redesigned with i18n + Carousel Effects + Glow/Fade + Hover Focus -->
+<section id="projects" class="py-20 bg-gray-100 dark:bg-gray-800 transition-colors">
+  <style>
+    .swiper-slide {
+      transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+      opacity: 1;
+    }
+    .swiper-wrapper:hover .swiper-slide:not(:hover) {
+      filter: blur(2px);
+      opacity: 0.4;
+    }
+    .swiper-slide:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+      filter: none;
+      opacity: 1 !important;
+      z-index: 10;
+    }
+  </style>
 
-<!-- Projects Section -->
-<section id="projects" class="py-16 bg-white dark:bg-gray-900">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold mb-10 text-center fade-in fade-delay-1" data-i18n="projects">Outstanding Projects</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-1">
-        <img src="https://via.placeholder.com/300x200" alt="Project A" class="rounded mb-4 w-full">
-        <h3 class="text-xl font-semibold mb-2">Project A</h3>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">Social campaign that boosted engagement by 300%.</p>
-        <a href="projects/project.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white" data-i18n="projects">My Projects</h2>
+    <p class="mb-12 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="projectIntro">
+      Discover the projects that showcase my passion for design and innovation
+    </p>
+
+    <div class="relative">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+
+          <!-- Project Card 1 -->
+          <div class="swiper-slide bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden max-w-xs mx-auto">
+            <img src="project1.jpg" alt="Amaksora App" class="w-full h-52 object-cover">
+            <div class="p-4 text-left">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="app1Title">Amaksora App</h3>
+              <span class="inline-block bg-purple-200 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-2" data-i18n="appDesign">App Design</span>
+              <p class="text-sm text-gray-700 dark:text-gray-300" data-i18n="app1Desc">
+                Creating intuitive and visually appealing designs that enhance user experience.
+              </p>
+            </div>
+          </div>
+
+          <!-- Project Card 2 -->
+          <div class="swiper-slide bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden max-w-xs mx-auto">
+            <img src="project2.jpg" alt="Homy App" class="w-full h-52 object-cover">
+            <div class="p-4 text-left">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="app2Title">Homy App</h3>
+              <span class="inline-block bg-purple-200 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-2" data-i18n="appDesign">App Design</span>
+              <p class="text-sm text-gray-700 dark:text-gray-300" data-i18n="app2Desc">
+                Creating intuitive and visually appealing designs that enhance user experience.
+              </p>
+            </div>
+          </div>
+
+          <!-- Project Card 3 -->
+          <div class="swiper-slide bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden max-w-xs mx-auto">
+            <img src="project3.jpg" alt="B-Roll Media" class="w-full h-52 object-cover">
+            <div class="p-4 text-left">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="app3Title">B-Roll Media</h3>
+              <span class="inline-block bg-blue-200 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-2" data-i18n="webDesign">Web Design</span>
+              <p class="text-sm text-gray-700 dark:text-gray-300" data-i18n="app3Desc">
+                Designing intuitive and visually engaging websites that elevate user experience.
+              </p>
+            </div>
+          </div>
+
+        </div>
       </div>
-      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-2">
-        <img src="https://via.placeholder.com/300x200" alt="Project B" class="rounded mb-4 w-full">
-        <h3 class="text-xl font-semibold mb-2">Project B</h3>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">Ranked top 3 on Google through on-page SEO.</p>
-        <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+
+      <!-- Navigation Buttons -->
+      <div class="absolute top-1/2 -left-6 transform -translate-y-1/2 z-10">
+        <button class="swiper-button-prev bg-white dark:bg-gray-600 text-gray-800 dark:text-white rounded-full w-10 h-10 shadow-md hover:scale-110">←</button>
       </div>
-      <div class="border rounded-lg shadow-md p-4 hover:shadow-xl transition duration-300 fade-in fade-delay-3">
-        <img src="https://via.placeholder.com/300x200" alt="Project C" class="rounded mb-4 w-full">
-        <h3 class="text-xl font-semibold mb-2">Project C</h3>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">Built a funnel with 25% lead conversion rate.</p>
-        <a href="#" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Read More</a>
+      <div class="absolute top-1/2 -right-6 transform -translate-y-1/2 z-10">
+        <button class="swiper-button-next bg-white dark:bg-gray-600 text-gray-800 dark:text-white rounded-full w-10 h-10 shadow-md hover:scale-110">→</button>
       </div>
     </div>
   </div>
 </section>
+
+      
+
+
+
+
 
 <!-- Blog Section -->
 <section id="blogs" class="py-16 bg-white dark:bg-gray-900">
@@ -485,8 +525,6 @@
     <button type="submit" class="px-4 text-blue-600 dark:text-blue-400 font-bold">➤</button>
   </form>
 </div>
-
-
 
 
   </div>
@@ -812,7 +850,45 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   });
 </script>
 
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".mySwiper", {
+      slidesPerView: 1.1,
+      spaceBetween: 20,
+      loop: true,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      breakpoints: {
+        768: { slidesPerView: 2.3 },
+        1024: { slidesPerView: 3 }
+      }
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    new Swiper(".mySwiper", {
+      slidesPerView: 1.2,
+      spaceBetween: 20,
+      loop: true,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      breakpoints: {
+        768: { slidesPerView: 2.2 },
+        1024: { slidesPerView: 3 }
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
