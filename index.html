@@ -759,7 +759,18 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     });
   </script>
+<script>
+  const input = document.getElementById('chatbot-input');
 
+  input.addEventListener('focus', () => {
+    setTimeout(() => {
+      input.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }, 300); // Slight delay lets the keyboard open
+  });
+</script>
 
 
 </body>
