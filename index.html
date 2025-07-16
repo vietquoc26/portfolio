@@ -922,5 +922,39 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   });
 </script>
 
+<script>
+  document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      phone: form.phone.value,
+      message: form.message.value
+    };
+
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbw48Tj-V22vNtnIwZEyYDXOQMbf2lARTe-qWncnLoFe0q-_5UowG0NTY38dy5UJvl-5/exec", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      });
+
+      const result = await response.json();
+      if (result.result === "success") {
+        alert("Message sent!");
+        form.reset();
+      } else {
+        alert("Failed to send message.");
+      }
+    } catch (error) {
+      alert("Error sending message.");
+      console.error(error);
+    }
+  });
+</script>
+
+
 </body>
 </html>
