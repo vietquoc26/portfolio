@@ -411,19 +411,37 @@
 
     </div>
   
-   <!-- Chatbot Widget -->
-<div id="chatbot-toggle" class="fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg cursor-pointer hover:bg-blue-700">
+   <!-- Chatbot Toggle Button -->
+<div id="chatbot-toggle" class="fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-5 py-3 rounded-full shadow-lg cursor-pointer hover:bg-blue-700">
   💬 Chat
 </div>
+    <!-- Chatbot Window -->
+<div id="chatbot-window"
+     class="hidden fixed bottom-[110px] right-4 md:right-6 w-[90%] max-w-[380px] h-[480px] bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700">
 
-<div id="chatbot-window" class="hidden fixed bottom-[110px] right-6 w-80 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden">
-  <div class="bg-blue-600 text-white px-4 py-3 font-semibold">Viet Assistant</div>
-  <div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto max-h-64 text-sm"></div>
-  <form id="chatbot-form" class="flex border-t dark:border-gray-700">
-    <input type="text" id="chatbot-input" placeholder="Ask me anything..." class="flex-1 px-3 py-2 text-sm bg-transparent focus:outline-none">
+  <!-- Header with Close Button -->
+  <div class="bg-blue-600 text-white px-4 py-3 font-semibold text-lg flex justify-between items-center">
+    Viet Assistant
+    <button id="chatbot-close" class="text-white text-xl leading-none hover:text-red-300">×</button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
+    <div class="text-left">
+      <div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1">
+        Hello 👋<br>How can I help you today?
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <form id="chatbot-form" class="flex border-t border-gray-200 dark:border-gray-700">
+    <input type="text" id="chatbot-input" placeholder="Type your message..."
+           class="flex-1 px-3 py-3 text-sm bg-transparent focus:outline-none">
     <button type="submit" class="px-4 text-blue-600 dark:text-blue-400 font-bold">➤</button>
   </form>
 </div>
+
 
 
 
@@ -594,9 +612,15 @@
   const form = document.getElementById("chatbot-form");
   const input = document.getElementById("chatbot-input");
   const messages = document.getElementById("chatbot-messages");
+  const closeBtn = document.getElementById("chatbot-close"); // ← New line
 
   toggle.addEventListener("click", () => {
     windowEl.classList.toggle("hidden");
+    setTimeout(() => messages.scrollTop = messages.scrollHeight, 100);
+  });
+
+  closeBtn.addEventListener("click", () => { // ← New event listener
+    windowEl.classList.add("hidden");
   });
 
   form.addEventListener("submit", function (e) {
@@ -604,26 +628,30 @@
     const userMessage = input.value.trim();
     if (!userMessage) return;
 
-    // Display user message
-    messages.innerHTML += `<div class="text-right"><div class="inline-block bg-blue-500 text-white rounded-lg px-3 py-2 mb-1">${userMessage}</div></div>`;
+    messages.innerHTML += `<div class="text-right">
+      <div class="inline-block bg-blue-500 text-white rounded-lg px-3 py-2 mb-1">${userMessage}</div>
+    </div>`;
     input.value = "";
 
-    // Simulated bot reply (replace with real API call if needed)
     setTimeout(() => {
       const reply = getBotReply(userMessage.toLowerCase());
-      messages.innerHTML += `<div class="text-left"><div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg px-3 py-2 mb-1">${reply}</div></div>`;
+      messages.innerHTML += `<div class="text-left">
+        <div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg px-3 py-2 mb-1">${reply}</div>
+      </div>`;
       messages.scrollTop = messages.scrollHeight;
     }, 500);
   });
 
   function getBotReply(msg) {
-    if (msg.includes("hello") || msg.includes("hi")) return "Hi there! 👋 How can I help you today?";
-    if (msg.includes("project")) return "You can check out my projects in the Projects section above.";
-    if (msg.includes("contact")) return "You can contact me through the contact form at the bottom.";
+    if (msg.includes("hello") || msg.includes("hi")) return "Hi there! 😊 How can I help you today?";
+    if (msg.includes("project")) return "You can explore my projects in the Projects section above.";
+    if (msg.includes("contact")) return "You can contact me using the form at the bottom of the page.";
     if (msg.includes("skills")) return "I specialize in SEO, content, Facebook/Google Ads, and more!";
-    return "Sorry, I didn’t understand that. Try asking about my projects, skills, or how to contact me!";
+    return "Sorry, I didn’t understand that. Try asking about my projects, skills, or contact info!";
   }
 </script>
+
+
 
 
 </body>
