@@ -782,6 +782,37 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   });
 </script>
 
+<script>
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const input = document.getElementById('chatbot-input');
+
+  let originalBottom = chatbotWindow.style.bottom;
+
+  input.addEventListener('focus', () => {
+    // Lift the chatbot up to prevent it being hidden
+    chatbotWindow.style.bottom = '300px';
+  });
+
+  input.addEventListener('blur', () => {
+    // Reset to original position
+    chatbotWindow.style.bottom = originalBottom || '110px';
+  });
+</script>
+
+<script>
+  const toggle = document.getElementById('chatbot-toggle');
+  const close = document.getElementById('chatbot-close');
+
+  toggle.addEventListener('click', () => {
+    document.body.style.overflow = 'hidden';
+  });
+
+  close.addEventListener('click', () => {
+    document.body.style.overflow = '';
+  });
+</script>
+
+
 
 </body>
 </html>
