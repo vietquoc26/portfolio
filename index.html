@@ -292,16 +292,24 @@
       transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
       opacity: 1;
     }
-    .swiper-wrapper:hover .swiper-slide:not(:hover) {
-      filter: blur(2px);
-      opacity: 0.4;
-    }
-    .swiper-slide:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
-      filter: none;
-      opacity: 1 !important;
-      z-index: 10;
+    .swiper-wrapper:hover .swiper-slide:not(:hover), .swiper-slide.dimmed {
+  filter: blur(2px);
+  opacity: 0.4;
+}
+.swiper-slide.hovered, .swiper-slide:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+  filter: none;
+  opacity: 1 !important;
+  z-index: 10;
+}
+      .swiper-slide:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+        filter: none;
+        opacity: 1 !important;
+        z-index: 10;
+      }
     }
   </style>
 
@@ -920,6 +928,21 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       }
     });
   });
+  // Mobile fallback hover simulation
+  if (window.matchMedia('(hover: none)').matches) {
+    const slides = document.querySelectorAll('.swiper-slide');
+    slides.forEach(slide => {
+      slide.addEventListener('touchstart', () => {
+        slides.forEach(s => s.classList.remove('hovered'));
+        slides.forEach(s => s.classList.add('dimmed'));
+        slide.classList.remove('dimmed');
+        slide.classList.add('hovered');
+      });
+      slide.addEventListener('touchend', () => {
+        slides.forEach(s => s.classList.remove('hovered', 'dimmed'));
+      });
+    });
+  }
 </script>
 
 <script>
