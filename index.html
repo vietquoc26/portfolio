@@ -702,62 +702,81 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 </script>
 
 <script>
-    const chatbotToggle = document.getElementById('chatbot-toggle');
-    const chatbotWindow = document.getElementById('chatbot-window');
-    const chatbotClose = document.getElementById('chatbot-close');
-    const chatbotForm = document.getElementById('chatbot-form');
-    const chatbotInput = document.getElementById('chatbot-input');
-    const chatbotMessages = document.getElementById('chatbot-messages');
+  const chatbotToggle = document.getElementById('chatbot-toggle');
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const chatbotClose = document.getElementById('chatbot-close');
+  const chatbotForm = document.getElementById('chatbot-form');
+  const chatbotInput = document.getElementById('chatbot-input');
+  const chatbotMessages = document.getElementById('chatbot-messages');
 
-    chatbotToggle.addEventListener('click', () => {
-      chatbotWindow.classList.remove('hidden', 'chatbot-animate-out');
-      chatbotWindow.classList.add('chatbot-animate-in');
-      setTimeout(() => chatbotInput.focus(), 300); // Auto focus input
-    });
+  // Show chatbot
+  chatbotToggle.addEventListener('click', () => {
+    chatbotWindow.classList.remove('hidden', 'chatbot-animate-out');
+    chatbotWindow.classList.add('chatbot-animate-in');
+    document.body.classList.add('overflow-hidden'); // prevent background scroll
 
-    chatbotClose.addEventListener('click', () => {
-      chatbotWindow.classList.remove('chatbot-animate-in');
-      chatbotWindow.classList.add('chatbot-animate-out');
-      setTimeout(() => chatbotWindow.classList.add('hidden'), 300);
-    });
-
-    chatbotForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const userInput = chatbotInput.value.trim();
-      if (!userInput) return;
-
-      // Add user message
-      const userMessage = document.createElement('div');
-      userMessage.className = 'text-right text-blue-600 dark:text-blue-400';
-      userMessage.textContent = `🙋‍♂️ ${userInput}`;
-      chatbotMessages.appendChild(userMessage);
-
-      chatbotInput.value = '';
+    setTimeout(() => {
+      chatbotInput.focus();
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }, 300);
+  });
 
-      // Add loading bot message
-      const botMessage = document.createElement('div');
-      botMessage.className = 'text-left text-gray-600 dark:text-gray-300';
-      botMessage.textContent = '🤖 Typing...';
-      chatbotMessages.appendChild(botMessage);
+  // Hide chatbot
+  chatbotClose.addEventListener('click', () => {
+    chatbotWindow.classList.remove('chatbot-animate-in');
+    chatbotWindow.classList.add('chatbot-animate-out');
+    document.body.classList.remove('overflow-hidden'); // restore scroll
+
+    setTimeout(() => {
+      chatbotWindow.classList.add('hidden');
+    }, 300);
+  });
+
+  // Scroll to input when keyboard opens (for mobile)
+  chatbotInput.addEventListener('focus', () => {
+    setTimeout(() => {
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }, 300);
+  });
 
-      try {
-        const response = await fetch('http://localhost:3000/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: userInput })
-        });
+  // Handle form submission
+  chatbotForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const userInput = chatbotInput.value.trim();
+    if (!userInput) return;
 
-        const data = await response.json();
-        botMessage.textContent = `🤖 ${data.message}`;
-      } catch (error) {
-        botMessage.textContent = '⚠️ Error connecting to the assistant.';
-      }
+    // Add user message
+    const userMessage = document.createElement('div');
+    userMessage.className = 'text-right text-blue-600 dark:text-blue-400';
+    userMessage.textContent = `🙋‍♂️ ${userInput}`;
+    chatbotMessages.appendChild(userMessage);
+    chatbotInput.value = '';
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 
-      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    });
-  </script>
+    // Add loading bot message
+    const botMessage = document.createElement('div');
+    botMessage.className = 'text-left text-gray-600 dark:text-gray-300';
+    botMessage.textContent = '🤖 Typing...';
+    chatbotMessages.appendChild(botMessage);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+    try {
+      const response = await fetch('http://localhost:3000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userInput })
+      });
+
+      const data = await response.json();
+      botMessage.textContent = `🤖 ${data.message}`;
+    } catch (error) {
+      botMessage.textContent = '⚠️ Error connecting to the assistant.';
+    }
+
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  });
+</script>
+
 
 
 
