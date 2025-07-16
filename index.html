@@ -448,9 +448,12 @@
 <div id="chatbot-toggle" class="fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-5 py-3 rounded-full shadow-lg cursor-pointer hover:bg-blue-700">
   💬 Chat
 </div>
+<!-- Chatbot Wrapper -->
+<div id="chatbot-wrapper" class="fixed inset-0 z-50 pointer-events-none">
     <!-- Chatbot Window -->
-<div id="chatbot-window"
-     class="hidden fixed bottom-[110px] right-4 md:right-6 w-[90%] max-w-[380px] h-[480px] bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700">
+  <div id="chatbot-window"
+     class="absolute bottom-0 right-0 left-0 sm:bottom-[110px] sm:right-4 sm:left-auto sm:w-[90%] max-w-[380px] h-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-t-xl sm:rounded-xl shadow-2xl flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700 pointer-events-auto hidden">
+    
 
   <!-- Header with Close Button -->
   <div class="bg-blue-600 text-white px-4 py-3 font-semibold text-lg flex justify-between items-center">
@@ -709,15 +712,24 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotMessages = document.getElementById('chatbot-messages');
 
+    function adjustHeight() {
+    const height = window.innerHeight;
+    chatbotWindow.style.height = height + 'px';
+  }
+
     chatbotToggle.addEventListener('click', () => {
       chatbotWindow.classList.remove('hidden', 'chatbot-animate-out');
       chatbotWindow.classList.add('chatbot-animate-in');
+      chatbotWrapper.classList.add('pointer-events-auto');
       setTimeout(() => chatbotInput.focus(), 300); // Auto focus input
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     });
 
     chatbotClose.addEventListener('click', () => {
       chatbotWindow.classList.remove('chatbot-animate-in');
       chatbotWindow.classList.add('chatbot-animate-out');
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      chatbotWindow.scrollIntoView({ behavior: 'smooth' });
       setTimeout(() => chatbotWindow.classList.add('hidden'), 300);
     });
 
@@ -731,6 +743,8 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       userMessage.className = 'text-right text-blue-600 dark:text-blue-400';
       userMessage.textContent = `🙋‍♂️ ${userInput}`;
       chatbotMessages.appendChild(userMessage);
+      chatbotInput.value = '';
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 
       chatbotInput.value = '';
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
