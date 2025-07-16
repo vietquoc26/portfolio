@@ -905,14 +905,16 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     new Swiper(".mySwiper", {
-      slidesPerView: 1.2,
-      spaceBetween: 20,
+      slidesPerView: 1.1,
+      spaceBetween: 16,
       loop: true,
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev"
       },
       breakpoints: {
+        360: { slidesPerView: 1.1 },
+        640: { slidesPerView: 1.3 },
         768: { slidesPerView: 2.2 },
         1024: { slidesPerView: 3 }
       }
