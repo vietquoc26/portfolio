@@ -607,49 +607,80 @@
 </script>
 
 <script>
-  const toggle = document.getElementById("chatbot-toggle");
-  const windowEl = document.getElementById("chatbot-window");
-  const form = document.getElementById("chatbot-form");
-  const input = document.getElementById("chatbot-input");
-  const messages = document.getElementById("chatbot-messages");
-  const closeBtn = document.getElementById("chatbot-close"); // ← New line
+  const WIT_TOKEN = 'HEKU3KJQIVCDYHEMFWZIODV2EHAEFLRE'; // Replace with your token
 
-  toggle.addEventListener("click", () => {
-    windowEl.classList.toggle("hidden");
-    setTimeout(() => messages.scrollTop = messages.scrollHeight, 100);
+  const chatbotToggle = document.getElementById('chatbot-toggle');
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const chatbotClose = document.getElementById('chatbot-close');
+  const chatbotForm = document.getElementById('chatbot-form');
+  const chatbotInput = document.getElementById('chatbot-input');
+  const chatbotMessages = document.getElementById('chatbot-messages');
+
+  chatbotToggle.addEventListener('click', () => {
+    chatbotWindow.classList.toggle('hidden');
   });
 
-  closeBtn.addEventListener("click", () => { // ← New event listener
-    windowEl.classList.add("hidden");
+  chatbotClose.addEventListener('click', () => {
+    chatbotWindow.classList.add('hidden');
   });
 
-  form.addEventListener("submit", function (e) {
+  chatbotForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const userMessage = input.value.trim();
-    if (!userMessage) return;
+    const userMsg = chatbotInput.value.trim();
+    if (!userMsg) return;
 
-    messages.innerHTML += `<div class="text-right">
-      <div class="inline-block bg-blue-500 text-white rounded-lg px-3 py-2 mb-1">${userMessage}</div>
-    </div>`;
-    input.value = "";
+    appendMessage('user', userMsg);
+    chatbotInput.value = '';
 
-    setTimeout(() => {
-      const reply = getBotReply(userMessage.toLowerCase());
-      messages.innerHTML += `<div class="text-left">
-        <div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg px-3 py-2 mb-1">${reply}</div>
-      </div>`;
-      messages.scrollTop = messages.scrollHeight;
-    }, 500);
+    try {
+      const res = await fetch(`https://api.wit.ai/message?v=20230716&q=${encodeURIComponent(userMsg)}`, {
+        headers: {
+          Authorization: `Bearer ${WIT_TOKEN}`,
+        },
+      });
+      const data = await res.json();
+      const intent = data.intents?.[0]?.name || 'unknown';
+
+      let botReply = '';
+      switch (intent) {
+        case 'greeting':
+          botReply = 'Hi there! 👋';
+          break;
+        case 'ask_name':
+          botReply = "I'm Viet Assistant 😊";
+          break;
+        case 'contact':
+          botReply = "You can reach me using the contact form below.";
+          break;
+        default:
+          botReply = "Sorry, I didn’t understand that. 🤔";
+      }
+
+      appendMessage('bot', botReply);
+    } catch (err) {
+      appendMessage('bot', 'Oops! Something went wrong. 😓');
+      console.error(err);
+    }
   });
 
-  function getBotReply(msg) {
-    if (msg.includes("hello") || msg.includes("hi")) return "Hi there! 😊 How can I help you today?";
-    if (msg.includes("project")) return "You can explore my projects in the Projects section above.";
-    if (msg.includes("contact")) return "You can contact me using the form at the bottom of the page.";
-    if (msg.includes("skills")) return "I specialize in SEO, content, Facebook/Google Ads, and more!";
-    return "Sorry, I didn’t understand that. Try asking about my projects, skills, or contact info!";
+  function appendMessage(sender, text) {
+    const msgWrapper = document.createElement('div');
+    msgWrapper.className = sender === 'user' ? 'text-right' : 'text-left';
+
+    const bubble = document.createElement('div');
+    bubble.className = `inline-block px-3 py-2 mb-1 rounded-lg ${
+      sender === 'user'
+        ? 'bg-blue-500 text-white'
+        : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white'
+    }`;
+    bubble.textContent = text;
+
+    msgWrapper.appendChild(bubble);
+    chatbotMessages.appendChild(msgWrapper);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
   }
 </script>
+
 
 
 
