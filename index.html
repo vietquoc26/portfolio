@@ -287,31 +287,55 @@
 
   <!-- Projects Section Redesigned with i18n + Carousel Effects + Glow/Fade + Hover Focus -->
 <section id="projects" class="py-20 bg-gray-100 dark:bg-gray-800 transition-colors">
-  <style>
-    .swiper-slide {
-      transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-      opacity: 1;
-    }
-    .swiper-wrapper:hover .swiper-slide:not(:hover), .swiper-slide.dimmed {
-  filter: blur(2px);
-  opacity: 0.4;
-}
-.swiper-slide.hovered, .swiper-slide:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
-  filter: none;
-  opacity: 1 !important;
-  z-index: 10;
-}
-      .swiper-slide:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
-        filter: none;
-        opacity: 1 !important;
-        z-index: 10;
-      }
-    }
-  </style>
+<style>
+  .swiper-slide {
+    transition: opacity 0.3s ease, filter 0.3s ease;
+    opacity: 1;
+    overflow: hidden;
+    border-radius: 1rem; /* Match card shape */
+    display: flex;
+    will-change: box-shadow;
+  }
+
+  .swiper-slide .card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .dark .swiper-slide .card {
+    background-color: #374151;
+  }
+
+  /* Dim non-hovered slides */
+  .swiper-wrapper:hover .swiper-slide:not(:hover) {
+    filter: blur(2px);
+    opacity: 0.4;
+  }
+
+  /* Glow shadow on hover (no scale) */
+  .swiper-slide:hover {
+    z-index: 10;
+  }
+
+  .swiper-slide:hover .card {
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.5); /* Blue glow */
+  }
+
+  /* Ensure inner content fills space */
+  .swiper-slide .card .p-4 {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+
 <div class="max-w-7xl mx-auto px-6 text-center">
     <h2 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white" data-i18n="projects">My Projects</h2>
     <p class="mb-12 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="projectIntro">
@@ -323,18 +347,19 @@
         <div class="swiper-wrapper">
 
           <!-- Project Card 1 -->
-          <div class="swiper-slide">
-            <div class="swiper-slide bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden max-w-xs mx-auto swiper-slide-active">
-              <img src="SEO.png" alt="SEO Project" class="w-full h-[200px] object-cover">
-              <div class="p-4 flex flex-col flex-grow text-left">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">SEO Optimization Project</h3>
-                <span class="inline-block bg-purple-200 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">SEO</span>
-                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow">
-                  Boosted website visibility through content strategy, on-page, and technical SEO.
-                </p>
-              </div>
-            </div>
-          </div>
+        <div class="swiper-slide">
+  <div class="card max-w-xs mx-auto">
+    <img src="SEO.png" alt="SEO Project" class="w-full h-[200px] object-cover">
+    <div class="p-4 text-left">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">SEO Optimization Project</h3>
+      <span class="inline-block bg-purple-200 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">SEO</span>
+      <p class="text-sm text-gray-700 dark:text-gray-300">
+        Boosted website visibility through content strategy, on-page, and technical SEO.
+      </p>
+    </div>
+  </div>
+</div>
+
 
           <!-- Project Card 2 -->
           <div class="swiper-slide">
