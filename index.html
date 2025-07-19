@@ -11,9 +11,12 @@
   <meta name="author" content="Hồ Nguyễn Quốc Việt">
   
   <title>Viet | Digital Marketer</title>
-  <link href="output.css" rel="stylesheet">
+   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
   <style>
     /* Chatbot animation keyframes */
     @keyframes slideFadeIn {
@@ -624,24 +627,42 @@
 
 <!-- Scripts -->
 <script>
- document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-      });
+    const mobileThemeToggle = document.querySelector('#mobile-menu button');
+
+    // Default to light mode unless user has saved dark
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light'); // Ensure light is saved as default
     }
 
-    // Hamburger toggle logic
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const logoLang = document.getElementById('logo-lang');
-    if (menuToggle && mobileMenu && logoLang) {
-      menuToggle.addEventListener('click', function () {
-        mobileMenu.classList.toggle('hidden');
-        logoLang.classList.toggle('hidden');
-      });
+    // Unified toggle function
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
+
+    themeToggle?.addEventListener('click', toggleTheme);
+    mobileThemeToggle?.addEventListener('click', toggleTheme);
+  });
+</script>
+
+
+
+    // Hamburger toggle logic
+   menuToggle?.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      // Optional: close mobile menu when clicking outside
+      document.addEventListener('click', (e) => {
+        const isInsideMenu = menuToggle.contains(e.target) || mobileMenu.contains(e.target);
+        if (!isInsideMenu) {
+          mobileMenu.classList.add('hidden');
 
     window.toggleSkill = function(index) {
       const content = document.getElementById(`skill-${index}`);
