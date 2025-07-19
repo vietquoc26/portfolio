@@ -729,33 +729,19 @@
       }
       
     }, function(err, t) {
-      updateContent();
-      highlightActiveLang(i18next.language);
-    });
-
-    function updateContent() {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.innerText = i18next.t(el.getAttribute('data-i18n'));
-      });
-    }
-
-    window.setLanguage = function(lang) {
-      i18next.changeLanguage(lang, () => {
-        updateContent();
-        highlightActiveLang(lang);
-      });
-    };
-
-    function highlightActiveLang(lang) {
-      const btnEn = document.getElementById('btn-en');
-      const btnVi = document.getElementById('btn-vi');
-      btnEn.classList.toggle('bg-white', lang === 'en');
-      btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
-      btnVi.classList.toggle('bg-white', lang === 'vi');
-      btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
-    }
+    updateI18n();
   });
+
+  function updateI18n() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (!el.getAttribute('data-sheet')) {
+        el.innerText = i18next.t(el.getAttribute('data-i18n'));
+      }
+    });
+  }
 </script>
+</script>
+
 <script>
   document.getElementById("contactForm").addEventListener("submit", function (e) {
     const name = document.getElementById("name").value.trim();
@@ -1007,16 +993,30 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       const response = await fetch(url);
       const data = await response.json();
 
-      document.querySelector('[data-i18n="greeting"]').innerHTML = data.greeting.replace(/\n/g, '<br>');
-      document.querySelector('[data-i18n="intro"]').innerText = data.intro;
-      document.querySelector('[data-i18n="aboutHeadline"]').innerText = data.aboutHeadline;
-      document.querySelector('[data-i18n="aboutIntro"]').innerText = data.aboutIntro;
-      document.querySelector('[data-i18n="aboutPeople"]').innerText = data.aboutPeople;
-      document.querySelector('[data-i18n="aboutBrands"]').innerText = data.aboutBrands;
-      document.querySelector('[data-i18n="aboutEveryone"]').innerText = data.aboutEveryone;
-      document.querySelector('[data-i18n="aboutPeopleText"]').innerText = data.aboutPeopleText;
-      document.querySelector('[data-i18n="aboutBrandsText"]').innerText = data.aboutBrandsText;
-      document.querySelector('[data-i18n="aboutEveryoneText"]').innerText = data.aboutEveryoneText;
+      const fields = [
+        "greeting",
+        "intro",
+        "aboutHeadline",
+        "aboutIntro",
+        "aboutPeople",
+        "aboutBrands",
+        "aboutEveryone",
+        "aboutPeopleText",
+        "aboutBrandsText",
+        "aboutEveryoneText"
+      ];
+
+      fields.forEach(key => {
+        const el = document.querySelector(`[data-i18n="${key}"]`);
+        if (el) {
+          if (key === "greeting") {
+            el.innerHTML = data[key].replace(/\n/g, '<br>');
+          } else {
+            el.innerText = data[key];
+          }
+        }
+      });
+
     } catch (err) {
       console.error("Failed to fetch content from Google Sheets:", err);
     }
@@ -1030,16 +1030,20 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 
     const btnEn = document.getElementById('btn-en');
     const btnVi = document.getElementById('btn-vi');
-    btnEn.classList.toggle('bg-white', lang === 'en');
-    btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
-    btnVi.classList.toggle('bg-white', lang === 'vi');
-    btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+    if (btnEn && btnVi) {
+      btnEn.classList.toggle('bg-white', lang === 'en');
+      btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
+      btnVi.classList.toggle('bg-white', lang === 'vi');
+      btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    switchLanguage('en');
+    const defaultLang = localStorage.getItem('lang') || 'en';
+    switchLanguage(defaultLang);
   });
 </script>
+
 
 </body>
 </html>
