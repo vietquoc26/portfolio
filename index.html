@@ -681,14 +681,6 @@
           "SEO Optimization": "SEO Optimization",
           "Content Marketing": "Content Marketing",
           "Facebook Ads": "Facebook Ads",
-"aboutHeadline": "It's not about where or when you work. It's about how you get it done.",
-"aboutIntro": "In a digital-first world, success is driven by creativity, agility, and the ability to adapt...",
-        "aboutPeople": "People:",
-        "aboutPeopleText": "Building trust and connection through content that resonates.",
-        "aboutBrands": "Brands:",
-        "aboutBrandsText": "Driving visibility and growth through data-driven campaigns.",
-        "aboutEveryone": "Everyone:",
-        "aboutEveryoneText": "Empowering others to thrive with tools, skills, and knowledge.",
         "Contactme": "Contact me",
         "app1Title": "SEO Optimization Project",
         "Tags": "SEO",
@@ -702,8 +694,6 @@
           
         }},
         vi: { translation: {
-          "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
-          "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
           "skills": "Kỹ năng của tôi",
           "about": "Giới thiệu bản thân",
           "aboutDesc": "Tôi là Việt, chuyên gia Digital Marketing với hơn 5 năm kinh nghiệm trong SEO, quảng cáo hiệu suất và phát triển thương hiệu.",
@@ -720,14 +710,6 @@
           "SEO Optimization": "Tối ưu SEO",
           "Content Marketing": "Tiếp thị nội dung",
           "Facebook Ads": "Quảng cáo Facebook",
-          "aboutHeadline": "Không quan trọng bạn làm việc ở đâu hay khi nào. Quan trọng là cách bạn hoàn thành công việc.",
-        "aboutIntro": "Trong thế giới số ngày nay, thành công đến từ sự sáng tạo, linh hoạt và khả năng thích ứng...",
-        "aboutPeople": "Con người:",
-        "aboutPeopleText": "Tạo ra chiến lược nội dung kết nối chân thật và hiệu quả.",
-        "aboutBrands": "Thương hiệu:",
-        "aboutBrandsText": "Thúc đẩy sự hiện diện và tăng trưởng thông qua các chiến dịch dựa trên dữ liệu.",
-        "aboutEveryone": "Tất cả mọi người:",
-        "aboutEveryoneText": "Trao quyền thành công với công cụ, kỹ năng và hiểu biết.",
         }}
         
       }
@@ -1003,7 +985,44 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   });
 </script>
 
+<script>
+  async function loadContent(lang = 'en') {
+    const url = `https://script.google.com/macros/s/AKfycbxa-00GbCHzeTEzvcqQFDwocE5cezqdHwHIq_JXSkJw7vsWr6a27czRPnWR817Yqak/exec?lang=${lang}`;
 
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      document.querySelector('[data-i18n="greeting"]').innerHTML = data.greeting.replace(/\n/g, '<br>');
+      document.querySelector('[data-i18n="intro"]').innerText = data.intro;
+      document.querySelector('[data-i18n="aboutHeadline"]').innerText = data.aboutHeadline;
+      document.querySelector('[data-i18n="aboutIntro"]').innerText = data.aboutIntro;
+      document.querySelector('[data-i18n="aboutPeople"]').innerText = data.aboutPeople;
+      document.querySelector('[data-i18n="aboutBrands"]').innerText = data.aboutBrands;
+      document.querySelector('[data-i18n="aboutEveryone"]').innerText = data.aboutEveryone;
+      document.querySelector('[data-i18n="aboutPeopleText"]').innerText = data.aboutPeopleText;
+      document.querySelector('[data-i18n="aboutBrandsText"]').innerText = data.aboutBrandsText;
+      document.querySelector('[data-i18n="aboutEveryoneText"]').innerText = data.aboutEveryoneText;
+    } catch (err) {
+      console.error("Failed to fetch content from Google Sheets:", err);
+    }
+  }
+
+  function switchLanguage(lang) {
+    loadContent(lang);
+
+    const btnEn = document.getElementById('btn-en');
+    const btnVi = document.getElementById('btn-vi');
+    btnEn.classList.toggle('bg-white', lang === 'en');
+    btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
+    btnVi.classList.toggle('bg-white', lang === 'vi');
+    btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    switchLanguage('en');
+  });
+</script>
 
 </body>
 </html>
