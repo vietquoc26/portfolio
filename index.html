@@ -976,7 +976,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
           Email: form.email.value,
           Phone: form.phone.value,
           Message: form.message.value,
-          Timestamp: timestamp
+          Timestamp: timestamp,
         }
       };
 
@@ -990,7 +990,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         });
 
         if (response.ok) {
-          alert("Message sent successfully!");
+          alert("Message sent!");
           form.reset();
         } else {
           alert("Failed to send message.");
