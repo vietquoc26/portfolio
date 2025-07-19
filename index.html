@@ -1000,6 +1000,39 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 </script>
 
 
+<script>
+  async function loadContent(lang = 'en') {
+    const url = `https://script.google.com/macros/s/AKfycbxa-00GbCHzeTEzvcqQFDwocE5cezqdHwHIq_JXSkJw7vsWr6a27czRPnWR817Yqak/exec?lang=${lang}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      document.querySelector('[data-i18n="greeting"]').innerHTML = data.greeting.replace(/\n/g, '<br>');
+      document.querySelector('[data-i18n="intro"]').innerText = data.intro;
+      document.querySelector('[data-i18n="aboutHeadline"]').innerText = data.aboutHeadline;
+      document.querySelector('[data-i18n="aboutIntro"]').innerText = data.aboutIntro;
+      document.querySelector('[data-i18n="aboutPeople"]').innerText = data.aboutPeople;
+      document.querySelector('[data-i18n="aboutBrands"]').innerText = data.aboutBrands;
+      document.querySelector('[data-i18n="aboutEveryone"]').innerText = data.aboutEveryone;
+      document.querySelector('[data-i18n="aboutPeopleText"]').innerText = data.aboutPeopleText;
+      document.querySelector('[data-i18n="aboutBrandsText"]').innerText = data.aboutBrandsText;
+      document.querySelector('[data-i18n="aboutEveryoneText"]').innerText = data.aboutEveryoneText;
+    } catch (err) {
+      console.error("Failed to fetch content from Google Sheets:", err);
+    }
+  }
+
+  // Optional: Auto-load English on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    loadContent('en'); // or 'vi'
+  });
+
+  // Optional: Hook for switching languages
+  function switchLanguage(lang) {
+    loadContent(lang);
+  }
+</script>
 
 
 
