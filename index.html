@@ -98,8 +98,8 @@
     <div id="logo-lang" class="flex items-center gap-4">
       <img src="logo.png" alt="Logo" class="h-12 w-12 rounded-full" />
       <div class="flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1">
-        <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇺🇸</button>
-        <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇻🇳</button>
+        <button onclick="switchLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇺🇸</button>
+        <button onclick="switchLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇻🇳</button>
       </div>
     </div>
 
@@ -1045,7 +1045,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 
   document.addEventListener('DOMContentLoaded', () => {
     const defaultLang = localStorage.getItem('lang') || 'en';
-    setLanguage(defaultLang);
+    switchLanguage(defaultLang);
   });
 </script>
 
