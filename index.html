@@ -263,9 +263,7 @@
 
     <!-- Right Content -->
     <div class="text-gray-800 dark:text-gray-200">
-      <h2 class="text-4xl font-extrabold mb-6 leading-snug text-gray-900 dark:text-white" data-i18n="aboutHeadline">
-        It's not about where or when you work.<br class="hidden md:block" />
-        It's about how you get it done.
+      <h2 class="text-4xl font-extrabold mb-6 leading-snug text-gray-900 dark:text-white" data-i18n="aboutHeadline" data-sheet="true">
       </h2>
       <p class="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed" data-i18n="aboutIntro" data-sheet="true"> 
       </p>
@@ -728,20 +726,17 @@
         
       }
       
-    }, function(err, t) {
-      updateContent();
-      highlightActiveLang(i18next.language);
-    });
-
-    function updateContent() {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    if (!el.getAttribute('data-sheet')) {
-      const key = el.getAttribute('data-i18n');
-      const translation = i18next.t(key);
-      el.innerHTML = key === 'greeting' ? translation.replace(/\n/g, '<br>') : translation;
-    }
+   }, function(err, t) {
+    updateI18n();
   });
-}
+
+   function updateI18n() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (!el.getAttribute('data-sheet')) {
+        el.innerText = i18next.t(el.getAttribute('data-i18n'));
+      }
+    });
+  }
 
    window.setLanguage = function(lang) {
   localStorage.setItem('preferredLang', lang);
