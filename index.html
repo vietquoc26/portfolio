@@ -131,11 +131,8 @@
   <div class="grid md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
     <!-- Text Column -->
     <div class="fade-in fade-delay-1" style="animation-name: fadeUp;">
-      <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="greeting">
-        Hello, I'm Viet,<br/>Professional Digital Marketer
-      </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6" data-i18n="intro">
-        Account Manager - SEO Specialist - Content Writer - Video Editor
+      <h1 class="text-4xl md:text-6xl font-bold mb-4" data-i18n="greeting" data-sheet="true"></h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6" data-i18n="intro" data-sheet="true">
       </p>
 
       <!-- Buttons -->
@@ -270,14 +267,13 @@
         It's not about where or when you work.<br class="hidden md:block" />
         It's about how you get it done.
       </h2>
-      <p class="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed" data-i18n="aboutIntro">
-        In a digital-first world, success is driven by creativity, agility, and the ability to adapt. I specialize in helping businesses grow through strategic content, SEO, and marketing that works — from anywhere.
+      <p class="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed" data-i18n="aboutIntro" data-sheet="true"> 
       </p>
 
       <ul class="space-y-2 text-sm md:text-base text-gray-700 dark:text-gray-300 list-disc list-inside">
-        <li><strong data-i18n="aboutPeople">People:</strong> <span data-i18n="aboutPeopleText">Building trust and connection through content that resonates.</span></li>
-        <li><strong data-i18n="aboutBrands">Brands:</strong> <span data-i18n="aboutBrandsText">Driving visibility and growth through data-driven campaigns.</span></li>
-        <li><strong data-i18n="aboutEveryone">Everyone:</strong> <span data-i18n="aboutEveryoneText">Empowering others to thrive with tools, skills, and knowledge.</span></li>
+        <li><strong data-i18n="aboutPeople">People:</strong> <span data-i18n="aboutPeopleText" data-sheet="true"></span></li>
+        <li><strong data-i18n="aboutBrands">Brands:</strong> <span data-i18n="aboutBrandsText" data-sheet="true"></span></li>
+        <li><strong data-i18n="aboutEveryone">Everyone:</strong> <span data-i18n="aboutEveryoneText" data-sheet="true"></span></li>
       </ul>
     </div>
 
@@ -1003,7 +999,47 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   });
 </script>
 
+<script>
+  async function loadContent(lang = 'en') {
+    const url = `https://script.google.com/macros/s/AKfycbxa-00GbCHzeTEzvcqQFDwocE5cezqdHwHIq_JXSkJw7vsWr6a27czRPnWR817Yqak/exec?lang=${lang}`;
 
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      document.querySelector('[data-i18n="greeting"]').innerHTML = data.greeting.replace(/\n/g, '<br>');
+      document.querySelector('[data-i18n="intro"]').innerText = data.intro;
+      document.querySelector('[data-i18n="aboutHeadline"]').innerText = data.aboutHeadline;
+      document.querySelector('[data-i18n="aboutIntro"]').innerText = data.aboutIntro;
+      document.querySelector('[data-i18n="aboutPeople"]').innerText = data.aboutPeople;
+      document.querySelector('[data-i18n="aboutBrands"]').innerText = data.aboutBrands;
+      document.querySelector('[data-i18n="aboutEveryone"]').innerText = data.aboutEveryone;
+      document.querySelector('[data-i18n="aboutPeopleText"]').innerText = data.aboutPeopleText;
+      document.querySelector('[data-i18n="aboutBrandsText"]').innerText = data.aboutBrandsText;
+      document.querySelector('[data-i18n="aboutEveryoneText"]').innerText = data.aboutEveryoneText;
+    } catch (err) {
+      console.error("Failed to fetch content from Google Sheets:", err);
+    }
+  }
+
+  function switchLanguage(lang) {
+    i18next.changeLanguage(lang, () => {
+      updateI18n();
+      loadContent(lang);
+    });
+
+    const btnEn = document.getElementById('btn-en');
+    const btnVi = document.getElementById('btn-vi');
+    btnEn.classList.toggle('bg-white', lang === 'en');
+    btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
+    btnVi.classList.toggle('bg-white', lang === 'vi');
+    btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    switchLanguage('en');
+  });
+</script>
 
 </body>
 </html>
