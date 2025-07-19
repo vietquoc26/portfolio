@@ -11,7 +11,6 @@
   
   <title>Viet | Digital Marketer</title>
   <link rel="stylesheet" href="output.css" />
-  <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
     tailwind.config = { darkMode: 'class' }
@@ -659,84 +658,6 @@
       arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
     };
 
-    // i18n logic remains unchanged
-    i18next.init({
-      lng: 'en',
-      resources: {
-        en: { translation: {
-          "greeting": "Hello, I'm Viet,\nProfessional Digital Marketer",
-          "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
-          "skills": "Skills",
-          "about": "About",
-          "aboutDesc": "I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.",
-          "projects": "Projects",
-          "blogs": "Latest Blog Posts",
-          "contact": "Contact",
-          "name": "Name",
-          "phone": "Contact Phone",
-          "email": "Email",
-          "message": "Message",
-          "Send message": "Send message",
-          "Read More": "Read More",
-          "SEO Optimization": "SEO Optimization",
-          "Content Marketing": "Content Marketing",
-          "Facebook Ads": "Facebook Ads",
-"aboutHeadline": "It's not about where or when you work. It's about how you get it done.",
-"aboutIntro": "In a digital-first world, success is driven by creativity, agility, and the ability to adapt...",
-        "aboutPeople": "People:",
-        "aboutPeopleText": "Building trust and connection through content that resonates.",
-        "aboutBrands": "Brands:",
-        "aboutBrandsText": "Driving visibility and growth through data-driven campaigns.",
-        "aboutEveryone": "Everyone:",
-        "aboutEveryoneText": "Empowering others to thrive with tools, skills, and knowledge.",
-        "Contactme": "Contact me",
-        "app1Title": "SEO Optimization Project",
-        "Tags": "SEO",
-        "app2Title": "SEO Content",
-        "Tag2": "SEO",
-        "app3Title": "Meta Ads",
-        "Tag3": "Paid Media", 
-         "app1Desc": "Aimed at boosting website visibility and organic traffic through improved content, keyword strategy, and technical SEO enhancements.",
-         "projects2": "My Projects",
-         "projectIntro": "Discover the projects that showcase my passion for design and innovation",
-          
-        }},
-        vi: { translation: {
-          "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
-          "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
-          "skills": "Kỹ năng của tôi",
-          "about": "Giới thiệu bản thân",
-          "aboutDesc": "Tôi là Việt, chuyên gia Digital Marketing với hơn 5 năm kinh nghiệm trong SEO, quảng cáo hiệu suất và phát triển thương hiệu.",
-          "projects": "Dự án nổi bật",
-          "blogs": "Bài viết mới nhất",
-          "contact": "Liên hệ",
-          "name": "Họ tên",
-          "email": "Email",
-           "phone": "Số điện thoại",
-          "message": "Tin nhắn",
-          "Send message": "Gửi tin nhắn",
-          "Read More": "Đọc thêm",
-          "Contactme": "Liên hệ tôi",
-          "SEO Optimization": "Tối ưu SEO",
-          "Content Marketing": "Tiếp thị nội dung",
-          "Facebook Ads": "Quảng cáo Facebook",
-          "aboutHeadline": "Không quan trọng bạn làm việc ở đâu hay khi nào. Quan trọng là cách bạn hoàn thành công việc.",
-        "aboutIntro": "Trong thế giới số ngày nay, thành công đến từ sự sáng tạo, linh hoạt và khả năng thích ứng...",
-        "aboutPeople": "Con người:",
-        "aboutPeopleText": "Tạo ra chiến lược nội dung kết nối chân thật và hiệu quả.",
-        "aboutBrands": "Thương hiệu:",
-        "aboutBrandsText": "Thúc đẩy sự hiện diện và tăng trưởng thông qua các chiến dịch dựa trên dữ liệu.",
-        "aboutEveryone": "Tất cả mọi người:",
-        "aboutEveryoneText": "Trao quyền thành công với công cụ, kỹ năng và hiểu biết.",
-        }}
-        
-      }
-      
-    }, function(err, t) {
-      updateContent();
-      highlightActiveLang(i18next.language);
-    });
-
     function updateContent() {
       document.querySelectorAll('[data-i18n]').forEach(el => {
         el.innerText = i18next.t(el.getAttribute('data-i18n'));
@@ -1003,6 +924,44 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   });
 </script>
 
+<script>
+  async function loadContent(lang = 'en') {
+    const url = `https://script.google.com/macros/s/AKfycbxa-00GbCHzeTEzvcqQFDwocE5cezqdHwHIq_JXSkJw7vsWr6a27czRPnWR817Yqak/exec?lang=${lang}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      document.querySelector('[data-i18n="greeting"]').innerHTML = data.greeting.replace(/\n/g, '<br>');
+      document.querySelector('[data-i18n="intro"]').innerText = data.intro;
+      document.querySelector('[data-i18n="aboutHeadline"]').innerText = data.aboutHeadline;
+      document.querySelector('[data-i18n="aboutIntro"]').innerText = data.aboutIntro;
+      document.querySelector('[data-i18n="aboutPeople"]').innerText = data.aboutPeople;
+      document.querySelector('[data-i18n="aboutBrands"]').innerText = data.aboutBrands;
+      document.querySelector('[data-i18n="aboutEveryone"]').innerText = data.aboutEveryone;
+      document.querySelector('[data-i18n="aboutPeopleText"]').innerText = data.aboutPeopleText;
+      document.querySelector('[data-i18n="aboutBrandsText"]').innerText = data.aboutBrandsText;
+      document.querySelector('[data-i18n="aboutEveryoneText"]').innerText = data.aboutEveryoneText;
+    } catch (err) {
+      console.error("Failed to fetch content from Google Sheets:", err);
+    }
+  }
+
+  function switchLanguage(lang) {
+    loadContent(lang);
+
+    const btnEn = document.getElementById('btn-en');
+    const btnVi = document.getElementById('btn-vi');
+    btnEn.classList.toggle('bg-white', lang === 'en');
+    btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
+    btnVi.classList.toggle('bg-white', lang === 'vi');
+    btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    switchLanguage('en');
+  });
+</script>
 
 
 </body>
