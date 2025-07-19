@@ -1024,7 +1024,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 
       fields.forEach(key => {
         const el = document.querySelector(`[data-i18n="${key}"][data-sheet="true"]`);
-        if (el) {
+        if (el && data[key]) {
           if (key === "greeting") {
             el.innerHTML = data[key].replace(/\n/g, '<br>');
           } else {
@@ -1039,26 +1039,25 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   }
 
   function switchLanguage(lang) {
-  localStorage.setItem('lang', lang); // ✅ Add this
-  i18next.changeLanguage(lang, () => {
-    updateI18n();
-    loadContent(lang);
-  });
+    localStorage.setItem('lang', lang);
+    i18next.changeLanguage(lang, () => {
+      updateI18n();
+      loadContent(lang);
+    });
 
-  const btnEn = document.getElementById('btn-en');
-  const btnVi = document.getElementById('btn-vi');
-  if (btnEn && btnVi) {
-    btnEn.classList.toggle('bg-white', lang === 'en');
-    btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
-    btnVi.classList.toggle('bg-white', lang === 'vi');
-    btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+    const btnEn = document.getElementById('btn-en');
+    const btnVi = document.getElementById('btn-vi');
+    if (btnEn && btnVi) {
+      btnEn.classList.toggle('bg-white', lang === 'en');
+      btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
+      btnVi.classList.toggle('bg-white', lang === 'vi');
+      btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+    }
   }
-}
-
 
   document.addEventListener('DOMContentLoaded', () => {
     const defaultLang = localStorage.getItem('lang') || 'en';
-    switchLanguage(defaultLang);
+    setLanguage(defaultLang);
   });
 </script>
 
