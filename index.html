@@ -89,8 +89,7 @@
 }
   </style>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans">
-
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
 <!-- Navbar -->
 <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
   <div class="flex justify-between items-center max-w-7xl mx-auto">
@@ -476,8 +475,10 @@
 
 <!-- i18next Language Update -->
 <script>
+  function initializeI18n(language = 'en') {
   i18next.init({
     lng: 'en',
+    debug: false,
     resources: {
       en: {
         translation: {
@@ -499,8 +500,14 @@
       }
     }
   }, function(err, t) {
-    updateContent();
-  });
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (!el.textContent.trim()) {
+          el.innerHTML = t(key); // only fill if it's still empty (i.e., not SheetDB)
+        }
+      });
+    });
+  }
 </script>
 
 <!-- Contact Section: 2-Column, No "Get in touch" -->
