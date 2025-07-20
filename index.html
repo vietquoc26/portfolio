@@ -119,8 +119,8 @@
 
     <!-- Desktop Nav -->
     <div id="nav-links" class="hidden md:flex gap-6 items-center">
-      <a href="#skills" class="hover:underline" data-i18n="skills">Skills</a>
       <a href="./about-me/" class="hover:underline" data-i18n="about">About</a>
+      <a href="#services" class="hover:underline" data-i18n="services">Services</a>
       <a href="#projects" class="hover:underline" data-i18n="projects">Projects</a>
       <a href="#contact" class="hover:underline" data-i18n="contact">Contact</a>
       <button id="themeToggle" class="bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
@@ -640,9 +640,56 @@
 
 
 <!-- Footer -->
-<footer class="bg-gray-100 dark:bg-gray-900 text-center py-6 mt-16 text-gray-600 dark:text-gray-400">
-  © 2025 Viet – Digital Marketer. All rights reserved.
+<footer class="bg-gradient-to-t from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 pt-12 pb-8 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
+
+    <!-- Logo + Description -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <img src="logo.png" alt="Logo" class="h-10 w-10 rounded-full" />
+        <h2 class="text-xl font-semibold">VietPortfolio</h2>
+      </div>
+      <p class="text-sm mb-4" data-i18n="footerDescription">Helping you grow with SEO, content, design, and tech-driven strategies.</p>
+      <div class="flex gap-4 text-xl text-blue-600 dark:text-blue-400">
+        <a href="https://www.facebook.com/honguyenquocviet150799/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.linkedin.com/in/ho-nguyen-quoc-viet/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Introduction -->
+    <div>
+      <h3 class="text-lg font-semibold mb-4" data-i18n="introduction">Introduction</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="./about-me/" class="hover:underline" data-i18n="about">About Me</a></li>
+        <li><a href="#services" class="hover:underline" data-i18n="services">Services</a></li>
+        <li><a href="#projects" class="hover:underline" data-i18n="projects">Projects</a></li>
+        <li><a href="#contact" class="hover:underline" data-i18n="contact">Projects</a></li>
+      </ul>
+    </div>
+
+    <!-- Services -->
+    <div>
+      <h3 class="text-lg font-semibold mb-4" data-i18n="services">Services</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#projects" class="hover:underline">SEO Strategy</a></li>
+        <li><a href="#projects" class="hover:underline">Google Ads</a></li>
+        <li><a href="#projects" class="hover:underline">Content Marketing</a></li>
+        <li><a href="#projects" class="hover:underline">Branding</a></li>
+        <li><a href="#projects" class="hover:underline">UI/UX & Web</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="mt-12 border-t border-gray-300 dark:border-gray-700 pt-4 text-center text-sm">
+    © 2025 VietPortfolio. <span data-i18n="rights">All rights reserved.</span>
+  </div>
 </footer>
+
+
 
 <!-- Elegant Scroll to Top Button -->
 <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
@@ -962,7 +1009,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
           translation: {
           "greeting": "Hello, I'm Viet,\nProfessional Digital Marketer",
           "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
-          "skills": "Skills",
+          "services": "Services",
           "about": "About",
           "aboutDesc": "I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.",
           "projects": "Projects",
@@ -994,13 +1041,14 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
          "app1Desc": "Aimed at boosting website visibility and organic traffic through improved content, keyword strategy, and technical SEO enhancements.",
          "projects2": "My Projects",
          "projectIntro": "Discover the projects that showcase my passion for design and innovation",
+         "introduction": "Introduction",
           }
         },
         vi: {
           translation: {
           "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
           "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
-          "skills": "Kỹ năng của tôi",
+          "services": "Dịch vụ",
           "about": "Giới thiệu bản thân",
           "aboutDesc": "Tôi là Việt, chuyên gia Digital Marketing với hơn 5 năm kinh nghiệm trong SEO, quảng cáo hiệu suất và phát triển thương hiệu.",
           "projects": "Dự án nổi bật",
@@ -1025,6 +1073,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         "aboutBrandsText": "Thúc đẩy sự hiện diện và tăng trưởng thông qua các chiến dịch dựa trên dữ liệu.",
         "aboutEveryone": "Tất cả mọi người:",
         "aboutEveryoneText": "Trao quyền thành công với công cụ, kỹ năng và hiểu biết.",
+         "introduction": "Giới thiệu",
           }
         }
       }
