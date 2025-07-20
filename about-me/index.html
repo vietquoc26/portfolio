@@ -137,6 +137,25 @@
 
     </div>
   </section>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', function () {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Optional: close mobile menu when clicking outside
+    document.addEventListener('click', function (e) {
+      const isClickInside = menuToggle.contains(e.target) || mobileMenu.contains(e.target);
+      if (!isClickInside && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+  });
+</script>
 </body>
 
 </html>
