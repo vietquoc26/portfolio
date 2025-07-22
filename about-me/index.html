@@ -23,7 +23,9 @@
     <!-- Left group: Logo + Language -->
     <div class="flex items-center gap-2">
       <!-- Logo -->
-      <img src="logo2.png" alt="Logo" class="h-10 w-10 rounded-full" />
+      <a href="./">
+  <img src="logo2.png" alt="Logo" class="h-10 w-10 rounded-full" />
+</a>
 
       <!-- Language Toggle (closer to logo) -->
       <div class="flex items-center gap-1 sm:gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1 ml-1">
@@ -47,7 +49,7 @@
 
     <!-- Desktop Nav -->
     <div id="nav-links" class="hidden md:flex gap-6 items-center ml-auto">
-      <a href="./about-me/" class="hover:underline" data-i18n="about">About</a>
+      <a href="./" class="hover:underline" data-i18n="about">About</a>
       <a href="#services" class="hover:underline" data-i18n="services">Services</a>
       <a href="#projects" class="hover:underline" data-i18n="projects">Projects</a>
       <a href="#contact"
@@ -59,7 +61,7 @@
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="md:hidden hidden flex flex-col mt-3 text-center">
-    <a href="./about-me/" class="block py-2 hover:underline" data-i18n="about">About</a>
+    <a href="./" class="block py-2 hover:underline" data-i18n="about">About</a>
     <a href="#services" class="block py-2 hover:underline" data-i18n="services">Services</a>
     <a href="#projects" class="block py-2 hover:underline" data-i18n="projects">Projects</a>
     <button id="themeToggleMobile" class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
@@ -68,8 +70,8 @@
 
 <!-- About -->
     <div id="nav-links" cl
-  <section id="about" class="py-20 px-6">
-    <div class="max-w-6xl mx-auto space-y-20">
+  <section id="about"
+    <div class="max-w-6xl mx-auto space-y-20 mb-16">
 
       <!-- Intro Section -->
       <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -156,12 +158,12 @@
           </div>
         </div>
       </div>
-
-    </div>
+   </div>
   </section>
 
-  <footer class="bg-gradient-to-t from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 pt-10 pb-6 px-4">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+  <!-- Footer -->
+<footer class="bg-gradient-to-t from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 pt-20 pb-10 px-6">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
 
     <!-- Logo + Description -->
     <div>
@@ -169,8 +171,10 @@
         <img src="logo2.png" alt="Logo" class="h-10 w-10 rounded-full" />
         <h2 class="text-lg font-semibold">VietPortfolio</h2>
       </div>
-      <p class="text-sm mb-4 leading-relaxed" data-i18n="footerDescription"></p>
-      <div class="flex gap-4 text-lg text-blue-600 dark:text-blue-400">
+      <p class="text-sm leading-relaxed mb-4" data-i18n="footerDescription">
+        <!-- Optional description -->
+      </p>
+      <div class="flex gap-4 text-xl text-blue-600 dark:text-blue-400">
         <a href="https://www.facebook.com/honguyenquocviet150799/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
         <a href="https://www.linkedin.com/in/ho-nguyen-quoc-viet/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
         <a href="https://www.tiktok.com/" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
@@ -178,13 +182,12 @@
       </div>
     </div>
 
-    <!-- Introduction + Services (Always Side-by-Side) -->
-    <div class="flex flex-nowrap justify-between w-full overflow-hidden gap-6 text-sm">
-
+    <!-- Footer Navigation -->
+    <div class="grid grid-cols-2 gap-8 text-sm">
       <!-- Introduction -->
-      <div class="w-1/2">
+      <div>
         <h3 class="text-base font-semibold mb-3" data-i18n="introduction">Introduction</h3>
-        <ul class="space-y-1 text-xs">
+        <ul class="space-y-2">
           <li><a href="./about-me/" class="hover:underline" data-i18n="about">About Me</a></li>
           <li><a href="#services" class="hover:underline" data-i18n="services">Services</a></li>
           <li><a href="#projects" class="hover:underline" data-i18n="projects">Projects</a></li>
@@ -193,9 +196,9 @@
       </div>
 
       <!-- Services -->
-      <div class="w-1/2">
+      <div>
         <h3 class="text-base font-semibold mb-3" data-i18n="services">Services</h3>
-        <ul class="space-y-1 text-xs">
+        <ul class="space-y-2">
           <li><a href="#projects" class="hover:underline">SEO Strategy</a></li>
           <li><a href="#projects" class="hover:underline">Google Ads</a></li>
           <li><a href="#projects" class="hover:underline">Content Marketing</a></li>
@@ -203,15 +206,17 @@
           <li><a href="#projects" class="hover:underline">UI/UX & Web</a></li>
         </ul>
       </div>
-
     </div>
   </div>
 
-  <!-- Bottom -->
-  <div class="mt-10 border-t border-gray-300 dark:border-gray-700 pt-4 text-center text-xs">
+  <!-- Footer Bottom -->
+  <div class="mt-10 border-t border-gray-300 dark:border-gray-700 pt-4 text-center text-xs text-gray-600 dark:text-gray-400">
     © 2025 VietPortfolio. <span data-i18n="rights">All rights reserved.</span>
   </div>
 </footer>
+
+
+
   
   <script>
   document.addEventListener('DOMContentLoaded', function () {
