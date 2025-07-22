@@ -134,7 +134,7 @@
      <a href="#services" class="hover:underline" data-i18n="services">Services</a>
     <a href="#projects" class="block py-2 hover:underline" data-i18n="projects">Projects</a>
     <a href="#contact" class="block py-2 hover:underline" data-i18n="contact">Contact</a>
-    <button class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded" onclick="document.documentElement.classList.toggle('dark')">🌓</button>
+    <button id="themeToggleMobile" class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded" onclick="document.documentElement.classList.toggle('dark')">🌓</button>
   </div>
 </nav>
 
@@ -695,7 +695,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('themeToggle');
-    const mobileThemeToggle = document.querySelector('#mobile-menu button');
+    const mobileThemeToggle = document.querySelector('themeToggleMobile');
 
     // Default to light mode unless user has saved dark
     const savedTheme = localStorage.getItem('theme');
