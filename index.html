@@ -103,40 +103,58 @@
   </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
+  
 <!-- Navbar -->
 <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
-  <div class="flex justify-between items-center max-w-7xl mx-auto">
-    <!-- Logo + Language -->
-    <div id="logo-lang" class="flex items-center gap-4">
-      <img src="logo2.png" alt="Logo" class="h-12 w-12 rounded-full" />
-      <div class="flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1">
+  <div class="flex items-center justify-between max-w-7xl mx-auto flex-wrap md:flex-nowrap">
+
+    <!-- Left group: Logo + Language -->
+    <div class="flex items-center gap-2">
+      <!-- Logo -->
+      <img src="logo.png" alt="Logo" class="h-10 w-10 rounded-full" />
+
+      <!-- Language Toggle (closer to logo) -->
+      <div class="flex items-center gap-1 sm:gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1 ml-1">
         <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇺🇸</button>
         <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇻🇳</button>
       </div>
     </div>
 
-    <!-- Hamburger Button -->
-    <button id="menu-toggle" class="text-3xl md:hidden text-gray-800 dark:text-white">☰</button>
+    <!-- Right group: Contact + Hamburger -->
+    <div class="flex items-center gap-2 ml-auto">
+      <!-- Mobile Contact Button (closer to hamburger) -->
+      <a href="#contact"
+         class="md:hidden px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm font-medium shadow transition"
+         data-i18n="contact">Contact</a>
+
+      <!-- Hamburger -->
+      <button id="menu-toggle" class="text-2xl md:hidden text-gray-800 dark:text-white">
+        ☰
+      </button>
+    </div>
 
     <!-- Desktop Nav -->
-    <div id="nav-links" class="hidden md:flex gap-6 items-center">
+    <div id="nav-links" class="hidden md:flex gap-6 items-center ml-auto">
       <a href="./about-me/" class="hover:underline" data-i18n="about">About</a>
       <a href="#services" class="hover:underline" data-i18n="services">Services</a>
       <a href="#projects" class="hover:underline" data-i18n="projects">Projects</a>
-      <a href="#contact" class="hover:underline" data-i18n="contact">Contact</a>
+      <a href="#contact"
+         class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition text-sm font-medium"
+         data-i18n="contact">Contact</a>
       <button id="themeToggle" class="bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
     </div>
   </div>
 
-  <!-- Mobile Nav -->
+  <!-- Mobile Menu -->
   <div id="mobile-menu" class="md:hidden hidden flex flex-col mt-3 text-center">
     <a href="./about-me/" class="block py-2 hover:underline" data-i18n="about">About</a>
-     <a href="#services" class="hover:underline" data-i18n="services">Services</a>
+    <a href="#services" class="block py-2 hover:underline" data-i18n="services">Services</a>
     <a href="#projects" class="block py-2 hover:underline" data-i18n="projects">Projects</a>
-    <a href="#contact" class="block py-2 hover:underline" data-i18n="contact">Contact</a>
-    <button id="themeToggleMobile" class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded" onclick="document.documentElement.classList.toggle('dark')">🌓</button>
+    <button id="themeToggleMobile" class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
   </div>
 </nav>
+
+
 
 
 <!-- Hero Section -->
