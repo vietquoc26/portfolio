@@ -13,6 +13,24 @@
   <script>
     tailwind.config = { darkMode: 'class' }
   </script>
+
+<style>
+@keyframes fadeInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px); /* move from left */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-left {
+  animation: fadeInFromLeft 0.8s ease-in-out forwards;
+}
+</style>
+
 </head>
 
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
@@ -88,7 +106,7 @@
       </div>
 
       <!-- Overlapping "ABOUT US" text, aligned right -->
-      <h2 class="absolute -top-10 right-4 md:-top-12 md:right-6 text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+      <h2 class="absolute -top-10 -right-12 md:-top-12 md:-right-16 text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white animate-fade-in-left">
         ABOUT US
       </h2>
     </div>
