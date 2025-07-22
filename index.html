@@ -100,6 +100,9 @@
 .animate-side-fade-in {
   animation: fadeInSideNav 1.8s ease-out forwards;
 }
+.swiper-button-next::after,
+  .swiper-button-prev::after {
+    content: none !important;
   </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
@@ -466,23 +469,26 @@
       </div>
 
      <!-- Navigation Buttons -->
-<!-- Previous Button -->
 <button class="swiper-button-prev absolute top-1/2 -left-4 -translate-y-1/2 z-10 
-  w-11 h-11 rounded-full bg-gradient-to-br from-white/80 to-gray-200 dark:from-gray-700 dark:to-gray-900
-  shadow-lg backdrop-blur-md text-gray-800 dark:text-white hover:scale-110 transition-all duration-300
-  flex items-center justify-center border border-gray-300 dark:border-gray-600">
-  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-  </svg>
+  w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 
+  shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
+  text-gray-900 dark:text-white hover:scale-105 hover:shadow-blue-400/50
+  transition-all duration-300 ease-in-out hover:-translate-x-1">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+  <path d="M12 8l-4 4 4 4M16 12H8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
 </button>
 
 <!-- Next Button -->
 <button class="swiper-button-next absolute top-1/2 -right-4 -translate-y-1/2 z-10 
-  w-11 h-11 rounded-full bg-gradient-to-br from-white/80 to-gray-200 dark:from-gray-700 dark:to-gray-900
-  shadow-lg backdrop-blur-md text-gray-800 dark:text-white hover:scale-110 transition-all duration-300
-  flex items-center justify-center border border-gray-300 dark:border-gray-600">
-  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+  w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 
+  shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
+  text-gray-900 dark:text-white hover:scale-105 hover:shadow-blue-400/50
+  transition-all duration-300 ease-in-out hover:translate-x-1">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+    <path d="M12 8l4 4-4 4M8 12h8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
 </button>
 </section>
