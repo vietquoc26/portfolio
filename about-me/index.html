@@ -13,7 +13,6 @@
   <script>
     tailwind.config = { darkMode: 'class' }
   </script>
-
 <style>
 @keyframes fadeInFromLeft {
   from {
@@ -127,7 +126,7 @@
 </section>
 
  <!-- Highlight number -->
-<section class="py-16 px-6 mb-16 bg-gradient-to-b from-blue-50 via-white to-white dark:from-gray-800 dark:via-gray-900 dark:to-gray-900 text-center">
+<section class="py-16 px-6 mb-14 bg-gradient-to-b from-blue-50 via-white to-white dark:from-gray-800 dark:via-gray-900 dark:to-gray-900 text-center">
   <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
 
     <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md">
@@ -148,43 +147,82 @@
   </div>
 </section>
 
-<!-- Experience Milestone Section -->
-<section id="milestone" class="py-20 px-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-4xl font-extrabold mb-12 text-center" data-i18n="experienceTimelineTitle">Experience Timeline</h2>
+<!-- AOS Animation Library -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<!-- Experience Timeline Section -->
+<section id="milestone" class="py-20 px-4 bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-4xl font-extrabold mb-16 text-center" data-i18n="experienceTimelineTitle">Experience Timeline</h2>
+    
+    <div class="border-l-4 border-blue-500 pl-6 space-y-10 relative">
 
-    <div class="relative border-l-4 border-blue-500 pl-6 space-y-12">
-      
-      <!-- Milestone 1 -->
-      <div class="relative">
-        <div class="absolute -left-6 top-1 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
-          <i class="fas fa-briefcase text-white"></i>
-        </div>
-        <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
-          <h4 class="text-xl font-semibold mb-1">2020 - Present</h4>
-          <p class="text-blue-600 dark:text-blue-400 font-medium" data-i18n="currentRole">Senior Digital Marketer</p>
-          <p class="text-sm mt-1 text-gray-700 dark:text-gray-300" data-i18n="currentRoleDesc">
-            Leading digital campaigns and growth strategy for B2C & B2B brands.
-          </p>
-        </div>
+      <!-- Milestone Template -->
+      <div class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" data-aos="fade-up">
+        <span class="absolute -left-[26px] top-2 w-5 h-5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></span>
+        <h3 class="text-lg font-semibold">Account Manager</h3>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400">BiziBusiness Digital Agency</p>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400">August 2024 – Present</p>
+        <p class="text-sm text-gray-700 dark:text-gray-300">Manage SEO projects for clients:
+</p>
+ <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+    <li>Communicate with clients and the in-house team to ensure the progress of the SEO project</li>
+    <li>Deliver SEO articles, optimize keyword performance, and create a performance report</li>
+    <li>Run Google ads and Meta ads for clients</li>
+  </ul>
       </div>
 
       <!-- Milestone 2 -->
-      <div class="relative">
-        <div class="absolute -left-6 top-1 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
-          <i class="fas fa-chart-line text-white"></i>
-        </div>
-        <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
-          <h4 class="text-xl font-semibold mb-1">2018 - 2020</h4>
-          <p class="text-blue-600 dark:text-blue-400 font-medium" data-i18n="previousRole">Digital Marketing Executive</p>
-          <p class="text-sm mt-1 text-gray-700 dark:text-gray-300" data-i18n="previousRoleDesc">
-            Hands-on with SEO, content, and performance marketing.
-          </p>
-        </div>
+      <div class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" data-aos="fade-up" data-aos-delay="100">
+        <span class="absolute -left-[26px] top-2 w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></span>
+        <h3 class="text-lg font-semibold">Social Media Executive - Content Writer - Video Editor</h3>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400">TechOne Digital Agency</p>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400" data-i18n="prevTimeframe">2018 – 2020</p>
+        <p class="text-sm text-gray-700 dark:text-gray-300" data-i18n="prevRoleDesc">
+          Hands-on with SEO, content, and performance marketing.
+        </p>
       </div>
+
+      <!-- Milestone 3 -->
+      <div class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" data-aos="fade-up" data-aos-delay="200">
+        <span class="absolute -left-[26px] top-2 w-5 h-5 bg-gradient-to-r from-pink-500 to-red-500 rounded-full"></span>
+        <h3 class="text-lg font-semibold" data-i18n="contentStrategist">Content Strategist</h3>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400" data-i18n="contentCompany">@ Content House</p>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400" data-i18n="contentTimeframe">2017 – 2018</p>
+        <p class="text-sm text-gray-700 dark:text-gray-300" data-i18n="contentDesc">
+          Developed multi-platform content strategies that aligned with brand voice and audience needs.
+        </p>
+      </div>
+
+      <!-- Milestone 4 -->
+      <div class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" data-aos="fade-up" data-aos-delay="300">
+        <span class="absolute -left-[26px] top-2 w-5 h-5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></span>
+        <h3 class="text-lg font-semibold" data-i18n="marketingIntern">Marketing Intern</h3>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400" data-i18n="internCompany">@ Bright Media</p>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400" data-i18n="internTimeframe">2016 – 2017</p>
+        <p class="text-sm text-gray-700 dark:text-gray-300" data-i18n="internDesc">
+          Assisted in campaign execution and learned the fundamentals of digital marketing.
+        </p>
+      </div>
+
+      <!-- Milestone 5 -->
+      <div class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" data-aos="fade-up" data-aos-delay="400">
+        <span class="absolute -left-[26px] top-2 w-5 h-5 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></span>
+        <h3 class="text-lg font-semibold" data-i18n="education">Bachelor of Marketing</h3>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400" data-i18n="eduSchool">@ University of Business</p>
+        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400" data-i18n="eduTimeframe">2012 – 2016</p>
+        <p class="text-sm text-gray-700 dark:text-gray-300" data-i18n="eduDesc">
+          Graduated with honors, majoring in Digital Marketing and Communication.
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
+
 
 
   <!-- Footer -->
@@ -313,7 +351,9 @@
         "aboutSkill3": "Conduct comprehensive email marketing campaigns",
         "aboutSkill4": "Create content and design interactive images across social media channels",
         "aboutSkill5": "Edit engaging videos to support building brand identities",
-        "aboutIntroList": "When diving into each project, I have dedicated all the following skills to supporting businesses in reaching all core objectives:"
+        "aboutIntroList": "When diving into each project, I have dedicated all the following skills to supporting businesses in reaching all core objectives:",
+         "experienceTimelineTitle":"Experience",
+         "currentRole":"Account Manager", 
           }
         },
         vi: {
@@ -332,6 +372,8 @@
         "aboutSkill4": "Tạo nội dung và thiết kế hình ảnh tương tác trên các kênh mạng xã hội",
         "aboutSkill5": "Chỉnh sửa video hấp dẫn để xây dựng thương hiệu",
         "aboutIntroList": "Khi bắt tay triển khai từng dự án, tôi có thể đóng góp nhiều giải pháp đa dạng giúp doanh nghiệp đạt được các mục tiêu truyền thông quan trọng như:",
+        "experienceTimelineTitle":"Kinh nghiệm",
+        "currentRole":"Account Manager",
           }
         }
       }
