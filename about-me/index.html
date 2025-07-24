@@ -17,7 +17,7 @@
 @keyframes fadeInFromLeft {
   from {
     opacity: 0;
-    transform: translateX(-30px); /* move from left */
+    transform: translateX(-30px); /* move from left */ 
   }
   to {
     opacity: 1;
@@ -28,6 +28,19 @@
 .animate-fade-in-left {
   animation: fadeInFromLeft 0.8s ease-in-out forwards;
 }
+
+.progress-bar {
+      width: 0%;
+      transition: width 2s ease-in-out;
+    }
+    .fade-in-number {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .fade-in-number.show {
+      opacity: 1;
+    }
+
 </style>
 
 </head>
@@ -86,7 +99,7 @@
 </nav>
 
 <!-- About -->
-<section id="about" class="min-h-[80vh] flex items-center justify-center py-20 px-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
+<section id="about" class="min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
   <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
    <!-- Image Column -->
@@ -126,7 +139,7 @@
 </section>
 
  <!-- Highlight number -->
-<section class="py-16 px-6 mb-14 bg-gradient-to-b from-blue-50 via-white to-white dark:from-gray-800 dark:via-gray-900 dark:to-gray-900 text-center">
+<section class="py-16 px-6 mb-14 bg-white dark:bg-gray-900 text-center">
   <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
 
     <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md">
@@ -154,7 +167,7 @@
   AOS.init();
 </script>
 <!-- Experience Timeline Section -->
-<section id="milestone" class="py-20 px-4 bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
+<section id="milestone" class="py-20 px-4 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white">
   <div class="max-w-4xl mx-auto">
     <h2 class="text-4xl font-extrabold mb-16 text-center" data-i18n="experienceTimelineTitle">Experience Timeline</h2>
     
@@ -228,6 +241,260 @@
   </div>
 </section>
 
+ <!-- Skill Section -->
+<section id="skills" class="py-20">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold mb-12 text-center text-gray-900 dark:text-white" data-i18n="skills">Skills</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Skill Card -->
+      <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm bg-white dark:bg-gray-800 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4" data-i18n="skill_seo_title">SEO Optimization</h3>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2">
+          <div class="bg-teal-500 h-3 dark:bg-yellow-400 rounded-full progress-bar" data-percent="85"></div>
+        </div>
+        <p class="text-sm text-right text-gray-700 dark:text-gray-300 mb-4 fade-in-number">85%</p>
+        <p class="text-sm text-gray-500 dark:text-gray-300" data-i18n="skill_seo_description">Improved organic reach for multiple clients through technical audits, keyword research, and on-page optimization.</p>
+      </div>
+
+      <!-- Duplicate this card block for each skill -->
+      <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm bg-white dark:bg-gray-800 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4" data-i18n="skill_content_title">Content Writing</h3>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2">
+          <div class="bg-teal-500 dark:bg-yellow-400 h-3 rounded-full progress-bar" data-percent="80"></div>
+        </div>
+        <p class="text-sm text-right text-gray-700 dark:text-gray-300 mb-4 fade-in-number">80%</p>
+        <p class="text-sm text-gray-500 dark:text-gray-300" data-i18n="skill_content_description">Crafted engaging content for blogs, SEO, and social platforms with measurable results.</p>
+      </div>
+
+      <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm bg-white dark:bg-gray-800 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4" data-i18n="skill_facebook_title">Facebook Ads</h3>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2">
+          <div class="bg-teal-500 dark:bg-yellow-400 h-3 rounded-full progress-bar" data-percent="70"></div>
+        </div>
+        <p class="text-sm text-right text-gray-700 dark:text-gray-300 mb-4 fade-in-number">90%</p>
+        <p class="text-sm text-gray-500 dark:text-gray-300" data-i18n="skill_facebook_description">Managed ad campaigns with optimized targeting, CTR, and conversions.</p>
+      </div>
+
+      <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm bg-white dark:bg-gray-800 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4" data-i18n="skill_video_title">Video Editing</h3>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2">
+          <div class="bg-teal-500 dark:bg-yellow-400 h-3 rounded-full progress-bar" data-percent="90"></div>
+        </div>
+        <p class="text-sm text-right text-gray-700 dark:text-gray-300 mb-4 fade-in-number">70%</p>
+        <p class="text-sm text-gray-500 dark:text-gray-300" data-i18n="skill_video_description">Edited reels, shorts, and promo videos with strong storytelling and effects.</p>
+      </div>
+
+      <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm bg-white dark:bg-gray-800 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4" data-i18n="skill_google_title">Google Ads</h3>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2">
+          <div class="bg-teal-500 dark:bg-yellow-400 h-3 rounded-full progress-bar" data-percent="75"></div>
+        </div>
+        <p class="text-sm text-right text-gray-700 dark:text-gray-300 mb-4 fade-in-number">75%</p>
+        <p class="text-sm text-gray-500 dark:text-gray-300" data-i18n="skill_google_description">Created and optimized search/display campaigns with high ROI.</p>
+      </div>
+
+      <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm bg-white dark:bg-gray-800 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4" data-i18n="skill_ai_title">AI Tools</h3>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2">
+          <div class="bg-teal-500 dark:bg-yellow-400 h-3 rounded-full progress-bar" data-percent="88"></div>
+        </div>
+        <p class="text-sm text-right text-gray-700 dark:text-gray-300 mb-4 fade-in-number">88%</p>
+        <p class="text-sm text-gray-500 dark:text-gray-300" data-i18n="skill_ai_description">Integrated ChatGPT, Midjourney, and automation tools into creative workflows.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Projects Section Redesigned with i18n + Carousel Effects + Glow/Fade + Hover Focus -->
+<section id="projects" class="py-20 bg-white dark:bg-gray-800 transition-colors">
+<style>
+  .swiper-slide {
+    transition: opacity 0.3s ease, filter 0.3s ease;
+    opacity: 1;
+    overflow: hidden;
+    border-radius: 1rem; /* Match card shape */
+    display: flex;
+    will-change: box-shadow;
+  }
+
+  .swiper-slide .card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .dark .swiper-slide .card {
+    background-color: #374151;
+  }
+
+  /* Dim non-hovered slides */
+  .swiper-wrapper:hover .swiper-slide:not(:hover) {
+    filter: blur(2px);
+    opacity: 0.4;
+  }
+
+  /* Glow shadow on hover (no scale) */
+  .swiper-slide:hover {
+    z-index: 10;
+  }
+
+  .swiper-slide:hover .card {
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.5); /* Blue glow */
+  }
+
+  /* Ensure inner content fills space */
+  .swiper-slide .card .p-4 {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+
+<div class="max-w-7xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white" data-i18n="projects">My Projects</h2>
+    <p class="mb-12 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="projectIntro">
+    </p>
+
+    <div class="relative">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+
+          <!-- Project Card 1 -->
+        <div class="swiper-slide">
+    <div class="card w-full sm:max-w-xs mx-auto">
+    <img src="SEO.png" alt="SEO Project" class="w-full h-[200px] object-cover">
+    <div class="p-4 text-left">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">SEO Optimization Project</h3>
+      <span class="inline-block bg-purple-200 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">SEO</span>
+      <p class="text-sm text-gray-700 dark:text-gray-300">
+        Boosted website visibility through content strategy, on-page, and technical SEO.
+      </p>
+    <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+</button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Project Card 2 -->
+  <div class="swiper-slide">
+              <div class="card w-full sm:max-w-xs mx-auto">
+              <img src="seo content.png" alt="Content Project" class="w-full h-[200px] object-cover">
+              <div class="p-4 flex flex-col flex-grow text-left">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Content Marketing</h3>
+                <span class="inline-block bg-green-200 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Content</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow">
+                  Grew traffic and leads through strategic blog and social content planning.
+                </p>
+              <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+            </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 3 -->
+          <div class="swiper-slide">
+              <div class="card w-full sm:max-w-xs mx-auto">
+              <img src="meta ad.png" alt="Meta Ads" class="w-full h-[200px] object-cover">
+              <div class="p-4 flex flex-col flex-grow text-left">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Meta Ads Campaign</h3>
+                <span class="inline-block bg-blue-200 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Ads</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow">
+                  Ran high-converting paid media campaigns to increase customer acquisition.
+                </p>
+                <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+              </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 4 -->
+          <div class="swiper-slide">
+              <div class="card w-full sm:max-w-xs mx-auto">
+              <img src="video-editing.png" alt="Video Editing" class="w-full h-[200px] object-cover">
+              <div class="p-4 flex flex-col flex-grow text-left">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Branded Video Series</h3>
+                <span class="inline-block bg-pink-200 text-pink-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Video</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow">
+                  Produced and edited storytelling videos for brand building and engagement.
+                </p>
+              <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+              </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 5 -->
+          <div class="swiper-slide">
+             <div class="card w-full sm:max-w-xs mx-auto">
+              <img src="social content.png" alt="Web Design" class="w-full h-[200px] object-cover">
+              <div class="p-4 flex flex-col flex-grow text-left">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Social content</h3>
+                <span class="inline-block bg-indigo-200 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Social meida</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow">
+                  Redesigned website UX for better conversion, faster performance, and mobile-first design.
+                </p>
+              <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+              </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+     <!-- Navigation Buttons -->
+<button class="swiper-button-prev absolute top-1/2 -left-4 -translate-y-1/2 z-10 
+  w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 
+  shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
+  text-gray-900 dark:text-white hover:scale-105 hover:shadow-blue-400/50
+  transition-all duration-300 ease-in-out hover:-translate-x-1">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+  <path d="M12 8l-4 4 4 4M16 12H8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
+
+<!-- Next Button -->
+<button class="swiper-button-next absolute top-1/2 -right-4 -translate-y-1/2 z-10 
+  w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 
+  shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
+  text-gray-900 dark:text-white hover:scale-105 hover:shadow-blue-400/50
+  transition-all duration-300 ease-in-out hover:translate-x-1">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+    <path d="M12 8l4 4-4 4M8 12h8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+</section>
+
+<!-- Testimonial Section -->
+<section id="testimonial" class="py-20 bg-white dark:bg-gray-900">
+  <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
+    
+    <!-- Client Photo -->
+    <div class="flex-shrink-0">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="rounded-full w-52 h-52 object-cover border-4 border-yellow-400" />
+    </div>
+
+    <!-- Testimonial Content -->
+    <div class="text-center md:text-left">
+      <p class="text-gray-700 dark:text-gray-300 text-lg italic mb-6" data-i18n="testimonial_quote"></p>
+      <p class="font-bold text-indigo-600 dark:text-indigo-400" data-i18n="testimonial_name"></p>
+      <p class="text-sm text-gray-600 dark:text-gray-400" data-i18n="testimonial_title"></p>
+    </div>
+
+  </div>
+</section>
 
 
   <!-- Footer -->
@@ -358,7 +625,38 @@
         "aboutSkill5": "Edit engaging videos to support building brand identities",
         "aboutIntroList": "When diving into each project, I have dedicated all the following skills to supporting businesses in reaching all core objectives:",
          "experienceTimelineTitle":"Experience",
-         "currentRole":"Account Manager", 
+         "currentRole":"Account Manager",
+         "toeicScore":"TOEIC Score",
+         "yearsExperience":"Years of Experience",
+         "completedProjects":"Projects Completed",
+         "skill_seo_title": "SEO Optimization",
+         "skills":"Skills",
+         "skill_seo_experience": "2.5 years",
+      "skill_seo_description": "Boosted Google rankings through on-page and technical SEO.",
+
+       "skill_content_title": "Content Marketing",
+      "skill_content_experience": "4 years",
+       "skill_content_description": "Created blog and social content to grow brand engagement.",
+
+      "skill_facebook_title": "Facebook Ads",
+      "skill_facebook_experience": "1.5 year",
+      "skill_facebook_description": "Ran high-converting paid campaigns for multiple brands.",
+
+      "skill_video_title": "Video Editing",
+      "skill_video_experience": "4 years",
+      "skill_video_description": "Edited marketing and branded videos for social platforms.\n Adobe Premiere Pro - After Effect - Capcut",
+
+      "skill_google_title": "Google Ads",
+      "skill_google_experience": "1 year",
+      "skill_google_description": "Managed PPC ads for eCommerce and service-based clients.",
+
+      "skill_ai_title": "AI Competency",
+      "skill_ai_experience": "6 months",
+      "skill_ai_description": "Leveraged AI tools to streamline workflows, enhance content, and support data-driven decisions. I use AI (ChatGPT) to code this website.",
+      "testimonial_quote":"Working with Viet was a game-changer. His creativity, responsiveness, and attention to detail helped us elevate our digital presence beyond expectations",
+      "testimonial_name": "Colin Melia",
+      "testimonial_title":"CEO & Co-Founder of BiziBusiness",
+
           }
         },
         vi: {
@@ -378,7 +676,38 @@
         "aboutSkill5": "Chỉnh sửa video hấp dẫn để xây dựng thương hiệu",
         "aboutIntroList": "Khi bắt tay triển khai từng dự án, tôi có thể đóng góp nhiều giải pháp đa dạng giúp doanh nghiệp đạt được các mục tiêu truyền thông quan trọng như:",
         "experienceTimelineTitle":"Kinh nghiệm",
+        "toeicScore":"TOEIC",
+        "yearsExperience":"Năm kinh nghiệm",
+        "completedProjects":"Dự án",
         "currentRole":"Account Manager",
+        "skills":"Những kỹ năng của tôi",
+        "skill_seo_title": "Tối ưu SEO",
+  "skill_seo_experience": "2.5 năm",
+  "skill_seo_description": "Tăng thứ hạng Google nhờ tối ưu SEO on-page và kỹ thuật.",
+
+  "skill_content_title": "Content Marketing",
+  "skill_content_experience": "3 năm",
+  "skill_content_description": "Tạo nội dung blog và mạng xã hội để tăng nhận diện thương hiệu.",
+
+  "skill_facebook_title": "Quảng cáo Facebook",
+  "skill_facebook_experience": "1.5 năm",
+  "skill_facebook_description": "Triển khai chiến dịch quảng cáo hiệu quả cho nhiều thương hiệu.",
+
+  "skill_video_title": "Biên tập video",
+  "skill_video_experience": "4 năm",
+  "skill_video_description": "Dựng video marketing và video thương hiệu cho nền tảng mạng xã hội.",
+
+  "skill_google_title": "Quảng cáo Google",
+  "skill_google_experience": "1 năm",
+  "skill_google_description": "Quản lý quảng cáo PPC cho doanh nghiệp thương mại điện tử và dịch vụ.",
+
+  "skill_ai_title": "Ứng dụng AI",
+  "skill_ai_experience": "6 tháng",
+  "skill_ai_description": "Ứng dụng AI để tối ưu quy trình làm việc, nâng cao nội dung và hỗ trợ ra quyết định dựa trên dữ liệu. Tôi sử dụng AI (ChatGPT) để viết code cho website này.",
+  "testimonial_quote": "Làm việc với [Tên bạn] là một trải nghiệm tuyệt vời. Sự chuyên nghiệp, sáng tạo và khả năng nắm bắt yêu cầu nhanh chóng đã giúp chúng tôi nâng tầm thương hiệu một cách rõ rệt.",
+      "testimonial_name": "Colin Melia",
+      "testimonial_title":"CEO & Co-Founder of BiziBusiness",
+        
           }
         }
       }
@@ -433,6 +762,78 @@
       }
     }
   </script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const skillSection = document.querySelector("#skills");
+    const bars = document.querySelectorAll(".progress-bar");
+    const numbers = document.querySelectorAll(".fade-in-number");
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          bars.forEach((bar, i) => {
+            const percent = bar.getAttribute("data-percent");
+            bar.style.width = percent + "%";
+
+            setTimeout(() => {
+              numbers[i].classList.add("show");
+            }, 2000);
+          });
+
+          observer.unobserve(skillSection); // Run once
+        }
+      });
+    }, { threshold: 0.3 });
+
+    if (skillSection) observer.observe(skillSection);
+  });
+</script>
+
+ <!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    new Swiper(".mySwiper", {
+  loop: false, // disable loop
+  speed: 600,
+  slidesPerView: 1.1,
+  spaceBetween: 12,
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  breakpoints: {
+    360: { slidesPerView: 1.1 },
+    640: { slidesPerView: 1.3 },
+    768: { slidesPerView: 2.2 },
+    1024: { slidesPerView: 3 }
+  }
+});
+
+  });
+  // Mobile fallback hover simulation
+  if (window.matchMedia('(hover: none)').matches) {
+    const slides = document.querySelectorAll('.swiper-slide');
+    slides.forEach(slide => {
+      slide.addEventListener('touchstart', () => {
+        slides.forEach(s => s.classList.remove('hovered'));
+        slides.forEach(s => s.classList.add('dimmed'));
+        slide.classList.remove('dimmed');
+        slide.classList.add('hovered');
+      });
+      slide.addEventListener('touchend', () => {
+        slides.forEach(s => s.classList.remove('hovered', 'dimmed'));
+      });
+    });
+  }
+</script>
+
+<script>
 
 </body>
 
