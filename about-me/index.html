@@ -242,7 +242,7 @@
 </section>
 
  <!-- Skill Section -->
-<section id="skills" class="py-20">
+<section id="skills" class="py-20 bg-white dark:bg-gray-900">
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-3xl font-bold mb-12 text-center text-gray-900 dark:text-white" data-i18n="skills">Skills</h2>
 
@@ -309,7 +309,7 @@
 </section>
 
 <!-- Projects Section Redesigned with i18n + Carousel Effects + Glow/Fade + Hover Focus -->
-<section id="projects" class="py-20 bg-white dark:bg-gray-900 transition-colors">
+<section id="projects" class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
 <style>
   .swiper-slide {
     transition: opacity 0.3s ease, filter 0.3s ease;
@@ -496,6 +496,46 @@
   </div>
 </section>
 
+<!-- Chatbot Toggle Button -->
+<div id="chatbot-toggle"
+     class="fixed bottom-24 right-4 z-50 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer hover:bg-blue-700 md:right-6 flex items-center justify-center"
+     title="Chat with Viet Assistant">
+  <!-- Chat Bubble Icon (Heroicons) -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+       stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-4.35-1l-3.65 1 1-3.65A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+</div>
+
+    <!-- Chatbot Window -->
+<!-- Chatbot Window -->
+<div id="chatbot-window"
+     class="hidden absolute bottom-0 right-0 w-full sm:fixed sm:bottom-[110px] sm:right-6 sm:w-[90%] max-w-[380px] max-h-[80vh] bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-t-xl sm:rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700">
+
+
+  <!-- Header with Close Button -->
+  <div class="bg-blue-600 text-white px-4 py-3 font-semibold text-lg flex justify-between items-center">
+    Viet Assistant
+    <button id="chatbot-close" class="text-white text-xl leading-none hover:text-red-300">×</button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
+    <div class="text-left">
+      <div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1">
+        Hello 👋<br>How can I help you today?
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <form id="chatbot-form" class="flex border-t border-gray-200 dark:border-gray-700">
+    <input type="text" id="chatbot-input" placeholder="Type your message..."
+           class="flex-1 px-3 py-3 text-sm bg-transparent focus:outline-none">
+    <button type="submit" class="px-4 text-blue-600 dark:text-blue-400 font-bold">➤</button>
+  </form>
+</div>
 
   <!-- Footer -->
 <footer class="bg-gradient-to-t from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 pt-20 pb-10 px-6">
@@ -561,6 +601,24 @@
 </button>
 
   
+<!-- Elegant Scroll to Top Button -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-6 right-6 z-50 hidden group p-3 rounded-full shadow-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:scale-110 transition-transform duration-300"
+        id="scrollTopBtn"
+        aria-label="Scroll to top">
+  <svg class="w-5 h-5 transition-transform group-hover:-translate-y-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+  </svg>
+</button>
+
+<!-- Scroll Button Script -->
+<script>
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  window.addEventListener("scroll", () => {
+    scrollBtn.classList.toggle("hidden", window.scrollY < 300);
+  });
+</script>
+
   <script>
   document.addEventListener('DOMContentLoaded', function () {
     const menuToggle = document.getElementById('menu-toggle');
@@ -834,6 +892,91 @@
 </script>
 
 <script>
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatbotClose = document.getElementById('chatbot-close');
+    const chatbotForm = document.getElementById('chatbot-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+
+    chatbotToggle.addEventListener('click', () => {
+      chatbotWindow.classList.remove('hidden', 'chatbot-animate-out');
+      chatbotWindow.classList.add('chatbot-animate-in');
+      setTimeout(() => chatbotInput.focus(), 300); // Auto focus input
+    });
+
+    chatbotClose.addEventListener('click', () => {
+      chatbotWindow.classList.remove('chatbot-animate-in');
+      chatbotWindow.classList.add('chatbot-animate-out');
+      setTimeout(() => chatbotWindow.classList.add('hidden'), 300);
+    });
+
+    chatbotForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const userInput = chatbotInput.value.trim();
+      if (!userInput) return;
+
+      // Add user message
+      const userMessage = document.createElement('div');
+      userMessage.className = 'text-right text-blue-600 dark:text-blue-400';
+      userMessage.textContent = `🙋‍♂️ ${userInput}`;
+      chatbotMessages.appendChild(userMessage);
+
+      chatbotInput.value = '';
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+      // Add loading bot message
+      const botMessage = document.createElement('div');
+      botMessage.className = 'text-left text-gray-600 dark:text-gray-300';
+      botMessage.textContent = '🤖 Typing...';
+      chatbotMessages.appendChild(botMessage);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+      try {
+        const response = await fetch('http://localhost:3000/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userInput })
+        });
+
+        const data = await response.json();
+        botMessage.textContent = `🤖 ${data.message}`;
+      } catch (error) {
+        botMessage.textContent = '⚠️ Error connecting to the assistant.';
+      }
+
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+  </script>
+<script>
+  const input = document.getElementById('chatbot-input');
+
+  input.addEventListener('focus', () => {
+    setTimeout(() => {
+      input.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }, 300); // Slight delay lets the keyboard open
+  });
+</script>
+
+<script>
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const input = document.getElementById('chatbot-input');
+
+  let originalBottom = chatbotWindow.style.bottom;
+
+  input.addEventListener('focus', () => {
+    // Lift the chatbot up to prevent it being hidden
+    chatbotWindow.style.bottom = '300px';
+  });
+
+  input.addEventListener('blur', () => {
+    // Reset to original position
+    chatbotWindow.style.bottom = originalBottom || '110px';
+  });
+</script>
 
 </body>
 
