@@ -111,51 +111,68 @@
 <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
   <div class="flex items-center justify-between max-w-7xl mx-auto flex-wrap md:flex-nowrap">
 
-    <!-- Left group: Logo + Language -->
+    <!-- Logo + Language -->
     <div class="flex items-center gap-2">
-      <!-- Logo -->
       <img src="logo2.png" alt="Logo" class="h-10 w-10 rounded-full" />
-
-      <!-- Language Toggle (closer to logo) -->
       <div class="flex items-center gap-1 sm:gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1 ml-1">
         <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇺🇸</button>
         <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇻🇳</button>
       </div>
     </div>
 
-    <!-- Right group: Contact + Hamburger -->
+    <!-- Contact + Hamburger -->
     <div class="flex items-center gap-5 ml-auto">
-      <!-- Mobile Contact Button (closer to hamburger) -->
-      <a href="./contact-us/"
-         class="md:hidden px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm font-medium shadow transition"
-         data-i18n="contact">Contact</a>
-
-      <!-- Hamburger -->
-      <button id="menu-toggle" class="text-2xl md:hidden text-gray-800 dark:text-white">
-        ☰
-      </button>
+      <a href="#contact" class="md:hidden px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm font-medium shadow transition" data-i18n="contact">Contact</a>
+      <button id="menu-toggle" class="text-2xl md:hidden text-gray-800 dark:text-white">☰</button>
     </div>
 
     <!-- Desktop Nav -->
     <div id="nav-links" class="hidden md:flex gap-6 items-center ml-auto">
       <a href="./about-me/" class="hover:underline" data-i18n="about">About</a>
-      <a href="#projects" class="hover:underline" data-i18n="projects">Projects</a>
-      <a href="./contact-us/"
-         class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition text-sm font-medium"
-         data-i18n="contact">Contact</a>
+
+      <!-- Projects with click-to-toggle -->
+      <div class="relative">
+        <button id="desktop-project-toggle" class="flex items-center hover:underline text-gray-800 dark:text-white focus:outline-none">
+          <span data-i18n="projects">Projects</span>
+          <svg id="desktop-project-arrow" class="ml-1 w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="desktop-project-submenu" class="absolute left-0 mt-2 min-w-[140px] bg-white dark:bg-gray-800 rounded-md shadow-lg hidden transition-all duration-200 z-50 whitespace-nowrap">
+          <a href="#seo-projects" data-i18n="seoProjects" class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">SEO Projects</a>
+          <a href="#content-writing" data-i18n="contentWriting" class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Content Writing</a>
+          <a href="#paid-media" data-i18n="paidMedia" class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Paid Media</a>
+          <a href="#video-editing" data-i18n="videoEditing" class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Video Editing</a>
+        </div>
+      </div>
+
+      <a href="./contact-us/" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition text-sm font-medium" data-i18n="contact">Contact</a>
       <button id="themeToggle" class="bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
     </div>
   </div>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="md:hidden hidden flex flex-col mt-3 text-center">
+  <div id="mobile-menu" class="md:hidden hidden flex flex-col items-start space-y-2 mt-3 px-4">
     <a href="./about-me/" class="block py-2 hover:underline" data-i18n="about">About</a>
-    <a href="#projects" class="block py-2 hover:underline" data-i18n="projects">Projects</a>
+
+    <!-- Mobile Projects Dropdown -->
+    <button id="mobile-project-toggle" class="flex items-center justify-center gap-1 py-2 hover:underline text-gray-800 dark:text-white focus:outline-none">
+      <span data-i18n="projects">Projects</span>
+      <svg id="mobile-project-arrow" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+    <div id="mobile-project-submenu" class="hidden flex flex-col pl-6 text-left text-sm">
+      <a href="#seo-projects" data-i18n="seoProjects" class="block py-1 text-gray-700 dark:text-white hover:underline">SEO Projects</a>
+      <a href="#content-writing" data-i18n="contentWriting" class="block py-1 text-gray-700 dark:text-white hover:underline">Content Writing</a>
+      <a href="#paid-media" data-i18n="paidMedia" class="block py-1 text-gray-700 dark:text-white hover:underline">Paid Media</a>
+      <a href="#video-editing" data-i18n="videoEditing" class="block py-1 text-gray-700 dark:text-white hover:underline">Video Editing</a>
+    </div>
+
+    <a href="#contact" class="block py-2 hover:underline" data-i18n="contact">Contact</a>
     <button id="themeToggleMobile" class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
   </div>
 </nav>
-
-
 
 
 <!-- Hero Section -->
@@ -1074,6 +1091,10 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "skill_ai_title": "AI Competency",
       "skill_ai_experience": "6 months",
       "skill_ai_description": "Leveraged AI tools to streamline workflows, enhance content, and support data-driven decisions. I use AI (ChatGPT) to code this website.",
+      "seoProjects": "SEO Projects",
+      "contentWriting": "Content Writing",
+      "paidMedia":"Paid Media",
+      "videoEditing":"Video Editing",
           }
         },
         vi: {
@@ -1131,7 +1152,11 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 
   "skill_ai_title": "Ứng dụng AI",
   "skill_ai_experience": "6 tháng",
-  "skill_ai_description": "Ứng dụng AI để tối ưu quy trình làm việc, nâng cao nội dung và hỗ trợ ra quyết định dựa trên dữ liệu. Tôi sử dụng AI (ChatGPT) để viết code cho website này."
+  "skill_ai_description": "Ứng dụng AI để tối ưu quy trình làm việc, nâng cao nội dung và hỗ trợ ra quyết định dựa trên dữ liệu. Tôi sử dụng AI (ChatGPT) để viết code cho website này.",
+  "seoProjects": "SEO Projects",
+      "contentWriting": "Content Writing",
+      "paidMedia":"Paid Media",
+      "videoEditing":"Video Editing",
           }
         }
       }
@@ -1190,6 +1215,28 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   AOS.init();
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const desktopToggle = document.getElementById("desktop-project-toggle");
+    const desktopSubmenu = document.getElementById("desktop-project-submenu");
+    const desktopArrow = document.getElementById("desktop-project-arrow");
+
+    const mobileToggle = document.getElementById("mobile-project-toggle");
+    const mobileSubmenu = document.getElementById("mobile-project-submenu");
+    const mobileArrow = document.getElementById("mobile-project-arrow");
+
+    desktopToggle.addEventListener("click", () => {
+      desktopSubmenu.classList.toggle("hidden");
+      desktopArrow.classList.toggle("rotate-180");
+    });
+
+    mobileToggle.addEventListener("click", () => {
+      mobileSubmenu.classList.toggle("hidden");
+      mobileArrow.classList.toggle("rotate-180");
+    });
+  });
 </script>
 
 </body>
