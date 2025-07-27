@@ -878,27 +878,6 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
     }
 
-    async function mergeSheetTranslations() {
-      try {
-        const url = 'https://sheetdb.io/api/v1/tmz40soq9xyqu'; // 🔁 Update this
-        const res = await fetch(url);
-        const data = await res.json();
-
-        const lang = i18next.language;
-        const overrides = {};
-
-        data.forEach(row => {
-          if (row.key && row[lang]) {
-            overrides[row.key] = row[lang].replace(/\\n/g, '\n').replace(/<br>/g, '\n');
-          }
-        });
-
-        i18next.addResources(lang, 'translation', overrides);
-        updateContent();
-      } catch (error) {
-        console.error('Failed to fetch sheet overrides:', error);
-      }
-    }
   </script>
   
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -938,6 +917,14 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       });
     });
   });
+</script>
+
+<script>
+  function toggleOverlay(card) {
+    const overlay = card.querySelector('div.absolute');
+    overlay.classList.toggle('opacity-0');
+    overlay.classList.toggle('opacity-100');
+  }
 </script>
 
 </body>
