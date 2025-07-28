@@ -67,25 +67,25 @@
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="md:hidden hidden flex flex-col items-start space-y-2 mt-3 px-4">
-    <a href="/about-me/" class="block py-2 hover:underline" data-i18n="about">About</a>
+   <!-- Mobile Menu -->
+<div id="mobile-menu" class="md:hidden hidden flex flex-col items-start space-y-2 mt-3 px-4">
+  <a href="/about-me/" class="block py-2 hover:underline" data-i18n="about">About</a>
 
-    <!-- Projects with submenu -->
-    <div class="w-full">
-      <button id="mobile-submenu-toggle" class="flex items-center justify-start gap-1 py-2 w-full hover:underline text-gray-800 dark:text-white">
-        <span data-i18n="projects">Projects</span>
-        <svg class="w-4 h-4 transition-transform" id="mobile-submenu-arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div id="mobile-submenu" class="flex flex-col pl-6 text-left text-sm hidden">
-        <a href="/project/" data-i18n="seoProjects" class="block py-1 text-gray-700 dark:text-white hover:underline">SEO Projects</a>
-        <a href="#content-writing" data-i18n="contentWriting" class="block py-1 text-gray-700 dark:text-white hover:underline">Content Writing</a>
-        <a href="#paid-media" data-i18n="paidMedia" class="block py-1 text-gray-700 dark:text-white hover:underline">Paid Media</a>
-        <a href="#video-editing" data-i18n="videoEditing" class="block py-1 text-gray-700 dark:text-white hover:underline">Video Editing</a>
-      </div>
+  <!-- Projects with submenu -->
+  <div class="w-full">
+    <div class="flex items-center justify-start gap-1 py-2 w-full text-gray-800 dark:text-white">
+      <a href="/project/" class="hover:underline text-gray-800 dark:text-white" data-i18n="projects">Projects</a>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
     </div>
+    <div id="mobile-submenu" class="flex flex-col pl-6 text-left text-sm">
+      <a href="/project/" data-i18n="seoProjects" class="block py-1 text-gray-700 dark:text-white hover:underline">SEO Projects</a>
+      <a href="#content-writing" data-i18n="contentWriting" class="block py-1 text-gray-700 dark:text-white hover:underline">Content Writing</a>
+      <a href="#paid-media" data-i18n="paidMedia" class="block py-1 text-gray-700 dark:text-white hover:underline">Paid Media</a>
+      <a href="#video-editing" data-i18n="videoEditing" class="block py-1 text-gray-700 dark:text-white hover:underline">Video Editing</a>
+    </div>
+  </div>
 
     <a href="/contact-us/" class="block py-2 hover:underline" data-i18n="contact">Contact</a>
     <button id="themeToggleMobile" class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
