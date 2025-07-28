@@ -228,8 +228,8 @@
   </div>
 </div>
 
-<!-- Card 5 (Full Width) -->
-<div class="relative group col-span-2 rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="card5.png">
+<!-- Card 5 (Full Width) with YouTube link -->
+<div class="relative group col-span-2 rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openYouTubeModal('https://www.youtube.com/embed/Er091Rv-3rA?autoplay=1')">
   <img src="card5.png" alt="Authentic" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
   <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
     <p class="text-white text-center text-base font-medium px-2">
@@ -1000,6 +1000,43 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     if (e.target === this) closeModal();
   });
 </script>
+
+<!-- YouTube Modal -->
+<div id="youtubeModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center">
+  <div class="relative w-full max-w-4xl aspect-video px-4">
+    <button onclick="closeYouTubeModal()" class="absolute top-2 right-2 text-white text-3xl z-50">&times;</button>
+    <iframe
+      id="youtubeFrame"
+      class="w-full h-full rounded-lg shadow-xl"
+      src=""
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+
+<script>
+  function openYouTubeModal(youtubeURL) {
+    const modal = document.getElementById('youtubeModal');
+    const frame = document.getElementById('youtubeFrame');
+    frame.src = youtubeURL;
+    modal.classList.remove('hidden');
+  }
+
+  function closeYouTubeModal() {
+    const modal = document.getElementById('youtubeModal');
+    const frame = document.getElementById('youtubeFrame');
+    modal.classList.add('hidden');
+    frame.src = ""; // unload video to stop playback
+  }
+
+  // Optional: click outside iframe to close
+  document.getElementById('youtubeModal').addEventListener('click', function (e) {
+    if (e.target === this) closeYouTubeModal();
+  });
+</script>
+
 
 </body>
 </html>
