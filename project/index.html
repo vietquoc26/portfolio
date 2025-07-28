@@ -220,7 +220,7 @@
 
 <!-- Card 4 -->
 <div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="meta.png">
-  <img src="meta.png" alt="Listeners" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
+  <img src="Meta.png" alt="Listeners" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
   <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
     <p class="text-white text-center text-base font-medium px-2">
       Join 1500+ Loyal Listeners
@@ -967,10 +967,19 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   }
 </script>
 
-<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
-  <div class="relative max-w-4xl w-full mx-auto">
-    <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-2xl">&times;</button>
-    <img id="modalImage" src="" alt="Full view" class="max-h-[80vh] mx-auto rounded-lg shadow-xl">
+<!-- Image Modal -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center">
+  <div class="relative">
+    <!-- Close Button -->
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl z-50">&times;</button>
+
+    <!-- Centered Image -->
+    <img 
+      id="modalImage" 
+      src="" 
+      alt="Full view" 
+      class="max-w-full max-h-[90vh] mx-auto rounded-lg shadow-xl object-contain"
+    >
   </div>
 </div>
 
