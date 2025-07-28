@@ -188,56 +188,56 @@
 
   <!-- Right Grid Bento Column -->
 <div class="grid grid-cols-2 grid-rows-3 gap-4 max-w-xl w-full">
-  <!-- Card 1 -->
-  <div class="relative group rounded-lg overflow-hidden shadow-lg">
-    <img src="wif.png" alt="Mentor" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
-    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      <p class="text-white text-center text-base font-medium px-2">
-        Fanpage WIF - What If Football<br>Follower: 11,000
-      </p>
-    </div>
-  </div>
-
-  <!-- Card 2 -->
-  <div class="relative group rounded-lg overflow-hidden shadow-lg">
-    <img src="tiktok.png" alt="Growth" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
-    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      <p class="text-white text-center text-base font-medium px-2">
-        Knowledge, Growth & Career Satisfaction
-      </p>
-    </div>
-  </div>
-
-  <!-- Card 3 -->
-  <div class="relative group rounded-lg overflow-hidden shadow-lg">
-    <img src="organic traffic.png" alt="Mentors" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
-    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      <p class="text-white text-center text-base font-medium px-2">
-        10+ Years of Experienced Mentors
-      </p>
-    </div>
-  </div>
-
-  <!-- Card 4 -->
-  <div class="relative group rounded-lg overflow-hidden shadow-lg">
-    <img src="card4.png" alt="Listeners" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
-    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      <p class="text-white text-center text-base font-medium px-2">
-        Join 1500+ Loyal Listeners
-      </p>
-    </div>
-  </div>
-
-  <!-- Card 5 (Full Width) -->
-  <div class="relative group col-span-2 rounded-lg overflow-hidden shadow-lg">
-    <img src="card5.png" alt="Authentic" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
-    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      <p class="text-white text-center text-base font-medium px-2">
-        99.9% Authentic Industry Material
-      </p>
-    </div>
+ <!-- Card 1 -->
+<div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="wif.png">
+  <img src="wif.png" alt="Mentor" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+    <p class="text-white text-center text-base font-medium px-2">
+      Fanpage WIF - What If Football<br>Follower: 11,000
+    </p>
   </div>
 </div>
+
+<!-- Card 2 -->
+<div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="tiktok.png">
+  <img src="tiktok.png" alt="Growth" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+    <p class="text-white text-center text-base font-medium px-2">
+      Knowledge, Growth & Career Satisfaction
+    </p>
+  </div>
+</div>
+
+<!-- Card 3 -->
+<div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="organic traffic.png">
+  <img src="organic traffic.png" alt="Mentors" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+    <p class="text-white text-center text-base font-medium px-2">
+      10+ Years of Experienced Mentors
+    </p>
+  </div>
+</div>
+
+<!-- Card 4 -->
+<div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="meta.png">
+  <img src="meta.png" alt="Listeners" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+    <p class="text-white text-center text-base font-medium px-2">
+      Join 1500+ Loyal Listeners
+    </p>
+  </div>
+</div>
+
+<!-- Card 5 (Full Width) -->
+<div class="relative group col-span-2 rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="card5.png">
+  <img src="card5.png" alt="Authentic" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
+  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+    <p class="text-white text-center text-base font-medium px-2">
+      99.9% Authentic Industry Material
+    </p>
+  </div>
+</div>
+
 
 </section>
 
@@ -965,6 +965,31 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     overlay.classList.toggle('opacity-0');
     overlay.classList.toggle('opacity-100');
   }
+</script>
+
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+  <div class="relative max-w-4xl w-full mx-auto">
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-2xl">&times;</button>
+    <img id="modalImage" src="" alt="Full view" class="max-h-[80vh] mx-auto rounded-lg shadow-xl">
+  </div>
+</div>
+
+<script>
+  function openModal(element) {
+    const imageUrl = element.getAttribute('data-image');
+    document.getElementById('modalImage').src = imageUrl;
+    document.getElementById('imageModal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('imageModal').classList.add('hidden');
+    document.getElementById('modalImage').src = "";
+  }
+
+  // Close modal if clicking outside the image
+  document.getElementById('imageModal').addEventListener('click', function (e) {
+    if (e.target === this) closeModal();
+  });
 </script>
 
 </body>
