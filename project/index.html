@@ -228,15 +228,28 @@
   </div>
 </div>
 
-<!-- Card 5 (Full Width) with YouTube link -->
-<div class="relative group col-span-2 rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openYouTubeModal('https://www.youtube.com/embed/Er091Rv-3rA?autoplay=1')">
-  <img src="card5.png" alt="Authentic" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
-  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-    <p class="text-white text-center text-base font-medium px-2">
+<!-- Card 5 (YouTube as image background) -->
+<div class="relative group col-span-2 rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openYouTubeModal('https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1')">
+  <!-- YouTube Iframe Background -->
+  <iframe
+    class="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
+    src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=YOUR_VIDEO_ID&controls=0&showinfo=0&modestbranding=1&rel=0"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+  ></iframe>
+
+  <!-- Overlay (hover text) -->
+  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
+    <p class="text-white text-center text-base font-medium px-2 z-10">
       99.9% Authentic Industry Material
     </p>
   </div>
+
+  <!-- Aspect ratio container (for height) -->
+  <div class="w-full h-60 invisible">.</div>
 </div>
+
 
 
 </section>
