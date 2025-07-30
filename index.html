@@ -541,7 +541,7 @@
     <!-- Card 1 -->
     <div class="relative flex flex-col md:flex-row items-center overflow-hidden rounded-2xl group transition-all duration-500">
        <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/50 via-indigo-300/10 to-transparent dark:from-indigo-400/40 dark:via-indigo-200/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20 pointer-events-none"></div>
-      <img src="traffic increase.png" alt="Organic Traffic" class="w-full md:w-1/2 object-cover z-10" />
+      <img src="traffic increase.png" alt="Organic Traffic" class="w-full md:w-1/2 object-cover z-10 cursor-pointer transition-transform hover:scale-105" />
       <div class="p-6 md:w-1/2 text-gray-900 dark:text-white z-10">
         <h3 class="text-xl font-semibold mb-2">+91% in organic traffic</h3>
         <p class="text-base text-gray-700 dark:text-gray-300">in 12 months</p>
@@ -551,20 +551,20 @@
     <!-- Card 2 (interleaved) -->
     <div class="relative flex flex-col md:flex-row-reverse items-center overflow-hidden rounded-2xl group transition-all duration-500">
       <div class="absolute inset-0 bg-gradient-to-l from-indigo-100/40 via-white/0 to-transparent dark:from-indigo-400/10 dark:via-slate-800/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0 pointer-events-none"></div>
-      <img src="Screenshot-2.png" alt="Revenue Growth" class="w-full md:w-1/2 object-cover z-10" />
+      <img src="Meta.png" alt="Revenue Growth" class="w-full md:w-1/2 object-cover z-10 cursor-pointer transition-transform hover:scale-105" />
       <div class="p-6 md:w-1/2 text-gray-900 dark:text-white z-10">
-        <h3 class="text-xl font-semibold mb-2">+28% in total revenue</h3>
-        <p class="text-base text-gray-700 dark:text-gray-300">in 12 months</p>
+        <h3 class="text-xl font-semibold mb-2">Gathered 247 clicks</h3>
+        <p class="text-base text-gray-700 dark:text-gray-300">in 3 months</p>
       </div>
     </div>
 
     <!-- Card 3 -->
     <div class="relative flex flex-col md:flex-row items-center overflow-hidden rounded-2xl group transition-all duration-500">
       <div class="absolute inset-0 bg-gradient-to-r from-indigo-100/40 via-white/0 to-transparent dark:from-indigo-400/10 dark:via-slate-800/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0 pointer-events-none"></div>
-      <img src="Screenshot-3.png" alt="Keyword Acquisition" class="w-full md:w-1/2 object-cover z-10" />
+      <img src="fanpage.png" alt="Keyword Acquisition" class="w-full md:w-1/2 object-cover z-10 cursor-pointer transition-transform hover:scale-105" />
       <div class="p-6 md:w-1/2 text-gray-900 dark:text-white z-10">
-        <h3 class="text-xl font-semibold mb-2">+197% in keyword acquisition</h3>
-        <p class="text-base text-gray-700 dark:text-gray-300">with 10× smarter targeting using intent-led keyword optimization</p>
+        <h3 class="text-xl font-semibold mb-2">Achieve 11,000 followers</h3>
+        <p class="text-base text-gray-700 dark:text-gray-300">reaching 100,000 viewers in average per post</p>
       </div>
     </div>
 
@@ -1223,6 +1223,47 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     });
   });
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const resultImages = document.querySelectorAll("#results img");
+
+    resultImages.forEach(img => {
+      img.addEventListener("click", () => {
+        modalImg.src = img.src;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      });
+    });
+
+    // Close on click outside or ESC
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal || e.target === modalImg) {
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+        modalImg.src = "";
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+        modalImg.src = "";
+      }
+    });
+  });
+</script>
+
+
+<!-- Image Modal -->
+<div id="imageModal" class="fixed inset-0 bg-black/70 z-[9999] hidden items-center justify-center">
+  <img id="modalImage" src="" alt="Enlarged Result" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl" />
+</div>
+
+
 
 </body>
 </html>
