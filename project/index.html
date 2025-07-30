@@ -192,7 +192,7 @@
 <div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="wif.png">
   <img src="wif.png" alt="Mentor" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
   <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-    <p class="text-white text-center text-base font-medium px-2">
+    <p class="text-white text-center text-base font-medium px-2" data-i18n="card1text">
       Fanpage WIF - What If Football<br>Follower: 11,000
     </p>
   </div>
@@ -202,7 +202,7 @@
 <div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="tiktok.png">
   <img src="tiktok.png" alt="Growth" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
   <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-    <p class="text-white text-center text-base font-medium px-2">
+    <p class="text-white text-center text-base font-medium px-2" data-i18n="card2text">
       Tiktok channel: from 0 to nearly 1000 followers
     </p>
   </div>
@@ -212,7 +212,7 @@
 <div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="organic traffic.png">
   <img src="organic traffic.png" alt="Mentors" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
   <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-    <p class="text-white text-center text-base font-medium px-2">
+    <p class="text-white text-center text-base font-medium px-2" data-i18n="card3text">
       Education: The organic traffic increased by more than 33% 
     </p>
   </div>
@@ -222,7 +222,7 @@
 <div class="relative group rounded-lg overflow-hidden shadow-lg cursor-pointer" onclick="openModal(this)" data-image="Meta.png">
   <img src="Meta.png" alt="Listeners" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105" />
   <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-    <p class="text-white text-center text-base font-medium px-2">
+    <p class="text-white text-center text-base font-medium px-2" data-i18n="card4text">
       Meta ad: The campaign gathered 247 website leads during 3 months
     </p>
   </div>
@@ -241,8 +241,8 @@
 
   <!-- Overlay (hover text) -->
   <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-    <p class="text-white text-center text-base font-medium px-2 z-10">
-      99.9% Authentic Industry Material
+    <p class="text-white text-center text-base font-medium px-2 z-10" data-i18n="card5text">
+      Engaging promotional videos for businesses
     </p>
   </div>
 
@@ -756,6 +756,11 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       resources: {
         en: {
           translation: {
+          "card1text": "Fanpage WIF - What If Football Follower: 11,000",
+          "card2text": "Tiktok channel: from 0 to nearly 1000 followers in 3 months",
+          "card3text": "Education: The organic traffic increased by more than 33%",
+          "card4text": "Meta ads: The campaign gathered 247 leads during 3 months",
+          "card5text": "Engaging promotional videos for businesses",
           "greeting": "Hello, I'm Viet,\nProfessional Digital Marketer",
           "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
           "services": "Services",
@@ -826,6 +831,11 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         },
         vi: {
           translation: {
+          "card1text": "Fanpage WIF - What If Football Follower: 11,000",
+          "card2text": "Xây kênh tiktok từ 0 đến 1000 followers trong 3 tháng",
+          "card3text": "Mảng giáo dục: Organic traffic tăng 33% hằng tháng",
+          "card4text": "Meta ads: Chiến dịch thu về 247 leads trong vòng 3 tháng",
+          "card5text": "Sáng tạo các video truyền thông hấp dẫn cho doanh nghiệp",
           "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
           "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
           "services": "Dịch vụ",
