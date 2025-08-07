@@ -103,18 +103,6 @@
     content: none !important;
   </style>
 
-  <style>
-  .filter-tab.active {
-    background-color: #4f46e5; /* Tailwind's indigo-600 */
-    color: white;
-  }
-
-  .dark .filter-tab.active {
-    background-color: #6366f1; /* Tailwind's indigo-400 for dark mode */
-    color: white;
-  }
-</style>
-
 <style>
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
@@ -124,6 +112,22 @@
     scrollbar-width: none;
   }
 </style>
+
+<style>
+  .filter-tab {
+    background-color: #e5e7eb; /* Tailwind gray-200 */
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+  }
+  .active-tab {
+    background-color: #4f46e5; /* Tailwind indigo-600 */
+    color: white;
+  }
+  .blog-item {
+    display: none;
+  }
+</style>
+
 
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
@@ -1528,16 +1532,25 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     });
 
     // Setup search functionality
-    if (searchInput) {
-      searchInput.addEventListener('input', () => {
-        const keyword = searchInput.value.toLowerCase();
+   if (searchInput) {
+  const searchAndFilter = () => {
+    const keyword = searchInput.value.toLowerCase();
 
-        articles.forEach(article => {
-          const text = article.textContent.toLowerCase();
-          article.style.display = text.includes(keyword) ? 'block' : 'none';
-        });
-      });
+    articles.forEach(article => {
+      const text = article.textContent.toLowerCase();
+      article.style.display = text.includes(keyword) ? 'block' : 'none';
+    });
+  };
+
+  searchInput.addEventListener('input', searchAndFilter);
+
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // prevent form submit if any
+      searchAndFilter();
     }
+  });
+}
 
     // ✅ Set default active filter to the first tab
     if (tabs.length > 0) {
