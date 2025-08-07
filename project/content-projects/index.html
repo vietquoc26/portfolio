@@ -205,17 +205,16 @@
 
     <!-- Filter Tabs -->
     <div class="flex flex-wrap justify-center gap-3 mt-2 px-4 mb-10">
-      <button class="filter-tab bg-indigo-600 text-white px-4 py-2 rounded-full" data-filter="all">All</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="wordpress">WordPress</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="travel">Travel</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="technical">Technical Writing</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="synodus">Synodus</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="promotion">Promotion Copy Ads</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="pr">PR Blogs</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="neurod">Neurond AI</button>
+      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="neurond">Neurond AI</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="marketing">Marketing Blogs</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="law">Law Industry</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="landing">Landing Pages</button>
+      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="landingpage">Landing Pages</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="informative">Informative Blog</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="business">Business Software</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="blockchain">Blockchains & Crypto</button>
@@ -227,30 +226,30 @@
     <!-- Google Docs Grid -->
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mt-10">
       <!-- Doc 1 -->
-      <article class="bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+      <article class="blog-item wordpress bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
         <div class="relative w-full h-64">
           <iframe 
-            src="https://docs.google.com/document/d/your-doc-id-1/preview" 
+            src="https://docs.google.com/document/d/1anKCj8pu8GSjCGzXFcoo2tM5XlpNAHkjyy3IsYgA5ec/edit?usp=drive_link" 
             width="100%" height="100%" class="absolute inset-0 border-none"></iframe>
         </div>
         <div class="p-5">
-          <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium">Technology</span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">How Technology is Changing the Workplace</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Tracey Wilson • 29 Jun, 2025</p>
+          <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium">WordPress</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">WordPress Member Directory - Raising Your Member Value With Top 5 Recommended Plugins</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
         </div>
       </article>
 
       <!-- Doc 2 -->
-      <article class="bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+      <article class="blog-item wordpress bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
         <div class="relative w-full h-64">
           <iframe 
-            src="https://docs.google.com/document/d/your-doc-id-2/preview" 
+            src="https://docs.google.com/document/d/1zCTTfin5M7AK-d9NCviKeF2H5HEKn14mg_O6O9B5HGs/edit?usp=drive_link" 
             width="100%" height="100%" class="absolute inset-0 border-none"></iframe>
         </div>
         <div class="p-5">
-          <span class="text-sm text-yellow-600 font-medium">Design</span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Grid System for Better UI</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Emma Collins • 20 Jun, 2025</p>
+          <span class="text-sm text-yellow-600 font-medium">WordPress</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Top WordPress Custom RSS Plugins - 5 Recommendations For Your Websites</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
         </div>
       </article>
 
@@ -911,6 +910,34 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   <img id="modalImage" src="" alt="Enlarged Result" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl" />
 </div>
 
+<script>
+  const tabs = document.querySelectorAll('.filter-tab');
+  const articles = document.querySelectorAll('.blog-item');
+  const searchInput = document.getElementById('searchInput');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const filter = tab.getAttribute('data-filter');
+
+      articles.forEach(article => {
+        if (filter === 'all' || article.classList.contains(filter)) {
+          article.style.display = 'block';
+        } else {
+          article.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  searchInput.addEventListener('input', () => {
+    const keyword = searchInput.value.toLowerCase();
+
+    articles.forEach(article => {
+      const text = article.textContent.toLowerCase();
+      article.style.display = text.includes(keyword) ? 'block' : 'none';
+    });
+  });
+</script>
 
 
 </body>
