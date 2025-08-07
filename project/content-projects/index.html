@@ -236,11 +236,6 @@
         </a>
       </p>
 
-      <input
-        type="text"
-        placeholder="Search our blogs by topic or keywords..."
-        class="mt-6 w-full max-w-md mx-auto px-4 py-2 rounded-xl border dark:border-gray-700 focus:outline-none focus:ring focus:border-indigo-400 dark:bg-gray-800 dark:text-white"
-      />
     </div>
 
     <!-- Filter Tabs -->
@@ -252,7 +247,6 @@
      <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="pr">PR Blogs</button>
      <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="marketing">Marketing</button>
      <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="law">Law Industry</button>
-     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="business">Business Software</button>
      <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="blockchain">Blockchains & Crypto</button>
      <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="architecture">Architecture</button>
      <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="apk">APK Software</button>
@@ -1567,10 +1561,16 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     const articles = document.querySelectorAll('.blog-item');
     const searchInput = document.getElementById('searchInput');
 
-    // Function to filter articles
-    function filterArticles(filter) {
+    let currentFilter = tabs[0]?.getAttribute('data-filter') || 'all';
+
+    function applyFilters() {
+      const keyword = searchInput?.value.toLowerCase() || '';
+
       articles.forEach(article => {
-        if (filter === 'all' || article.classList.contains(filter)) {
+        const matchesCategory = currentFilter === 'all' || article.classList.contains(currentFilter);
+        const matchesSearch = article.textContent.toLowerCase().includes(keyword);
+
+        if (matchesCategory && matchesSearch) {
           article.style.display = 'block';
         } else {
           article.style.display = 'none';
@@ -1578,47 +1578,35 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       });
     }
 
-    // Setup tab click behavior
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
-        const filter = tab.getAttribute('data-filter');
-        filterArticles(filter);
+        currentFilter = tab.getAttribute('data-filter');
+        applyFilters();
       });
     });
 
-    // Setup search functionality
-   if (searchInput) {
-  const searchAndFilter = () => {
-    const keyword = searchInput.value.toLowerCase();
+    if (searchInput) {
+      searchInput.addEventListener('input', applyFilters);
 
-    articles.forEach(article => {
-      const text = article.textContent.toLowerCase();
-      article.style.display = text.includes(keyword) ? 'block' : 'none';
-    });
-  };
-
-  searchInput.addEventListener('input', searchAndFilter);
-
-  searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault(); // prevent form submit if any
-      searchAndFilter();
+      // 🔥 Enter key support
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); // Stop form submission
+          applyFilters();
+        }
+      });
     }
-  });
-}
 
-    // ✅ Set default active filter to the first tab
     if (tabs.length > 0) {
-      const firstTab = tabs[0];
-      const firstFilter = firstTab.getAttribute('data-filter');
-      firstTab.classList.add('active');
-      filterArticles(firstFilter);
+      tabs[0].classList.add('active');
+      applyFilters();
     }
   });
 </script>
+
+
 
 
 
