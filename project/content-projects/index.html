@@ -102,8 +102,21 @@
   .swiper-button-prev::after {
     content: none !important;
   </style>
+
+  <style>
+  .filter-tab.active {
+    background-color: #4f46e5; /* Tailwind's indigo-600 */
+    color: white;
+  }
+
+  .dark .filter-tab.active {
+    background-color: #6366f1; /* Tailwind's indigo-400 for dark mode */
+    color: white;
+  }
+</style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
+  
 
 <!-- Navbar -->
 <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
@@ -180,6 +193,18 @@
 </nav>
 
 <!-- Blogs -->
+<style>
+  .filter-tab.active {
+    background-color: #4f46e5; /* indigo-600 */
+    color: #fff;
+  }
+
+  .dark .filter-tab.active {
+    background-color: #6366f1; /* dark: indigo-400 */
+    color: #fff;
+  }
+</style>
+
 <section id="blog" class="py-20 px-6 bg-white dark:bg-gray-900">
   <div class="max-w-7xl mx-auto">
 
@@ -205,13 +230,13 @@
 
     <!-- Filter Tabs -->
     <div class="flex flex-wrap justify-center gap-3 mt-2 px-4 mb-10">
+      <button class="filter-tab active bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="AI">AI Technology</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="wordpress">WordPress</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="travel">Travel</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="technical">Technical Writing</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="synodus">Synodus</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="promotion">Promotion Copy Ads</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="pr">PR Blogs</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="neurond">Neurond AI</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="marketing">Marketing Blogs</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="law">Law Industry</button>
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="landingpage">Landing Pages</button>
@@ -223,8 +248,123 @@
       <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="amazon">Amazon Product Reviews</button>
     </div>
 
-    <!-- Google Docs Grid -->
+    <!-- AI Technology Blogs -->
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mt-10">
+      <!-- Doc 1 -->
+      <article class="blog-item AI bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+       <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      13 Types of AI Agents (Features and Examples)
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">AI Technology</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">13 Types of AI Agents (Features and Examples)</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+           <a href="https://docs.google.com/document/d/1WRSINz6Z6VNJuUhevvoN0sYC6TS_1zYOIdJqtVVglFs/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+      <!-- Doc 2 -->
+      <article class="blog-item AI bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      Choosing the Right AI Model for Your AI Implementation: A Practical Guide 
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">AI Technology</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Choosing the Right AI Model for Your AI Implementation: A Practical Guide </h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/1jyNb_9Lm-4jd-GDSRSg5C2fQpLpFH89Q1SD46CNjnHQ/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+      <!-- Doc 3 -->
+      <article class="blog-item AI bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      AI Pricing: How Much Does AI Implementation Cost
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">AI Technology</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">AI Pricing: How Much Does AI Implementation Cost</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/1Sd_HDbzxRUdWG_tp6md1Qlvj-R5NjNHE23L6Q65nh0c/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+      <!-- Doc 4 -->
+      <article class="blog-item AI bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      Generative AI vs Conversational AI: What is The Difference?
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">AI Technology</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Generative AI vs Conversational AI: What is The Difference?</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/1LaQjslOW07mC_jXfAJ0wpgyaWOHHZt6ogMyhQcFzdOo/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+          <!-- Doc 5 -->
+      <article class="blog-item AI bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      How to Build and Deploy Custom AI Models
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">AI Technology</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">How to Build and Deploy Custom AI Models</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/1qd16DQdaJvHrdzBSS8jC4-zDbATUeM5aETNwy0329Sw/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+      <!-- Doc 6 -->
+      <article class="blog-item AI bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      Top 10 Conversational AI Platforms for 2025
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">AI Technology</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Top 10 Conversational AI Platforms for 2025</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/19z7egCJjUgKoTQj6dche0Y0rilKbtMaTt9NPtidpW6g/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+    <!-- WordPress Blogs -->
       <!-- Doc 1 -->
       <article class="blog-item wordpress bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
@@ -233,7 +373,7 @@
     </h3>
   </div>
         <div class="p-5">
-          <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium">WordPress</span>
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">WordPress</span>
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">WordPress Member Directory - Raising Your Member Value With Top 5 Recommended Plugins</h3>
           <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
            <a href="https://docs.google.com/document/d/1anKCj8pu8GSjCGzXFcoo2tM5XlpNAHkjyy3IsYgA5ec/edit?usp=drive_link"
@@ -252,7 +392,7 @@
     </h3>
   </div>
         <div class="p-5">
-          <span class="text-sm text-yellow-600 font-medium">WordPress</span>
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">WordPress</span>
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Top WordPress Custom RSS Plugins - 5 Recommendations For Your Websites</h3>
           <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
           <a href="https://docs.google.com/document/d/1zCTTfin5M7AK-d9NCviKeF2H5HEKn14mg_O6O9B5HGs/edit?usp=drive_link"
@@ -264,19 +404,80 @@
       </article>
 
       <!-- Doc 3 -->
-      <article class="bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-        <div class="relative w-full h-64">
-          <iframe 
-            src="https://docs.google.com/document/d/your-doc-id-3/preview" 
-            width="100%" height="100%" class="absolute inset-0 border-none"></iframe>
-        </div>
+      <article class="blog-item wordpress bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      Top WordPress Custom RSS Plugins - 5 Recommendations For Your Websites
+    </h3>
+  </div>
         <div class="p-5">
-          <span class="text-sm text-red-600 font-medium">Leadership</span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Bill Walsh Leadership Lessons</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Dexter Scott • 12 Jun, 2025</p>
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">WordPress</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Top WordPress Custom RSS Plugins - 5 Recommendations For Your Websites</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/1FXvyzhZ9vwzXtJnm3HLmjC0MrFrZVHVWLRZ24tbiM8U/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
         </div>
       </article>
-    </div>
+
+      <!-- Doc 4 -->
+      <article class="blog-item wordpress bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      The Overarching Guide For Applying WordPress Dummy Content
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">WordPress</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">The Overarching Guide For Applying WordPress Dummy Content</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/1RfQo3xXFMJLvcSyfirpk9l20TIkOtfo-g6yAEwMmmpo/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+          <!-- Doc 5 -->
+      <article class="blog-item wordpress bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      User Role Unique to WordPress Multisite - A Comprehensive Guide to Managing Multiple Websites
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">WordPress</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">User Role Unique to WordPress Multisite - A Comprehensive Guide to Managing Multiple Websites</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/1LcuR8wqsOXCwlhC4n4Koiy7nzM6l2QZdJqQ4taXCcUg/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+      <!-- Doc 6 -->
+      <article class="blog-item wordpress bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <div class="bg-indigo-100 dark:bg-gray-900 flex items-center justify-center h-64 text-center px-6">
+    <h3 class="text-xl font-semibold text-indigo-800 dark:text-white leading-snug">
+      Interactive Image WordPress - Capturing Visitors’ Eyes with These 7 Plugins
+    </h3>
+  </div>
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-yellow-400 font-medium">WordPress</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Interactive Image WordPress - Capturing Visitors’ Eyes with These 7 Plugins</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Viet Quoc</p>
+          <a href="https://docs.google.com/document/d/1WaucVE3Zgs4OQCNj80YDB-T6JjDham9ayM26pbNAQnw/edit?usp=sharing"
+       target="_blank"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
 
   </div>
 </section>
@@ -927,8 +1128,14 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const filter = tab.getAttribute('data-filter');
+      // Remove 'active' class from all tabs
+      tabs.forEach(t => t.classList.remove('active'));
 
+      // Add 'active' class to the clicked tab
+      tab.classList.add('active');
+
+      // Filter articles
+      const filter = tab.getAttribute('data-filter');
       articles.forEach(article => {
         if (filter === 'all' || article.classList.contains(filter)) {
           article.style.display = 'block';
@@ -939,6 +1146,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     });
   });
 
+  // Search logic
   searchInput.addEventListener('input', () => {
     const keyword = searchInput.value.toLowerCase();
 
@@ -948,6 +1156,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     });
   });
 </script>
+
 
 
 </body>
