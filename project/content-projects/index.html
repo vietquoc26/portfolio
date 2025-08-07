@@ -114,6 +114,17 @@
     color: white;
   }
 </style>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
   
@@ -230,22 +241,22 @@
 
     <!-- Filter Tabs -->
     <div class="flex flex-wrap justify-center gap-3 mt-2 px-4 mb-10">
-      <button class="filter-tab active bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="AI">AI Technology</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="wordpress">WordPress</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="travel">Travel</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="technical">Technical Writing</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="synodus">Synodus</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="promotion">Promotion Copy Ads</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="pr">PR Blogs</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="marketing">Marketing Blogs</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="law">Law Industry</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="landingpage">Landing Pages</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="informative">Informative Blog</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="business">Business Software</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="blockchain">Blockchains & Crypto</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="architecture">Architecture</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="apk">APK Software</button>
-      <button class="filter-tab bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full" data-filter="amazon">Amazon Product Reviews</button>
+     <button class="filter-tab active flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="AI">AI Technology</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="wordpress">WordPress</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="travel">Travel</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="technical">Technical Writing</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="synodus">Synodus</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="promotion">Promotion Copy Ads</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="pr">PR Blogs</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="marketing">Marketing Blogs</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="law">Law Industry</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="landingpage">Landing Pages</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="informative">Informative Blog</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="business">Business Software</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="blockchain">Blockchains & Crypto</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="architecture">Architecture</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="apk">APK Software</button>
+     <button class="filter-tab flex-shrink-0 bg-gray-200 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-full text-sm font-medium transition" data-filter="amazon">Amazon Product Reviews</button>
     </div>
 
     <!-- AI Technology Blogs -->
