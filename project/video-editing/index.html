@@ -10,7 +10,7 @@
   
   <title>Viet | Digital Marketer</title>
    <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js" defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
     tailwind.config = { darkMode: 'class' }
@@ -195,7 +195,8 @@
     <section>
       <h2 class="text-2xl font-bold mb-4">Brand Introduction</h2>
       <div class="rounded-xl overflow-hidden shadow-lg border-4 border-white dark:border-gray-800">
-    <iframe 
+    <iframe
+    loading="lazy"
       class="w-full aspect-[21/9]"
       src="https://www.youtube.com/embed/hYB0xfd7p30?autoplay=1&loop=1&playlist=hYB0xfd7p30&mute=1"
       allow="autoplay; encrypted-media"
@@ -209,6 +210,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
     <!-- Horizontal -->
     <iframe 
+    loading="lazy"
       class="w-full aspect-video rounded-lg border-4 border-white"
       src="https://www.youtube.com/embed/xNjyzWbXmbU?autoplay=1&loop=1&playlist=xNjyzWbXmbU&mute=1"
       allow="autoplay; encrypted-media"
@@ -218,6 +220,7 @@
     <!-- Vertical (Short) -->
   <div class="rounded-xl overflow-hidden shadow-md border-4 border-white dark:border-gray-700 bg-white dark:bg-gray-800 max-w-[240px] mx-auto">
     <iframe 
+    loading="lazy"
       class="w-full h-[320px] object-cover"
       src="https://www.youtube.com/embed/MDMgatXqTic?autoplay=1&loop=1&playlist=MDMgatXqTic&mute=1"
       allow="autoplay; encrypted-media"
@@ -230,6 +233,7 @@
       <h2 class="text-2xl font-bold mb-4">Teaser</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
     <iframe 
+    loading="lazy"
       class="w-full aspect-video rounded-lg border-4 border-white"
       src="https://www.youtube.com/embed/ZV3e81eQEF8?autoplay=1&loop=1&playlist=ZV3e81eQEF8&mute=1"
       allow="autoplay; encrypted-media"
@@ -242,6 +246,7 @@
       <h2 class="text-2xl font-bold mb-4">Trailer</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <iframe 
+      loading="lazy"
       class="w-full aspect-video rounded-lg border-4 border-white"
       src="https://www.youtube.com/embed/fRRaLktHvuA?autoplay=1&loop=1&playlist=fRRaLktHvuA&mute=1"
       allow="autoplay; encrypted-media"
@@ -249,6 +254,7 @@
     </iframe>
 
       <iframe 
+      loading="lazy"
       class="w-full aspect-video rounded-lg border-4 border-white"
       src="https://www.youtube.com/embed/7XjR9eer11w?autoplay=1&loop=1&playlist=7XjR9eer11w&mute=1"
       allow="autoplay; encrypted-media"
@@ -256,6 +262,7 @@
     </iframe>
 
     <iframe 
+    loading="lazy"
       class="w-full aspect-video rounded-lg border-4 border-white"
       src="https://www.youtube.com/embed/6h7Q90BmoDs?autoplay=1&loop=1&playlist=6h7Q90BmoDs&mute=1"
       allow="autoplay; encrypted-media"
@@ -590,17 +597,6 @@
 </script>
 
 
-    <script>
-  document.getElementById("contactForm").addEventListener("submit", function (e) {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    if (!name || !email) {
-      alert(i18next.t("alertRequired"));
-      e.preventDefault();
-    }
-  });
-</script>
-
 <script>
 const WIT_AI_TOKEN = "HEKU3KJQIVCDYHEMFWZIODV2EHAEFLRE"; // 🔁 Replace with your Wit.ai Server token
 
@@ -747,89 +743,6 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   input.addEventListener('blur', () => {
     // Reset to original position
     chatbotWindow.style.bottom = originalBottom || '110px';
-  });
-</script>
-
-
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    new Swiper(".mySwiper", {
-  loop: false, // disable loop
-  speed: 600,
-  slidesPerView: 1.1,
-  spaceBetween: 12,
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  breakpoints: {
-    360: { slidesPerView: 1.1 },
-    640: { slidesPerView: 1.3 },
-    768: { slidesPerView: 2.2 },
-    1024: { slidesPerView: 3 }
-  }
-});
-
-  });
-  // Mobile fallback hover simulation
-  if (window.matchMedia('(hover: none)').matches) {
-    const slides = document.querySelectorAll('.swiper-slide');
-    slides.forEach(slide => {
-      slide.addEventListener('touchstart', () => {
-        slides.forEach(s => s.classList.remove('hovered'));
-        slides.forEach(s => s.classList.add('dimmed'));
-        slide.classList.remove('dimmed');
-        slide.classList.add('hovered');
-      });
-      slide.addEventListener('touchend', () => {
-        slides.forEach(s => s.classList.remove('hovered', 'dimmed'));
-      });
-    });
-  }
-</script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("contactForm");
-    form.addEventListener("submit", async function(e) {
-      e.preventDefault();
-
-      const data = {
-        data: {
-          Timestamp: new Date().toLocaleString(), // e.g., "7/19/2025, 12:06 AM"
-          Name: form.name.value,
-          Email: form.email.value,
-          Phone: form.phone.value,
-          Message: form.message.value
-        }
-      };
-
-      try {
-        const response = await fetch("https://sheetdb.io/api/v1/qnlcqcaiwnlq5", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
-
-        if (response.ok) {
-          alert("Message sent successfully!");
-          form.reset();
-        } else {
-          alert("Failed to send message.");
-        }
-      } catch (error) {
-        alert("Error sending message.");
-        console.error(error);
-      }
-    });
   });
 </script>
 
