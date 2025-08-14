@@ -907,6 +907,29 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     });
   });
 </script>
+
+<!-- Modal -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+  <div class="relative max-w-4xl mx-auto">
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl">&times;</button>
+    <img id="modalImage" src="" alt="" class="max-h-[80vh] rounded-lg">
+    <p id="modalCaption" class="text-center text-white mt-4"></p>
+  </div>
+</div>
+
+<script>
+  function openModal(src, caption) {
+    document.getElementById('modalImage').src = src;
+    document.getElementById('modalCaption').textContent = caption;
+    document.getElementById('imageModal').classList.remove('hidden');
+    document.getElementById('imageModal').classList.add('flex');
+  }
+
+  function closeModal() {
+    document.getElementById('imageModal').classList.add('hidden');
+    document.getElementById('imageModal').classList.remove('flex');
+  }
+</script>
   
 </body>
 </html>
