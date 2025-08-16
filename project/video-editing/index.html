@@ -10,7 +10,7 @@
   
   <title>Viet | Digital Marketer</title>
    <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js" defer></script>
+  <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
     tailwind.config = { darkMode: 'class' }
@@ -888,7 +888,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
           }
         }
       }
-    }, function(err, t) {
+     }, function(err, t) {
       updateContent();
       highlightActiveLang(i18next.language);
       mergeSheetTranslations(); // override intro/about/skills
@@ -896,7 +896,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 
     function updateContent() {
       document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.innerHTML = i18next.t(el.getAttribute('data-i18n'));
+        el.innerText = i18next.t(el.getAttribute('data-i18n'));
       });
     }
 
