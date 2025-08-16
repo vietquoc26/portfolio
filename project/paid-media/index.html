@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="Viet is a professional digital marketer specializing in SEO, content, ads, and branding. Based in Ho Chi Minh City, Vietnam.">
+  <meta name="keywords" content="Digital Marketing, SEO, Content Writing, Facebook Ads, Viet, Vietnam">
+  <meta name="author" content="Hồ Nguyễn Quốc Việt">
+  
+  <title>Viet | Digital Marketer</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <style>
+    /* Chatbot animation keyframes */
+    @keyframes slideFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+    @keyframes slideFadeOut {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+    }
+
+    .chatbot-animate-in {
+      animation: slideFadeIn 0.4s ease-out forwards;
+    }
+
+    .chatbot-animate-out {
+      animation: slideFadeOut 0.3s ease-in forwards;
+    }
+  </style>
+
+  <style>
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-delay-1 { animation-delay: 0.2s; }
+    .fade-delay-2 { animation-delay: 0.4s; }
+    .fade-delay-3 { animation-delay: 0.6s; }
+    .fade-delay-4 { animation-delay: 0.8s; }
+    #btn-en.bg-white, #btn-vi.bg-white {
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+   @keyframes fadeInSideNav {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-side-fade-in {
+  animation: fadeInSideNav 1.8s ease-out forwards;
+}
+.swiper-button-next::after,
+  .swiper-button-prev::after {
+    content: none !important;
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
+
+<!-- Navbar -->
+<nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 px-4 py-3">
+  <div class="flex items-center justify-between max-w-7xl mx-auto flex-wrap md:flex-nowrap">
+
+    <!-- Logo + Language -->
+    <div class="flex items-center gap-2">
+      <a href="/">
+        <img src="logo2.png" alt="Logo" class="h-10 w-10 rounded-full" />
+      </a>
+      <div class="flex items-center gap-1 sm:gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-1 ml-1">
+        <button onclick="setLanguage('en')" id="btn-en" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇺🇸</button>
+        <button onclick="setLanguage('vi')" id="btn-vi" class="px-2 py-1 rounded-full text-sm font-medium text-gray-700 dark:text-gray-200">🇻🇳</button>
+      </div>
+    </div>
+
+    <!-- Contact + Hamburger -->
+    <div class="flex items-center gap-5 ml-auto">
+      <a href="/contact-us/" class="md:hidden px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm font-medium shadow transition" data-i18n="contact">Contact</a>
+      <button id="menu-toggle" class="text-2xl md:hidden text-gray-800 dark:text-white">☰</button>
+    </div>
+
+    <!-- Desktop Nav -->
+    <div id="nav-links" class="hidden md:flex gap-6 items-center ml-auto">
+      <a href="/about-me/" class="hover:underline" data-i18n="about">About</a>
+
+      <!-- Projects with dropdown -->
+      <div class="relative group">
+        <a href="/project/" class="flex items-center hover:underline text-gray-800 dark:text-white">
+          <span data-i18n="projects">Projects</span>
+          <svg class="ml-1 w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </a>
+        <div class="absolute left-0 mt-2 min-w-[140px] bg-white dark:bg-gray-800 rounded-md shadow-lg 
+                    opacity-0 invisible translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 
+                    transition-all duration-300 ease-out z-50 whitespace-nowrap">
+          <a href="/project/SEO-projects/" data-i18n="seoProjects" class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">SEO Projects</a>
+          <a href="/project/content-projects/" data-i18n="contentWriting" class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Content Writing</a>
+          <a href="#paid-media" data-i18n="paidMedia" class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Paid Media</a>
+          <a href="#video-editing" data-i18n="videoEditing" class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Video Editing</a>
+        </div>
+      </div>
+
+      <a href="/contact-us/" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition text-sm font-medium" data-i18n="contact">Contact</a>
+      <button id="themeToggle" class="bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
+    </div>
+  </div>
+
+ <!-- Mobile Menu -->
+<div id="mobile-menu" class="md:hidden hidden flex flex-col items-start space-y-2 mt-3 px-4">
+  <a href="/about-me/" class="block py-2 hover:underline" data-i18n="about">About</a>
+
+  <!-- Projects with submenu -->
+  <div class="w-full">
+    <div class="flex items-center justify-start gap-1 py-2 w-full text-gray-800 dark:text-white">
+      <a href="/project/" class="hover:underline text-gray-800 dark:text-white" data-i18n="projects">Projects</a>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+    <div id="mobile-submenu" class="flex flex-col pl-6 text-left text-sm">
+      <a href="/project/SEO-projects/" data-i18n="seoProjects" class="block py-1 text-gray-700 dark:text-white hover:underline">SEO Projects</a>
+      <a href="/project/content-projects/" data-i18n="contentWriting" class="block py-1 text-gray-700 dark:text-white hover:underline">Content Writing</a>
+      <a href="#paid-media" data-i18n="paidMedia" class="block py-1 text-gray-700 dark:text-white hover:underline">Paid Media</a>
+      <a href="#video-editing" data-i18n="videoEditing" class="block py-1 text-gray-700 dark:text-white hover:underline">Video Editing</a>
+    </div>
+  </div>
+
+
+    <a href="/contact-us/" class="block py-2 hover:underline" data-i18n="contact">Contact</a>
+    <button id="themeToggleMobile" class="mt-2 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">🌓</button>
+  </div>
+</nav>
+<section id="blog" class="py-20 px-6 bg-white dark:bg-gray-900">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white">My Paid Media Projects</h2>
+      <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg">
+        Including all my campaigns run on Google and Meta ads
+      </p>
+    </div>
+
+    <!-- Blog Cards Grid -->
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Blog Card 1 -->
+      <article class="bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <img src="seo-education-1.png" alt="" class="w-full h-48 object-cover">
+        <div class="p-5">
+          <span class="text-sm text-indigo-600 dark:text-indigo-400 font-medium">Paid Media</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Google Ads Campaign Optimization</h3>
+        <a href="/project/seo-project-1/"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+      <!-- Blog Card 2 -->
+      <article class="bg-gray-50 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+        <img src="seo-technology-1.jpg" alt="" class="w-full h-48 object-cover">
+        <div class="p-5">
+          <span class="text-sm text-yellow-600 font-medium">Paid Media</span>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-2">Meta ads campaign optimization</h3>
+         <a href="/project/seo-project-2/"
+       class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200">
+      Read more
+    </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Chatbot Toggle Button -->
+<div id="chatbot-toggle"
+     class="fixed bottom-24 right-4 z-50 bg-blue-600 text-white p-4 rounded-full shadow-lg cursor-pointer hover:bg-blue-700 md:right-6 flex items-center justify-center"
+     title="Chat with Viet Assistant">
+  <!-- Chat Bubble Icon (Heroicons) -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+       stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-4.35-1l-3.65 1 1-3.65A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+</div>
+
+    <!-- Chatbot Window -->
+<!-- Chatbot Window -->
+<div id="chatbot-window"
+     class="hidden absolute bottom-0 right-0 w-full sm:fixed sm:bottom-[110px] sm:right-6 sm:w-[90%] max-w-[380px] max-h-[80vh] bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-t-xl sm:rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700">
+
+
+  <!-- Header with Close Button -->
+  <div class="bg-blue-600 text-white px-4 py-3 font-semibold text-lg flex justify-between items-center">
+    Viet Assistant
+    <button id="chatbot-close" class="text-white text-xl leading-none hover:text-red-300">×</button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
+    <div class="text-left">
+      <div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1">
+        Hello 👋<br>How can I help you today?
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <form id="chatbot-form" class="flex border-t border-gray-200 dark:border-gray-700">
+    <input type="text" id="chatbot-input" placeholder="Type your message..."
+           class="flex-1 px-3 py-3 text-sm bg-transparent focus:outline-none">
+    <button type="submit" class="px-4 text-blue-600 dark:text-blue-400 font-bold">➤</button>
+  </form>
+</div>
+
+
+
+<!-- Footer -->
+<footer class="bg-gradient-to-t from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200 pt-10 pb-6 px-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+
+    <!-- Logo + Description -->
+    <div>
+      <div class="flex items-center gap-3 mb-4">
+        <img src="logo2.png" alt="Logo" class="h-10 w-10 rounded-full" />
+        <h2 class="text-lg font-semibold">VietPortfolio</h2>
+      </div>
+      <p class="text-sm mb-4 leading-relaxed" data-i18n="footerDescription"></p>
+      <div class="flex gap-4 text-lg text-blue-600 dark:text-blue-400">
+        <a href="https://www.facebook.com/honguyenquocviet150799/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.linkedin.com/in/ho-nguyen-quoc-viet/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.tiktok.com/" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="https://youtube.com/" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Introduction + Services (Always Side-by-Side) -->
+    <div class="flex flex-nowrap justify-between w-full overflow-hidden gap-6 text-sm">
+
+      <!-- Introduction -->
+      <div class="w-1/2">
+        <h3 class="text-base font-semibold mb-3" data-i18n="introduction">Introduction</h3>
+        <ul class="space-y-1 text-xs">
+          <li><a href="./about-me/" class="hover:underline" data-i18n="about">About Me</a></li>
+          <li><a href="#projects" class="hover:underline" data-i18n="projects">Projects</a></li>
+          <li><a href="#contact" class="hover:underline" data-i18n="contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="w-1/2">
+        <h3 class="text-base font-semibold mb-3" data-i18n="services">Services</h3>
+        <ul class="space-y-1 text-xs">
+          <li><a href="#projects" class="hover:underline">SEO Strategy</a></li>
+          <li><a href="#projects" class="hover:underline">Google Ads</a></li>
+          <li><a href="#projects" class="hover:underline">Content Marketing</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom -->
+  <div class="mt-10 border-t border-gray-300 dark:border-gray-700 pt-4 text-center text-xs">
+    © 2025 VietPortfolio. <span data-i18n="rights">All rights reserved.</span>
+  </div>
+</footer>
+
+
+
+
+<!-- Elegant Scroll to Top Button -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-6 right-6 z-50 hidden group p-3 rounded-full shadow-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:scale-110 transition-transform duration-300"
+        id="scrollTopBtn"
+        aria-label="Scroll to top">
+  <svg class="w-5 h-5 transition-transform group-hover:-translate-y-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+  </svg>
+</button>
+
+<!-- Scroll Button Script -->
+<script>
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  window.addEventListener("scroll", () => {
+    scrollBtn.classList.toggle("hidden", window.scrollY < 300);
+  });
+</script>
+
+<!-- Scripts -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const themeToggle = document.getElementById('themeToggle');
+    const mobileThemeToggle = document.getElementById('themeToggleMobile');
+
+    // Default to light mode unless user has saved dark
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light'); // Ensure light is saved as default
+    }
+
+    // Unified toggle function
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    themeToggle?.addEventListener('click', toggleTheme);
+    mobileThemeToggle?.addEventListener('click', toggleTheme);
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', function () {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Optional: close mobile menu when clicking outside
+    document.addEventListener('click', function (e) {
+      const isClickInside = menuToggle.contains(e.target) || mobileMenu.contains(e.target);
+      if (!isClickInside && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
+
+    <script>
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    if (!name || !email) {
+      alert(i18next.t("alertRequired"));
+      e.preventDefault();
+    }
+  });
+</script>
+
+<script>
+const WIT_AI_TOKEN = "HEKU3KJQIVCDYHEMFWZIODV2EHAEFLRE"; // 🔁 Replace with your Wit.ai Server token
+
+const chatbotReplies = {
+  get_background: "I specialize in digital marketing, with a strong background in SEO, content strategy, and data-driven campaigns.",
+  check_professionalism: "Yes — professionalism and reliability are core to how I work.",
+  check_experience: "Absolutely. I’ve worked with various clients across industries to deliver impactful campaigns.",
+  request_projects: "Yes — feel free to browse my portfolio for case studies and real-world results.",
+  can_you_do_job: "Let’s talk! Once I understand your needs, I can confirm the fit and approach.",
+  skills_up_to_date: "Yes — I stay updated on the latest tools, trends, and best practices in digital marketing.",
+  check_style_match: "Take a look through my portfolio — it reflects my strategic thinking and design style.",
+  align_with_brand: "Every project starts with understanding your brand, goals, and audience to ensure alignment.",
+  check_dependability: "Clients describe me as approachable, honest, and committed to delivering results.",
+  how_to_contact: "You can reach me via the contact form or book a call — I'm easy to reach!",
+  check_deadlines_communication: "I take deadlines seriously and communicate clearly every step of the way.",
+  unknown: "I'm not sure I understood that — could you try rephrasing?"
+};
+
+async function getWitAIResponse(message) {
+  const response = await fetch(`https://api.wit.ai/message?v=20240716&q=${encodeURIComponent(message)}`, {
+    headers: {
+      Authorization: `Bearer ${WIT_AI_TOKEN}`,
+    }
+  });
+  const data = await response.json();
+  return data.intents?.[0]?.name || "unknown";
+}
+
+function displayMessage(message, sender) {
+  const container = document.getElementById('chatbot-messages');
+  const messageDiv = document.createElement('div');
+  messageDiv.className = sender === 'user' ? 'text-right' : 'text-left';
+
+  const bgClass = sender === 'user' ? 'bg-blue-100 dark:bg-blue-700 text-blue-900' : 'bg-gray-200 dark:bg-gray-700 text-gray-800';
+  messageDiv.innerHTML = `<div class="inline-block ${bgClass} dark:text-white rounded-lg px-3 py-2 mb-1">${message}</div>`;
+  
+  container.appendChild(messageDiv);
+  container.scrollTop = container.scrollHeight;
+}
+
+document.getElementById('chatbot-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const input = document.getElementById('chatbot-input');
+  const userMessage = input.value.trim();
+  input.value = '';
+  if (userMessage === '') return;
+
+  displayMessage(userMessage, 'user');
+
+  const intent = await getWitAIResponse(userMessage);
+  const botReply = chatbotReplies[intent] || chatbotReplies.unknown;
+  displayMessage(botReply, 'bot');
+});
+
+document.getElementById('chatbot-toggle').addEventListener('click', () => {
+  document.getElementById('chatbot-window').classList.remove('hidden');
+});
+document.getElementById('chatbot-close').addEventListener('click', () => {
+  document.getElementById('chatbot-window').classList.add('hidden');
+});
+</script>
+
+<script>
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatbotClose = document.getElementById('chatbot-close');
+    const chatbotForm = document.getElementById('chatbot-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+
+    chatbotToggle.addEventListener('click', () => {
+      chatbotWindow.classList.remove('hidden', 'chatbot-animate-out');
+      chatbotWindow.classList.add('chatbot-animate-in');
+      setTimeout(() => chatbotInput.focus(), 300); // Auto focus input
+    });
+
+    chatbotClose.addEventListener('click', () => {
+      chatbotWindow.classList.remove('chatbot-animate-in');
+      chatbotWindow.classList.add('chatbot-animate-out');
+      setTimeout(() => chatbotWindow.classList.add('hidden'), 300);
+    });
+
+    chatbotForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const userInput = chatbotInput.value.trim();
+      if (!userInput) return;
+
+      // Add user message
+      const userMessage = document.createElement('div');
+      userMessage.className = 'text-right text-blue-600 dark:text-blue-400';
+      userMessage.textContent = `🙋‍♂️ ${userInput}`;
+      chatbotMessages.appendChild(userMessage);
+
+      chatbotInput.value = '';
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+      // Add loading bot message
+      const botMessage = document.createElement('div');
+      botMessage.className = 'text-left text-gray-600 dark:text-gray-300';
+      botMessage.textContent = '🤖 Typing...';
+      chatbotMessages.appendChild(botMessage);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+      try {
+        const response = await fetch('http://localhost:3000/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userInput })
+        });
+
+        const data = await response.json();
+        botMessage.textContent = `🤖 ${data.message}`;
+      } catch (error) {
+        botMessage.textContent = '⚠️ Error connecting to the assistant.';
+      }
+
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+  </script>
+<script>
+  const input = document.getElementById('chatbot-input');
+
+  input.addEventListener('focus', () => {
+    setTimeout(() => {
+      input.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }, 300); // Slight delay lets the keyboard open
+  });
+</script>
+
+<script>
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const input = document.getElementById('chatbot-input');
+
+  let originalBottom = chatbotWindow.style.bottom;
+
+  input.addEventListener('focus', () => {
+    // Lift the chatbot up to prevent it being hidden
+    chatbotWindow.style.bottom = '300px';
+  });
+
+  input.addEventListener('blur', () => {
+    // Reset to original position
+    chatbotWindow.style.bottom = originalBottom || '110px';
+  });
+</script>
+
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    new Swiper(".mySwiper", {
+  loop: false, // disable loop
+  speed: 600,
+  slidesPerView: 1.1,
+  spaceBetween: 12,
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  breakpoints: {
+    360: { slidesPerView: 1.1 },
+    640: { slidesPerView: 1.3 },
+    768: { slidesPerView: 2.2 },
+    1024: { slidesPerView: 3 }
+  }
+});
+
+  });
+  // Mobile fallback hover simulation
+  if (window.matchMedia('(hover: none)').matches) {
+    const slides = document.querySelectorAll('.swiper-slide');
+    slides.forEach(slide => {
+      slide.addEventListener('touchstart', () => {
+        slides.forEach(s => s.classList.remove('hovered'));
+        slides.forEach(s => s.classList.add('dimmed'));
+        slide.classList.remove('dimmed');
+        slide.classList.add('hovered');
+      });
+      slide.addEventListener('touchend', () => {
+        slides.forEach(s => s.classList.remove('hovered', 'dimmed'));
+      });
+    });
+  }
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contactForm");
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const data = {
+        data: {
+          Timestamp: new Date().toLocaleString(), // e.g., "7/19/2025, 12:06 AM"
+          Name: form.name.value,
+          Email: form.email.value,
+          Phone: form.phone.value,
+          Message: form.message.value
+        }
+      };
+
+      try {
+        const response = await fetch("https://sheetdb.io/api/v1/qnlcqcaiwnlq5", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (response.ok) {
+          alert("Message sent successfully!");
+          form.reset();
+        } else {
+          alert("Failed to send message.");
+        }
+      } catch (error) {
+        alert("Error sending message.");
+        console.error(error);
+      }
+    });
+  });
+</script>
+
+ <script>
+    i18next.init({
+      lng: 'en',
+      resources: {
+        en: {
+          translation: {
+          "greeting": "Hello, I'm Viet,\nProfessional Digital Marketer",
+          "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
+          "services": "Services",
+          "about": "About",
+          "aboutDesc": "I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.",
+          "projects": "Projects",
+          "blogs": "Latest Blog Posts",
+          "contact": "Contact",
+          "name": "Name",
+          "phone": "Contact Phone",
+          "email": "Email",
+          "message": "Message",
+          "Send message": "Send message",
+          "Read More": "Read More",
+          "Content Marketing": "Content Marketing",
+          "Facebook Ads": "Facebook Ads",
+        "aboutIntro": "I have experience with various micro and macro skills, focusing on helping projects get better results and more conversions.",
+        "aboutPeople": "Plan comprehensive SEO and social media content strategy",
+        "aboutPeopleText": "Building trust and connection through content that resonates.",
+        "aboutBrands": "Plan and implement paid media strategy:",
+        "aboutBrandsText": "Driving visibility and growth through data-driven campaigns.",
+        "aboutEveryone": "Manage projects effectively:",
+        "aboutEveryoneText": "Empowering others to thrive with tools, skills, and knowledge.",
+        "findOutMore": "More information",
+        "Contactme": "Contact me",
+        "app1Title": "SEO Optimization Project",
+        "Tags": "SEO",
+        "app2Title": "SEO Content",
+        "Tag2": "SEO",
+        "app3Title": "Meta Ads",
+        "aboutHeadline": "Let me manage and drive your projects' conversions",
+        "Tag3": "Paid Media", 
+         "app1Desc": "Aimed at boosting website visibility and organic traffic through improved content, keyword strategy, and technical SEO enhancements.",
+         "projects2": "My Projects",
+         "projectIntro": "Discover the projects that showcase my passion for design and innovation",
+         "introduction": "Introduction",
+         "skills":"Skills",
+         "footerDescription": "Helping you grow with SEO, content, design, and tech-driven strategies.",
+         "SEOOptimization": "SEO Optimization",
+         "readMore": "Read More",
+          "skill_seo_title": "SEO Optimization",
+      "skill_seo_experience": "2.5 years",
+      "skill_seo_description": "Boosted Google rankings through on-page and technical SEO.",
+
+       "skill_content_title": "Content Marketing",
+      "skill_content_experience": "4 years",
+       "skill_content_description": "Created blog and social content to grow brand engagement.",
+
+      "skill_facebook_title": "Facebook Ads",
+      "skill_facebook_experience": "1.5 year",
+      "skill_facebook_description": "Ran high-converting paid campaigns for multiple brands.",
+
+      "skill_video_title": "Video Editing",
+      "skill_video_experience": "4 years",
+      "skill_video_description": "Edited marketing and branded videos for social platforms.\n Adobe Premiere Pro - After Effect - Capcut",
+
+      "skill_google_title": "Google Ads",
+      "skill_google_experience": "1 year",
+      "skill_google_description": "Managed PPC ads for eCommerce and service-based clients.",
+
+      "skill_ai_title": "AI Competency",
+      "skill_ai_experience": "6 months",
+      "skill_ai_description": "Leveraged AI tools to streamline workflows, enhance content, and support data-driven decisions. I use AI (ChatGPT) to code this website.",
+      "seoProjects": "SEO Projects",
+      "contentWriting": "Content Writing",
+      "paidMedia":"Paid Media",
+      "videoEditing":"Video Editing",
+          }
+        },
+        vi: {
+          translation: {
+          "greeting": "Xin chào, tôi là Việt,\nChuyên gia Digital Marketing",
+          "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
+          "services": "Dịch vụ",
+          "about": "Giới thiệu",
+          "aboutDesc": "Tôi là Việt, chuyên gia Digital Marketing với hơn 5 năm kinh nghiệm trong SEO, quảng cáo hiệu suất và phát triển thương hiệu.",
+          "projects": "Dự án nổi bật",
+          "projectIntro": "Những dự án mà tôi từng thực hiện",
+          "blogs": "Bài viết mới nhất",
+          "contact": "Liên hệ",
+          "name": "Họ tên",
+          "email": "Email",
+           "phone": "Số điện thoại",
+          "message": "Tin nhắn",
+          "Send message": "Gửi tin nhắn",
+          "Read More": "Đọc thêm",
+          "Contactme": "Liên hệ tôi",
+          "SEO Optimization": "Tối ưu SEO",
+          "Content Marketing": "Tiếp thị nội dung",
+          "Facebook Ads": "Quảng cáo Facebook",
+          "aboutHeadline": "Triển khai các dự án nhanh chóng",
+        "aboutIntro": "Trong thế giới số ngày nay, thành công đến từ sự sáng tạo, linh hoạt và khả năng thích ứng...",
+        "aboutPeople": "Lập kế hoạch nội dung SEO và social content",
+        "aboutPeopleText": "Tiếp cận khách hàng mục tiêu với nhiều dạng content tư vấn, so sánh và khuyến khích chuyển đổi.",
+        "aboutBrands": "Xây dựng chién dịch quảng cáo hiệu quả:",
+        "aboutBrandsText": "Thúc đẩy sự hiện diện và tăng trưởng thông qua các chiến dịch dựa trên dữ liệu.",
+        "aboutEveryone": "Quản lý nguồn lực dự án hiệu quả",
+        "aboutEveryoneText": "Trao quyền thành công với công cụ, kỹ năng và hiểu biết.",
+        "findOutMore": "Tìm hiểu thêm",
+         "introduction": "Giới thiệu",
+          "skills":"Những kỹ năng của tôi",
+          "footerDescription": "Tăng trưởng nhanh chóng với chiến lược SEO và nội dung hiệu quả",
+          "readMore": "Tìm hiểu thêm",
+           "skill_seo_title": "Tối ưu SEO",
+  "skill_seo_experience": "2.5 năm",
+  "skill_seo_description": "Tăng thứ hạng Google nhờ tối ưu SEO on-page và kỹ thuật.",
+
+  "skill_content_title": "Content Marketing",
+  "skill_content_experience": "3 năm",
+  "skill_content_description": "Tạo nội dung blog và mạng xã hội để tăng nhận diện thương hiệu.",
+
+  "skill_facebook_title": "Quảng cáo Facebook",
+  "skill_facebook_experience": "1.5 năm",
+  "skill_facebook_description": "Triển khai chiến dịch quảng cáo hiệu quả cho nhiều thương hiệu.",
+
+  "skill_video_title": "Biên tập video",
+  "skill_video_experience": "4 năm",
+  "skill_video_description": "Dựng video marketing và video thương hiệu cho nền tảng mạng xã hội.",
+
+  "skill_google_title": "Quảng cáo Google",
+  "skill_google_experience": "1 năm",
+  "skill_google_description": "Quản lý quảng cáo PPC cho doanh nghiệp thương mại điện tử và dịch vụ.",
+
+  "skill_ai_title": "Ứng dụng AI",
+  "skill_ai_experience": "6 tháng",
+  "skill_ai_description": "Ứng dụng AI để tối ưu quy trình làm việc, nâng cao nội dung và hỗ trợ ra quyết định dựa trên dữ liệu. Tôi sử dụng AI (ChatGPT) để viết code cho website này.",
+  "seoProjects": "SEO Projects",
+      "contentWriting": "Content Writing",
+      "paidMedia":"Paid Media",
+      "videoEditing":"Video Editing",
+          }
+        }
+      }
+    }, function(err, t) {
+      updateContent();
+      highlightActiveLang(i18next.language);
+      mergeSheetTranslations(); // override intro/about/skills
+    });
+
+    function updateContent() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.innerHTML = i18next.t(el.getAttribute('data-i18n'));
+      });
+    }
+
+    function setLanguage(lang) {
+      i18next.changeLanguage(lang, () => {
+        updateContent();
+        highlightActiveLang(lang);
+        mergeSheetTranslations(); // re-fetch for new language
+      });
+    }
+
+    function highlightActiveLang(lang) {
+      const btnEn = document.getElementById('btn-en');
+      const btnVi = document.getElementById('btn-vi');
+      btnEn.classList.toggle('bg-white', lang === 'en');
+      btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
+      btnVi.classList.toggle('bg-white', lang === 'vi');
+      btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+    }
+
+  </script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const desktopToggle = document.getElementById("desktop-project-toggle");
+    const desktopSubmenu = document.getElementById("desktop-project-submenu");
+    const desktopArrow = document.getElementById("desktop-project-arrow");
+
+    const mobileToggle = document.getElementById("mobile-project-toggle");
+    const mobileSubmenu = document.getElementById("mobile-project-submenu");
+    const mobileArrow = document.getElementById("mobile-project-arrow");
+
+    desktopToggle.addEventListener("click", () => {
+      desktopSubmenu.classList.toggle("hidden");
+      desktopArrow.classList.toggle("rotate-180");
+    });
+
+    mobileToggle.addEventListener("click", () => {
+      mobileSubmenu.classList.toggle("hidden");
+      mobileArrow.classList.toggle("rotate-180");
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const resultImages = document.querySelectorAll("#results img");
+
+    resultImages.forEach(img => {
+      img.addEventListener("click", () => {
+        modalImg.src = img.src;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      });
+    });
+
+    // Close on click outside or ESC
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal || e.target === modalImg) {
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+        modalImg.src = "";
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+        modalImg.src = "";
+      }
+    });
+  });
+</script>
+
+
+<!-- Image Modal -->
+<div id="imageModal" class="fixed inset-0 bg-black/70 z-[9999] hidden items-center justify-center">
+  <img id="modalImage" src="" alt="Enlarged Result" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl" />
+</div>
+
+
+
+</body>
+</html>
