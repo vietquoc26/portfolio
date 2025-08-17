@@ -657,14 +657,16 @@
     <button id="chatbot-close" class="text-white text-xl leading-none hover:text-red-300">×</button>
   </div>
 
-  <!-- Messages -->
-  <div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
-    <div class="text-left">
-      <div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1">
-        Hello 👋<br>How can I help you today?
-      </div>
+ <!-- Messages -->
+<div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
+  <div class="text-left">
+    <div 
+      class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1" 
+      data-i18n="chatbot.defaultMessage">
+      Hello 👋<br>How can I help you today?
     </div>
   </div>
+</div>
 
   <!-- Input -->
   <form id="chatbot-form" class="flex border-t border-gray-200 dark:border-gray-700">
@@ -813,6 +815,10 @@ const WIT_AI_TOKEN = "HEKU3KJQIVCDYHEMFWZIODV2EHAEFLRE"; // Your Wit.ai token
 
 // Predefined replies
 const chatbotReplies = {
+  greeting: [
+  "Xin chào 👋! Tôi là chatbot của Việt.",
+  "Hello! I'm Viet assistant."
+],
    get_background: [
     "I specialize in digital marketing, with a strong background in SEO, content strategy, and data-driven campaigns.",
     "My experience spans SEO, content marketing, and results-focused campaigns."
@@ -1166,6 +1172,8 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
+      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?"
+      
           }
         },
         vi: {
@@ -1229,6 +1237,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
+      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?"
           }
         }
       }
