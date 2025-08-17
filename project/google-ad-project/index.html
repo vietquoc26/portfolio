@@ -326,14 +326,16 @@
     <button id="chatbot-close" class="text-white text-xl leading-none hover:text-red-300">×</button>
   </div>
 
-  <!-- Messages -->
-  <div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
-    <div class="text-left">
-      <div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1">
-        Hello 👋<br>How can I help you today?
-      </div>
+ <!-- Messages -->
+<div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
+  <div class="text-left">
+    <div 
+      class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1" 
+      data-i18n="chatbot.defaultMessage">
+      Hello 👋<br>How can I help you today?
     </div>
   </div>
+</div>
 
   <!-- Input -->
   <form id="chatbot-form" class="flex border-t border-gray-200 dark:border-gray-700">
@@ -478,124 +480,123 @@
 </script>
 
 <script>
-const WIT_AI_TOKEN = "HEKU3KJQIVCDYHEMFWZIODV2EHAEFLRE"; // 🔁 Replace with your Wit.ai Server token
+const WIT_AI_TOKEN = "HEKU3KJQIVCDYHEMFWZIODV2EHAEFLRE"; // Your Wit.ai token
 
+// Predefined replies
 const chatbotReplies = {
-  get_background: "I specialize in digital marketing, with a strong background in SEO, content strategy, and data-driven campaigns.",
-  check_professionalism: "Yes — professionalism and reliability are core to how I work.",
-  check_experience: "Absolutely. I’ve worked with various clients across industries to deliver impactful campaigns.",
-  request_projects: "Yes — feel free to browse my portfolio for case studies and real-world results.",
-  can_you_do_job: "Let’s talk! Once I understand your needs, I can confirm the fit and approach.",
+  greeting: [
+  "Xin chào 👋! Tôi là chatbot của Việt.",
+  "Hello! I'm Viet assistant."
+],
+   get_background: [
+    "I specialize in digital marketing, with a strong background in SEO, content strategy, and data-driven campaigns.",
+    "My experience spans SEO, content marketing, and results-focused campaigns."
+  ],
+  education_request: "I earned my Bachelor's degree in Marketing at the University of Economics.",
+  check_experience: "Absolutely. I’ve worked with various clients across industries, such as technology and education, to deliver impactful campaigns.",
+   request_projects: [
+    "Yes — feel free to browse my portfolio for case studies!",
+    "Of course. I’d be happy to walk you through my project highlights."
+  ],
+  working_style: [
+"When it comes to my working style, colleagues often describe me as approachable, capable, a good listener, and highly proactive.",
+"Về tính cách làm việc thì mình được nhiều anh chị đánh giá là hiền, có năng lực, lắng nghe tốt và có tinh thần chủ động cao.",
+  ] 
   skills_up_to_date: "Yes — I stay updated on the latest tools, trends, and best practices in digital marketing.",
   check_style_match: "Take a look through my portfolio — it reflects my strategic thinking and design style.",
   align_with_brand: "Every project starts with understanding your brand, goals, and audience to ensure alignment.",
   check_dependability: "Clients describe me as approachable, honest, and committed to delivering results.",
   how_to_contact: "You can reach me via the contact form or book a call — I'm easy to reach!",
   check_deadlines_communication: "I take deadlines seriously and communicate clearly every step of the way.",
-  unknown: "I'm not sure I understood that — could you try rephrasing?"
+  unknown: "🤖 I’m not sure I understood that. Could you rephrase or check my portfolio?"
 };
 
-async function getWitAIResponse(message) {
-  const response = await fetch(`https://api.wit.ai/message?v=20240716&q=${encodeURIComponent(message)}`, {
-    headers: {
-      Authorization: `Bearer ${WIT_AI_TOKEN}`,
-    }
-  });
-  const data = await response.json();
-  return data.intents?.[0]?.name || "unknown";
+function getReply(intent) {
+  const options = chatbotReplies[intent] || chatbotReplies.unknown;
+  return Array.isArray(options)
+    ? options[Math.floor(Math.random() * options.length)]
+    : options;
 }
 
+// Wit.ai request
+async function getWitAIIntent(message) {
+  const response = await fetch(`https://api.wit.ai/message?v=20240716&q=${encodeURIComponent(message)}`, {
+    headers: { Authorization: `Bearer ${WIT_AI_TOKEN}` }
+  });
+  const data = await response.json();
+  
+  const intent = data.intents?.[0];
+  if (!intent || intent.confidence < 0.7) {   // 👈 threshold
+    return "unknown";
+  }
+  return intent.name;
+}
+
+// Add message with timestamp
 function displayMessage(message, sender) {
   const container = document.getElementById('chatbot-messages');
   const messageDiv = document.createElement('div');
   messageDiv.className = sender === 'user' ? 'text-right' : 'text-left';
 
-  const bgClass = sender === 'user' ? 'bg-blue-100 dark:bg-blue-700 text-blue-900' : 'bg-gray-200 dark:bg-gray-700 text-gray-800';
-  messageDiv.innerHTML = `<div class="inline-block ${bgClass} dark:text-white rounded-lg px-3 py-2 mb-1">${message}</div>`;
+  const bgClass = sender === 'user'
+    ? 'bg-blue-100 dark:bg-blue-700 text-blue-900 dark:text-white'
+    : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white';
+
+  const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  messageDiv.innerHTML = `
+    <div class="inline-block ${bgClass} rounded-lg px-3 py-2 mb-1">
+      ${message}
+      <div class="text-[10px] text-gray-500 mt-1">${timestamp}</div>
+    </div>
+  `;
   
   container.appendChild(messageDiv);
-  container.scrollTop = container.scrollHeight;
+  container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
 }
 
+// Handle chatbot form
 document.getElementById('chatbot-form').addEventListener('submit', async function (e) {
   e.preventDefault();
   const input = document.getElementById('chatbot-input');
   const userMessage = input.value.trim();
   input.value = '';
-  if (userMessage === '') return;
+  if (!userMessage) return;
 
-  displayMessage(userMessage, 'user');
+  displayMessage(`🙋‍♂️ ${userMessage}`, 'user');
 
-  const intent = await getWitAIResponse(userMessage);
-  const botReply = chatbotReplies[intent] || chatbotReplies.unknown;
+  // Show typing indicator
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'text-left text-gray-500 dark:text-gray-400';
+  typingDiv.textContent = '🤖 Typing...';
+  document.getElementById('chatbot-messages').appendChild(typingDiv);
+  document.getElementById('chatbot-messages').scrollTop = document.getElementById('chatbot-messages').scrollHeight;
+
+  // Fetch intent from Wit.ai
+  const intent = await getWitAIIntent(userMessage);
+  const botReply = getReply(intent);
+
+
+  // Replace typing with reply
+  typingDiv.remove();
   displayMessage(botReply, 'bot');
 });
 
+// Toggle open/close
 document.getElementById('chatbot-toggle').addEventListener('click', () => {
-  document.getElementById('chatbot-window').classList.remove('hidden');
+  const win = document.getElementById('chatbot-window');
+  win.classList.remove('hidden', 'chatbot-animate-out');
+  win.classList.add('chatbot-animate-in');
+  setTimeout(() => document.getElementById('chatbot-input').focus(), 300);
 });
+
 document.getElementById('chatbot-close').addEventListener('click', () => {
-  document.getElementById('chatbot-window').classList.add('hidden');
+  const win = document.getElementById('chatbot-window');
+  win.classList.remove('chatbot-animate-in');
+  win.classList.add('chatbot-animate-out');
+  setTimeout(() => win.classList.add('hidden'), 300);
 });
 </script>
-
-<script>
-    const chatbotToggle = document.getElementById('chatbot-toggle');
-    const chatbotWindow = document.getElementById('chatbot-window');
-    const chatbotClose = document.getElementById('chatbot-close');
-    const chatbotForm = document.getElementById('chatbot-form');
-    const chatbotInput = document.getElementById('chatbot-input');
-    const chatbotMessages = document.getElementById('chatbot-messages');
-
-    chatbotToggle.addEventListener('click', () => {
-      chatbotWindow.classList.remove('hidden', 'chatbot-animate-out');
-      chatbotWindow.classList.add('chatbot-animate-in');
-      setTimeout(() => chatbotInput.focus(), 300); // Auto focus input
-    });
-
-    chatbotClose.addEventListener('click', () => {
-      chatbotWindow.classList.remove('chatbot-animate-in');
-      chatbotWindow.classList.add('chatbot-animate-out');
-      setTimeout(() => chatbotWindow.classList.add('hidden'), 300);
-    });
-
-    chatbotForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const userInput = chatbotInput.value.trim();
-      if (!userInput) return;
-
-      // Add user message
-      const userMessage = document.createElement('div');
-      userMessage.className = 'text-right text-blue-600 dark:text-blue-400';
-      userMessage.textContent = `🙋‍♂️ ${userInput}`;
-      chatbotMessages.appendChild(userMessage);
-
-      chatbotInput.value = '';
-      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-
-      // Add loading bot message
-      const botMessage = document.createElement('div');
-      botMessage.className = 'text-left text-gray-600 dark:text-gray-300';
-      botMessage.textContent = '🤖 Typing...';
-      chatbotMessages.appendChild(botMessage);
-      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-
-      try {
-        const response = await fetch('http://localhost:3000/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: userInput })
-        });
-
-        const data = await response.json();
-        botMessage.textContent = `🤖 ${data.message}`;
-      } catch (error) {
-        botMessage.textContent = '⚠️ Error connecting to the assistant.';
-      }
-
-      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    });
-  </script>
 <script>
   const input = document.getElementById('chatbot-input');
 
@@ -782,6 +783,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
+      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?"
           }
         },
         vi: {
@@ -845,6 +847,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
+      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?"
           }
         }
       }

@@ -244,14 +244,16 @@
     <button id="chatbot-close" class="text-white text-xl leading-none hover:text-red-300">×</button>
   </div>
 
-  <!-- Messages -->
-  <div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
-    <div class="text-left">
-      <div class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1">
-        Hello 👋<br>How can I help you today?
-      </div>
+ <!-- Messages -->
+<div id="chatbot-messages" class="flex-1 px-4 py-3 space-y-2 overflow-y-auto text-sm">
+  <div class="text-left">
+    <div 
+      class="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 mb-1" 
+      data-i18n="chatbot.defaultMessage">
+      Hello 👋<br>How can I help you today?
     </div>
   </div>
+</div>
 
   <!-- Input -->
   <form id="chatbot-form" class="flex border-t border-gray-200 dark:border-gray-700">
@@ -412,7 +414,10 @@ const chatbotReplies = {
     "Yes — feel free to browse my portfolio for case studies!",
     "Of course. I’d be happy to walk you through my project highlights."
   ],
-  can_you_do_job: "Let’s talk! Once I understand your needs, I can confirm the fit and approach.",
+  working_style: [
+"When it comes to my working style, colleagues often describe me as approachable, capable, a good listener, and highly proactive.",
+"Về tính cách làm việc thì mình được nhiều anh chị đánh giá là hiền, có năng lực, lắng nghe tốt và có tinh thần chủ động cao.",
+  ] 
   skills_up_to_date: "Yes — I stay updated on the latest tools, trends, and best practices in digital marketing.",
   check_style_match: "Take a look through my portfolio — it reflects my strategic thinking and design style.",
   align_with_brand: "Every project starts with understanding your brand, goals, and audience to ensure alignment.",
@@ -752,6 +757,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
+      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?"
           }
         },
         vi: {
@@ -815,6 +821,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
+      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?"
           }
         }
       }
