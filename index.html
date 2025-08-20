@@ -1114,29 +1114,28 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("contactForm");
+    
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
 
       const data = {
-        data: {
-          Timestamp: new Date().toLocaleString(), // e.g., "7/19/2025, 12:06 AM"
-          Name: form.name.value,
-          Email: form.email.value,
-          Phone: form.phone.value,
-          Message: form.message.value
-        }
+        Timestamp: new Date().toLocaleString(),
+        Name: form.name.value,
+        Email: form.email.value,
+        Phone: form.phone.value,
+        Message: form.message.value
       };
 
       try {
-        const response = await fetch("https://sheetdb.io/api/v1/qnlcqcaiwnlq5", {
+        const response = await fetch("https://portfolio-backend-zmdt.onrender.com", {
           method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json"
-          }
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
         });
 
-        if (response.ok) {
+        const result = await response.json();
+
+        if (result.success) {
           alert("Message sent successfully!");
           form.reset();
         } else {
@@ -1149,6 +1148,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     });
   });
 </script>
+
 
  <script>
     i18next.init({
