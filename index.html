@@ -1127,7 +1127,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       };
 
       try {
-        const response = await fetch("https://portfolio-backend-zmdt.onrender.com", {
+        const response = await fetch("https://portfolio-backend-zmdt.onrender.com/api/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
