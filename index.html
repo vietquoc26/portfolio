@@ -1118,12 +1118,13 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
 
-      // Match backend keys: name, email, phone, message
+      // Match backend keys: name, email, phone, message, timestamp
       const data = {
         name: form.name.value,
         email: form.email.value,
         phone: form.phone.value,
-        message: form.message.value
+        message: form.message.value,
+        timestamp: new Date().toISOString() // e.g., "2025-08-21T14:30:00.000Z"
       };
 
       try {
