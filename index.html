@@ -1118,12 +1118,12 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
 
+      // Match backend keys: name, email, phone, message
       const data = {
-        Timestamp: new Date().toLocaleString(),
-        Name: form.name.value,
-        Email: form.email.value,
-        Phone: form.phone.value,
-        Message: form.message.value
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        message: form.message.value
       };
 
       try {
@@ -1136,18 +1136,20 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         const result = await response.json();
 
         if (result.success) {
-          alert("Message sent successfully!");
+          alert("✅ Message sent successfully!");
           form.reset();
         } else {
-          alert("Failed to send message.");
+          alert("⚠️ Failed to send message: " + (result.error || "Unknown error"));
+          console.error(result);
         }
       } catch (error) {
-        alert("Error sending message.");
-        console.error(error);
+        alert("❌ Error sending message. Please try again later.");
+        console.error("Network error:", error);
       }
     });
   });
 </script>
+
 
 
  <script>
