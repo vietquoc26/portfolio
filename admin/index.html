@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | VietPortfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- ✅ Enable dark mode via class -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
@@ -44,7 +50,14 @@
     <!-- Top Navbar -->
     <header class="bg-white dark:bg-gray-800 px-6 py-4 shadow flex justify-between items-center">
       <h1 class="text-lg font-bold">Admin Dashboard</h1>
-      <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Logout</button>
+      <div class="flex items-center gap-3">
+        <!-- 🌙☀️ Dark Mode Toggle -->
+        <button id="darkModeToggle" 
+          class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-700 shadow hover:scale-105 transition">
+          <i id="darkModeIcon" class="fas fa-moon text-yellow-400 text-lg"></i>
+        </button>
+        <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Logout</button>
+      </div>
     </header>
 
     <!-- Tabs Content -->
@@ -133,6 +146,40 @@ function toggleSubmenu(id) {
   const menu = document.getElementById(id);
   menu.classList.toggle("hidden");
 }
+
+// 🌙 Dark Mode Toggle
+const toggleBtn = document.getElementById("darkModeToggle");
+const toggleIcon = document.getElementById("darkModeIcon");
+
+// Load saved theme or system preference
+if (localStorage.getItem("theme") === "dark" || 
+   (!localStorage.getItem("theme") && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add("dark");
+  toggleIcon.classList.replace("fa-moon", "fa-sun");
+  toggleIcon.classList.remove("text-yellow-400");
+  toggleIcon.classList.add("text-orange-400");
+} else {
+  document.documentElement.classList.remove("dark");
+  toggleIcon.classList.replace("fa-sun", "fa-moon");
+  toggleIcon.classList.remove("text-orange-400");
+  toggleIcon.classList.add("text-yellow-400");
+}
+
+// Toggle on click
+toggleBtn.addEventListener("click", () => {
+  document.documentElement.classList.toggle("dark");
+  if (document.documentElement.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    toggleIcon.classList.replace("fa-moon", "fa-sun");
+    toggleIcon.classList.remove("text-yellow-400");
+    toggleIcon.classList.add("text-orange-400");
+  } else {
+    localStorage.setItem("theme", "light");
+    toggleIcon.classList.replace("fa-sun", "fa-moon");
+    toggleIcon.classList.remove("text-orange-400");
+    toggleIcon.classList.add("text-yellow-400");
+  }
+});
 </script>
 </body>
 </html>
