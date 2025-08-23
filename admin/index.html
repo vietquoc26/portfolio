@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | VietPortfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white dark:bg-gray-800 shadow-lg flex flex-col">
+    <div class="p-6 text-center border-b border-gray-200 dark:border-gray-700">
+      <h2 class="text-xl font-bold">Admin Panel</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400">VietPortfolio</p>
+    </div>
+    <nav class="flex-1 p-4 space-y-2">
+      <button onclick="switchTab('dashboardTab')" class="tab-btn w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fas fa-home"></i> Dashboard</button>
+      <button onclick="switchTab('homeTab')" class="tab-btn w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fas fa-house"></i> Home</button>
+      <button onclick="switchTab('aboutTab')" class="tab-btn w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fas fa-user"></i> About</button>
+
+      <!-- Project Dropdown -->
+      <div>
+        <button onclick="toggleSubmenu('projectMenu')" class="w-full flex items-center justify-between px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+          <span class="flex items-center gap-3"><i class="fas fa-briefcase"></i> Project</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="projectMenu" class="ml-8 mt-2 hidden flex-col space-y-2">
+          <button onclick="switchTab('seoTab')" class="tab-btn w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">SEO Projects</button>
+          <button onclick="switchTab('contentTab')" class="tab-btn w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">Content Writing</button>
+          <button onclick="switchTab('videoTab')" class="tab-btn w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">Video Editing</button>
+          <button onclick="switchTab('paidMediaTab')" class="tab-btn w-full text-left px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">Paid Media</button>
+        </div>
+      </div>
+
+      <button onclick="switchTab('contactTab')" class="tab-btn w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fas fa-envelope"></i> Contact</button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col">
+    <!-- Top Navbar -->
+    <header class="bg-white dark:bg-gray-800 px-6 py-4 shadow flex justify-between items-center">
+      <h1 class="text-lg font-bold">Admin Dashboard</h1>
+      <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Logout</button>
+    </header>
+
+    <!-- Tabs Content -->
+    <section class="flex-1 p-6 overflow-y-auto space-y-6">
+      <div id="dashboardTab" class="tab-content"> <h2 class="text-2xl font-bold">Dashboard</h2> </div>
+      <div id="homeTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Home Editor</h2> </div>
+      <div id="aboutTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">About Editor</h2> </div>
+      <div id="seoTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">SEO Projects</h2> </div>
+      <div id="contentTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Content Writing Projects</h2> </div>
+      <div id="videoTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Video Editing Projects</h2> </div>
+      <div id="paidMediaTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Paid Media Projects</h2> </div>
+      <div id="contactTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Contact Messages</h2> </div>
+    </section>
+  </main>
+</div>
+
+<script>
+// Tab switching
+function switchTab(tabId) {
+  document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+  document.getElementById(tabId).classList.remove("hidden");
+}
+switchTab("dashboardTab"); // default
+
+// Toggle submenu
+function toggleSubmenu(id) {
+  const menu = document.getElementById(id);
+  menu.classList.toggle("hidden");
+}
+</script>
+</body>
+</html>
 
