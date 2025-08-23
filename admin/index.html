@@ -49,14 +49,73 @@
 
     <!-- Tabs Content -->
     <section class="flex-1 p-6 overflow-y-auto space-y-6">
-      <div id="dashboardTab" class="tab-content"> <h2 class="text-2xl font-bold">Dashboard</h2> </div>
-      <div id="homeTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Home Editor</h2> </div>
-      <div id="aboutTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">About Editor</h2> </div>
+      
+      <!-- ✅ Dashboard Tab -->
+      <div id="dashboardTab" class="tab-content">
+        <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h3 class="text-sm text-gray-500">Total Projects</h3>
+            <p id="statProjects" class="text-2xl font-bold">12</p>
+          </div>
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h3 class="text-sm text-gray-500">Messages</h3>
+            <p id="statMessages" class="text-2xl font-bold">23</p>
+          </div>
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h3 class="text-sm text-gray-500">SEO Projects</h3>
+            <p id="statSEO" class="text-2xl font-bold">5</p>
+          </div>
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h3 class="text-sm text-gray-500">Video Editing</h3>
+            <p id="statVideo" class="text-2xl font-bold">4</p>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
+          <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+          <ul id="recentActivity" class="space-y-3 text-sm">
+            <li>📧 New message from <strong>Sarah</strong> (Aug 22, 2025)</li>
+            <li>📂 Added project <strong>"SEO for XYZ"</strong> (Aug 20, 2025)</li>
+            <li>✍️ Updated <strong>About section</strong> (Aug 19, 2025)</li>
+          </ul>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
+          <div class="flex flex-wrap gap-3">
+            <button onclick="switchTab('seoTab')" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">+ Add Project</button>
+            <button onclick="switchTab('homeTab')" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Edit Home</button>
+            <button onclick="switchTab('aboutTab')" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit About</button>
+            <button onclick="switchTab('contactTab')" class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">View Messages</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home -->
+      <div id="homeTab" class="tab-content hidden"> 
+        <h2 class="text-2xl font-bold">Home Editor</h2>
+      </div>
+
+      <!-- About -->
+      <div id="aboutTab" class="tab-content hidden"> 
+        <h2 class="text-2xl font-bold">About Editor</h2>
+      </div>
+
+      <!-- Projects -->
       <div id="seoTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">SEO Projects</h2> </div>
-      <div id="contentTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Content Writing Projects</h2> </div>
-      <div id="videoTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Video Editing Projects</h2> </div>
-      <div id="paidMediaTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Paid Media Projects</h2> </div>
-      <div id="contactTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Contact Messages</h2> </div>
+      <div id="contentTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Content Writing</h2> </div>
+      <div id="videoTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Video Editing</h2> </div>
+      <div id="paidMediaTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Paid Media</h2> </div>
+
+      <!-- Contact -->
+      <div id="contactTab" class="tab-content hidden"> 
+        <h2 class="text-2xl font-bold">Contact Messages</h2>
+      </div>
     </section>
   </main>
 </div>
@@ -77,4 +136,3 @@ function toggleSubmenu(id) {
 </script>
 </body>
 </html>
-
