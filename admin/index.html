@@ -5,11 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | VietPortfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- ✅ Enable dark mode via class -->
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
+    tailwind.config = { darkMode: 'class' }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -134,6 +131,17 @@
 </div>
 
 <script>
+// 🔒 Protect Admin Page
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.href = "login.html";
+}
+
+// Logout Button
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("isLoggedIn");
+  window.location.href = "login.html";
+});
+
 // Tab switching
 function switchTab(tabId) {
   document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
@@ -151,7 +159,6 @@ function toggleSubmenu(id) {
 const toggleBtn = document.getElementById("darkModeToggle");
 const toggleIcon = document.getElementById("darkModeIcon");
 
-// Load saved theme or system preference
 if (localStorage.getItem("theme") === "dark" || 
    (!localStorage.getItem("theme") && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
   document.documentElement.classList.add("dark");
@@ -165,7 +172,6 @@ if (localStorage.getItem("theme") === "dark" ||
   toggleIcon.classList.add("text-yellow-400");
 }
 
-// Toggle on click
 toggleBtn.addEventListener("click", () => {
   document.documentElement.classList.toggle("dark");
   if (document.documentElement.classList.contains("dark")) {
