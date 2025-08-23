@@ -133,13 +133,13 @@
 <script>
 // 🔒 Protect Admin Page
 if (localStorage.getItem("isLoggedIn") !== "true") {
-  window.location.href = "login.html";
+  window.location.href = "/login/";
 }
 
 // Logout Button
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("isLoggedIn");
-  window.location.href = "login.html";
+  window.location.href = "/login/";
 });
 
 // Tab switching
