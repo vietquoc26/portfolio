@@ -37,6 +37,11 @@
   </div>
 
 <script>
+// 🔒 Redirect if already logged in
+if (localStorage.getItem("isLoggedIn") === "true") {
+  window.location.href = "admin.html";
+}
+
 // Example hardcoded credentials (replace with backend validation later)
 const adminEmail = "admin@vietportfolio.work.gd";
 const adminPassword = "123456"; // ⚠️ Replace with env variable in backend
