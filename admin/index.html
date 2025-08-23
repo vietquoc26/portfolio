@@ -12,6 +12,8 @@
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
 
+<!-- Wrapper hidden by default -->
+<div id="adminWrapper" style="display:none;">
 <div class="flex h-screen">
   <!-- Sidebar -->
   <aside class="w-64 bg-white dark:bg-gray-800 shadow-lg flex flex-col">
@@ -129,11 +131,15 @@
     </section>
   </main>
 </div>
+</div>
 
 <script>
 // 🔒 Protect Admin Page
 if (localStorage.getItem("isLoggedIn") !== "true") {
   window.location.href = "https://www.vietportfolio.work.gd/login/";
+} else {
+  // Show admin content only if logged in
+  document.getElementById("adminWrapper").style.display = "block";
 }
 
 // Logout Button
