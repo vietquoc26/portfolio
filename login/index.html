@@ -39,7 +39,7 @@
 <script>
 // 🔒 Redirect if already logged in
 if (localStorage.getItem("isLoggedIn") === "true") {
-  window.location.href = "admin.html";
+  window.location.href = "https://www.vietportfolio.work.gd/admin/";
 }
 
 // Example hardcoded credentials (replace with backend later)
@@ -53,7 +53,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
 
   if (username === adminUsername && password === adminPassword) {
     localStorage.setItem("isLoggedIn", "true");
-    window.location.href = "admin.html";
+    window.location.href = "https://www.vietportfolio.work.gd/admin/";
   } else {
     document.getElementById("errorMsg").classList.remove("hidden");
   }
