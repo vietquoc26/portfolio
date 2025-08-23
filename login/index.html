@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | VietPortfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 flex items-center justify-center h-screen">
+
+  <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg w-96 relative">
+    <!-- 🌙☀️ Dark Mode Toggle -->
+    <button id="darkModeToggle" 
+      class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-700 shadow hover:scale-105 transition">
+      <i id="darkModeIcon" class="fas fa-moon text-yellow-400 text-lg"></i>
+    </button>
+
+    <h2 class="text-2xl font-bold text-center mb-6">Admin Login</h2>
+
+    <form id="loginForm" class="space-y-4">
+      <div>
+        <label class="block text-sm mb-1">Email</label>
+        <input type="email" id="email" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600" required>
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Password</label>
+        <input type="password" id="password" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600" required>
+      </div>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Login</button>
+    </form>
+
+    <p id="errorMsg" class="text-red-500 text-sm text-center mt-3 hidden">Invalid email or password.</p>
+  </div>
+
+<script>
+// Example hardcoded credentials (replace with backend validation later)
+const adminEmail = "admin@vietportfolio.work.gd";
+const adminPassword = "123456"; // ⚠️ Replace with env variable in backend
+
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (email === adminEmail && password === adminPassword) {
+    localStorage.setItem("isLoggedIn", "true");
+    window.location.href = "admin.html";
+  } else {
+    document.getElementById("errorMsg").classList.remove("hidden");
+  }
+});
+
+// 🌙 Dark Mode Toggle
+const toggleBtn = document.getElementById("darkModeToggle");
+const toggleIcon = document.getElementById("darkModeIcon");
+
+if (localStorage.getItem("theme") === "dark" || 
+   (!localStorage.getItem("theme") && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add("dark");
+  toggleIcon.classList.replace("fa-moon", "fa-sun");
+  toggleIcon.classList.remove("text-yellow-400");
+  toggleIcon.classList.add("text-orange-400");
+} else {
+  document.documentElement.classList.remove("dark");
+  toggleIcon.classList.replace("fa-sun", "fa-moon");
+  toggleIcon.classList.remove("text-orange-400");
+  toggleIcon.classList.add("text-yellow-400");
+}
+
+toggleBtn.addEventListener("click", () => {
+  document.documentElement.classList.toggle("dark");
+  if (document.documentElement.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    toggleIcon.classList.replace("fa-moon", "fa-sun");
+    toggleIcon.classList.remove("text-yellow-400");
+    toggleIcon.classList.add("text-orange-400");
+  } else {
+    localStorage.setItem("theme", "light");
+    toggleIcon.classList.replace("fa-sun", "fa-moon");
+    toggleIcon.classList.remove("text-orange-400");
+    toggleIcon.classList.add("text-yellow-400");
+  }
+});
+</script>
+</body>
+</html>
