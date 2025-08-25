@@ -134,56 +134,28 @@
 </div>
 
 <script>
-// 🔒 Protect Admin Page with JWT
-(async function protectAdmin() {
-  const token = localStorage.getItem("authToken");
+// 🔒 Protect Admin Page
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.href = "https://www.vietportfolio.work.gd/login/";
+} else {
+  // Show admin content only if logged in
+  document.getElementById("adminWrapper").style.display = "block";
+}
 
-  if (!token) {
-    // no token → force login
-    window.location.href = "https://www.vietportfolio.work.gd/login/";
-    return;
-  }
-
-  try {
-    // Call backend to validate token
-    const res = await fetch("https://your-backend.onrender.com/auth/verify", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-    });
-
-    if (!res.ok) throw new Error("Invalid token");
-
-    const data = await res.json();
-    if (data.valid) {
-      // ✅ token is valid → show admin
-      document.getElementById("adminWrapper").style.display = "block";
-    } else {
-      throw new Error("Invalid token");
-    }
-  } catch (err) {
-    console.error("Auth failed:", err);
-    localStorage.removeItem("authToken");
-    window.location.href = "https://www.vietportfolio.work.gd/login/";
-  }
-})();
-
-// 🚪 Logout
+// Logout Button
 document.getElementById("logoutBtn").addEventListener("click", () => {
-  localStorage.removeItem("authToken");
+  localStorage.removeItem("isLoggedIn");
   window.location.href = "https://www.vietportfolio.work.gd/login/";
 });
 
-// 📑 Tab switching
+// Tab switching
 function switchTab(tabId) {
   document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
   document.getElementById(tabId).classList.remove("hidden");
 }
-switchTab("dashboardTab"); // default tab
+switchTab("dashboardTab"); // default
 
-// 📂 Toggle submenu
+// Toggle submenu
 function toggleSubmenu(id) {
   const menu = document.getElementById(id);
   menu.classList.toggle("hidden");
@@ -221,6 +193,5 @@ toggleBtn.addEventListener("click", () => {
   }
 });
 </script>
-
 </body>
 </html>
