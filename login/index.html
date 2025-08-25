@@ -42,19 +42,34 @@ if (localStorage.getItem("isLoggedIn") === "true") {
   window.location.href = "https://www.vietportfolio.work.gd/admin/";
 }
 
-// Example hardcoded credentials (replace with backend later)
-const adminUsername = "viet";   // ✅ change this
-const adminPassword = "123456789"; // ✅ change this
-
-document.getElementById("loginForm").addEventListener("submit", function(e) {
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
   e.preventDefault();
+
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  if (username === adminUsername && password === adminPassword) {
-    localStorage.setItem("isLoggedIn", "true");
-    window.location.href = "https://www.vietportfolio.work.gd/admin/";
-  } else {
+  try {
+    const res = await fetch("https://your-backend.onrender.com/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!res.ok) throw new Error("Login failed");
+
+    const data = await res.json();
+
+    if (data.success) {
+      // ✅ store token for future requests
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("authToken", data.token);
+
+      window.location.href = "https://www.vietportfolio.work.gd/admin/";
+    } else {
+      document.getElementById("errorMsg").classList.remove("hidden");
+    }
+  } catch (err) {
+    console.error(err);
     document.getElementById("errorMsg").classList.remove("hidden");
   }
 });
@@ -91,5 +106,6 @@ toggleBtn.addEventListener("click", () => {
   }
 });
 </script>
+
 </body>
 </html>
