@@ -587,33 +587,48 @@
     <div class="grid md:grid-cols-[3fr_2fr] gap-12 text-gray-800 dark:text-gray-300">
       
       <!-- Contact Form -->
-      <form id="contactForm" class="space-y-6">
-        <div>
-          <label class="block mb-1 font-semibold" data-i18n="name">Name*</label>
-          <input id="name" name="name" type="text" placeholder="Enter your name..." required
-            class="w-full px-4 py-3 rounded border border-gray-300 bg-[#efeae4] dark:bg-gray-800 focus:ring-2 focus:ring-red-400 focus:outline-none" />
-        </div>
-        <div>
-          <label class="block mb-1 font-semibold" data-i18n="email">Email*</label>
-          <input id="email" name="email" type="email" placeholder="Enter your email..." required
-            class="w-full px-4 py-3 rounded border border-gray-300 bg-[#efeae4] dark:bg-gray-800 focus:ring-2 focus:ring-red-400 focus:outline-none" />
-        </div>
-        <div>
-          <label class="block mb-1 font-semibold" data-i18n="phone">Contact Phone</label>
-          <input name="phone" type="text" placeholder="Enter your phone (optional)"
-            class="w-full px-4 py-3 rounded border border-gray-300 bg-[#efeae4] dark:bg-gray-800 focus:ring-2 focus:ring-red-400 focus:outline-none" />
-        </div>
-        <div>
-          <label class="block mb-1 font-semibold" data-i18n="message">Message</label>
-          <textarea name="message" rows="5" placeholder="Type your message here..."
-            class="w-full px-4 py-3 rounded border border-gray-300 bg-[#efeae4] dark:bg-gray-800 focus:ring-2 focus:ring-red-400 focus:outline-none"></textarea>
-        </div>
-        <button type="submit"
-          class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full shadow-md transition-all duration-300"
-          data-i18n="Send message">
-          Send message →
-        </button>
-      </form>
+<form id="contactForm" class="space-y-6">
+  <div>
+    <label class="block mb-1 font-semibold" data-i18n="name">Name*</label>
+    <input id="name" name="name" type="text" 
+      placeholder="Enter your name..." 
+      data-i18n-placeholder="name_placeholder"
+      required
+      class="w-full px-4 py-3 rounded border border-gray-300 bg-[#efeae4] dark:bg-gray-800 focus:ring-2 focus:ring-red-400 focus:outline-none" />
+  </div>
+
+  <div>
+    <label class="block mb-1 font-semibold" data-i18n="email">Email*</label>
+    <input id="email" name="email" type="email" 
+      placeholder="Enter your email..." 
+      data-i18n-placeholder="email_placeholder"
+      required
+      class="w-full px-4 py-3 rounded border border-gray-300 bg-[#efeae4] dark:bg-gray-800 focus:ring-2 focus:ring-red-400 focus:outline-none" />
+  </div>
+
+  <div>
+    <label class="block mb-1 font-semibold" data-i18n="phone">Contact Phone</label>
+    <input name="phone" type="text" 
+      placeholder="Enter your phone (optional)" 
+      data-i18n-placeholder="phone_placeholder"
+      class="w-full px-4 py-3 rounded border border-gray-300 bg-[#efeae4] dark:bg-gray-800 focus:ring-2 focus:ring-red-400 focus:outline-none" />
+  </div>
+
+  <div>
+    <label class="block mb-1 font-semibold" data-i18n="message">Message</label>
+    <textarea name="message" rows="5" 
+      placeholder="Type your message here..." 
+      data-i18n-placeholder="message_placeholder"
+      class="w-full px-4 py-3 rounded border border-gray-300 bg-[#efeae4] dark:bg-gray-800 focus:ring-2 focus:ring-red-400 focus:outline-none"></textarea>
+  </div>
+
+  <button type="submit"
+    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-full shadow-md transition-all duration-300"
+    data-i18n="send_message">
+    Send message →
+  </button>
+</form>
+
 
       <!-- Contact Info Only -->
       <div class="space-y-6 text-base">
@@ -1166,7 +1181,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
           "phone": "Contact Phone",
           "email": "Email",
           "message": "Message",
-          "Send message": "Send message",
+          "send_message": "Send message",
           "Read More": "Read More",
           "Content Marketing": "Content Marketing",
           "Facebook Ads": "Facebook Ads",
@@ -1239,7 +1254,11 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
-      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?"
+      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?",
+      "name_placeholder": "Enter your name...",
+  "email_placeholder": "Enter your email...",
+  "phone_placeholder": "Enter your phone (optional)",
+  "message_placeholder": "Type your message here..."
       
           }
         },
@@ -1258,7 +1277,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
           "email": "Email",
            "phone": "Số điện thoại",
           "message": "Tin nhắn",
-          "Send message": "Gửi tin nhắn",
+          "send_message": "Gửi tin nhắn",
           "Read More": "Đọc thêm",
           "Contactme": "Liên hệ tôi",
           "SEO Optimization": "Tối ưu SEO",
@@ -1322,7 +1341,11 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
-      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?"
+      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?",
+      "name_placeholder": "Nhập tên của bạn...",
+  "email_placeholder": "Nhập email...",
+  "phone_placeholder": "Nhập sdt (không bắt buộc)",
+  "message_placeholder": "Nhập tin nhắn của bạn..."
           }
         }
       }
@@ -1336,6 +1359,13 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       document.querySelectorAll('[data-i18n]').forEach(el => {
         el.innerHTML = i18next.t(el.getAttribute('data-i18n'));
       });
+      
+       // Placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const val = i18next.t(key);
+    if (val) el.setAttribute('placeholder', val);
+  });
     }
 
     function setLanguage(lang) {
