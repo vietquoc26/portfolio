@@ -408,7 +408,7 @@
 
 
 <div class="max-w-7xl mx-auto px-6 text-center">
-    <h2 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white" data-i18n="projects">My Projects</h2>
+    <h2 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white" data-i18n="projects"></h2>
     <p class="mb-12 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="projectIntro">
     </p>
 
@@ -441,10 +441,9 @@
               <div class="card w-full sm:max-w-xs mx-auto">
               <img src="seo content.png" alt="Content Project" class="w-full h-[200px] object-cover">
               <div class="p-4 flex flex-col flex-grow text-left">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Content Marketing</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="project2"></h3>
                 <span class="inline-block bg-green-200 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Content</span>
-                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow">
-                  Grew traffic and leads through strategic blog and social content planning.
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow" data-i18n="project2des">
                 </p>
                  <a href="/project/content-projects/">
               <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
@@ -459,10 +458,9 @@
               <div class="card w-full sm:max-w-xs mx-auto">
               <img src="meta ad.png" alt="Meta Ads" class="w-full h-[200px] object-cover">
               <div class="p-4 flex flex-col flex-grow text-left">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Meta Ads Campaign</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="project3"></h3>
                 <span class="inline-block bg-blue-200 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Ads</span>
-                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow">
-                  Ran high-converting paid media campaigns to increase customer acquisition.
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow" data-i18n="project3des">
                 </p>
                 <a href="/project/paid-media/">
                 <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
@@ -477,10 +475,9 @@
               <div class="card w-full sm:max-w-xs mx-auto">
               <img src="video-editing.png" alt="Video Editing" class="w-full h-[200px] object-cover">
               <div class="p-4 flex flex-col flex-grow text-left">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Video Editing Projects</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 data-i18n="project4"></h3>
                 <span class="inline-block bg-pink-200 text-pink-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Video</span>
-                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow">
-                  Produced and edited storytelling videos for brand building and engagement.
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow data-i18n="project4des">
                 </p>
               <a href="/project/video-editing/"
                 <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
@@ -1179,7 +1176,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         "aboutPeople": "Plan comprehensive SEO and social media content strategy",
         "aboutPeopleText": "Building trust and connection through content that resonates.",
         "aboutBrands": "Plan and implement paid media strategy:",
-        "aboutBrandsText": "Driving visibility and growth through data-driven campaigns.",
+        "aboutBrandsText": "Driving visibility and growth through data-driven campaigns on Google ads and Meta ads",
         "aboutEveryone": "Manage projects effectively:",
         "aboutEveryoneText": "Empowering others to thrive with tools, skills, and knowledge.",
         "findOutMore": "More information",
@@ -1194,8 +1191,14 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
          "app1Desc": "Aimed at boosting website visibility and organic traffic through improved content, keyword strategy, and technical SEO enhancements.",
          "project1": "SEO Optimization Projects",
          "projectdes1": "Boosted website visibility through content strategy, on-page, and technical SEO.",
-         "projects2": "My Projects",
+         "projects": "My Projects",
          "projectIntro": "Discover the projects that showcase my passion for design and innovation",
+         "project2":"Content Marketing",
+         "project2des":"Grew traffic and leads through strategic blog and social content planning.",
+         "project3":"Meta Ads Campaign",
+         "project3des":"Ran high-converting paid media campaigns to increase sale revenue.",
+         "project4":"Video Marketing",
+         "project4des":"Produced and edited storytelling videos for brand building and engagement.",
          "introduction": "Introduction",
          "skills":"Skills",
          "footerDescription": "Helping you grow with SEO, content, design, and tech-driven strategies.",
@@ -1254,15 +1257,21 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
           "Content Marketing": "Tiếp thị nội dung",
           "Facebook Ads": "Quảng cáo Facebook",
           "aboutHeadline": "Triển khai các dự án nhanh chóng",
-        "aboutIntro": "Trong thế giới số ngày nay, thành công đến từ sự sáng tạo, linh hoạt và khả năng thích ứng...",
+        "aboutIntro": "Tôi có kinh nghiệm đa dạng về nhiều kỹ năng chuyên môn và tổng thể, tập trung vào việc giúp các dự án đạt hiệu quả cao hơn và tối ưu tỷ lệ chuyển đổi.",
         "aboutPeople": "Lập kế hoạch nội dung SEO và social content",
         "aboutPeopleText": "Tiếp cận khách hàng mục tiêu với nhiều dạng content tư vấn, so sánh và khuyến khích chuyển đổi.",
         "aboutBrands": "Xây dựng chién dịch quảng cáo hiệu quả:",
-        "aboutBrandsText": "Thúc đẩy sự hiện diện và tăng trưởng thông qua các chiến dịch dựa trên dữ liệu.",
+        "aboutBrandsText": "Tạo ra sự tăng trưởng và nâng cao độ nhận diện thương hiệu bằng các chiến dịch quảng cáo dữ liệu trên Google Ads và Meta Ads.",
         "aboutEveryone": "Quản lý nguồn lực dự án hiệu quả",
-        "aboutEveryoneText": "Trao quyền thành công với công cụ, kỹ năng và hiểu biết.",
+        "aboutEveryoneText": "đồng thời trao quyền và hỗ trợ đội ngũ phát huy tối đa tiềm năng nhờ công cụ, kỹ năng và kiến thức.",
           "project1": "Dự án tối ưu SEO",
          "projectdes1": "Tối ưu nội dung với chiến lược on-page và off-page phù hợp, giúp tăng lượt truy cập tự nhiên",
+         "project2":"Content Marketing",
+          "project2des":"Tăng traffic và lead nhờ xây dựng kế hoạch nội dung organic trên website và các nền tảng mạng xã hội.",
+         "project3":"Quảng cáo meta",
+         "project3des":"Thực hiện các chiến dịch paid media hiệu quả, giúp tối ưu chuyển đổi và thúc đẩy doanh số bán hàng.",
+         "project4":"Video Marketing",
+         "project4des":"Produced and edited storytelling videos for brand building and engagement.",
         "findOutMore": "Tìm hiểu thêm",
          "introduction": "Giới thiệu",
           "skills":"Những kỹ năng của tôi",
