@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motivational Unemployment Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white shadow-2xl rounded-3xl w-full max-w-xl p-8 md:p-12 text-center border border-gray-200">
+    <div class="flex justify-end mb-4">
+      <button id="langBtn" class="bg-purple-200 text-purple-800 px-4 py-1 rounded-lg hover:bg-purple-300 transition-all duration-200">Tiếng Việt</button>
+    </div>
+
+    <h1 id="title" class="text-3xl font-extrabold mb-6 text-purple-700">💼 Unemployment Dashboard</h1>
+
+    <!-- Input Card -->
+    <div class="bg-purple-50 p-6 rounded-2xl mb-6 shadow-inner border border-purple-100">
+      <label id="labelStart" class="block text-gray-700 font-semibold mb-2">Start Date:</label>
+      <input type="date" id="startDate" class="w-full p-3 rounded-lg border border-gray-300 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-400">
+
+      <label id="labelSalary" class="block text-gray-700 font-semibold mb-2">Expected Daily Salary ($):</label>
+      <input type="number" id="dailySalary" class="w-full p-3 rounded-lg border border-gray-300 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-400" placeholder="e.g., 50">
+
+      <label id="labelGoal" class="block text-gray-700 font-semibold mb-2">Job Goal Deadline:</label>
+      <input type="date" id="goalDate" class="w-full p-3 rounded-lg border border-gray-300 mb-6 focus:outline-none focus:ring-2 focus:ring-purple-400">
+
+      <button id="startButton" class="bg-purple-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-purple-700 transition-all duration-300 shadow-lg w-full">Start Dashboard</button>
+    </div>
+
+    <!-- Display Section -->
+    <div id="result" class="text-lg font-semibold mb-4 p-4 rounded-2xl bg-white border border-gray-200 shadow-md"></div>
+    <div id="motivation" class="text-gray-700 italic text-center p-4 rounded-xl bg-purple-50 shadow-inner border border-purple-100"></div>
+  </div>
+
+  <script>
+    let timer;
+    let currentLang = 'en';
+
+    const quotes = {
+      en: [
+        "Every day counts. Apply for at least 3 jobs today.",
+        "Time is money – don't waste another second!",
+        "Small steps every day lead to big results.",
+        "Discipline beats motivation when motivation fades.",
+        "Your future self will thank you for starting today."
+      ],
+      vi: [
+        "Mỗi ngày đều quan trọng. Hãy nộp ít nhất 3 đơn xin việc hôm nay.",
+        "Thời gian là tiền bạc – đừng lãng phí giây phút nào!",
+        "Những bước nhỏ mỗi ngày dẫn đến kết quả lớn.",
+        "Kỷ luật quan trọng hơn động lực khi động lực biến mất.",
+        "Tương lai của bạn sẽ cảm ơn vì bạn đã bắt đầu hôm nay."
+      ]
+    };
+
+    const labels = {
+      en: {
+        title: "💼 Unemployment Dashboard",
+        start: "Start Date:",
+        salary: "Expected Daily Salary ($):",
+        goal: "Job Goal Deadline:",
+        startBtn: "Start Dashboard",
+        alert: "Please select your unemployment start date!",
+        future: "Start date cannot be in the future!",
+        lost: "Estimated money lost:",
+        timeLeft: "Time left to reach your goal:",
+        goalPassed: "Goal deadline has passed! Time to act immediately!"
+      },
+      vi: {
+        title: "💼 Bảng Thống Kê Thời Gian Thất Nghiệp",
+        start: "Ngày bắt đầu:",
+        salary: "Thu nhập dự kiến mỗi ngày ($):",
+        goal: "Ngày hoàn thành mục tiêu:",
+        startBtn: "Bắt đầu",
+        alert: "Vui lòng chọn ngày bắt đầu!",
+        future: "Ngày bắt đầu không thể ở tương lai!",
+        lost: "Tiền ước tính đã mất:",
+        timeLeft: "Thời gian còn lại để đạt mục tiêu:",
+        goalPassed: "Đã quá hạn mục tiêu! Hãy hành động ngay!"
+      }
+    };
+
+    // Language toggle button
+    document.getElementById("langBtn").addEventListener("click", () => {
+      currentLang = currentLang === 'en' ? 'vi' : 'en';
+      updateLabels();
+      document.getElementById("langBtn").innerText = currentLang === 'en' ? "Tiếng Việt" : "English";
+    });
+
+    function updateLabels() {
+      document.getElementById("title").innerText = labels[currentLang].title;
+      document.getElementById("labelStart").innerText = labels[currentLang].start;
+      document.getElementById("labelSalary").innerText = labels[currentLang].salary;
+      document.getElementById("labelGoal").innerText = labels[currentLang].goal;
+      document.getElementById("startButton").innerText = labels[currentLang].startBtn;
+    }
+
+    document.getElementById("startButton").addEventListener("click", startDashboard);
+
+    function startDashboard() {
+      const startDateValue = document.getElementById("startDate").value;
+      const dailySalary = parseFloat(document.getElementById("dailySalary").value) || 0;
+      const goalDateValue = document.getElementById("goalDate").value;
+
+      if (!startDateValue) {
+        alert(labels[currentLang].alert);
+        return;
+      }
+
+      clearInterval(timer);
+
+      const startDate = new Date(startDateValue);
+      const goalDate = goalDateValue ? new Date(goalDateValue) : null;
+
+      function updateDashboard() {
+        const now = new Date();
+        const diffTime = now - startDate;
+
+        if (diffTime < 0) {
+          document.getElementById("result").innerText = labels[currentLang].future;
+          return;
+        }
+
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24);
+        const diffMinutes = Math.floor((diffTime / (1000 * 60)) % 60);
+        const diffSeconds = Math.floor((diffTime / 1000) % 60);
+
+        const moneyLost = (diffDays * dailySalary).toFixed(2);
+
+        // Goal countdown
+        let goalMsg = '';
+        if (goalDate) {
+          const remainingTime = goalDate - now;
+          if (remainingTime > 0) {
+            const remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+            const remainingHours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
+            goalMsg = `⏳ ${labels[currentLang].timeLeft} ${remainingDays}d ${remainingHours}h`;
+          } else {
+            goalMsg = "⚠️ " + labels[currentLang].goalPassed;
+          }
+        }
+
+        // Urgency color
+        let color = 'text-green-600';
+        if (diffDays >= 30) color = 'text-red-600';
+        else if (diffDays >= 7) color = 'text-yellow-600';
+
+        document.getElementById("result").innerHTML = `
+          <p class="${color} text-2xl font-bold mb-2">${currentLang === 'en' ? 'You have been unemployed for:' : 'Bạn đã thất nghiệp trong:'} ${diffDays}d ${diffHours}h ${diffMinutes}m ${diffSeconds}s</p>
+          <p class="text-gray-800 mb-2">${labels[currentLang].lost} $${moneyLost}</p>
+          <p class="text-gray-700 font-semibold">${goalMsg}</p>
+        `;
+
+        const quote = quotes[currentLang][Math.floor(Math.random() * quotes[currentLang].length)];
+        document.getElementById("motivation").innerText = quote;
+      }
+
+      updateDashboard();
+      timer = setInterval(updateDashboard, 1000);
+    }
+  </script>
+
+</body>
+</html>
