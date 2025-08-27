@@ -9,6 +9,8 @@
     tailwind.config = { darkMode: 'class' }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- SortableJS (drag & drop) -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
 
@@ -83,7 +85,36 @@
         </div>
       </div>
 
-      <div id="homeTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Home Editor</h2> </div>
+      <!-- HOME TAB: WP-BAKERY STYLE BUILDER -->
+      <div id="homeTab" class="tab-content hidden">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold">Home Editor</h2>
+          <div class="flex gap-3 items-center">
+            <select id="addSectionSelect" class="px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
+              <option value="hero">Hero</option>
+              <option value="about">About</option>
+              <option value="skills">Skills</option>
+              <option value="projects">Projects</option>
+              <option value="results">Results</option>
+              <option value="contact">Contact</option>
+            </select>
+            <button id="addSectionBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Section</button>
+            <button id="saveHomeBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Save Homepage</button>
+            <button id="previewBtn" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Preview</button>
+          </div>
+        </div>
+
+        <!-- Sections container (sortable) -->
+        <div id="sectionsContainer" class="space-y-6">
+          <!-- Dynamic sections inserted here -->
+        </div>
+
+        <!-- If no sections -->
+        <div id="emptyState" class="text-center text-gray-500 py-8">
+          No sections yet — add one with the button above.
+        </div>
+      </div>
+
       <div id="aboutTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">About Editor</h2> </div>
       <div id="seoTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">SEO Projects</h2> </div>
       <div id="contentTab" class="tab-content hidden"> <h2 class="text-2xl font-bold">Content Writing</h2> </div>
@@ -112,6 +143,8 @@
 
     if (res.ok) {
       document.getElementById("adminWrapper").style.display = "block";
+      // initialize builder after auth
+      initBuilder();
     } else {
       localStorage.removeItem("token");
       localStorage.removeItem("isLoggedIn");
@@ -166,6 +199,539 @@ toggleBtn.addEventListener("click", () => {
     toggleIcon.classList.replace("text-orange-400", "text-yellow-400");
   }
 });
+
+/* ---------------------------
+   Builder Implementation
+   --------------------------- */
+function initBuilder() {
+  const templates = {
+    hero: createHeroHTML,
+    about: createAboutHTML,
+    skills: createSkillsHTML,
+    projects: createProjectHTML,
+    results: createResultsHTML,
+    contact: createContactHTML
+  };
+
+  const container = document.getElementById('sectionsContainer');
+  const emptyState = document.getElementById('emptyState');
+  const addBtn = document.getElementById('addSectionBtn');
+  const addSelect = document.getElementById('addSectionSelect');
+  const saveBtn = document.getElementById('saveHomeBtn');
+  const previewBtn = document.getElementById('previewBtn');
+
+  // Load existing homepage content from backend (if any)
+  loadHomepage();
+
+  addBtn.addEventListener('click', () => {
+    const type = addSelect.value;
+    if (templates[type]) {
+      const el = htmlToElement(templates[type]());
+      container.appendChild(el);
+      emptyState.style.display = container.children.length ? 'none' : 'block';
+    }
+  });
+
+  // Save handler
+  saveBtn.addEventListener('click', saveHomepage);
+
+  // Preview handler (opens a new window with simple render)
+  previewBtn.addEventListener('click', () => {
+    const data = serializeSections();
+    const previewWindow = window.open('', '_blank');
+    previewWindow.document.write(renderPreviewHTML(data));
+    previewWindow.document.close();
+  });
+
+  // Initialize Sortable
+  new Sortable(container, {
+    animation: 180,
+    handle: '.drag-handle',
+    onUpdate: () => { /* keep order up-to-date on save */ }
+  });
+
+  // Make container respond visually
+  container.addEventListener('click', (e) => {
+    // enable inline-edit focus styles if needed
+  });
+
+  function htmlToElement(html) {
+    const template = document.createElement('template');
+    template.innerHTML = html.trim();
+    const node = template.content.firstChild;
+    registerSectionEvents(node);
+    return node;
+  }
+
+  // Register events for each section (remove, upload preview, add child items, etc)
+  function registerSectionEvents(node) {
+    // remove
+    const removeBtn = node.querySelector('.remove-section');
+    if (removeBtn) removeBtn.addEventListener('click', () => {
+      node.remove();
+      emptyState.style.display = container.children.length ? 'none' : 'block';
+    });
+
+    // upload input preview
+    const fileInputs = node.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(fi => fi.addEventListener('change', async (ev) => {
+      const input = ev.target;
+      const file = input.files[0];
+      const previewImg = node.querySelector('.preview-img');
+      if (!file) return;
+      // local preview first
+      previewImg.src = URL.createObjectURL(file);
+
+      // try upload to backend
+      try {
+        const token = localStorage.getItem('token');
+        const form = new FormData();
+        form.append('image', file);
+        const r = await fetch('https://portfolio-backend-zmdt.onrender.com/api/upload-image', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: form
+        });
+        if (r.ok) {
+          const j = await r.json();
+          // assume backend returns { url: 'https://...' }
+          previewImg.dataset.src = j.url || previewImg.src;
+        } else {
+          // keep data URL fallback
+          previewImg.dataset.src = previewImg.src;
+        }
+      } catch (err) {
+        // no upload endpoint or network error: fallback to data URL
+        previewImg.dataset.src = previewImg.src;
+        console.warn('Image upload failed (fallback to local preview)', err);
+      }
+    }));
+
+    // add/remove repeatable items (skills/projects)
+    const addItemBtn = node.querySelector('.add-item');
+    if (addItemBtn) addItemBtn.addEventListener('click', () => {
+      const list = node.querySelector('.items-list');
+      const template = node.querySelector('.item-template');
+      const clone = template.cloneNode(true);
+      clone.classList.remove('item-template', 'hidden');
+      // wire delete button
+      const del = clone.querySelector('.item-remove');
+      if (del) del.addEventListener('click', () => clone.remove());
+      list.appendChild(clone);
+    });
+
+    // wire existing item remove buttons
+    const removes = node.querySelectorAll('.item-remove');
+    removes.forEach(r => r.addEventListener('click', (ev) => ev.target.closest('.item').remove()));
+
+    // inline editing: inputs and textareas are naturally editable, so nothing needed
+  }
+
+  /* ---------- Templates (return HTML strings) ---------- */
+
+  function createHeroHTML() {
+    return `
+    <div class="home-section bg-white dark:bg-gray-800 rounded-lg shadow p-6 cursor-move">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3">
+          <span class="drag-handle cursor-grab px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm">≡</span>
+          <h3 class="text-xl font-bold">Hero Section</h3>
+        </div>
+        <div class="flex gap-2">
+          <button class="remove-section bg-red-600 text-white px-3 py-1 rounded">Remove</button>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div class="space-y-3">
+          <input class="hero-title w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" placeholder="Greeting / Title" value="Hi, I'm Viet — Digital Marketer" />
+          <textarea class="hero-sub w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" rows="3">I help brands grow through SEO, content and paid media.</textarea>
+          <div class="flex gap-3">
+            <input class="hero-cta-text px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" placeholder="CTA text" value="Contact Me" />
+            <input class="hero-cta-link px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" placeholder="CTA URL" value="/contact-us/" />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <img src="Avatar.jpg" class="preview-img w-full h-56 object-cover rounded shadow" alt="Hero image" data-src="Avatar.jpg" />
+          <input type="file" accept="image/*" class="w-full" />
+        </div>
+      </div>
+    </div>
+    `;
+  }
+
+  function createAboutHTML() {
+    return `
+    <div class="home-section bg-white dark:bg-gray-800 rounded-lg shadow p-6 cursor-move">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3">
+          <span class="drag-handle cursor-grab px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm">≡</span>
+          <h3 class="text-xl font-bold">About Section</h3>
+        </div>
+        <button class="remove-section bg-red-600 text-white px-3 py-1 rounded">Remove</button>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div class="space-y-3">
+          <input class="about-headline w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" placeholder="Headline" value="About Me" />
+          <textarea class="about-text w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" rows="5">I’m an Account Manager, Content Writer and Video Editor based in Ho Chi Minh City...</textarea>
+          <div class="flex gap-3">
+            <input class="about-cta-text px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" placeholder="Button text" value="Find Out More" />
+            <input class="about-cta-link px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" placeholder="Button link" value="/about-me/" />
+          </div>
+        </div>
+        <div class="space-y-2">
+          <img src="Avatar.jpg" class="preview-img w-full h-56 object-cover rounded shadow" data-src="Avatar.jpg" />
+          <input type="file" accept="image/*" class="w-full" />
+        </div>
+      </div>
+    </div>
+    `;
+  }
+
+  function createSkillsHTML() {
+    return `
+    <div class="home-section bg-white dark:bg-gray-800 rounded-lg shadow p-6 cursor-move">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3">
+          <span class="drag-handle cursor-grab px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm">≡</span>
+          <h3 class="text-xl font-bold">Skills Section</h3>
+        </div>
+        <button class="remove-section bg-red-600 text-white px-3 py-1 rounded">Remove</button>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <input class="skills-headline w-2/3 px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" placeholder="Section title" value="Skills" />
+          <button class="add-item bg-green-600 text-white px-3 py-1 rounded">Add Skill</button>
+        </div>
+
+        <div class="items-list space-y-3">
+          <!-- item-template used as clone source -->
+          <div class="item item-template hidden">
+            <div class="bg-gray-50 dark:bg-gray-900 p-3 rounded flex gap-3 items-start">
+              <input class="skill-name flex-1 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Skill name" value="SEO" />
+              <input class="skill-level w-28 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="level" value="Expert" />
+              <button class="item-remove bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+            </div>
+          </div>
+
+          <!-- initial example item -->
+          <div class="item">
+            <div class="bg-gray-50 dark:bg-gray-900 p-3 rounded flex gap-3 items-start">
+              <input class="skill-name flex-1 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Skill name" value="SEO" />
+              <input class="skill-level w-28 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="level" value="Expert" />
+              <button class="item-remove bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }
+
+  function createProjectHTML() {
+    return `
+    <div class="home-section bg-white dark:bg-gray-800 rounded-lg shadow p-6 cursor-move">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3">
+          <span class="drag-handle cursor-grab px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm">≡</span>
+          <h3 class="text-xl font-bold">Projects Section</h3>
+        </div>
+        <button class="remove-section bg-red-600 text-white px-3 py-1 rounded">Remove</button>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <input class="projects-headline w-2/3 px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900" placeholder="Section title" value="Projects" />
+          <button class="add-item bg-green-600 text-white px-3 py-1 rounded">Add Project</button>
+        </div>
+
+        <div class="items-list space-y-3">
+          <div class="item">
+            <div class="bg-gray-50 dark:bg-gray-900 p-3 rounded flex gap-3 items-start">
+              <input class="project-name flex-1 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Project name" value="SEO Project" />
+              <input class="project-image w-40 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Image URL" value="SEO.png" />
+              <button class="item-remove bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }
+
+  function createResultsHTML() {
+    return `
+    <div class="home-section bg-white dark:bg-gray-800 rounded-lg shadow p-6 cursor-move">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3">
+          <span class="drag-handle cursor-grab px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm">≡</span>
+          <h3 class="text-xl font-bold">Results Section</h3>
+        </div>
+        <button class="remove-section bg-red-600 text-white px-3 py-1 rounded">Remove</button>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="p-4 rounded bg-gray-50 dark:bg-gray-900">
+          <input class="result-title w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Title" value="Traffic +200%" />
+          <textarea class="result-desc w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600" rows="2">Increased organic traffic by 200%.</textarea>
+        </div>
+        <div class="p-4 rounded bg-gray-50 dark:bg-gray-900">
+          <input class="result-title w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Title" value="Revenue +40%" />
+          <textarea class="result-desc w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600" rows="2">Boosted revenue through paid media.</textarea>
+        </div>
+        <div class="p-4 rounded bg-gray-50 dark:bg-gray-900">
+          <input class="result-title w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Title" value="Engagement +150%" />
+          <textarea class="result-desc w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600" rows="2">Improved engagement on social channels.</textarea>
+        </div>
+      </div>
+    </div>
+    `;
+  }
+
+  function createContactHTML() {
+    return `
+    <div class="home-section bg-white dark:bg-gray-800 rounded-lg shadow p-6 cursor-move">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3">
+          <span class="drag-handle cursor-grab px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm">≡</span>
+          <h3 class="text-xl font-bold">Contact Section</h3>
+        </div>
+        <button class="remove-section bg-red-600 text-white px-3 py-1 rounded">Remove</button>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <input class="contact-email w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Email" value="vietquoc150799@gmail.com" />
+          <input class="contact-phone w-full mt-3 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Phone" value="+84 986 255 349" />
+          <input class="contact-bank w-full mt-3 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Bank info" value="Vietcombank - 9986255349" />
+        </div>
+        <div class="space-y-3">
+          <textarea class="contact-intro w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-600" rows="5">Contact me to discuss your next project.</textarea>
+        </div>
+      </div>
+    </div>
+    `;
+  }
+
+  /* ---------- Serialization & Save ---------- */
+
+  // Convert UI sections to JSON ready to save
+  async function serializeSections() {
+    const secs = [];
+    const nodes = container.querySelectorAll('.home-section');
+    nodes.forEach(node => {
+      const type = node.querySelector('h3')?.innerText?.toLowerCase().split(' ')[0] || 'section';
+      const obj = { type: type, data: {} };
+
+      // Generic known fields mapping
+      if (type === 'hero') {
+        obj.data.title = node.querySelector('.hero-title')?.value || '';
+        obj.data.subtitle = node.querySelector('.hero-sub')?.value || '';
+        obj.data.ctaText = node.querySelector('.hero-cta-text')?.value || '';
+        obj.data.ctaLink = node.querySelector('.hero-cta-link')?.value || '';
+        // image
+        const img = node.querySelector('.preview-img');
+        obj.data.image = img?.dataset.src || img?.src || '';
+      } else if (type === 'about') {
+        obj.data.headline = node.querySelector('.about-headline')?.value || '';
+        obj.data.text = node.querySelector('.about-text')?.value || '';
+        obj.data.ctaText = node.querySelector('.about-cta-text')?.value || '';
+        obj.data.ctaLink = node.querySelector('.about-cta-link')?.value || '';
+        const img = node.querySelector('.preview-img');
+        obj.data.image = img?.dataset.src || img?.src || '';
+      } else if (type === 'skills') {
+        obj.data.title = node.querySelector('.skills-headline')?.value || '';
+        obj.data.items = [];
+        node.querySelectorAll('.items-list .item').forEach(it => {
+          const name = it.querySelector('.skill-name')?.value || '';
+          const level = it.querySelector('.skill-level')?.value || '';
+          if (name) obj.data.items.push({ name, level });
+        });
+      } else if (type === 'projects') {
+        obj.data.title = node.querySelector('.projects-headline')?.value || '';
+        obj.data.items = [];
+        node.querySelectorAll('.items-list .item').forEach(it => {
+          const name = it.querySelector('.project-name')?.value || '';
+          const image = it.querySelector('.project-image')?.value || '';
+          if (name) obj.data.items.push({ name, image });
+        });
+      } else if (type === 'results') {
+        obj.data.items = [];
+        node.querySelectorAll('.result-title').forEach((t, idx) => {
+          const title = t.value || '';
+          const desc = node.querySelectorAll('.result-desc')[idx]?.value || '';
+          if (title) obj.data.items.push({ title, desc });
+        });
+      } else if (type === 'contact') {
+        obj.data.email = node.querySelector('.contact-email')?.value || '';
+        obj.data.phone = node.querySelector('.contact-phone')?.value || '';
+        obj.data.bank = node.querySelector('.contact-bank')?.value || '';
+        obj.data.intro = node.querySelector('.contact-intro')?.value || '';
+      } else {
+        // fallback: collect inputs & textareas generically
+        node.querySelectorAll('input, textarea').forEach(inp => {
+          const k = inp.className?.split(' ')[0] || inp.placeholder || `field_${Math.random().toString(36).slice(2,7)}`;
+          obj.data[k] = inp.value || '';
+        });
+      }
+
+      secs.push(obj);
+    });
+
+    return secs;
+  }
+
+  // Save homepage JSON to backend
+  async function saveHomepage() {
+    const sections = await serializeSections();
+    const token = localStorage.getItem('token');
+    try {
+      const res = await fetch('https://portfolio-backend-zmdt.onrender.com/api/homepage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ sections })
+      });
+      if (res.ok) {
+        alert('Homepage saved successfully.');
+      } else {
+        const text = await res.text();
+        alert('Save failed: ' + res.status + ' — ' + text);
+      }
+    } catch (err) {
+      console.error('Save error', err);
+      alert('Save failed (network error).');
+    }
+  }
+
+  // Load existing homepage structure from backend and render
+  async function loadHomepage() {
+    const token = localStorage.getItem('token');
+    try {
+      const res = await fetch('https://portfolio-backend-zmdt.onrender.com/api/homepage', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) {
+        // no saved homepage yet - keep empty
+        return;
+      }
+      const payload = await res.json(); // expect { sections: [...] }
+      const sections = payload.sections || payload.data || [];
+
+      if (!sections.length) return;
+      // clear container
+      container.innerHTML = '';
+      sections.forEach(s => {
+        const type = s.type || s.section || 'hero';
+        const templateFn = templates[type] || templates['hero'];
+        const node = htmlToElement(templateFn());
+        // populate fields
+        if (type === 'hero') {
+          node.querySelector('.hero-title').value = s.data.title || '';
+          node.querySelector('.hero-sub').value = s.data.subtitle || '';
+          node.querySelector('.hero-cta-text').value = s.data.ctaText || '';
+          node.querySelector('.hero-cta-link').value = s.data.ctaLink || '';
+          const img = node.querySelector('.preview-img');
+          if (s.data.image) { img.src = s.data.image; img.dataset.src = s.data.image; }
+        } else if (type === 'about') {
+          node.querySelector('.about-headline').value = s.data.headline || '';
+          node.querySelector('.about-text').value = s.data.text || '';
+          node.querySelector('.about-cta-text').value = s.data.ctaText || '';
+          node.querySelector('.about-cta-link').value = s.data.ctaLink || '';
+          const img = node.querySelector('.preview-img');
+          if (s.data.image) { img.src = s.data.image; img.dataset.src = s.data.image; }
+        } else if (type === 'skills') {
+          node.querySelector('.skills-headline').value = s.data.title || '';
+          const list = node.querySelector('.items-list');
+          list.innerHTML = '';
+          (s.data.items || []).forEach(it => {
+            const templ = node.querySelector('.item-template').cloneNode(true);
+            templ.classList.remove('item-template', 'hidden');
+            templ.classList.add('item');
+            templ.querySelector('.skill-name').value = it.name || '';
+            templ.querySelector('.skill-level').value = it.level || '';
+            templ.querySelector('.item-remove').addEventListener('click', () => templ.remove());
+            list.appendChild(templ);
+          });
+        } else if (type === 'projects') {
+          node.querySelector('.projects-headline').value = s.data.title || '';
+          const list = node.querySelector('.items-list');
+          list.innerHTML = '';
+          (s.data.items || []).forEach(it => {
+            const el = document.createElement('div');
+            el.className = 'item';
+            el.innerHTML = `
+              <div class="bg-gray-50 dark:bg-gray-900 p-3 rounded flex gap-3 items-start">
+                <input class="project-name flex-1 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Project name" value="${escapeHtml(it.name || '')}" />
+                <input class="project-image w-40 px-3 py-2 rounded border border-gray-300 dark:border-gray-600" placeholder="Image URL" value="${escapeHtml(it.image || '')}" />
+                <button class="item-remove bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+              </div>
+            `;
+            el.querySelector('.item-remove').addEventListener('click', () => el.remove());
+            list.appendChild(el);
+          });
+        } else if (type === 'results') {
+          // fill result titles & descs
+          const titles = node.querySelectorAll('.result-title');
+          const descs = node.querySelectorAll('.result-desc');
+          (s.data.items || []).forEach((it, idx) => {
+            if (titles[idx]) titles[idx].value = it.title || '';
+            if (descs[idx]) descs[idx].value = it.desc || '';
+          });
+        } else if (type === 'contact') {
+          node.querySelector('.contact-email').value = s.data.email || '';
+          node.querySelector('.contact-phone').value = s.data.phone || '';
+          node.querySelector('.contact-bank').value = s.data.bank || '';
+          node.querySelector('.contact-intro').value = s.data.intro || '';
+        }
+        container.appendChild(node);
+      });
+      emptyState.style.display = container.children.length ? 'none' : 'block';
+    } catch (err) {
+      console.warn('Load homepage failed', err);
+    }
+  }
+
+  // Helper to render a minimal preview HTML to new tab
+  function renderPreviewHTML(sections) {
+    // very simple preview using inline styles and tailwind CDN
+    const content = sections.map(s => {
+      if (s.type === 'hero') {
+        return `<section class="py-12 text-center"><h1 class="text-4xl font-bold">${escapeHtml(s.data.title)}</h1><p>${escapeHtml(s.data.subtitle)}</p><a href="${escapeHtml(s.data.ctaLink)}" class="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded">${escapeHtml(s.data.ctaText)}</a></section>`;
+      } else if (s.type === 'about') {
+        return `<section class="py-12"><h2 class="text-3xl font-bold">${escapeHtml(s.data.headline)}</h2><p>${escapeHtml(s.data.text)}</p></section>`;
+      } else if (s.type === 'skills') {
+        const items = (s.data.items || []).map(it => `<li>${escapeHtml(it.name)} — ${escapeHtml(it.level)}</li>`).join('');
+        return `<section class="py-12"><h2 class="text-3xl font-bold">${escapeHtml(s.data.title)}</h2><ul>${items}</ul></section>`;
+      } else if (s.type === 'projects') {
+        const items = (s.data.items || []).map(it => `<li>${escapeHtml(it.name)} — <img src="${escapeHtml(it.image)}" style="max-width:80px;"/></li>`).join('');
+        return `<section class="py-12"><h2 class="text-3xl font-bold">${escapeHtml(s.data.title)}</h2><ul>${items}</ul></section>`;
+      } else if (s.type === 'results') {
+        const items = (s.data.items || []).map(it => `<div><strong>${escapeHtml(it.title)}</strong><p>${escapeHtml(it.desc)}</p></div>`).join('');
+        return `<section class="py-12">${items}</section>`;
+      } else if (s.type === 'contact') {
+        return `<section class="py-12"><p>${escapeHtml(s.data.intro || '')}</p><p>${escapeHtml(s.data.email || '')}</p></section>`;
+      } else {
+        return `<section class="py-12"><pre>${escapeHtml(JSON.stringify(s.data, null, 2))}</pre></section>`;
+      }
+    }).join('');
+    return `<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<title>Preview - Homepage</title></head><body>${content}</body></html>`;
+  }
+
+  function escapeHtml(str){ return (str+'').replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+
+} // end initBuilder
+/* ---------------------------
+   end Builder
+   --------------------------- */
 </script>
 </body>
 </html>
