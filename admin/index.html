@@ -31,7 +31,7 @@
     <!-- Sidebar -->
     <aside class="w-64 bg-white dark:bg-gray-800 shadow-lg flex flex-col">
       <div class="p-6 text-center border-b border-gray-200 dark:border-gray-700">
-        <img src="logo2.png" alt="logo" class="mx-auto h-10 w-10 rounded-full mb-2">
+        <img src="https://www.vietportfolio.work.gd/logo2.png" alt="logo" class="mx-auto h-10 w-10 rounded-full mb-2">
         <h2 class="text-xl font-bold">Admin Panel</h2>
         <p class="text-sm text-gray-500 dark:text-gray-400">VietPortfolio</p>
       </div>
@@ -56,10 +56,6 @@
 
         <button onclick="switchTab('contactTab')" class="tab-btn w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"><i class="fas fa-envelope"></i> Contact</button>
       </nav>
-
-      <div class="p-4 border-t border-gray-200 dark:border-gray-700">
-        <button id="logoutBtnSidebar" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">Logout</button>
-      </div>
     </aside>
 
     <!-- Main -->
@@ -246,7 +242,6 @@ function initUI() {
 
   // Logout buttons
   document.getElementById("logoutBtn").addEventListener("click", doLogout);
-  document.getElementById("logoutBtnSidebar").addEventListener("click", doLogout);
 }
 
 function doLogout() {
