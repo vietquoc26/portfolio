@@ -1452,32 +1452,34 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 </div>
 
 <script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-const supabaseUrl = 'YOUR_SUPABASE_URL'
-const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY'
-const supabase = createClient(supabaseUrl, supabaseAnonKey)
+  const supabaseUrl = 'YOUR_SUPABASE_URL'
+  const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY'
+  const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// Example: Detect user language
-const userLang = navigator.language.startsWith('vi') ? 'vi_text' : 'en_text'
+  // Default language (can be dynamically set based on user preference)
+  let currentLang = 'en'
 
-async function loadHeroContent() {
-  const { data, error } = await supabase
-    .from('hero_content')
-    .select('*')
+  async function loadHeroContent() {
+    const { data, error } = await supabase.from('hero_content').select('*')
+    if (error) return console.error('Supabase fetch error:', error)
 
-  if (error) {
-    console.error(error)
-    return
+    // Map keys to elements
+    const mapping = {
+      greeting: document.getElementById('hero-greeting'),
+      intro: document.getElementById('hero-intro'),
+      projects: document.getElementById('hero-projects'),
+      contact: document.getElementById('hero-contact')
+    }
+
+    Object.keys(mapping).forEach(key => {
+      const row = data.find(d => d.key === key)
+      if (row) mapping[key].innerText = currentLang === 'en' ? row.en_text : row.vi_text
+    })
   }
 
-  data.forEach(item => {
-    const el = document.querySelector(`[data-i18n="${item.key}"]`)
-    if (el) el.textContent = item[userLang]
-  })
-}
-
-loadHeroContent()
+  loadHeroContent()
 </script>
 
 
