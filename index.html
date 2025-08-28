@@ -1451,6 +1451,34 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   <img id="modalImage" src="" alt="Enlarged Result" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl" />
 </div>
 
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabaseUrl = 'YOUR_SUPABASE_URL'
+const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY'
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+// Example: Detect user language
+const userLang = navigator.language.startsWith('vi') ? 'vi_text' : 'en_text'
+
+async function loadHeroContent() {
+  const { data, error } = await supabase
+    .from('hero_content')
+    .select('*')
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  data.forEach(item => {
+    const el = document.querySelector(`[data-i18n="${item.key}"]`)
+    if (el) el.textContent = item[userLang]
+  })
+}
+
+loadHeroContent()
+</script>
 
 
 </body>
