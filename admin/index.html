@@ -111,67 +111,67 @@ background-color: #f0f9ff;
 <!-- Hero -->
 <section class="relative group min-h-[80vh] flex items-center justify-center py-12 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
 
-<!-- Edit Button (top-right corner) -->
-<button class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
-<i class="fas fa-edit mr-1"></i> Edit Hero
-</button>
+  <!-- Edit Button (top-right corner) -->
+  <button class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
+    <i class="fas fa-edit mr-1"></i> Edit Hero
+  </button>
 
-<div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
+  <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
-<!-- Text Column -->
-<div class="fade-in fade-delay-1 space-y-6 md:pr-6 text-center md:text-left" style="animation-name: fadeUp;">
+    <!-- Text Column -->
+    <div class="fade-in fade-delay-1 space-y-6 md:pr-6 text-center md:text-left" style="animation-name: fadeUp;">
+      <h1 class="text-4xl md:text-6xl font-bold leading-tight editable" contenteditable="true" data-i18n="greeting">
+        Hello, I'm Viet
+      </h1>
 
-<h1 class="text-4xl md:text-6xl font-bold leading-tight editable" contenteditable="true" data-i18n="greeting">
-Hello, I'm Viet
-</h1>
+      <p class="text-lg text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="intro">
+        Marketing & Content Specialist
+      </p>
 
-<p class="text-lg text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="intro">
-Marketing & Content Specialist
-</p>
+      <!-- Buttons -->
+      <div class="flex flex-wrap justify-center md:justify-start gap-4">
+        <a href="#projects" class="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition editable" contenteditable="true" data-i18n="projects">
+          Projects
+        </a>
+        <a href="#contact" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition editable" contenteditable="true" data-i18n="contact">
+          Contact Me
+        </a>
+      </div>
 
-<!-- Buttons -->
-<div class="flex flex-wrap justify-center md:justify-start gap-4">
-<a href="#projects" class="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition editable" contenteditable="true" data-i18n="projects">
-Projects
-</a>
-<a href="#contact" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition editable" contenteditable="true" data-i18n="contact">
-Contact Me
-</a>
-</div>
+      <!-- Social Icons -->
+      <div class="flex justify-center md:justify-start gap-4 text-2xl text-blue-600 dark:text-blue-400 -mt-2">
+        <a href="https://www.facebook.com/honguyenquocviet150799/" target="_blank" class="hover:text-blue-800"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.linkedin.com/in/ho-nguyen-quoc-viet/" target="_blank" class="hover:text-blue-800"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
 
-<!-- Social Icons -->
-<div class="flex justify-center md:justify-start gap-4 text-2xl text-blue-600 dark:text-blue-400 -mt-2">
-<a href="https://www.facebook.com/honguyenquocviet150799/" target="_blank" class="hover:text-blue-800"><i class="fab fa-facebook"></i></a>
-<a href="https://www.linkedin.com/in/ho-nguyen-quoc-viet/" target="_blank" class="hover:text-blue-800"><i class="fab fa-linkedin"></i></a>
-</div>
-</div>
+    <!-- Image Column -->
+    <div class="relative flex justify-center items-center">
+      <!-- Circular Image -->
+      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+        <img id="heroImage" src="Avatar.jpg" alt="Viet" 
+             class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
 
-<!-- Image Column -->
-<div class="relative flex justify-center items-center">
-<!-- Circular Image -->
-<div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
-<img src="Avatar.jpg" alt="Viet" class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+        <!-- Upload Overlay -->
+        <label class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
+          <i class="fas fa-camera"></i>
+          <input type="file" accept="image/*" class="hidden hero-upload">
+        </label>
+      </div>
 
-<!-- Upload Overlay -->
-<label class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden group-hover:block">
-<i class="fas fa-camera"></i>
-<input type="file" class="hidden" onchange="previewImage(this)" />
-</label>
-</div>
+      <!-- Floating Icons -->
+      <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
+        <i class="fas fa-lightbulb"></i>
+      </div>
+      <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
+        <i class="fas fa-code"></i>
+      </div>
+      <div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
+        <i class="fas fa-rocket"></i>
+      </div>
+    </div>
 
-<!-- Floating Icons -->
-<div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
-<i class="fas fa-lightbulb"></i>
-</div>
-<div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
-<i class="fas fa-code"></i>
-</div>
-<div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
-<i class="fas fa-rocket"></i>
-</div>
-</div>
-
-</div>
+  </div>
 </section>
 
 <!-- Skills -->
@@ -515,7 +515,7 @@ Designed social content strategies and engagement plans.
         <img src="traffic increase.png" alt="Organic Traffic" 
              class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105 editable-image">
         <label class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-          Change
+          <i class="fas fa-camera"></i>
           <input type="file" accept="image/*" class="hidden image-upload">
         </label>
       </div>
@@ -541,7 +541,7 @@ Designed social content strategies and engagement plans.
         <img src="Meta.png" alt="Revenue Growth" 
              class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105 editable-image">
         <label class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-          Change
+          <i class="fas fa-camera"></i>
           <input type="file" accept="image/*" class="hidden image-upload">
         </label>
       </div>
@@ -567,7 +567,7 @@ Designed social content strategies and engagement plans.
         <img src="fanpage.png" alt="Keyword Acquisition" 
              class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105 editable-image">
         <label class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-          Change
+        <i class="fas fa-camera"></i>
           <input type="file" accept="image/*" class="hidden image-upload">
         </label>
       </div>
