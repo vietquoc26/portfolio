@@ -1457,14 +1457,19 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   const supabase = createClient('https://ohbrtxfmwxbjqfyaicpc.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA')
   let currentLang = localStorage.getItem('lang') || 'en'
 
-  async function loadHeroContent() {
-    const { data, error } = await supabase.from('hero_content').select('*')
+    async function loadSectionContent(sectionId) {
+    const section = document.getElementById(sectionId)
+    if (!section) return
+
+    const editableElements = section.querySelectorAll('[data-i18n]')
+
+    const { data, error } = await supabase.from(sectionId + '_content').select('*')
     if (error) {
-      console.error('Error loading hero content:', error)
+      console.error(`❌ Error loading ${sectionId} content:`, error)
       return
     }
 
-    document.querySelectorAll('[data-i18n]').forEach(el => {
+    editableElements.forEach(el => {
       const key = el.getAttribute('data-i18n')
       const row = data.find(d => d.key === key)
       if (row) {
