@@ -73,9 +73,9 @@ background-color: #f0f9ff;
         <div class="flex items-center gap-3">           
                 <!-- 🌙☀️ Dark Mode Toggle -->
                         <button id="darkModeToggle" 
-                        class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-700 shadow hover:scale-105 transition">
-                        <i id="darkModeIcon" class="fas fa-moon text-yellow-400 text-lg"></i>
-                        </button>
+                                        class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-700 shadow hover:scale-105 transition">
+                                                <i id="darkModeIcon" class="fas fa-moon text-yellow-400 text-lg"></i>
+                                                                                                                                                                        </button>
 <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Logout</button>
 </div>
 </header>
@@ -109,70 +109,69 @@ background-color: #f0f9ff;
 <h2 class="text-2xl font-bold">Home Editor</h2>
 
 <!-- Hero -->
-<section id="hero_content" class="relative group min-h-[80vh] flex items-center justify-center py-12 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
+<section class="relative group min-h-[80vh] flex items-center justify-center py-12 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
 
-<button class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-  <i class="fas fa-edit mr-1"></i> Edit Hero
+<!-- Edit Button (top-right corner) -->
+<button class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
+<i class="fas fa-edit mr-1"></i> Edit Hero
 </button>
 
-  
 <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
-    <!-- Text Column -->
-    <div class="fade-in fade-delay-1 space-y-6 md:pr-6 text-center md:text-left" style="animation-name: fadeUp;">
-      <h1 class="text-4xl md:text-6xl font-bold leading-tight editable" contenteditable="true" data-i18n="greeting">
-        Hello, I'm Viet
-      </h1>
+<!-- Text Column -->
+<div class="fade-in fade-delay-1 space-y-6 md:pr-6 text-center md:text-left" style="animation-name: fadeUp;">
 
-      <p class="text-lg text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="intro">
-        Marketing & Content Specialist
-      </p>
+<h1 class="text-4xl md:text-6xl font-bold leading-tight editable" contenteditable="true" data-i18n="greeting">
+Hello, I'm Viet
+</h1>
 
-      <!-- Buttons -->
-      <div class="flex flex-wrap justify-center md:justify-start gap-4">
-        <a href="#projects" class="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition editable" contenteditable="true" data-i18n="projects">
-          Projects
-        </a>
-        <a href="#contact" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition editable" contenteditable="true" data-i18n="contact">
-          Contact Me
-        </a>
-      </div>
+<p class="text-lg text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="intro">
+Marketing & Content Specialist
+</p>
 
-      <!-- Social Icons -->
-    <div class="flex justify-center md:justify-start gap-4 text-2xl text-blue-600 dark:text-blue-400 -mt-2">
-  <i class="fab fa-facebook hover:text-blue-800 cursor-pointer"></i>
-  <i class="fab fa-linkedin hover:text-blue-800 cursor-pointer"></i>
+<!-- Buttons -->
+<div class="flex flex-wrap justify-center md:justify-start gap-4">
+<a href="#projects" class="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition editable" contenteditable="true" data-i18n="projects">
+Projects
+</a>
+<a href="#contact" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition editable" contenteditable="true" data-i18n="contact">
+Contact Me
+</a>
 </div>
-    </div>
 
-    <!-- Image Column -->
+<!-- Social Icons -->
+<div class="flex justify-center md:justify-start gap-4 text-2xl text-blue-600 dark:text-blue-400 -mt-2">
+<a href="https://www.facebook.com/honguyenquocviet150799/" target="_blank" class="hover:text-blue-800"><i class="fab fa-facebook"></i></a>
+<a href="https://www.linkedin.com/in/ho-nguyen-quoc-viet/" target="_blank" class="hover:text-blue-800"><i class="fab fa-linkedin"></i></a>
+</div>
+</div>
+
+<!-- Image Column -->
 <div class="relative flex justify-center items-center">
-  <!-- Circular Image -->
-  <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
-    <img id="heroImage" src="Avatar.jpg" alt="Viet" 
-         class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+<!-- Circular Image -->
+<div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+<img src="Avatar.jpg" alt="Viet" class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
 
-    <!-- Upload Overlay -->
-    <label class="absolute bottom-2 right-2 bg-black/50 text-white p-2 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-      <i class="fas fa-camera"></i>
-      <input type="file" accept="image/*" class="hidden hero-upload">
-    </label>
-  </div>
+<!-- Upload Overlay -->
+<label class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden group-hover:block">
+<i class="fas fa-camera"></i>
+<input type="file" class="hidden" onchange="previewImage(this)" />
+</label>
 </div>
 
-      <!-- Floating Icons -->
-      <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
-        <i class="fas fa-lightbulb"></i>
-      </div>
-      <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
-        <i class="fas fa-code"></i>
-      </div>
-      <div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
-        <i class="fas fa-rocket"></i>
-      </div>
-    </div>
+<!-- Floating Icons -->
+<div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
+<i class="fas fa-lightbulb"></i>
+</div>
+<div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
+<i class="fas fa-code"></i>
+</div>
+<div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
+<i class="fas fa-rocket"></i>
+</div>
+</div>
 
-  </div>
+</div>
 </section>
 
 <!-- Skills -->
@@ -470,10 +469,10 @@ Edited promotional and creative videos for campaigns.
 </label>
 </div>
 <div class="p-5 text-left">
-  <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 editable" contenteditable="true" data-i18n="project5">Social Media</h3>
-  <span class="inline-block bg-indigo-200 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full mb-2 editable" contenteditable="true">Social Media</span>
-  <p class="text-sm text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="project5des">
-  Designed social content strategies and engagement plans.
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 editable" contenteditable="true" data-i18n="project5">Social Media</h3>
+<span class="inline-block bg-indigo-200 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full mb-2 editable" contenteditable="true">Social Media</span>
+<p class="text-sm text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="project5des">
+Designed social content strategies and engagement plans.
 </p>
 <button class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all editable" contenteditable="true" data-i18n="readMore">Read More</button>
 </div>
@@ -487,103 +486,60 @@ Edited promotional and creative videos for campaigns.
 <!-- Results -->
 <section id="results" class="relative group bg-gray-50 dark:bg-gray-800 py-20 px-6 sm:px-8 rounded-xl shadow transition-colors">
 
-  <!-- Section Edit Button -->
-  <button class="edit-btn absolute top-6 right-6 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
-    <i class="fas fa-edit mr-1"></i> Edit Results
-  </button>
+<!-- Section Edit Button -->
+<button class="edit-btn absolute top-6 right-6 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
+<i class="fas fa-edit mr-1"></i> Edit Results
+</button>
 
-  <div class="space-y-8 max-w-3xl mx-auto text-center mb-16">
-    <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-snug editable"
-        contenteditable="true" data-i18n="driven_results">
-      Driven by Results
-    </h2>
-    <p class="text-lg text-gray-600 dark:text-gray-300 editable" contenteditable="true" data-i18n="resultdes">
-      Showcasing measurable outcomes from impactful campaigns.
-    </p>
-  </div>
+<div class="space-y-8 max-w-3xl mx-auto text-center mb-16">
+<h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-snug editable" contenteditable="true" data-i18n="driven_results">
+Driven by Results
+</h2>
+<p class="text-lg text-gray-600 dark:text-gray-300 editable" contenteditable="true" data-i18n="resultdes">
+Showcasing measurable outcomes from impactful campaigns.
+</p>
+</div>
 
-  <!-- Grid Layout -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
 
-    <!-- Result Card 1 -->
-    <div class="relative flex flex-col overflow-hidden rounded-2xl shadow hover:shadow-lg group transition-all duration-500">
-      <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/50 via-indigo-300/10 to-transparent 
-                  dark:from-indigo-400/40 dark:via-indigo-200/10 opacity-0 group-hover:opacity-100 
-                  transition-opacity duration-700 z-20 pointer-events-none"></div>
+<!-- Result Card 1 -->
+<div class="relative flex flex-col overflow-hidden rounded-2xl shadow hover:shadow-lg group transition-all duration-500">
+<div class="absolute inset-0 bg-gradient-to-r from-indigo-500/50 via-indigo-300/10 to-transparent dark:from-indigo-400/40 dark:via-indigo-200/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20 pointer-events-none"></div>
+<img src="traffic increase.png" alt="Organic Traffic" class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105">
+<div class="p-6 text-gray-900 dark:text-white z-10">
+<h3 class="text-xl font-semibold mb-2 editable" contenteditable="true" data-i18n="result1">+120% Organic Traffic</h3>
+<p class="text-base text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="result1.1">
+Achieved significant organic growth with targeted SEO strategies.
+</p>
+</div>
+</div>
 
-      <!-- Editable Image -->
-      <div class="relative w-full h-56 overflow-hidden">
-        <img src="traffic increase.png" alt="Organic Traffic" 
-             class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105 editable-image">
-        <label class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-          <i class="fas fa-camera"></i>
-          <input type="file" accept="image/*" class="hidden image-upload">
-        </label>
-      </div>
+<!-- Result Card 2 -->
+<div class="relative flex flex-col overflow-hidden rounded-2xl shadow hover:shadow-lg group transition-all duration-500">
+<div class="absolute inset-0 bg-gradient-to-r from-indigo-500/50 via-indigo-300/10 to-transparent dark:from-indigo-400/40 dark:via-indigo-200/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20 pointer-events-none"></div>
+<img src="Meta.png" alt="Revenue Growth" class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105">
+<div class="p-6 text-gray-900 dark:text-white z-10">
+<h3 class="text-xl font-semibold mb-2 editable" contenteditable="true" data-i18n="result2">+85% Revenue Growth</h3>
+<p class="text-base text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="result2.2">
+Increased ROI through high-performing Meta Ads campaigns.
+</p>
+</div>
+</div>
 
-      <div class="p-6 text-gray-900 dark:text-white z-10">
-        <h3 class="text-xl font-semibold mb-2 editable" contenteditable="true" data-i18n="result1">
-          +120% Organic Traffic
-        </h3>
-        <p class="text-base text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="result1.1">
-          Achieved significant organic growth with targeted SEO strategies.
-        </p>
-      </div>
-    </div>
+<!-- Result Card 3 -->
+<div class="relative flex flex-col overflow-hidden rounded-2xl shadow hover:shadow-lg group transition-all duration-500">
+<div class="absolute inset-0 bg-gradient-to-r from-indigo-500/50 via-indigo-300/10 to-transparent dark:from-indigo-400/40 dark:via-indigo-200/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20 pointer-events-none"></div>
+<img src="fanpage.png" alt="Keyword Acquisition" class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105">
+<div class="p-6 text-gray-900 dark:text-white z-10">
+<h3 class="text-xl font-semibold mb-2 editable" contenteditable="true" data-i18n="result3">5,000+ New Followers</h3>
+<p class="text-base text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="result3.3">
+Built an engaged community and expanded brand presence.
+</p>
+</div>
+</div>
 
-    <!-- Result Card 2 -->
-    <div class="relative flex flex-col overflow-hidden rounded-2xl shadow hover:shadow-lg group transition-all duration-500">
-      <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/50 via-indigo-300/10 to-transparent 
-                  dark:from-indigo-400/40 dark:via-indigo-200/10 opacity-0 group-hover:opacity-100 
-                  transition-opacity duration-700 z-20 pointer-events-none"></div>
-
-      <!-- Editable Image -->
-      <div class="relative w-full h-56 overflow-hidden">
-        <img src="Meta.png" alt="Revenue Growth" 
-             class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105 editable-image">
-        <label class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-          <i class="fas fa-camera"></i>
-          <input type="file" accept="image/*" class="hidden image-upload">
-        </label>
-      </div>
-
-      <div class="p-6 text-gray-900 dark:text-white z-10">
-        <h3 class="text-xl font-semibold mb-2 editable" contenteditable="true" data-i18n="result2">
-          +85% Revenue Growth
-        </h3>
-        <p class="text-base text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="result2.2">
-          Increased ROI through high-performing Meta Ads campaigns.
-        </p>
-      </div>
-    </div>
-
-    <!-- Result Card 3 -->
-    <div class="relative flex flex-col overflow-hidden rounded-2xl shadow hover:shadow-lg group transition-all duration-500">
-      <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/50 via-indigo-300/10 to-transparent 
-                  dark:from-indigo-400/40 dark:via-indigo-200/10 opacity-0 group-hover:opacity-100 
-                  transition-opacity duration-700 z-20 pointer-events-none"></div>
-
-      <!-- Editable Image -->
-      <div class="relative w-full h-56 overflow-hidden">
-        <img src="fanpage.png" alt="Keyword Acquisition" 
-             class="w-full h-56 object-cover z-10 cursor-pointer transition-transform duration-500 group-hover:scale-105 editable-image">
-        <label class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-        <i class="fas fa-camera"></i>
-          <input type="file" accept="image/*" class="hidden image-upload">
-        </label>
-      </div>
-
-      <div class="p-6 text-gray-900 dark:text-white z-10">
-        <h3 class="text-xl font-semibold mb-2 editable" contenteditable="true" data-i18n="result3">
-          5,000+ New Followers
-        </h3>
-        <p class="text-base text-gray-700 dark:text-gray-300 editable" contenteditable="true" data-i18n="result3.3">
-          Built an engaged community and expanded brand presence.
-        </p>
-      </div>
-    </div>
-
-  </div>
+</div>
 </section>
 
 <!-- Contact -->
@@ -714,31 +670,12 @@ localStorage.removeItem("token");
 window.location.href = "https://www.vietportfolio.work.gd/login/";
 });
 
-// ✅ Tab switching with Supabase refresh
+// Tab switching
 function switchTab(tabId) {
-  // Hide all tabs
-  document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"))
-  // Show the selected tab
-  document.getElementById(tabId).classList.remove("hidden")
-
-  // Load fresh data from Supabase depending on tab
-  if (tabId === "homeTab") {
-    loadHeroContent()   // Hero section
-  }
-  if (tabId === "aboutTab") {
-    loadAboutContent()  // About section (you'll define similar to loadHeroContent)
-  }
-  if (tabId === "seoTab" || tabId === "contentTab" || tabId === "videoTab" || tabId === "paidMediaTab") {
-    loadProjectsContent(tabId)  // Projects section
-  }
-  if (tabId === "contactTab") {
-    loadContactContent()  // Contact form/messages
-  }
+document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+document.getElementById(tabId).classList.remove("hidden");
 }
-
-// Default to dashboard
-switchTab("dashboardTab")
-
+switchTab("dashboardTab");
 
 // Toggle submenu
 function toggleSubmenu(id) {
@@ -811,8 +748,8 @@ return closest;
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-  const supabaseUrl = 'https://ohbrtxfmwxbjqfyaicpc.supabase.co'
-  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA'
+  const supabaseUrl = 'YOUR_SUPABASE_URL'
+  const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY'
   const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
   const editBtn = document.querySelector('.edit-btn')
@@ -823,47 +760,22 @@ return closest;
   document.getElementById('lang-en').addEventListener('click', () => { currentLang = 'en'; loadHeroContent() })
   document.getElementById('lang-vi').addEventListener('click', () => { currentLang = 'vi'; loadHeroContent() })
 
-  // 🔄 Handle edit/save for every section
-document.querySelectorAll('.edit-btn').forEach(editBtn => {
+  // Toggle edit/save mode
   editBtn.addEventListener('click', async () => {
-    const section = editBtn.closest('section')
-    const editableElements = section.querySelectorAll('.editable')
-
-    if (editableElements.length === 0) return
     const isEditing = editableElements[0].contentEditable === 'true'
-
-    // Toggle editable mode
     editableElements.forEach(el => {
       el.contentEditable = !isEditing
       el.classList.toggle('border', !isEditing)
       el.classList.toggle('border-dashed', !isEditing)
       el.classList.toggle('p-1', !isEditing)
     })
-
     if (isEditing) {
-      await saveSectionContent(section.id, editableElements)
-      editBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit'
+      await saveHeroContent()
+      editBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
     } else {
-      editBtn.innerHTML = '<i class="fas fa-save mr-1"></i> Save'
+      editBtn.innerHTML = '<i class="fas fa-save mr-1"></i> Save Hero'
     }
   })
-})
-
-// 💾 Save content to Supabase
-async function saveSectionContent(sectionId, editableElements) {
-  for (const el of editableElements) {
-    const key = el.getAttribute('data-i18n')
-    const text = el.innerText
-    const { error } = await supabase.from(sectionId + '_content').upsert([
-      currentLang === 'en'
-        ? { key, en_text: text }
-        : { key, vi_text: text }
-    ])
-    if (error) console.error(`Failed to save ${sectionId}:${key}`, error)
-  }
-  alert(`${sectionId} content saved!`)
-}
-
 
   // Load hero content
   async function loadHeroContent() {
@@ -876,22 +788,20 @@ async function saveSectionContent(sectionId, editableElements) {
     })
   }
 
- async function saveHeroContent() {
-  for (const el of document.querySelectorAll('#homeTab .editable')) {
-    const key = el.getAttribute('data-i18n')
-    const text = el.innerText
-
-    const { error } = await supabase.from('hero_content').upsert([
-      currentLang === 'en'
-        ? { key, en_text: text }
-        : { key, vi_text: text }
-    ])
-
-    if (error) console.error('Failed to save:', key, error)
+  // Save hero content
+  async function saveHeroContent() {
+    for (const el of editableElements) {
+      const key = el.getAttribute('data-i18n')
+      const text = el.innerText
+      const { error } = await supabase.from('hero_content').upsert([
+        currentLang === 'en'
+          ? { key, en_text: text }
+          : { key, vi_text: text }
+      ])
+      if (error) console.error('Failed to save:', key, error)
+    }
+    alert('Hero content saved!')
   }
-  alert('Hero content saved!')
-}
-
 
   // Image preview
   window.previewImage = function(input) {
