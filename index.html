@@ -1454,32 +1454,43 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-  const supabaseUrl = 'YOUR_SUPABASE_URL'
-  const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY'
+  // Replace with your Supabase project credentials
+  const supabaseUrl = 'https://ohbrtxfmwxbjqfyaicpc.supabase.co'
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA'
   const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-  // Default language (can be dynamically set based on user preference)
-  let currentLang = 'en'
+  let currentLang = localStorage.getItem('lang') || 'en'
 
-  async function loadHeroContent() {
+  document.getElementById('lang-en').addEventListener('click', () => {
+    currentLang = 'en'
+    localStorage.setItem('lang', 'en')
+    loadContent()
+  })
+
+  document.getElementById('lang-vi').addEventListener('click', () => {
+    currentLang = 'vi'
+    localStorage.setItem('lang', 'vi')
+    loadContent()
+  })
+
+  async function loadContent() {
     const { data, error } = await supabase.from('hero_content').select('*')
-    if (error) return console.error('Supabase fetch error:', error)
-
-    // Map keys to elements
-    const mapping = {
-      greeting: document.getElementById('hero-greeting'),
-      intro: document.getElementById('hero-intro'),
-      projects: document.getElementById('hero-projects'),
-      contact: document.getElementById('hero-contact')
+    if (error) {
+      console.error(error)
+      return
     }
 
-    Object.keys(mapping).forEach(key => {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n')
       const row = data.find(d => d.key === key)
-      if (row) mapping[key].innerText = currentLang === 'en' ? row.en_text : row.vi_text
+      if (row) {
+        el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+      }
     })
   }
 
-  loadHeroContent()
+  // Load on page ready
+  loadContent()
 </script>
 
 
