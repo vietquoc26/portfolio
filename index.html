@@ -1454,21 +1454,30 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-  const supabase = createClient('https://ohbrtxfmwxbjqfyaicpc.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA')
+  const supabase = createClient(
+    'https://ohbrtxfmwxbjqfyaicpc.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA'
+  )
+
   let currentLang = localStorage.getItem('lang') || 'en'
 
-    async function loadSectionContent(sectionId) {
+  // Load content for any section
+  async function loadSectionContent(sectionId) {
     const section = document.getElementById(sectionId)
     if (!section) return
 
     const editableElements = section.querySelectorAll('[data-i18n]')
 
-    const { data, error } = await supabase.from(sectionId + '_content').select('*')
+    const { data, error } = await supabase
+      .from(sectionId + '_content')
+      .select('*')
+
     if (error) {
       console.error(`❌ Error loading ${sectionId} content:`, error)
       return
     }
 
+    // Apply text content
     editableElements.forEach(el => {
       const key = el.getAttribute('data-i18n')
       const row = data.find(d => d.key === key)
@@ -1476,9 +1485,24 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
       }
     })
+
+    // Extra: Handle hero image
+    if (sectionId === 'hero') {
+      const imgRow = data.find(d => d.key === 'image_url')
+      if (imgRow) {
+        document.getElementById('heroImage').src = imgRow.en_text // store URL in en_text
+      }
+    }
   }
 
-  loadHeroContent()
+  // Load all sections on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    loadSectionContent('hero')
+    loadSectionContent('about')
+    loadSectionContent('skills')
+    loadSectionContent('projects')
+    loadSectionContent('contact')
+  })
 </script>
 
 
