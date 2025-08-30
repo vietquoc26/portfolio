@@ -75,7 +75,7 @@ background-color: #f0f9ff;
                         <button id="darkModeToggle" 
                                         class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-700 shadow hover:scale-105 transition">
                                                 <i id="darkModeIcon" class="fas fa-moon text-yellow-400 text-lg"></i>
-                                                                                                                                                                        </button>
+                        </button>
 <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Logout</button>
 </div>
 </header>
@@ -773,9 +773,11 @@ return closest;
     }
   })
 
-  // Load content for any section
+  // Load content for any section into the admin panel
 async function loadSectionContent(sectionId) {
   const section = document.getElementById(sectionId)
+  if (!section) return
+
   const editableElements = section.querySelectorAll('.editable')
 
   const { data, error } = await supabase.from(sectionId + '_content').select('*')
@@ -792,6 +794,15 @@ async function loadSectionContent(sectionId) {
     }
   })
 }
+
+// Run loaders on page load
+window.addEventListener('DOMContentLoaded', () => {
+  loadSectionContent('hero')
+  loadSectionContent('about')
+  loadSectionContent('skills')
+  loadSectionContent('projects')
+  loadSectionContent('contact')
+})
 
 // Save content for any section
 async function saveSectionContent(sectionId) {
