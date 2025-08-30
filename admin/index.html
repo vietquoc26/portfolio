@@ -749,6 +749,7 @@ return closest;
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
+  // --- Supabase Setup ---
   const supabaseUrl = 'https://ohbrtxfmwxbjqfyaicpc.supabase.co'
   const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA'
   const supabase = createClient(supabaseUrl, supabaseAnonKey)
@@ -756,21 +757,23 @@ return closest;
   const editBtn = document.querySelector('.edit-btn')
   let currentLang = 'en'
 
-  // Language toggle
-  document.getElementById('lang-en').addEventListener('click', () => { 
+  // --- Language Toggle ---
+  document.getElementById('lang-en')?.addEventListener('click', () => { 
     currentLang = 'en'; 
-    loadSectionContent('hero') 
+    reloadAllSections()
   })
-  document.getElementById('lang-vi').addEventListener('click', () => { 
+  document.getElementById('lang-vi')?.addEventListener('click', () => { 
     currentLang = 'vi'; 
-    loadSectionContent('hero') 
+    reloadAllSections()
   })
 
-  // Toggle edit/save for HERO section only
-  editBtn.addEventListener('click', async () => {
+  // --- Edit/Save Toggle (for HERO only for now) ---
+  editBtn?.addEventListener('click', async () => {
     const heroSection = document.getElementById('hero')
+    if (!heroSection) return
+
     const editableElements = heroSection.querySelectorAll('.editable')
-    const isEditing = editableElements[0].contentEditable === 'true'
+    const isEditing = editableElements[0]?.contentEditable === 'true'
 
     editableElements.forEach(el => {
       el.contentEditable = !isEditing
@@ -787,7 +790,7 @@ return closest;
     }
   })
 
-  // Load content for any section (hero/about/skills...)
+  // --- Load Section Content ---
   async function loadSectionContent(sectionId) {
     const section = document.getElementById(sectionId)
     if (!section) return
@@ -796,7 +799,7 @@ return closest;
     const { data, error } = await supabase.from(sectionId + '_content').select('*')
 
     if (error) {
-      console.error(`❌ Error loading ${sectionId} content:`, error)
+      console.error(`❌ Error loading ${sectionId} content:`, error.message)
       return
     }
 
@@ -808,18 +811,24 @@ return closest;
       }
     })
 
-    // Load hero image
+    // Special case: Hero Image
     if (sectionId === 'hero') {
-      const { data: heroRow } = await supabase.from('hero_content').select('*').eq('id', 1).single()
-      if (heroRow && heroRow.image_url) {
+      const { data: heroRow, error: heroError } = await supabase
+        .from('hero_content')
+        .select('image_url')
+        .eq('id', 1)
+        .single()
+      if (!heroError && heroRow?.image_url) {
         document.getElementById('heroImage').src = heroRow.image_url
       }
     }
   }
 
-  // Save content for any section
+  // --- Save Section Content ---
   async function saveSectionContent(sectionId) {
     const section = document.getElementById(sectionId)
+    if (!section) return
+
     const editableElements = section.querySelectorAll('.editable')
 
     for (const el of editableElements) {
@@ -833,13 +842,13 @@ return closest;
       ])
 
       if (error) {
-        console.error(`❌ Failed to save ${sectionId}:${key}`, error)
+        console.error(`❌ Failed to save ${sectionId}:${key}`, error.message)
       }
     }
     alert(`${sectionId} content saved! ✅`)
   }
 
-  // Image preview + upload to Supabase Storage
+  // --- Image Preview + Upload ---
   window.previewImage = async function(input) {
     if (input.files && input.files[0]) {
       const file = input.files[0]
@@ -851,15 +860,14 @@ return closest;
       }
       reader.readAsDataURL(file)
 
-      // Upload to Supabase Storage (bucket: hero)
+      // Upload
       const fileName = `hero-${Date.now()}-${file.name}`
       const { error: uploadError } = await supabase.storage.from('hero').upload(fileName, file, {
         cacheControl: '3600',
         upsert: true
       })
-
       if (uploadError) {
-        console.error('❌ Upload failed:', uploadError)
+        console.error('❌ Upload failed:', uploadError.message)
         return
       }
 
@@ -867,27 +875,31 @@ return closest;
       const { data } = supabase.storage.from('hero').getPublicUrl(fileName)
       const publicUrl = data.publicUrl
 
-      // Save image URL in hero_content table
-      const { error: dbError } = await supabase.from('hero_content').update({
-        image_url: publicUrl
-      }).eq('id', 1)
+      // Update DB
+      const { error: dbError } = await supabase
+        .from('hero_content')
+        .update({ image_url: publicUrl })
+        .eq('id', 1)
 
       if (dbError) {
-        console.error('❌ Failed to update DB:', dbError)
+        console.error('❌ Failed to update DB:', dbError.message)
       } else {
         console.log('✅ Image uploaded and DB updated:', publicUrl)
       }
     }
   }
 
-  // Load all sections on startup
-  window.addEventListener('DOMContentLoaded', () => {
+  // --- Load All Sections ---
+  function reloadAllSections() {
     loadSectionContent('hero')
     loadSectionContent('about')
     loadSectionContent('skills')
     loadSectionContent('projects')
     loadSectionContent('contact')
-  })
+  }
+
+  // Startup
+  window.addEventListener('DOMContentLoaded', reloadAllSections)
 </script>
 
 
