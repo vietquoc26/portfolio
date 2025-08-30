@@ -791,38 +791,52 @@ return closest;
   })
 
   // --- Load Section Content ---
-  async function loadSectionContent(sectionId) {
-    const section = document.getElementById(sectionId)
-    if (!section) return
+async function loadSectionContent(sectionId) {
+  const section = document.getElementById(sectionId)
+  if (!section) return
 
-    const editableElements = section.querySelectorAll('.editable')
-    const { data, error } = await supabase.from(sectionId + '_content').select('*')
+  const editableElements = section.querySelectorAll('.editable')
+  const { data, error } = await supabase.from(sectionId + '_content').select('*')
 
-    if (error) {
-      console.error(`❌ Error loading ${sectionId} content:`, error.message)
-      return
+  if (error) {
+    console.error(`❌ Error loading ${sectionId} content:`, error.message)
+    return
+  }
+
+  editableElements.forEach(el => {
+    const key = el.getAttribute('data-i18n')
+    const row = data.find(d => d.key === key)
+    if (row) {
+      const text = currentLang === 'en' ? row.en_text : row.vi_text
+
+      // ✅ Update the preview
+      el.innerText = text
+
+      // ✅ Also update the admin input field
+      const inputEl = document.querySelector(
+        `#${sectionId} [data-key="${key}"]`
+      )
+      if (inputEl) inputEl.value = text
     }
+  })
 
-    editableElements.forEach(el => {
-      const key = el.getAttribute('data-i18n')
-      const row = data.find(d => d.key === key)
-      if (row) {
-        el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
-      }
-    })
+  // Special case: Hero Image
+  if (sectionId === 'hero') {
+    const { data: heroRow, error: heroError } = await supabase
+      .from('hero_content')
+      .select('image_url')
+      .eq('id', 1)
+      .single()
 
-    // Special case: Hero Image
-    if (sectionId === 'hero') {
-      const { data: heroRow, error: heroError } = await supabase
-        .from('hero_content')
-        .select('image_url')
-        .eq('id', 1)
-        .single()
-      if (!heroError && heroRow?.image_url) {
-        document.getElementById('heroImage').src = heroRow.image_url
-      }
+    if (!heroError && heroRow?.image_url) {
+      document.getElementById('heroImage').src = heroRow.image_url
+
+      // ✅ Sync admin image input (if you have one)
+      const imgInput = document.querySelector(`#${sectionId} [data-key="image_url"]`)
+      if (imgInput) imgInput.value = heroRow.image_url
     }
   }
+}
 
   // --- Save Section Content ---
   async function saveSectionContent(sectionId) {
