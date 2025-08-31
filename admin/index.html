@@ -943,10 +943,10 @@ skillsEditBtn?.addEventListener('click', async () => {
 
 // --- Load Skills Content ---
 async function loadSkillContent() {
-    const heroSection = document.getElementById('skills')
+    const skillSection = document.getElementById('skills')
     if (!skillSection) return
 
-    const editableElements = heroSection.querySelectorAll('.editable')
+    const editableElements = skillSection.querySelectorAll('.editable')
     const { data, error } = await supabase.from('skill_content').select('*')
 
     if (error) {
@@ -962,12 +962,12 @@ async function loadSkillContent() {
       }
     })
 
-  // --- Save Hero Content ---
+  // --- Save Skills Content ---
   async function saveSkillContent() {
     const skillSection = document.getElementById('skills')
     if (!skillSection) return
 
-    const editableElements = heroSection.querySelectorAll('.editable')
+    const editableElements = skillSection.querySelectorAll('.editable')
 
     for (const el of editableElements) {
       const key = el.getAttribute('data-i18n')
