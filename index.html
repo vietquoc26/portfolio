@@ -1169,10 +1169,14 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       resources: {
         en: {
           translation: {
+          "greeting": "Hello, I'm Viet,\nProfessional Digital Marketer",
+          "intro": "Account Manager - SEO Specialist - Content Writer - Video Editor",
           "services": "Services",
           "about": "About",
           "aboutDesc": "I’m Viet, a seasoned digital marketer with 5+ years of experience specializing in SEO, performance ads, and brand growth.",
+          "projects": "Projects",
           "blogs": "Latest Blog Posts",
+          "contact": "Contact",
           "name": "Name",
           "phone": "Contact Phone",
           "email": "Email",
@@ -1347,40 +1351,6 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
           }
         }
       }
-    }, function(err, t) {
-      updateContent();
-      highlightActiveLang(i18next.language);
-      mergeSheetTranslations(); // override intro/about/skills
-    });
-
-    function updateContent() {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.innerHTML = i18next.t(el.getAttribute('data-i18n'));
-      });
-      
-       // Placeholders
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-i18n-placeholder');
-    const val = i18next.t(key);
-    if (val) el.setAttribute('placeholder', val);
-  });
-    }
-
-    function setLanguage(lang) {
-      i18next.changeLanguage(lang, () => {
-        updateContent();
-        highlightActiveLang(lang);
-        mergeSheetTranslations(); // re-fetch for new language
-      });
-    }
-
-    function highlightActiveLang(lang) {
-      const btnEn = document.getElementById('btn-en');
-      const btnVi = document.getElementById('btn-vi');
-      btnEn.classList.toggle('bg-white', lang === 'en');
-      btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
-      btnVi.classList.toggle('bg-white', lang === 'vi');
-      btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
     }
 
   </script>
@@ -1506,21 +1476,34 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     loadSectionContent('contact')
   }
 
-  // --- Language Toggle ---
-  document.getElementById('lang-en')?.addEventListener('click', () => {
-    currentLang = 'en'
-    localStorage.setItem('lang', 'en')
+// --- Language Switching ---
+  function setLanguage(lang) {
+    currentLang = lang
+    localStorage.setItem('lang', lang)
     reloadAllSections()
-  })
+    highlightActiveLang(lang)
+  }
 
-  document.getElementById('lang-vi')?.addEventListener('click', () => {
-    currentLang = 'vi'
-    localStorage.setItem('lang', 'vi')
+  function highlightActiveLang(lang) {
+    const btnEn = document.getElementById('btn-en')
+    const btnVi = document.getElementById('btn-vi')
+    if (!btnEn || !btnVi) return
+
+    btnEn.classList.toggle('bg-white', lang === 'en')
+    btnEn.classList.toggle('dark:bg-gray-900', lang === 'en')
+    btnVi.classList.toggle('bg-white', lang === 'vi')
+    btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi')
+  }
+
+  // --- Attach Button Events ---
+  document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'))
+  document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'))
+
+  // --- On Load ---
+  window.addEventListener('DOMContentLoaded', () => {
     reloadAllSections()
-  })
-
-  // --- On Page Load ---
-  window.addEventListener('DOMContentLoaded', reloadAllSections)
+    highlightActiveLang(currentLang)
+    })  
 </script>
 
 
