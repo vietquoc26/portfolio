@@ -851,39 +851,34 @@ return closest;
   }
 
   // --- Save Hero Content ---
-async function saveHeroContent() {
-  const heroSection = document.getElementById('hero')
-  if (!heroSection) return
+async function saveSectionContent(sectionId) {
+  const section = document.getElementById(sectionId)
+  if (!section) return
 
-  const editableElements = heroSection.querySelectorAll('.editable')
+  const editableElements = section.querySelectorAll('.editable')
 
   for (const el of editableElements) {
     const key = el.getAttribute('data-i18n')
     const text = el.innerText.trim()
 
-    // Pick correct language column
-    const updates = {
-      key,
-      ...(currentLang === 'en'
-        ? { en_text: text }
-        : { vi_text: text })
-    }
+    const updates =
+      currentLang === 'en'
+        ? { key, en_text: text }
+        : { key, vi_text: text }
 
-    // ✅ Ensure Supabase updates by key
+    // ✅ ensure it updates the correct row by key
     const { error } = await supabase
-      .from('hero_content')
-      .upsert(updates, { onConflict: 'key' }) 
+      .from(sectionId + '_content')
+      .upsert(updates, { onConflict: 'key' })
 
     if (error) {
-      console.error(`❌ Failed to save hero:${key}`, error.message)
+      console.error(`❌ Failed to save ${sectionId}:${key}`, error.message)
     } else {
-      console.log(`✅ Saved hero:${key} (${currentLang})`)
+      console.log(`✅ Saved ${sectionId}:${key}`)
     }
   }
-
-  alert(`Hero content saved in ${currentLang.toUpperCase()}! ✅`)
+  alert(`${sectionId} content saved! ✅`)
 }
-
   // --- Image Preview + Upload ---
   window.previewImage = async function(input) {
     if (input.files && input.files[0]) {
