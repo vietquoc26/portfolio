@@ -947,7 +947,7 @@ async function loadSkillsContent() {
   if (!skillsSection) return
 
   const editableElements = skillsSection.querySelectorAll('.editable')
-  const { data, error } = await supabase.from('skills_content').select('*')
+  const { data, error } = await supabase.from('skill_content').select('*')
 
   if (error) {
     console.error('❌ Error loading skills content:', error.message)
