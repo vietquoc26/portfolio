@@ -980,7 +980,7 @@ async function saveSkillsContent() {
         : { key, vi_text: text }
 
     const { error } = await supabase
-      .from('skills_content')
+      .from('skill_content')
       .upsert(updates, { onConflict: 'key' })
 
     if (error) {
