@@ -947,7 +947,7 @@ async function loadSkillsContent() {
   if (!skillsSection) return
 
   const editableElements = skillsSection.querySelectorAll('.editable')
-  const { data, error } = await supabase.from('skills_content').select('*')
+  const { data, error } = await supabase.from('skill_content').select('*')
 
   if (error) {
     console.error('❌ Error loading skills content:', error.message)
@@ -955,10 +955,16 @@ async function loadSkillsContent() {
   }
 
   editableElements.forEach(el => {
-    const key = el.getAttribute('data-i18n')
-    const row = data.find(d => d.key === key)
+    const key = el.getAttribute('data-i18n') // e.g. skill1-title / skill1-experience / skill1-description
+    const [rowKey, field] = key.split('-')   // rowKey = "skill1", field = "title" | "experience" | "description"
+    const row = data.find(d => d.key === rowKey)
+
     if (row) {
-      el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+      if (currentLang === 'en') {
+        el.innerText = row[`en_${field}`] || ''
+      } else {
+        el.innerText = row[`vi_${field}`] || ''
+      }
     }
   })
 }
@@ -971,22 +977,23 @@ async function saveSkillsContent() {
   const editableElements = skillsSection.querySelectorAll('.editable')
 
   for (const el of editableElements) {
-    const key = el.getAttribute('data-i18n')
+    const key = el.getAttribute('data-i18n') // e.g. skill1-title
+    const [rowKey, field] = key.split('-')
     const text = el.innerText.trim()
 
     const updates =
       currentLang === 'en'
-        ? { key, en_text: text }
-        : { key, vi_text: text }
+        ? { key: rowKey, [`en_${field}`]: text }
+        : { key: rowKey, [`vi_${field}`]: text }
 
     const { error } = await supabase
       .from('skill_content')
       .upsert(updates, { onConflict: 'key' })
 
     if (error) {
-      console.error(`❌ Failed to save skill:${key}`, error.message)
+      console.error(`❌ Failed to save skill:${rowKey}-${field}`, error.message)
     } else {
-      console.log(`✅ Saved skill:${key}`)
+      console.log(`✅ Saved skill:${rowKey}-${field}`)
     }
   }
 
@@ -998,6 +1005,7 @@ window.addEventListener('DOMContentLoaded', () => {
   loadHeroContent()
   loadSkillsContent()
 })
+
 
 </script>
 
