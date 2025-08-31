@@ -436,7 +436,7 @@
 </div>
 
 
-          <!-- Project Card 2 -->
+      <!-- Project Card 2 -->
           <div class="swiper-slide">
               <div class="card w-full sm:max-w-xs mx-auto">
               <img src="seo content.png" alt="Content Project" class="w-full h-[200px] object-cover">
@@ -1469,6 +1469,8 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     if (!section) return
 
     const editableElements = section.querySelectorAll('[data-i18n]')
+
+    // ✅ always pull the correct table: hero_content, about_content...
     const { data, error } = await supabase
       .from(sectionId + '_content')
       .select('*')
@@ -1478,16 +1480,16 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       return
     }
 
-    // Fill text fields
+    // ✅ Fill text fields dynamically
     editableElements.forEach(el => {
       const key = el.getAttribute('data-i18n')
       const row = data.find(d => d.key === key)
       if (row) {
-        el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+        el.innerText = currentLang === 'en' ? (row.en_text || '') : (row.vi_text || '')
       }
     })
 
-    // Special case: Hero image
+    // ✅ Special case: Hero image (only stored once)
     if (sectionId === 'hero') {
       const { data: heroRow, error: heroError } = await supabase
         .from('hero_content')
