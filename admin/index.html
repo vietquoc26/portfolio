@@ -69,15 +69,28 @@ background-color: #f0f9ff;
 <main class="flex-1 flex flex-col">
 <!-- Top Navbar -->
 <header class="bg-white dark:bg-gray-800 px-6 py-4 shadow flex justify-between items-center">
-        <h1 class="text-lg font-bold">Admin Dashboard</h1>
-        <div class="flex items-center gap-3">           
-                <!-- 🌙☀️ Dark Mode Toggle -->
-                        <button id="darkModeToggle" 
-                                        class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-700 shadow hover:scale-105 transition">
-                                                <i id="darkModeIcon" class="fas fa-moon text-yellow-400 text-lg"></i>
-                        </button>
-<button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Logout</button>
-</div>
+  <h1 class="text-lg font-bold">Admin Dashboard</h1>
+  <div class="flex items-center gap-3">
+    
+    <!-- 🌐 Language Toggle -->
+    <div class="flex gap-2">
+      <button id="lang-en" class="px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+        EN
+      </button>
+      <button id="lang-vi" class="px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+        VI
+      </button>
+    </div>
+
+    <!-- 🌙☀️ Dark Mode Toggle -->
+    <button id="darkModeToggle" 
+      class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-700 shadow hover:scale-105 transition">
+      <i id="darkModeIcon" class="fas fa-moon text-yellow-400 text-lg"></i>
+    </button>
+
+    <!-- 🔴 Logout -->
+    <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Logout</button>
+  </div>
 </header>
 
 <!-- Tabs Content -->
