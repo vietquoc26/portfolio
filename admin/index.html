@@ -330,9 +330,9 @@ background-color: #f0f9ff;
 
   <!-- ✅ Save Button (hidden until edit mode) -->
   <div class="flex justify-center mb-12">
-     <button id="saveHero" class="absolute top-4 right-28 bg-green-600 text-white px-3 py-1 rounded hidden">
-    <i class="fas fa-save mr-1"></i> Save Change
-  </button>
+    <button id="saveAbout" class="hidden bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
+      <i class="fas fa-save mr-2"></i> Save Changes
+    </button>
   </div>
 
   <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
@@ -378,9 +378,11 @@ background-color: #f0f9ff;
       </ul>
 
       <!-- Button -->
-      <span class="inline-block px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition editable" contenteditable="true" data-i18n="findOutMore">
+      <div class="inline-block px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition editable" 
+     contenteditable="true" 
+     data-i18n="findOutMore">
   Find Out More
-</span>
+</div>
     </div>
   </div>
 </section>
