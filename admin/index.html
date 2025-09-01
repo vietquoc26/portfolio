@@ -917,7 +917,17 @@ return closest;
 
   /* ================= SKILLS SECTION ================= */
 
-// --- Toggle Edit/Save for SKILLS ---
+// --- Language Toggle ---
+  document.getElementById('lang-en')?.addEventListener('click', () => { 
+    currentLang = 'en'
+    loadSkillsContent()
+  })
+  document.getElementById('lang-vi')?.addEventListener('click', () => { 
+    currentLang = 'vi'
+    loadSkillsContent()
+  })
+
+  // --- Toggle Edit/Save for SKILLS ---
 const skillsEditBtn = document.querySelector('#skills .edit-btn')
 skillsEditBtn?.addEventListener('click', async () => {
   const skillsSection = document.getElementById('skills')
@@ -996,7 +1006,7 @@ async function saveSkillsContent() {
 /* ================= STARTUP ================= */
 window.addEventListener('DOMContentLoaded', () => {
   loadHeroContent()
-  loadSkillContent()
+  loadSkillsContent()
 })
 
 
