@@ -787,28 +787,47 @@ return closest;
     loadHeroContent()
   })
 
-  // --- Toggle Edit/Save for HERO ---
-  editBtn?.addEventListener('click', async () => {
-    const heroSection = document.getElementById('hero')
-    if (!heroSection) return
+ // --- Toggle Edit Mode for HERO ---
+const heroEditBtn = document.getElementById('editHero')
+const saveHeroBtn = document.getElementById('saveHero')
 
-    const editableElements = heroSection.querySelectorAll('.editable')
-    const isEditing = editableElements[0]?.contentEditable === 'true'
+heroEditBtn?.addEventListener('click', () => {
+  const heroSection = document.getElementById('hero')
+  if (!heroSection) return
 
-    editableElements.forEach(el => {
-      el.contentEditable = !isEditing
-      el.classList.toggle('border', !isEditing)
-      el.classList.toggle('border-dashed', !isEditing)
-      el.classList.toggle('p-1', !isEditing)
-    })
+  const editableElements = heroSection.querySelectorAll('.editable')
+  const isEditing = editableElements[0]?.contentEditable === 'true'
 
-    if (isEditing) {
-      await saveHeroContent()
-      editBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
-    } else {
-      editBtn.innerHTML = '<i class="fas fa-save mr-1"></i> Save Hero'
-    }
+  editableElements.forEach(el => {
+    el.contentEditable = !isEditing
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
   })
+
+  if (isEditing) {
+    // leaving edit mode
+    saveHeroBtn.classList.add('hidden')
+    heroEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
+  } else {
+    // entering edit mode
+    saveHeroBtn.classList.remove('hidden')
+    heroEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+  }
+})
+
+// --- Save button saves ---
+saveHeroBtn?.addEventListener('click', async () => {
+  await saveHeroContent()
+  saveHeroBtn.classList.add('hidden')
+  heroEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
+
+  // turn off edit mode
+  const heroSection = document.getElementById('hero')
+  const editableElements = heroSection.querySelectorAll('.editable')
+  editableElements.forEach(el => (el.contentEditable = 'false'))
+})
+
 
   // --- Load Hero Content ---
   async function loadHeroContent() {
