@@ -103,6 +103,12 @@
 .swiper-button-next::after,
   .swiper-button-prev::after {
     content: none !important;
+
+/* hide text while deciding between Supabase or fallback */
+.i18n-hidden [data-i18n],
+.i18n-hidden [data-i18n-placeholder] {
+  visibility: hidden !important;
+}
   </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
@@ -1596,6 +1602,10 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   })
 </script>
 
+<script>
+  // add class early so user won't see the fallback flash
+  document.documentElement.classList.add('i18n-hidden');
+</script>
 
 </body>
 </html>
