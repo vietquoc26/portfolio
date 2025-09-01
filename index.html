@@ -1491,14 +1491,14 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       const key = el.getAttribute('data-i18n')
       const row = data.find(d => d.key === key)
 
-      if (row) {
-        const supaText = currentLang === 'en' ? row.en_text : row.vi_text
-        el.innerText = (supaText && supaText.trim() !== '')
-          ? supaText
-          : i18next.t(key)   // fallback
-      } else {
-        el.innerText = i18next.t(key) // fallback if no row at all
-      }
+     if (row) {
+  const supaText = currentLang === 'en' ? row.en_text : row.vi_text
+  el.innerText = (supaText && supaText.trim() !== '')
+    ? supaText
+    : i18next.t(key) // fallback to data-i18n
+} else {
+  el.innerText = i18next.t(key) // fallback if no Supabase row at all
+}
     })
 
     // Special case: Hero image
