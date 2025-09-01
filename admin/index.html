@@ -927,11 +927,11 @@ return closest;
     loadSkillsContent()
   })
 
-  // --- Toggle Edit/Save for SKILLS ---
+// --- Toggle Edit Mode for SKILLS ---
 const skillsEditBtn = document.querySelector('#skills .edit-btn')
 const saveSkillsBtn = document.getElementById('saveSkillsBtn')
 
-skillsEditBtn?.addEventListener('click', async () => {
+skillsEditBtn?.addEventListener('click', () => {
   const skillsSection = document.getElementById('skills')
   if (!skillsSection) return
 
@@ -946,12 +946,28 @@ skillsEditBtn?.addEventListener('click', async () => {
   })
 
   if (isEditing) {
-    await saveSkillsContent()
+    // leaving edit mode
+    saveSkillsBtn.classList.add('hidden')
     skillsEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Skills'
   } else {
-    skillsEditBtn.innerHTML = '<i class="fas fa-save mr-1"></i> Save Skills'
+    // entering edit mode
+    saveSkillsBtn.classList.remove('hidden')
+    skillsEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
   }
 })
+
+// --- Save button saves ---
+saveSkillsBtn?.addEventListener('click', async () => {
+  await saveSkillsContent()
+  saveSkillsBtn.classList.add('hidden')
+  skillsEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Skills'
+
+  // turn off edit mode
+  const skillsSection = document.getElementById('skills')
+  const editableElements = skillsSection.querySelectorAll('.editable')
+  editableElements.forEach(el => (el.contentEditable = 'false'))
+})
+
 
 // --- Load Skills Content ---
 async function loadSkillsContent() {
