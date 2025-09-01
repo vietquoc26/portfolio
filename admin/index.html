@@ -929,6 +929,8 @@ return closest;
 
   // --- Toggle Edit/Save for SKILLS ---
 const skillsEditBtn = document.querySelector('#skills .edit-btn')
+const saveSkillsBtn = document.getElementById('saveSkillsBtn')
+
 skillsEditBtn?.addEventListener('click', async () => {
   const skillsSection = document.getElementById('skills')
   if (!skillsSection) return
