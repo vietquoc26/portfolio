@@ -1466,7 +1466,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   // --- Table mapping ---
   const tableMap = {
     hero: 'hero_content',
-    skills: 'skill_content',   // ✅ fixed mismatch
+    skills: 'skill_content',
     about: 'about_content',
     projects: 'projects_content',
     contact: 'contact_content'
@@ -1486,12 +1486,18 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       return
     }
 
-    // Fill text fields
+    // Fill text fields with Supabase → fallback to i18n
     editableElements.forEach(el => {
       const key = el.getAttribute('data-i18n')
       const row = data.find(d => d.key === key)
+
       if (row) {
-        el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+        const supaText = currentLang === 'en' ? row.en_text : row.vi_text
+        el.innerText = (supaText && supaText.trim() !== '')
+          ? supaText
+          : i18next.t(key)   // fallback
+      } else {
+        el.innerText = i18next.t(key) // fallback if no row at all
       }
     })
 
@@ -1512,7 +1518,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   // --- Reload all sections ---
   function reloadAllSections() {
     loadSectionContent('hero')
-    loadSectionContent('skills')   // ✅ skills now loads too
+    loadSectionContent('skills')
     loadSectionContent('about')
     loadSectionContent('projects')
     loadSectionContent('contact')
