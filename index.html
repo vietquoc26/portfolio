@@ -1463,16 +1463,24 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   // --- Language Setup ---
   let currentLang = localStorage.getItem('lang') || 'en'
 
+  // --- Table mapping ---
+  const tableMap = {
+    hero: 'hero_content',
+    skills: 'skill_content',   // ✅ fixed mismatch
+    about: 'about_content',
+    projects: 'projects_content',
+    contact: 'contact_content'
+  }
+
   // --- Load Section Content ---
   async function loadSectionContent(sectionId) {
     const section = document.getElementById(sectionId)
     if (!section) return
 
     const editableElements = section.querySelectorAll('[data-i18n]')
-    const { data, error } = await supabase
-      .from(sectionId + '_content')
-      .select('*')
+    const tableName = tableMap[sectionId] || (sectionId + '_content')
 
+    const { data, error } = await supabase.from(tableName).select('*')
     if (error) {
       console.error(`❌ Error loading ${sectionId} content:`, error.message)
       return
@@ -1504,13 +1512,13 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   // --- Reload all sections ---
   function reloadAllSections() {
     loadSectionContent('hero')
+    loadSectionContent('skills')   // ✅ skills now loads too
     loadSectionContent('about')
-    loadSectionContent('skills')
     loadSectionContent('projects')
     loadSectionContent('contact')
   }
 
- // --- Language Switching ---
+  // --- Language Switching ---
   function setLanguage(lang) {
     currentLang = lang
     localStorage.setItem('lang', lang)
@@ -1538,7 +1546,6 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     reloadAllSections()
     highlightActiveLang(currentLang)
   })
-  
 </script>
 
 
