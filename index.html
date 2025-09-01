@@ -1454,59 +1454,93 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-  // --- Supabase Setup ---
+  /* ================= SUPABASE ================= */
   const supabase = createClient(
     'https://ohbrtxfmwxbjqfyaicpc.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA'
   )
 
-  // --- Language Setup ---
+  /* ================= LANGUAGE ================= */
   let currentLang = localStorage.getItem('lang') || 'en'
 
-  // --- Table mapping ---
+  /* ================= TABLE MAP ================= */
   const tableMap = {
     hero: 'hero_content',
     skills: 'skill_content',
     about: 'about_content',
     projects: 'projects_content',
-    contact: 'contact_content'
+    contact: 'contact_content',
   }
 
-  // --- Load Section Content ---
+  /* ================= FALLBACK HELPERS ================= */
+  // 1) Cache the original hardcoded text once, so we never lose it.
+  function captureFallbacks(root = document) {
+    const nodes = root.querySelectorAll('[data-i18n]')
+    nodes.forEach(el => {
+      if (!el.dataset.fallback) {
+        el.dataset.fallback = (el.innerText ?? '').trim()
+      }
+    })
+  }
+
+  // 2) Try i18next.t(key); if not available or returns the key,
+  //    use the cached hardcoded fallback.
+  function getFallbackText(key, el) {
+    try {
+      if (window.i18next && typeof window.i18next.t === 'function') {
+        const t = window.i18next.t(key)
+        if (typeof t === 'string' && t.trim() && t !== key) {
+          return t
+        }
+      }
+    } catch (_) {}
+    return (el?.dataset?.fallback ?? '').trim()
+  }
+
+  /* ================= CORE LOADER ================= */
   async function loadSectionContent(sectionId) {
     const section = document.getElementById(sectionId)
     if (!section) return
 
+    // Ensure we have a reliable fallback before we touch content
+    captureFallbacks(section)
+
     const editableElements = section.querySelectorAll('[data-i18n]')
     const tableName = tableMap[sectionId] || (sectionId + '_content')
 
+    // Pull all rows for this section
     const { data, error } = await supabase.from(tableName).select('*')
     if (error) {
       console.error(`❌ Error loading ${sectionId} content:`, error.message)
-      return
     }
 
-    // Fill text fields with Supabase → fallback to i18n
+    // Build a quick lookup by key for speed/simplicity
+    const byKey = Object.create(null)
+    if (Array.isArray(data)) {
+      for (const row of data) {
+        if (row && typeof row.key === 'string') byKey[row.key] = row
+      }
+    }
+
+    // Fill text: Supabase (selected lang) → fallback (i18n or hardcoded)
     editableElements.forEach(el => {
-  const key = el.getAttribute('data-i18n')
-  const row = data.find(d => d.key === key)
+      const key = el.getAttribute('data-i18n')
+      const row = byKey[key]
+      let supaText = ''
 
-  // choose Supabase text if available
-  let supaText = ''
-  if (row) {
-    supaText = currentLang === 'en' ? row.en_text : row.vi_text
-  }
+      if (row) {
+        // Only use the chosen language column; do NOT borrow from the other lang
+        supaText = currentLang === 'en' ? (row.en_text || '') : (row.vi_text || '')
+      }
 
-  if (supaText && supaText.trim() !== '') {
-    // ✅ Supabase wins
-    el.innerText = supaText
-  } else {
-    // ✅ fallback only if Supabase empty
-    el.innerText = i18next.t(key)
-  }
+      if (supaText && supaText.trim() !== '') {
+        el.innerText = supaText
+      } else {
+        el.innerText = getFallbackText(key, el)
+      }
     })
 
-    // Special case: Hero image
+    // Special: Hero image
     if (sectionId === 'hero') {
       const { data: heroRow, error: heroError } = await supabase
         .from('hero_content')
@@ -1515,13 +1549,14 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         .single()
 
       if (!heroError && heroRow?.image_url) {
-        document.getElementById('heroImage').src = heroRow.image_url
+        const img = document.getElementById('heroImage')
+        if (img) img.src = heroRow.image_url
       }
     }
   }
 
-  // --- Reload all sections ---
   function reloadAllSections() {
+    // You can run these in parallel if you want:
     loadSectionContent('hero')
     loadSectionContent('skills')
     loadSectionContent('about')
@@ -1529,7 +1564,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     loadSectionContent('contact')
   }
 
-  // --- Language Switching ---
+  /* ================= LANGUAGE SWITCH ================= */
   function setLanguage(lang) {
     currentLang = lang
     localStorage.setItem('lang', lang)
@@ -1541,19 +1576,21 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     const btnEn = document.getElementById('btn-en')
     const btnVi = document.getElementById('btn-vi')
     if (!btnEn || !btnVi) return
-
     btnEn.classList.toggle('bg-white', lang === 'en')
     btnEn.classList.toggle('dark:bg-gray-900', lang === 'en')
     btnVi.classList.toggle('bg-white', lang === 'vi')
     btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi')
   }
 
-  // --- Attach Button Events ---
   document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'))
   document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'))
 
-  // --- On Load ---
+  /* ================= STARTUP ================= */
   window.addEventListener('DOMContentLoaded', () => {
+    // Cache all hardcoded fallbacks first
+    captureFallbacks(document)
+
+    // Initial render
     reloadAllSections()
     highlightActiveLang(currentLang)
   })
