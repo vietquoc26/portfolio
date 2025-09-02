@@ -322,17 +322,15 @@ background-color: #f0f9ff;
 <!-- About Section (Admin Editable) -->
 <section id="about" class="relative group py-20 bg-gray-50 dark:bg-gray-800 rounded-xl shadow">
 
-  <!-- Edit Button -->
-  <button id="editAbout" class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
-    <i class="fas fa-edit mr-1"></i> Edit About
-  </button>
+ <!-- Section Edit Button -->
+<button class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
+  <i class="fas fa-edit mr-1"></i> Edit Projects
+</button>
 
-  <!-- Save Button -->
-  <div class="flex justify-center mb-12">
-    <button id="saveAbout" class="hidden bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
-      <i class="fas fa-save mr-2"></i> Save Changes
-    </button>
-  </div>
+<!-- Save Button -->
+<button id="saveProjectsBtn" class="absolute top-4 right-36 bg-green-600 text-white px-3 py-1 rounded hidden">
+  <i class="fas fa-save mr-1"></i> Save
+</button>
 
   <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
     <!-- Left Image -->
@@ -1462,12 +1460,118 @@ async function saveAboutContent() {
   alert('About content saved! ✅')
 }
 
+/* ================= PROJECT SECTION ================= */
+// --- Language Toggle for PROJECTS ---
+document.getElementById('lang-en')?.addEventListener('click', () => { 
+  currentLang = 'en'
+  loadProjectsContent()
+})
+document.getElementById('lang-vi')?.addEventListener('click', () => { 
+  currentLang = 'vi'
+  loadProjectsContent()
+})
+
+// --- Toggle Edit Mode for PROJECTS ---
+const projectEditBtn = document.querySelector('#projects .edit-btn')
+const saveProjectBtn = document.getElementById('saveProjects')
+
+projectEditBtn?.addEventListener('click', async () => {
+  const projectSection = document.getElementById('projects')
+  if (!projectSection) return
+
+  const editableElements = projectSection.querySelectorAll('.editable')
+  const isEditing = editableElements[0]?.contentEditable === 'true'
+
+  editableElements.forEach(el => {
+    el.contentEditable = !isEditing
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
+  })
+
+  if (isEditing) {
+    // Cancel clicked → exit edit mode
+    saveProjectBtn.classList.add('hidden')
+    projectEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Projects'
+    await loadProjectsContent() // revert unsaved changes
+  } else {
+    // Entering edit mode
+    saveProjectBtn.classList.remove('hidden')
+    projectEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+  }
+})
+
+// --- Save button saves ---
+saveProjectBtn?.addEventListener('click', async () => {
+  await saveProjectsContent()
+  saveProjectBtn.classList.add('hidden')
+  projectEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Projects'
+
+  // turn off edit mode
+  const projectSection = document.getElementById('projects')
+  const editableElements = projectSection.querySelectorAll('.editable')
+  editableElements.forEach(el => (el.contentEditable = 'false'))
+})
+
+// --- Load Projects Content ---
+async function loadProjectsContent() {
+  const projectSection = document.getElementById('projects')
+  if (!projectSection) return
+
+  const editableElements = projectSection.querySelectorAll('.editable')
+  const { data, error } = await supabase.from('projects_content').select('*')
+
+  if (error) {
+    console.error('❌ Error loading projects content:', error.message)
+    return
+  }
+
+  editableElements.forEach(el => {
+    const key = el.getAttribute('data-i18n')
+    const row = data.find(d => d.key === key)
+    if (row) {
+      el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+    }
+  })
+}
+
+// --- Save Projects Content ---
+async function saveProjectsContent() {
+  const projectSection = document.getElementById('projects')
+  if (!projectSection) return
+
+  const editableElements = projectSection.querySelectorAll('.editable')
+
+  for (const el of editableElements) {
+    const key = el.getAttribute('data-i18n')
+    const text = el.innerText.trim()
+
+    const updates =
+      currentLang === 'en'
+        ? { key, en_text: text }
+        : { key, vi_text: text }
+
+    const { error } = await supabase
+      .from('projects_content')
+      .upsert(updates, { onConflict: 'key' })
+
+    if (error) {
+      console.error(`❌ Failed to save project:${key}`, error.message)
+    } else {
+      console.log(`✅ Saved project:${key}`)
+    }
+  }
+
+  alert('Projects content saved! ✅')
+}
+
 
 /* ================= STARTUP ================= */
 window.addEventListener('DOMContentLoaded', () => {
   loadHeroContent()
   loadSkillsContent()
   loadAboutContent()
+  loadProjectsContent()
 })
 
 
