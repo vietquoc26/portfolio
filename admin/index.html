@@ -1433,14 +1433,17 @@ async function saveAboutContent() {
         ? { key, en_text: text }
         : { key, vi_text: text }
 
-    const { error } = await supabase
+    console.log('🔄 Saving:', updates)
+
+    const { data, error } = await supabase
       .from('about_content')
       .upsert(updates, { onConflict: 'key' })
+      .select()
 
     if (error) {
       console.error(`❌ Failed to save about:${key}`, error.message)
     } else {
-      console.log(`✅ Saved about:${key}`)
+      console.log(`✅ Saved about:${key}`, data)
     }
   }
 
