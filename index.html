@@ -1376,6 +1376,11 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         }
       }
     },
+    function(err, t) {
+      updateContent();
+      highlightActiveLang(i18next.language);
+      mergeSheetTranslations(); // override intro/about/skills
+    });
 
   </script>
 
