@@ -109,6 +109,25 @@
 .i18n-hidden [data-i18n-placeholder] {
   visibility: hidden !important;
 }
+
+/* Hide everything until i18n + Supabase content is ready */
+html.i18n-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Optional: while changing languages, fade page a little */
+body.loading-lang {
+  opacity: 0.6;
+  transition: opacity 0.25s ease-in-out;
+  pointer-events: none; /* prevents clicks while switching */
+}
+
+/* Restore normal view */
+body:not(.loading-lang) {
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+}
   </style>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
