@@ -1450,41 +1450,111 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA'
   )
 
-  let currentLang = localStorage.getItem('lang') || 'en';
+  /* ================= LANGUAGE ================= */
+  let currentLang = localStorage.getItem('lang') || 'en'
 
-/* ================= TABLE MAP ================= */
-const tableMap = {
-  hero: 'hero_content',
-  skills: 'skill_content',
-  about: 'about_content',
-  projects: 'projects_content',
-  results: 'results_content'
-  // ❌ contact removed, since we don’t want Supabase for it
-};
+  /* ================= TABLE MAP ================= */
+  const tableMap = {
+    hero: 'hero_content',
+    skills: 'skill_content',
+    about: 'about_content',
+    projects: 'projects_content',
+    contact: 'contact_content',
+  }
 
-/* ================= FALLBACK HELPERS ================= */
-function captureFallbacks(root = document) {
-  const nodes = root.querySelectorAll('[data-i18n]');
-  nodes.forEach(el => {
-    if (!el.dataset.fallback) {
-      el.dataset.fallback = (el.innerText ?? '').trim();
+  /* ================= FALLBACK HELPERS ================= */
+  // 1) Cache the original hardcoded text once, so we never lose it.
+  function captureFallbacks(root = document) {
+    const nodes = root.querySelectorAll('[data-i18n]')
+    nodes.forEach(el => {
+      if (!el.dataset.fallback) {
+        el.dataset.fallback = (el.innerText ?? '').trim()
+      }
+    })
+  }
+
+  // 2) Try i18next.t(key); if not available or returns the key,
+  //    use the cached hardcoded fallback.
+  function getFallbackText(key, el) {
+    try {
+      if (window.i18next && typeof window.i18next.t === 'function') {
+        const t = window.i18next.t(key)
+        if (typeof t === 'string' && t.trim() && t !== key) {
+          return t
+        }
+      }
+    } catch (_) {}
+    return (el?.dataset?.fallback ?? '').trim()
+  }
+
+  /* ================= CORE LOADER ================= */
+async function loadSectionContent(sectionId) {
+const section = document.getElementById(sectionId);
+if (!section) return;
+
+// ensure fallback cache is captured once
+captureFallbacks(section);
+
+const editableElements = section.querySelectorAll('[data-i18n]');
+const tableName = tableMap[sectionId] || (sectionId + '_content');
+
+  const { data, error } = await supabase.from(tableName).select('*');
+  if (error) {
+    console.error(`❌ Error loading ${sectionId} content:`, error.message);
+  }
+
+  const byKey = Object.create(null);
+  if (Array.isArray(data)) {
+    for (const row of data) {
+      if (row && typeof row.key === 'string') byKey[row.key] = row;
     }
+  }
+
+  editableElements.forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const row = byKey[key];
+    let supaText = '';
+
+    if (row) {
+      supaText = currentLang === 'en' ? (row.en_text || '') : (row.vi_text || '');
+    }
+
+    if (supaText && supaText.trim() !== '') {
+      el.innerHTML = supaText;
+      el.dataset.supabaseApplied = 'true';
+    } else {
+      delete el.dataset.supabaseApplied;
+      el.innerHTML = getFallbackText(key, el);
+    }
+  });
+
+  if (sectionId === 'hero') {
+    const { data: heroRow, error: heroError } = await supabase
+      .from('hero_content')
+      .select('image_url')
+      .eq('id', 1)
+      .single();
+    if (!heroError && heroRow?.image_url) {
+      const img = document.getElementById('heroImage');
+      if (img) img.src = heroRow.image_url;
+    }
+  }
+}
+
+ function reloadAllSections() {
+  // Only Supabase-driven sections
+  return Promise.all([
+    loadSectionContent('hero'),
+    loadSectionContent('about'),
+    loadSectionContent('skills'),
+    loadSectionContent('projects'),
+    loadSectionContent('results'),
+  ]).catch(err => {
+    console.error("Error reloading Supabase sections:", err);
   });
 }
 
-function getFallbackText(key, el) {
-  try {
-    if (window.i18next && typeof window.i18next.t === 'function') {
-      const t = window.i18next.t(key);
-      if (typeof t === 'string' && t.trim() && t !== key) {
-        return t;
-      }
-    }
-  } catch (_) {}
-  return (el?.dataset?.fallback ?? '').trim();
-}
-
-/* ================= LANGUAGE SWITCH ================= */
+  /* ================= LANGUAGE SWITCH ================= */
 async function setLanguage(lang) {
   if (!lang || lang === currentLang) {
     highlightActiveLang(lang || currentLang);
@@ -1495,7 +1565,7 @@ async function setLanguage(lang) {
   localStorage.setItem('lang', lang);
   document.body.classList.add('loading-lang');
 
-  // 1) Switch i18next language
+  // 1) Wait until i18next actually finishes switching
   if (window.i18next && typeof i18next.changeLanguage === 'function') {
     try { 
       await i18next.changeLanguage(lang); 
@@ -1504,13 +1574,14 @@ async function setLanguage(lang) {
     }
   }
 
-  // 2) Update i18n-only sections (like contact, navbar, footer)
+  // 2) Update i18n-only sections (skip Supabase ones)
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const section = el.closest('#hero, #about, #skills, #projects, #results');
     if (section) return; // skip Supabase-driven sections
 
     const key = el.getAttribute('data-i18n');
-    el.innerHTML = getFallbackText(key, el);
+    const v = i18next.t(key);
+    if (v && v !== key) el.innerHTML = v;
   });
 
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
@@ -1518,7 +1589,8 @@ async function setLanguage(lang) {
     if (section) return;
 
     const key = el.getAttribute('data-i18n-placeholder');
-    el.setAttribute('placeholder', getFallbackText(key, el));
+    const v = i18next.t(key);
+    if (v && v !== key) el.setAttribute('placeholder', v);
   });
 
   // 3) Reload Supabase-driven sections
@@ -1528,7 +1600,6 @@ async function setLanguage(lang) {
   highlightActiveLang(lang);
 }
 
-/* ================= HIGHLIGHT ACTIVE BUTTON ================= */
 function highlightActiveLang(lang) {
   const btnEn = document.getElementById('btn-en');
   const btnVi = document.getElementById('btn-vi');
@@ -1540,9 +1611,20 @@ function highlightActiveLang(lang) {
   btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
 }
 
-/* ================= EVENT BINDINGS ================= */
 document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'));
 document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'));
+
+
+  /* ================= STARTUP ================= */
+window.addEventListener('DOMContentLoaded', async () => {
+  captureFallbacks(document);
+  if (window.i18next && typeof i18next.changeLanguage === 'function') {
+    try { await i18next.changeLanguage(currentLang); } catch (e) {}
+  }
+  await reloadAllSections(); // fetch only Supabase sections
+  document.documentElement.classList.remove('i18n-hidden');
+  highlightActiveLang(currentLang);
+});
 </script>
 
 <script>
