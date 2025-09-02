@@ -319,16 +319,15 @@ background-color: #f0f9ff;
 </section>
 
 
-<!-- About -->
 <!-- About Section (Admin Editable) -->
 <section id="about" class="relative group py-20 bg-gray-50 dark:bg-gray-800 rounded-xl shadow">
 
-  <!-- Section Edit Button -->
-  <button class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
+  <!-- Edit Button -->
+  <button id="editAbout" class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
     <i class="fas fa-edit mr-1"></i> Edit About
   </button>
 
-  <!-- ✅ Save Button (hidden until edit mode) -->
+  <!-- Save Button -->
   <div class="flex justify-center mb-12">
     <button id="saveAbout" class="hidden bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
       <i class="fas fa-save mr-2"></i> Save Changes
@@ -336,60 +335,35 @@ background-color: #f0f9ff;
   </div>
 
   <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
-
-    <!-- Left Image with Decoration -->
+    <!-- Left Image -->
     <div class="relative">
-      <!-- Yellow Bar -->
       <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-72 h-4 bg-yellow-400 rounded-full rotate-[-5deg] z-20 md:left-24 md:-translate-x-0 md:w-80 md:h-5"></div>
-
-      <!-- Image with upload overlay -->
       <div class="relative w-80 h-80 mx-auto md:mx-0">
-        <img src="Avatar.jpg" loading="lazy" alt="Viet working" class="rounded-full shadow-xl w-80 h-80 object-cover z-10 relative">
-        <label class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden group-hover:block">
-          <i class="fas fa-camera"></i>
-          <input type="file" class="hidden" onchange="previewImage(this)">
-        </label>
+        <img src="Avatar.jpg" alt="Viet working" class="rounded-full shadow-xl w-80 h-80 object-cover z-10 relative">
       </div>
     </div>
 
     <!-- Right Content -->
     <div class="text-gray-800 dark:text-gray-200">
-      <!-- Headline -->
-      <h2 class="text-4xl font-extrabold mb-6 leading-snug text-gray-900 dark:text-white editable" contenteditable="true" data-i18n="aboutHeadline">
+      <h2 class="text-4xl font-extrabold mb-6 leading-snug text-gray-900 dark:text-white editable" data-i18n="aboutHeadline">
         About Me
       </h2>
-
-      <!-- Intro -->
-      <p class="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed editable" contenteditable="true" data-i18n="aboutIntro">
+      <p class="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed editable" data-i18n="aboutIntro">
         I’m a Marketing and Content Specialist with 5 years of experience in SEO, paid media, and creative campaigns.
       </p>
-
-      <!-- List -->
       <ul class="space-y-2 text-sm md:text-base text-gray-700 dark:text-gray-300 list-disc list-inside mb-6">
-        <li class="editable" contenteditable="true">
-          <strong><span data-i18n="aboutPeople">People</span>:</strong> <span data-i18n="aboutPeopleText">Collaborated with 50+ clients worldwide</span>
-        </li>
-        <li class="editable" contenteditable="true">
-          <strong data-i18n="aboutBrands">Brands</strong> <span data-i18n="aboutBrandsText">Worked with top-tier companies</span>
-        </li>
-        <li class="editable" contenteditable="true">
-          <strong data-i18n="aboutEveryone">Everyone</strong> <span data-i18n="aboutEveryoneText">Passionate about delivering impact</span>
-        </li>
+        <li class="editable"><strong><span data-i18n="aboutPeople">People</span>:</strong> <span data-i18n="aboutPeopleText">Collaborated with 50+ clients worldwide</span></li>
+        <li class="editable"><strong data-i18n="aboutBrands">Brands</strong> <span data-i18n="aboutBrandsText">Worked with top-tier companies</span></li>
+        <li class="editable"><strong data-i18n="aboutEveryone">Everyone</strong> <span data-i18n="aboutEveryoneText">Passionate about delivering impact</span></li>
       </ul>
-
-      <!-- Button -->
-      <div class="inline-block px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition editable" 
-     contenteditable="true" 
-     data-i18n="findOutMore">
-  Find Out More
-</div>
+      <div class="editable inline-block px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition" data-i18n="findOutMore">
+        Find Out More
+      </div>
     </div>
   </div>
 </section>
 
 
-
-<!-- Projects Section (Admin Editable) -->
 <!-- Projects Section (Admin Editable, Improved Layout) -->
 <section id="projects" class="relative group py-20 bg-white dark:bg-gray-900 transition-colors rounded-xl shadow">
 
@@ -1372,57 +1346,53 @@ async function saveSkillsContent() {
   alert('Skills content saved! ✅')
 }
 
-  /* ================= ABOUT SECTION ================= */
+/* ================= ABOUT SECTION ================= */
 
 // --- Language Toggle ---
-  document.getElementById('lang-en')?.addEventListener('click', () => { 
-    currentLang = 'en'
-    loadAboutContent()
-  })
-  document.getElementById('lang-vi')?.addEventListener('click', () => { 
-    currentLang = 'vi'
-    loadAboutContent()
-  })
+document.getElementById('lang-en')?.addEventListener('click', () => { 
+  currentLang = 'en'
+  loadAboutContent()
+})
+document.getElementById('lang-vi')?.addEventListener('click', () => { 
+  currentLang = 'vi'
+  loadAboutContent()
+})
 
 // --- Toggle Edit Mode for ABOUT ---
 const aboutEditBtn = document.querySelector('#about .edit-btn')
-const saveAboutBtn = document.getElementById('saveAbout') // make sure you add this button in HTML
+const saveAboutBtn = document.getElementById('saveAbout')
 
 aboutEditBtn?.addEventListener('click', () => {
   const aboutSection = document.getElementById('about')
   if (!aboutSection) return
 
   const editableElements = aboutSection.querySelectorAll('.editable')
-  const isEditing = editableElements[0]?.contentEditable === 'true'
 
+  // ✅ Enable editing
   editableElements.forEach(el => {
-    el.contentEditable = !isEditing
-    el.classList.toggle('border', !isEditing)
-    el.classList.toggle('border-dashed', !isEditing)
-    el.classList.toggle('p-1', !isEditing)
+    el.contentEditable = "true"
+    el.classList.add('border', 'border-dashed', 'p-1')
   })
 
-  if (isEditing) {
-    // leaving edit mode
-    saveAboutBtn.classList.add('hidden')
-    aboutEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit About'
-  } else {
-    // entering edit mode
-    saveAboutBtn.classList.remove('hidden')
-    aboutEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
-  }
+  saveAboutBtn.classList.remove('hidden')
+  aboutEditBtn.classList.add('hidden') // hide edit while editing
 })
 
-// --- Save button saves ---
+// --- Save button ---
 saveAboutBtn?.addEventListener('click', async () => {
   await saveAboutContent()
-  saveAboutBtn.classList.add('hidden')
-  aboutEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit About'
 
-  // turn off edit mode
   const aboutSection = document.getElementById('about')
   const editableElements = aboutSection.querySelectorAll('.editable')
-  editableElements.forEach(el => (el.contentEditable = 'false'))
+
+  // ✅ Disable editing
+  editableElements.forEach(el => {
+    el.contentEditable = "false"
+    el.classList.remove('border', 'border-dashed', 'p-1')
+  })
+
+  saveAboutBtn.classList.add('hidden')
+  aboutEditBtn.classList.remove('hidden')
 })
 
 // --- Load About Content ---
@@ -1463,7 +1433,6 @@ async function saveAboutContent() {
         ? { key, en_text: text }
         : { key, vi_text: text }
 
-    // ✅ upsert by key
     const { error } = await supabase
       .from('about_content')
       .upsert(updates, { onConflict: 'key' })
@@ -1477,6 +1446,7 @@ async function saveAboutContent() {
 
   alert('About content saved! ✅')
 }
+
 
 
 /* ================= STARTUP ================= */
