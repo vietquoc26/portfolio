@@ -1348,10 +1348,6 @@ async function saveSkillsContent() {
 
 /* ================= ABOUT SECTION ================= */
 
-// --- Default Language ---
-let currentLang = 'en' // ✅ fallback default
-// Or auto-detect browser language
-// let currentLang = navigator.language.startsWith('vi') ? 'vi' : 'en'
 
 // --- Language Toggle ---
 document.getElementById('lang-en')?.addEventListener('click', () => { 
@@ -1456,7 +1452,7 @@ async function saveAboutContent() {
 window.addEventListener('DOMContentLoaded', () => {
   loadHeroContent()
   loadSkillsContent()
-  loadAboutContent() // ✅ now works, because currentLang has a default
+  loadAboutContent()
 })
 
 
