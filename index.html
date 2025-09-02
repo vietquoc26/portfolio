@@ -1356,11 +1356,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
           }
         }
       }
-    }, function(err, t) {
-  setLanguage(i18next.language); // use our improved setLanguage
-}
-
-function updateContentFromI18n() {
+    }, function updateContentFromI18n() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     el.innerHTML = i18next.t(el.getAttribute('data-i18n'));
   });
@@ -1373,23 +1369,37 @@ function updateContentFromI18n() {
   });
 }
 
-async function setLanguage(lang) {
-  highlightActiveLang(lang);
+// --- Merge Supabase Content on top of i18n defaults ---
+async function mergeSheetTranslations(lang) {
+  const { data, error } = await supabase.from('translations').select('*'); 
+  // 👆 replace 'translations' with your actual table name
 
-  if (lang === 'en') {
-    // 🔹 Try loading Supabase content first
-    const success = await mergeSheetTranslations(true); 
-    if (!success) {
-      // fallback to i18next if Supabase fails or empty
-      updateContentFromI18n();
-    }
-  } else {
-    // For Vietnamese → load i18next first, then override with Supabase
-    updateContentFromI18n();
-    mergeSheetTranslations();
+  if (error) {
+    console.error('❌ Supabase load failed:', error.message);
+    return;
   }
+
+  data.forEach(row => {
+    const el = document.querySelector(`[data-i18n="${row.key}"]`);
+    if (el) {
+      const text = lang === 'en' ? row.en_text : row.vi_text;
+      if (text && text.trim() !== '') {
+        el.innerHTML = text; // ✅ only override if Supabase has content
+      }
+    }
+  });
 }
 
+// --- Change Language ---
+function setLanguage(lang) {
+  i18next.changeLanguage(lang, async () => {
+    updateContentFromI18n();      // i18n default first
+    highlightActiveLang(lang);
+    await mergeSheetTranslations(lang); // Supabase overrides
+  });
+}
+
+// --- Highlight Active Button ---
 function highlightActiveLang(lang) {
   const btnEn = document.getElementById('btn-en');
   const btnVi = document.getElementById('btn-vi');
@@ -1398,7 +1408,6 @@ function highlightActiveLang(lang) {
   btnVi.classList.toggle('bg-white', lang === 'vi');
   btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
 }
-
   </script>
 
 
