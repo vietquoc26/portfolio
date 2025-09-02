@@ -1358,14 +1358,22 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       }
     }, function updateContentFromI18n() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
-    el.innerHTML = i18next.t(el.getAttribute('data-i18n'));
+    const key = el.getAttribute('data-i18n');
+    const translated = i18next.t(key);
+
+    // if translation exists in i18n, update it
+    if (translated && translated.trim() !== "") {
+      el.innerHTML = translated;
+    }
   });
 
-  // Placeholders
+  // Handle placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    const val = i18next.t(key);
-    if (val) el.setAttribute('placeholder', val);
+    const translated = i18next.t(key);
+    if (translated && translated.trim() !== "") {
+      el.setAttribute('placeholder', translated);
+    }
   });
 }
 
@@ -1392,10 +1400,10 @@ async function mergeSheetTranslations(lang) {
 
 // --- Change Language ---
 function setLanguage(lang) {
-  i18next.changeLanguage(lang, async () => {
-    updateContentFromI18n();      // i18n default first
+  i18next.changeLanguage(lang).then(async () => {
+    updateContentFromI18n();         // 1. Update with i18n
     highlightActiveLang(lang);
-    await mergeSheetTranslations(lang); // Supabase overrides
+    await mergeSheetTranslations(lang); // 2. Supabase overrides
   });
 }
 
@@ -1403,6 +1411,9 @@ function setLanguage(lang) {
 function highlightActiveLang(lang) {
   const btnEn = document.getElementById('btn-en');
   const btnVi = document.getElementById('btn-vi');
+
+  if (!btnEn || !btnVi) return;
+
   btnEn.classList.toggle('bg-white', lang === 'en');
   btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
   btnVi.classList.toggle('bg-white', lang === 'vi');
