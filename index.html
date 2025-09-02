@@ -1447,7 +1447,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   /* ================= SUPABASE ================= */
   const supabase = createClient(
     'https://ohbrtxfmwxbjqfyaicpc.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oYnJ0eGZtd3hianFmeWFpY3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwODU2NTQsImV4cCI6MjA3MTY2MTY1NH0.Jsix7dkwHk4gU_66XI2QRX8nhIlVI2jy9i4eheIFdyA'
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
   )
 
   /* ================= LANGUAGE ================= */
@@ -1463,7 +1463,6 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   }
 
   /* ================= FALLBACK HELPERS ================= */
-  // 1) Cache the original hardcoded text once, so we never lose it.
   function captureFallbacks(root = document) {
     const nodes = root.querySelectorAll('[data-i18n]')
     nodes.forEach(el => {
@@ -1473,8 +1472,6 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     })
   }
 
-  // 2) Try i18next.t(key); if not available or returns the key,
-  //    use the cached hardcoded fallback.
   function getFallbackText(key, el) {
     try {
       if (window.i18next && typeof window.i18next.t === 'function') {
@@ -1488,149 +1485,143 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   }
 
   /* ================= CORE LOADER ================= */
-async function loadSectionContent(sectionId) {
-const section = document.getElementById(sectionId);
-if (!section) return;
+  async function loadSectionContent(sectionId) {
+    const section = document.getElementById(sectionId)
+    if (!section) return
 
-// ensure fallback cache is captured once
-captureFallbacks(section);
+    captureFallbacks(section)
 
-const editableElements = section.querySelectorAll('[data-i18n]');
-const tableName = tableMap[sectionId] || (sectionId + '_content');
+    const editableElements = section.querySelectorAll('[data-i18n]')
+    const tableName = tableMap[sectionId] || (sectionId + '_content')
 
-  const { data, error } = await supabase.from(tableName).select('*');
-  if (error) {
-    console.error(`❌ Error loading ${sectionId} content:`, error.message);
-  }
+    const { data, error } = await supabase.from(tableName).select('*')
+    if (error) {
+      console.error(`❌ Error loading ${sectionId} content:`, error.message)
+    }
 
-  const byKey = Object.create(null);
-  if (Array.isArray(data)) {
-    for (const row of data) {
-      if (row && typeof row.key === 'string') byKey[row.key] = row;
+    const byKey = Object.create(null)
+    if (Array.isArray(data)) {
+      for (const row of data) {
+        if (row && typeof row.key === 'string') byKey[row.key] = row
+      }
+    }
+
+    editableElements.forEach(el => {
+      const key = el.getAttribute('data-i18n')
+      const row = byKey[key]
+      let supaText = ''
+
+      if (row) {
+        supaText = currentLang === 'en' ? (row.en_text || '') : (row.vi_text || '')
+      }
+
+      if (supaText && supaText.trim() !== '') {
+        el.innerHTML = supaText
+        el.dataset.supabaseApplied = 'true'
+      } else {
+        delete el.dataset.supabaseApplied
+        el.innerHTML = getFallbackText(key, el) // ✅ fallback works
+      }
+    })
+
+    if (sectionId === 'hero') {
+      const { data: heroRow, error: heroError } = await supabase
+        .from('hero_content')
+        .select('image_url')
+        .eq('id', 1)
+        .single()
+      if (!heroError && heroRow?.image_url) {
+        const img = document.getElementById('heroImage')
+        if (img) img.src = heroRow.image_url
+      }
     }
   }
 
-  editableElements.forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const row = byKey[key];
-    let supaText = '';
-
-    if (row) {
-      supaText = currentLang === 'en' ? (row.en_text || '') : (row.vi_text || '');
-    }
-
-    if (supaText && supaText.trim() !== '') {
-      el.innerHTML = supaText;
-      el.dataset.supabaseApplied = 'true';
-    } else {
-      delete el.dataset.supabaseApplied;
-      el.innerHTML = getFallbackText(key, el);
-    }
-  });
-
-  if (sectionId === 'hero') {
-    const { data: heroRow, error: heroError } = await supabase
-      .from('hero_content')
-      .select('image_url')
-      .eq('id', 1)
-      .single();
-    if (!heroError && heroRow?.image_url) {
-      const img = document.getElementById('heroImage');
-      if (img) img.src = heroRow.image_url;
-    }
+  function reloadAllSections() {
+    return Promise.all([
+      loadSectionContent('hero'),
+      loadSectionContent('about'),
+      loadSectionContent('skills'),
+      loadSectionContent('projects'),
+      loadSectionContent('results'),
+    ]).catch(err => {
+      console.error("Error reloading Supabase sections:", err)
+    })
   }
-}
-
- function reloadAllSections() {
-  // Only Supabase-driven sections
-  return Promise.all([
-    loadSectionContent('hero'),
-    loadSectionContent('about'),
-    loadSectionContent('skills'),
-    loadSectionContent('projects'),
-    loadSectionContent('results'),
-  ]).catch(err => {
-    console.error("Error reloading Supabase sections:", err);
-  });
-}
 
   /* ================= LANGUAGE SWITCH ================= */
-async function setLanguage(lang) {
-  if (!lang || lang === currentLang) {
-    highlightActiveLang(lang || currentLang);
-    return;
-  }
-
-  currentLang = lang;
-  localStorage.setItem('lang', lang);
-  document.body.classList.add('loading-lang');
-
-  // 1) Wait until i18next actually finishes switching
-  if (window.i18next && typeof i18next.changeLanguage === 'function') {
-    try { 
-      await i18next.changeLanguage(lang); 
-    } catch (err) {
-      console.error("Error changing language:", err);
+  async function setLanguage(lang) {
+    if (!lang || lang === currentLang) {
+      highlightActiveLang(lang || currentLang)
+      return
     }
+
+    currentLang = lang
+    localStorage.setItem('lang', lang)
+    document.body.classList.add('loading-lang')
+
+    if (window.i18next && typeof i18next.changeLanguage === 'function') {
+      try {
+        await i18next.changeLanguage(lang)
+      } catch (err) {
+        console.error("Error changing language:", err)
+      }
+    }
+
+    // ✅ Now use getFallbackText so hardcoded always works
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const section = el.closest('#hero, #about, #skills, #projects, #results')
+      if (section) return
+
+      const key = el.getAttribute('data-i18n')
+      el.innerHTML = getFallbackText(key, el)
+    })
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const section = el.closest('#hero, #about, #skills, #projects, #results')
+      if (section) return
+
+      const key = el.getAttribute('data-i18n-placeholder')
+      const v = getFallbackText(key, el)
+      if (v) el.setAttribute('placeholder', v)
+    })
+
+    await reloadAllSections()
+
+    document.body.classList.remove('loading-lang')
+    highlightActiveLang(lang)
   }
 
-  // 2) Update i18n-only sections (skip Supabase ones)
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const section = el.closest('#hero, #about, #skills, #projects, #results');
-    if (section) return; // skip Supabase-driven sections
+  function highlightActiveLang(lang) {
+    const btnEn = document.getElementById('btn-en')
+    const btnVi = document.getElementById('btn-vi')
+    if (!btnEn || !btnVi) return
 
-    const key = el.getAttribute('data-i18n');
-    const v = i18next.t(key);
-    if (v && v !== key) el.innerHTML = v;
-  });
+    btnEn.classList.toggle('bg-white', lang === 'en')
+    btnEn.classList.toggle('dark:bg-gray-900', lang === 'en')
+    btnVi.classList.toggle('bg-white', lang === 'vi')
+    btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi')
+  }
 
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const section = el.closest('#hero, #about, #skills, #projects, #results');
-    if (section) return;
-
-    const key = el.getAttribute('data-i18n-placeholder');
-    const v = i18next.t(key);
-    if (v && v !== key) el.setAttribute('placeholder', v);
-  });
-
-  // 3) Reload Supabase-driven sections
-  await reloadAllSections();
-
-  document.body.classList.remove('loading-lang');
-  highlightActiveLang(lang);
-}
-
-function highlightActiveLang(lang) {
-  const btnEn = document.getElementById('btn-en');
-  const btnVi = document.getElementById('btn-vi');
-  if (!btnEn || !btnVi) return;
-
-  btnEn.classList.toggle('bg-white', lang === 'en');
-  btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
-  btnVi.classList.toggle('bg-white', lang === 'vi');
-  btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
-}
-
-document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'));
-document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'));
-
+  document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'))
+  document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'))
 
   /* ================= STARTUP ================= */
-window.addEventListener('DOMContentLoaded', async () => {
-  captureFallbacks(document);
-  if (window.i18next && typeof i18next.changeLanguage === 'function') {
-    try { await i18next.changeLanguage(currentLang); } catch (e) {}
-  }
-  await reloadAllSections(); // fetch only Supabase sections
-  document.documentElement.classList.remove('i18n-hidden');
-  highlightActiveLang(currentLang);
-});
+  window.addEventListener('DOMContentLoaded', async () => {
+    captureFallbacks(document)
+    if (window.i18next && typeof i18next.changeLanguage === 'function') {
+      try { await i18next.changeLanguage(currentLang) } catch (e) {}
+    }
+    await reloadAllSections()
+    document.documentElement.classList.remove('i18n-hidden')
+    highlightActiveLang(currentLang)
+  })
 </script>
 
 <script>
-  // add class early so user won't see the fallback flash
-  document.documentElement.classList.add('i18n-hidden');
+  document.documentElement.classList.add('i18n-hidden')
 </script>
+
 
 </body>
 </html>
