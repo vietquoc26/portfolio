@@ -1542,13 +1542,16 @@ const tableName = tableMap[sectionId] || (sectionId + '_content');
 }
 
  function reloadAllSections() {
+  // Only Supabase-driven sections
   return Promise.all([
     loadSectionContent('hero'),
-    loadSectionContent('skills'),
     loadSectionContent('about'),
+    loadSectionContent('skills'),
     loadSectionContent('projects'),
     loadSectionContent('results'),
-  ]);
+  ]).catch(err => {
+    console.error("Error reloading Supabase sections:", err);
+  });
 }
 
   /* ================= LANGUAGE SWITCH ================= */
@@ -1608,12 +1611,12 @@ document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('
 document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'));
 
   /* ================= STARTUP ================= */
- window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('DOMContentLoaded', async () => {
   captureFallbacks(document);
   if (window.i18next && typeof i18next.changeLanguage === 'function') {
     try { await i18next.changeLanguage(currentLang); } catch (e) {}
   }
-  await reloadAllSections();
+  await reloadAllSections(); // fetch only Supabase sections
   document.documentElement.classList.remove('i18n-hidden');
   highlightActiveLang(currentLang);
 });
