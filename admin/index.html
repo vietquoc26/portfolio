@@ -1348,6 +1348,7 @@ async function saveSkillsContent() {
 
 /* ================= ABOUT SECTION ================= */
 
+
 // --- Language Toggle ---
 document.getElementById('lang-en')?.addEventListener('click', () => { 
   currentLang = 'en'
@@ -1358,7 +1359,7 @@ document.getElementById('lang-vi')?.addEventListener('click', () => {
   loadAboutContent()
 })
 
-// --- Toggle Edit Mode for ABOUT ---
+// --- Edit/Save Buttons ---
 const aboutEditBtn = document.querySelector('#about .edit-btn')
 const saveAboutBtn = document.getElementById('saveAbout')
 
@@ -1368,24 +1369,23 @@ aboutEditBtn?.addEventListener('click', () => {
 
   const editableElements = aboutSection.querySelectorAll('.editable')
 
-  // ✅ Enable editing
+  // Enable editing
   editableElements.forEach(el => {
     el.contentEditable = "true"
     el.classList.add('border', 'border-dashed', 'p-1')
   })
 
   saveAboutBtn.classList.remove('hidden')
-  aboutEditBtn.classList.add('hidden') // hide edit while editing
+  aboutEditBtn.classList.add('hidden')
 })
 
-// --- Save button ---
 saveAboutBtn?.addEventListener('click', async () => {
   await saveAboutContent()
 
   const aboutSection = document.getElementById('about')
   const editableElements = aboutSection.querySelectorAll('.editable')
 
-  // ✅ Disable editing
+  // Disable editing
   editableElements.forEach(el => {
     el.contentEditable = "false"
     el.classList.remove('border', 'border-dashed', 'p-1')
@@ -1446,7 +1446,6 @@ async function saveAboutContent() {
 
   alert('About content saved! ✅')
 }
-
 
 
 /* ================= STARTUP ================= */
