@@ -1497,10 +1497,10 @@ projectEditBtn?.addEventListener('click', async () => {
   })
 
   if (isEditing) {
-    // Cancel clicked → revert changes (do not save)
+    // Cancel clicked → exit edit mode
     saveProjectBtn.classList.add('hidden')
     projectEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Projects'
-    await loadProjectsContent() // reload from Supabase to discard unsaved edits
+    await loadProjectsContent() // revert unsaved changes
   } else {
     // Entering edit mode
     saveProjectBtn.classList.remove('hidden')
@@ -1571,6 +1571,15 @@ async function saveProjectsContent() {
 
   alert('Projects content saved! ✅')
 }
+
+
+/* ================= STARTUP ================= */
+window.addEventListener('DOMContentLoaded', () => {
+  loadHeroContent()
+  loadSkillsContent()
+  loadAboutContent()
+  loadProjectsContent()
+})
 
 
 </script>
