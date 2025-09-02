@@ -1355,8 +1355,8 @@ async function saveSkillsContent() {
   alert('Skills content saved! ✅')
 }
 
-/* ================= ABOUT SECTION ================= */
 
+/* ================= ABOUT SECTION ================= */
 
 // --- Language Toggle ---
 document.getElementById('lang-en')?.addEventListener('click', () => { 
@@ -1368,40 +1368,46 @@ document.getElementById('lang-vi')?.addEventListener('click', () => {
   loadAboutContent()
 })
 
-// --- Edit/Save Buttons ---
+// --- Toggle Edit Mode for ABOUT ---
 const aboutEditBtn = document.querySelector('#about .edit-btn')
 const saveAboutBtn = document.getElementById('saveAbout')
 
-aboutEditBtn?.addEventListener('click', () => {
+aboutEditBtn?.addEventListener('click', async () => {
   const aboutSection = document.getElementById('about')
   if (!aboutSection) return
 
   const editableElements = aboutSection.querySelectorAll('.editable')
+  const isEditing = editableElements[0]?.contentEditable === 'true'
 
-  // Enable editing
   editableElements.forEach(el => {
-    el.contentEditable = "true"
-    el.classList.add('border', 'border-dashed', 'p-1')
+    el.contentEditable = !isEditing
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
   })
 
-  saveAboutBtn.classList.remove('hidden')
-  aboutEditBtn.classList.add('hidden')
+  if (isEditing) {
+    // Leaving edit mode (Cancel clicked)
+    saveAboutBtn.classList.add('hidden')
+    aboutEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit About'
+    await loadAboutContent() // reload from Supabase to revert changes
+  } else {
+    // Entering edit mode
+    saveAboutBtn.classList.remove('hidden')
+    aboutEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+  }
 })
 
+// --- Save button saves ---
 saveAboutBtn?.addEventListener('click', async () => {
   await saveAboutContent()
+  saveAboutBtn.classList.add('hidden')
+  aboutEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit About'
 
+  // turn off edit mode
   const aboutSection = document.getElementById('about')
   const editableElements = aboutSection.querySelectorAll('.editable')
-
-  // Disable editing
-  editableElements.forEach(el => {
-    el.contentEditable = "false"
-    el.classList.remove('border', 'border-dashed', 'p-1')
-  })
-
-  saveAboutBtn.classList.add('hidden')
-  aboutEditBtn.classList.remove('hidden')
+  editableElements.forEach(el => (el.contentEditable = 'false'))
 })
 
 // --- Load About Content ---
@@ -1442,17 +1448,14 @@ async function saveAboutContent() {
         ? { key, en_text: text }
         : { key, vi_text: text }
 
-    console.log('🔄 Saving:', updates)
-
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('about_content')
       .upsert(updates, { onConflict: 'key' })
-      .select()
 
     if (error) {
       console.error(`❌ Failed to save about:${key}`, error.message)
     } else {
-      console.log(`✅ Saved about:${key}`, data)
+      console.log(`✅ Saved about:${key}`)
     }
   }
 
