@@ -374,16 +374,10 @@ background-color: #f0f9ff;
 <!-- Projects Section (Admin Editable, Improved Layout) -->
 <section id="projects" class="relative group py-20 bg-white dark:bg-gray-900 transition-colors rounded-xl shadow">
 
-   <!-- Edit Button -->
-  <button class="edit-btn bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
-      <i class="fas fa-edit mr-1"></i> Edit Projects
-    </button>
-
-    <!-- Save Button -->
-    <button id="saveProjects" class="bg-green-600 text-white px-3 py-1 rounded hidden items-center">
-      <i class="fas fa-save mr-1"></i> Save
-    </button>
-  </div>
+<!-- Section Edit Button -->
+<button class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
+<i class="fas fa-edit mr-1"></i> Edit Projects
+</button>
 
 <div class="max-w-7xl mx-auto px-6 text-center">
 <!-- Title -->
@@ -1477,13 +1471,11 @@ document.getElementById('lang-vi')?.addEventListener('click', () => {
   loadProjectsContent()
 })
 
-// --- Buttons ---
+// --- Toggle Edit Mode for PROJECTS ---
 const projectEditBtn = document.querySelector('#projects .edit-btn')
 const saveProjectBtn = document.getElementById('saveProjects')
-const cancelProjectBtn = document.getElementById('cancelProjects')
 
-// --- Edit Button ---
-projectEditBtn?.addEventListener('click', () => {
+projectEditBtn?.addEventListener('click', async () => {
   const projectSection = document.getElementById('projects')
   if (!projectSection) return
 
@@ -1498,39 +1490,24 @@ projectEditBtn?.addEventListener('click', () => {
   })
 
   if (isEditing) {
-    // Exit edit mode
+    // Cancel clicked → exit edit mode
     saveProjectBtn.classList.add('hidden')
-    cancelProjectBtn.classList.add('hidden')
     projectEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Projects'
+    await loadProjectsContent() // revert unsaved changes
   } else {
-    // Enter edit mode
+    // Entering edit mode
     saveProjectBtn.classList.remove('hidden')
-    cancelProjectBtn.classList.remove('hidden')
-    projectEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Editing...'
+    projectEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
   }
 })
 
-// --- Save Button ---
+// --- Save button saves ---
 saveProjectBtn?.addEventListener('click', async () => {
   await saveProjectsContent()
   saveProjectBtn.classList.add('hidden')
-  cancelProjectBtn.classList.add('hidden')
   projectEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Projects'
 
   // turn off edit mode
-  const projectSection = document.getElementById('projects')
-  const editableElements = projectSection.querySelectorAll('.editable')
-  editableElements.forEach(el => (el.contentEditable = 'false'))
-})
-
-// --- Cancel Button ---
-cancelProjectBtn?.addEventListener('click', async () => {
-  await loadProjectsContent() // reload from Supabase (revert changes)
-  cancelProjectBtn.classList.add('hidden')
-  saveProjectBtn.classList.add('hidden')
-  projectEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Projects'
-
-  // disable editing
   const projectSection = document.getElementById('projects')
   const editableElements = projectSection.querySelectorAll('.editable')
   editableElements.forEach(el => (el.contentEditable = 'false'))
@@ -1587,7 +1564,6 @@ async function saveProjectsContent() {
 
   alert('Projects content saved! ✅')
 }
-
 
 
 /* ================= STARTUP ================= */
