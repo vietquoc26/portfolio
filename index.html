@@ -1565,9 +1565,13 @@ async function setLanguage(lang) {
   localStorage.setItem('lang', lang);
   document.body.classList.add('loading-lang');
 
-  // 1) Switch i18next language
+  // 1) Wait until i18next actually finishes switching
   if (window.i18next && typeof i18next.changeLanguage === 'function') {
-    try { await i18next.changeLanguage(lang); } catch (err) {}
+    try { 
+      await i18next.changeLanguage(lang); 
+    } catch (err) {
+      console.error("Error changing language:", err);
+    }
   }
 
   // 2) Update i18n-only sections (skip Supabase ones)
@@ -1582,7 +1586,7 @@ async function setLanguage(lang) {
 
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const section = el.closest('#hero, #about, #skills, #projects, #results');
-    if (section) return; // skip Supabase-driven sections
+    if (section) return;
 
     const key = el.getAttribute('data-i18n-placeholder');
     const v = i18next.t(key);
@@ -1609,6 +1613,7 @@ function highlightActiveLang(lang) {
 
 document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'));
 document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'));
+
 
   /* ================= STARTUP ================= */
 window.addEventListener('DOMContentLoaded', async () => {
