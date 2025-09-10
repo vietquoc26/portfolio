@@ -748,14 +748,6 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
     }
 
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const section = el.closest('#hero, #about, #skills, #projects, #results');
-    if (section) return;
-
-    const key = el.getAttribute('data-i18n-placeholder');
-    const v = i18next.t(key);
-    if (v && v !== key) el.setAttribute('placeholder', v);
-  });
 
     async function mergeSheetTranslations() {
       try {
@@ -778,6 +770,7 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
         console.error('Failed to fetch sheet overrides:', error);
       }
     }
+
   </script>
   
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -805,6 +798,25 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       mobileArrow.classList.toggle("rotate-180");
     });
   });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  function updatePlaceholders() {
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      el.setAttribute("placeholder", i18next.t(key));
+    });
+  }
+
+  // Run once on load
+  updatePlaceholders();
+
+  // Re-run every time the language changes
+  i18next.on("languageChanged", () => {
+    updatePlaceholders();
+  });
+});
 </script>
 
 </body>
