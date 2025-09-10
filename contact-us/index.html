@@ -748,6 +748,15 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
     }
 
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const section = el.closest('#hero, #about, #skills, #projects, #results');
+    if (section) return;
+
+    const key = el.getAttribute('data-i18n-placeholder');
+    const v = i18next.t(key);
+    if (v && v !== key) el.setAttribute('placeholder', v);
+  });
+
     async function mergeSheetTranslations() {
       try {
         const url = 'https://sheetdb.io/api/v1/tmz40soq9xyqu'; // 🔁 Update this
