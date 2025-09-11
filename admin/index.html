@@ -166,7 +166,7 @@ background-color: #f0f9ff;
         <img id="heroImage" src="Avatar.jpg" alt="Viet" class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
 
         <!-- Upload Overlay -->
-        <label id="uploadLabel" class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden group-hover:block">
+        <label id="uploadLabel"class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden group-hover:block">
           <i class="fas fa-camera"></i>
           <input type="file" class="hidden" onchange="previewImage(this)" />
         </label>
@@ -1129,7 +1129,6 @@ heroEditBtn?.addEventListener('click', () => {
   if (!heroSection) return
 
   const editableElements = heroSection.querySelectorAll('.editable')
-  const uploadLabel = document.getElementById('uploadLabel') // 👈 added
   const isEditing = editableElements[0]?.contentEditable === 'true'
 
   editableElements.forEach(el => {
@@ -1143,16 +1142,10 @@ heroEditBtn?.addEventListener('click', () => {
     // leaving edit mode
     saveHeroBtn.classList.add('hidden')
     heroEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
-
-    // hide image upload button
-    uploadLabel?.classList.add('hidden')
   } else {
     // entering edit mode
     saveHeroBtn.classList.remove('hidden')
     heroEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
-
-    // show image upload button
-    uploadLabel?.classList.remove('hidden')
   }
 })
 
@@ -1246,40 +1239,33 @@ saveHeroBtn?.addEventListener('click', async () => {
       reader.readAsDataURL(file)
 
       // Upload to storage
-const fileName = `hero-${Date.now()}-${file.name}`
-const { error: uploadError } = await supabase.storage
-  .from('hero')
-  .upload(fileName, file, {
-    cacheControl: '3600',
-    upsert: true
-  })
+      const fileName = `hero-${Date.now()}-${file.name}`
+      const { error: uploadError } = await supabase.storage.from('hero').upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: true
+      })
+      if (uploadError) {
+        console.error('❌ Upload failed:', uploadError.message)
+        return
+      }
 
-if (uploadError) {
-  console.error('❌ Upload failed:', uploadError.message)
-  return
-}
+      // Get public URL
+      const { data } = supabase.storage.from('hero').getPublicUrl(fileName)
+      const publicUrl = data.publicUrl
 
-// Get public URL
-const { data } = supabase.storage.from('hero').getPublicUrl(fileName)
-const publicUrl = data.publicUrl
+      // Update DB
+      const { error: dbError } = await supabase
+        .from('hero_content')
+        .update({ image_url: publicUrl })
+        .eq('id', 1)
 
-// Update DB
-const { error: dbError } = await supabase
-  .from('hero_content')
-  .update({ image_url: publicUrl })
-  .eq('id', 1)
-
-if (dbError) {
-  console.error('❌ Failed to update DB:', dbError.message)
-} else {
-  console.log('✅ Image uploaded and DB updated:', publicUrl)
-
-  // 👉 Update <img> on frontend instantly
-  const heroImage = document.getElementById('heroImage')
-  if (heroImage) {
-    heroImage.src = publicUrl
+      if (dbError) {
+        console.error('❌ Failed to update DB:', dbError.message)
+      } else {
+        console.log('✅ Image uploaded and DB updated:', publicUrl)
+      }
+    }
   }
-}
 
   /* ================= SKILLS SECTION ================= */
 
