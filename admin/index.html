@@ -166,11 +166,11 @@ background-color: #f0f9ff;
         <img id="heroImage" src="Avatar.jpg" alt="Viet" class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
 
         <!-- Upload Overlay -->
-        <label id="uploadLabel"class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden group-hover:block">
-          <i class="fas fa-camera"></i>
-          <input type="file" class="hidden" onchange="previewImage(this)" />
-        </label>
-      </div>
+<label id="uploadLabel"
+  class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden">
+  <i class="fas fa-camera"></i>
+  <input type="file" class="hidden" onchange="previewImage(this)" />
+</label>
 
       <!-- Floating Icons -->
       <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
@@ -1169,7 +1169,6 @@ saveHeroBtn?.addEventListener('click', async () => {
   // also hide image upload after saving
   uploadLabel?.classList.add('hidden')
 })
-
 
 
   // --- Load Hero Content ---
