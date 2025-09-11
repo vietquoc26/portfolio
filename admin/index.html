@@ -1246,33 +1246,40 @@ saveHeroBtn?.addEventListener('click', async () => {
       reader.readAsDataURL(file)
 
       // Upload to storage
-      const fileName = `hero-${Date.now()}-${file.name}`
-      const { error: uploadError } = await supabase.storage.from('hero').upload(fileName, file, {
-        cacheControl: '3600',
-        upsert: true
-      })
-      if (uploadError) {
-        console.error('❌ Upload failed:', uploadError.message)
-        return
-      }
+const fileName = `hero-${Date.now()}-${file.name}`
+const { error: uploadError } = await supabase.storage
+  .from('hero')
+  .upload(fileName, file, {
+    cacheControl: '3600',
+    upsert: true
+  })
 
-      // Get public URL
-      const { data } = supabase.storage.from('hero').getPublicUrl(fileName)
-      const publicUrl = data.publicUrl
+if (uploadError) {
+  console.error('❌ Upload failed:', uploadError.message)
+  return
+}
 
-      // Update DB
-      const { error: dbError } = await supabase
-        .from('hero_content')
-        .update({ image_url: publicUrl })
-        .eq('id', 1)
+// Get public URL
+const { data } = supabase.storage.from('hero').getPublicUrl(fileName)
+const publicUrl = data.publicUrl
 
-      if (dbError) {
-        console.error('❌ Failed to update DB:', dbError.message)
-      } else {
-        console.log('✅ Image uploaded and DB updated:', publicUrl)
-      }
-    }
+// Update DB
+const { error: dbError } = await supabase
+  .from('hero_content')
+  .update({ image_url: publicUrl })
+  .eq('id', 1)
+
+if (dbError) {
+  console.error('❌ Failed to update DB:', dbError.message)
+} else {
+  console.log('✅ Image uploaded and DB updated:', publicUrl)
+
+  // 👉 Update <img> on frontend instantly
+  const heroImage = document.getElementById('heroImage')
+  if (heroImage) {
+    heroImage.src = publicUrl
   }
+}
 
   /* ================= SKILLS SECTION ================= */
 
