@@ -1269,7 +1269,7 @@ window.previewImage = async function (input) {
     const { error: dbError } = await supabase
       .from('hero_content')
       .update({ image_url: publicUrl })
-      .eq('key', 'greeting')   // 👈 safer: use a "key" column (like greeting/intro)
+      .eq('key', 'heroImage')   // 👈 safer: use a "key" column (like greeting/intro)
       // .eq('id', 1)            // ❌ only use if you are sure id=1 is correct
 
     if (dbError) {
