@@ -166,7 +166,7 @@ background-color: #f0f9ff;
         <img id="heroImage" src="Avatar.jpg" alt="Viet" class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
 
         <!-- Upload Overlay -->
-        <label class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden group-hover:block">
+        <label id="uploadLabel" class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden group-hover:block">
           <i class="fas fa-camera"></i>
           <input type="file" class="hidden" onchange="previewImage(this)" />
         </label>
@@ -1122,12 +1122,14 @@ return closest;
  // --- Toggle Edit Mode for HERO ---
 const heroEditBtn = document.getElementById('editHero')
 const saveHeroBtn = document.getElementById('saveHero')
+const uploadLabel = document.getElementById('uploadLabel')
 
 heroEditBtn?.addEventListener('click', () => {
   const heroSection = document.getElementById('hero')
   if (!heroSection) return
 
   const editableElements = heroSection.querySelectorAll('.editable')
+  const uploadLabel = document.getElementById('uploadLabel') // 👈 added
   const isEditing = editableElements[0]?.contentEditable === 'true'
 
   editableElements.forEach(el => {
@@ -1141,10 +1143,16 @@ heroEditBtn?.addEventListener('click', () => {
     // leaving edit mode
     saveHeroBtn.classList.add('hidden')
     heroEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
+
+    // hide image upload button
+    uploadLabel?.classList.add('hidden')
   } else {
     // entering edit mode
     saveHeroBtn.classList.remove('hidden')
     heroEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+
+    // show image upload button
+    uploadLabel?.classList.remove('hidden')
   }
 })
 
