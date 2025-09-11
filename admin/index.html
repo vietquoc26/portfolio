@@ -1119,10 +1119,10 @@ return closest;
     loadHeroContent()
   })
 
- // --- Toggle Edit Mode for HERO ---
+// --- Toggle Edit Mode for HERO ---
 const heroEditBtn = document.getElementById('editHero')
 const saveHeroBtn = document.getElementById('saveHero')
-const uploadLabel = document.getElementById('uploadLabel')
+const uploadLabel = document.getElementById('uploadLabel') // 👈 added
 
 heroEditBtn?.addEventListener('click', () => {
   const heroSection = document.getElementById('hero')
@@ -1142,10 +1142,16 @@ heroEditBtn?.addEventListener('click', () => {
     // leaving edit mode
     saveHeroBtn.classList.add('hidden')
     heroEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
+
+    // hide image upload overlay
+    uploadLabel?.classList.add('hidden')
   } else {
     // entering edit mode
     saveHeroBtn.classList.remove('hidden')
     heroEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+
+    // show image upload overlay
+    uploadLabel?.classList.remove('hidden')
   }
 })
 
@@ -1159,7 +1165,11 @@ saveHeroBtn?.addEventListener('click', async () => {
   const heroSection = document.getElementById('hero')
   const editableElements = heroSection.querySelectorAll('.editable')
   editableElements.forEach(el => (el.contentEditable = 'false'))
+
+  // also hide image upload after saving
+  uploadLabel?.classList.add('hidden')
 })
+
 
 
   // --- Load Hero Content ---
