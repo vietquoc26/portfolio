@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.vietportfolio.work.gd/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://www.vietportfolio.work.gd/about-me/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Project main page -->
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- SEO Projects -->
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/SEO-projects/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/seo-project-1/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/seo-project-2/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Content Projects -->
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/content-projects/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Paid Media Projects -->
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/paid-media/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/google-ad-project/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/meta-ad-project/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Video Editing Projects -->
+  <url>
+    <loc>https://www.vietportfolio.work.gd/project/video-editing/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://www.vietportfolio.work.gd/contact-us/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>
