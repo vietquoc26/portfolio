@@ -46,7 +46,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Paid Media Projects -->
+  <!-- Paid Media -->
   <url>
     <loc>https://www.vietportfolio.work.gd/project/paid-media/</loc>
     <lastmod>2025-09-11</lastmod>
@@ -63,7 +63,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Video Editing Projects -->
+  <!-- Video Editing -->
   <url>
     <loc>https://www.vietportfolio.work.gd/project/video-editing/</loc>
     <lastmod>2025-09-11</lastmod>
@@ -74,7 +74,7 @@
   <url>
     <loc>https://www.vietportfolio.work.gd/contact-us/</loc>
     <lastmod>2025-09-11</lastmod>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
