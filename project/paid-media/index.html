@@ -167,8 +167,8 @@
     <div id="mobile-submenu" class="flex flex-col pl-6 text-left text-sm">
       <a href="/project/SEO-projects/" data-i18n="seoProjects" class="block py-1 text-gray-700 dark:text-white hover:underline">SEO Projects</a>
       <a href="/project/content-projects/" data-i18n="contentWriting" class="block py-1 text-gray-700 dark:text-white hover:underline">Content Writing</a>
-      <a href="#paid-media" data-i18n="paidMedia" class="block py-1 text-gray-700 dark:text-white hover:underline">Paid Media</a>
-      <a href="#video-editing" data-i18n="videoEditing" class="block py-1 text-gray-700 dark:text-white hover:underline">Video Editing</a>
+      <a href="/project/paid-media/" data-i18n="paidMedia" class="block py-1 text-gray-700 dark:text-white hover:underline">Paid Media</a>
+      <a href="/project/video-editing" data-i18n="videoEditing" class="block py-1 text-gray-700 dark:text-white hover:underline">Video Editing</a>
     </div>
   </div>
 
@@ -223,7 +223,7 @@
 <section class="py-12 bg-gray-50 dark:bg-gray-800">
   <div class="max-w-3xl mx-auto px-6">
     <h2 class="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white" data-i18n="pmProcessTitle">My Paid Media Process</h2>
-    <p class="text-center text-gray-600 dark:text-gray-400 mb-12" data-i18n="pmProcessIntro">
+    <p class="text-center text-xl text-gray-600 dark:text-gray-400 mb-12" data-i18n="pmProcessIntro">
       How I plan, execute, and optimize paid campaigns to drive measurable results
     </p>
 
@@ -311,6 +311,21 @@
     </a>
   </div>
 </section>
+
+<script>
+  function toggleStep(stepId) {
+    const desc = document.getElementById(stepId + "desc");
+    desc.classList.toggle("hidden");
+  }
+</script>
+
+
+<script>
+  function toggleStep(stepId) {
+    const desc = document.getElementById(stepId + "desc");
+    desc.classList.toggle("hidden");
+  }
+</script>
 
 <!-- Chatbot Toggle Button -->
 <div id="chatbot-toggle"
