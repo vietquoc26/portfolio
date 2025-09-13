@@ -9,7 +9,7 @@
   <meta name="author" content="Hồ Nguyễn Quốc Việt">
   
   <title>Viet | Digital Marketer</title>
-  <link href="./output.css" rel="stylesheet">
+   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
@@ -219,6 +219,98 @@
   </div>
 </section>
 
+<!-- Paid Media Process Section -->
+<section class="py-12 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white" data-i18n="pmProcessTitle">My Paid Media Process</h2>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-12" data-i18n="pmProcessIntro">
+      How I plan, execute, and optimize paid campaigns to drive measurable results
+    </p>
+
+    <div class="space-y-8 relative">
+      <!-- Vertical line -->
+      <div class="absolute left-4 top-0 h-full w-0.5 bg-gray-300 dark:bg-gray-600"></div>
+
+      <!-- Step 1 -->
+      <div class="relative pl-12 group">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleStep('pmstep1')">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-transform duration-200 group-hover:scale-110">1</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 group-hover:text-blue-500">
+            <span data-i18n="pmStep1Title">Research & Audience Insights</span>
+          </h3>
+        </div>
+        <ul id="pmstep1desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+          <li data-i18n="pmStep1Point1">Analyze target audience demographics, interests, and behaviors.</li>
+          <li data-i18n="pmStep1Point2">Review competitors’ ad strategies and positioning.</li>
+          <li data-i18n="pmStep1Point3">Define campaign objectives and key success metrics (KPIs).</li>
+          <li data-i18n="pmStep1Point4">Understand customer journey to optimize ad touchpoints.</li>
+        </ul>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="relative pl-12 group">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleStep('pmstep2')">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-green-500 text-white font-bold transition-transform duration-200 group-hover:scale-110">2</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 group-hover:text-green-500">
+            <span data-i18n="pmStep2Title">Campaign Strategy</span>
+          </h3>
+        </div>
+        <ul id="pmstep2desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+          <li data-i18n="pmStep2Point1">Select platforms (Google Ads, Meta Ads, LinkedIn, TikTok, etc.).</li>
+          <li data-i18n="pmStep2Point2">Define ad formats, placements, and audience targeting.</li>
+          <li data-i18n="pmStep2Point3">Develop messaging and creatives tailored to each segment.</li>
+          <li data-i18n="pmStep2Point4">Set budgets and bidding strategies for maximum ROI.</li>
+        </ul>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="relative pl-12 group">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleStep('pmstep3')">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-purple-500 text-white font-bold transition-transform duration-200 group-hover:scale-110">3</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 group-hover:text-purple-500">
+            <span data-i18n="pmStep3Title">Execution & Optimization</span>
+          </h3>
+        </div>
+        <ul id="pmstep3desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+          <li data-i18n="pmStep3Point1">Launch campaigns with audience-specific creatives and targeting.</li>
+          <li data-i18n="pmStep3Point2">A/B test ad copies, visuals, and CTAs for best performance.</li>
+          <li data-i18n="pmStep3Point3">Adjust bidding strategies and budgets in real time.</li>
+          <li data-i18n="pmStep3Point4">Continuously monitor conversions, CTR, and engagement.</li>
+        </ul>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="relative pl-12 group">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleStep('pmstep4')">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-yellow-500 text-white font-bold transition-transform duration-200 group-hover:scale-110">4</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 group-hover:text-yellow-500">
+            <span data-i18n="pmStep4Title">Reporting & Insights</span>
+          </h3>
+        </div>
+        <ul id="pmstep4desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+          <li data-i18n="pmStep4Point1">Deliver transparent performance reports with key metrics.</li>
+          <li data-i18n="pmStep4Point2">Highlight cost per conversion, ROI, and audience engagement.</li>
+          <li data-i18n="pmStep4Point3">Provide actionable insights for scaling campaigns.</li>
+          <li data-i18n="pmStep4Point4">Refine targeting and creatives based on data-driven results.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Paid Media CTA Section -->
+<section class="py-16 bg-green-600 dark:bg-gradient-to-r dark:from-indigo-700 dark:to-teal-800 text-white mt-16">
+  <div class="max-w-3xl mx-auto text-center px-6">
+    <h2 class="text-3xl font-bold mb-4" data-i18n="pmCtaTitle">Ready to Maximize Your Ad Performance?</h2>
+    <p class="text-lg mb-8 text-green-100 dark:text-indigo-200" data-i18n="pmCtaSubtitle">
+      Let’s create high-performing campaigns that bring measurable results, attract qualified leads, and grow your revenue.
+    </p>
+    <a href="/contact-us/" 
+       class="inline-block px-8 py-3 rounded-lg bg-white text-green-600 font-semibold shadow hover:bg-gray-100 transition duration-300 dark:bg-gray-100 dark:hover:bg-gray-200 dark:text-indigo-800">
+      <span data-i18n="pmCtaButton">Register for Paid Media Services</span>
+    </a>
+  </div>
+</section>
 
 <!-- Chatbot Toggle Button -->
 <div id="chatbot-toggle"
@@ -807,7 +899,37 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
-      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?"
+      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?",
+       "pmProcessTitle": "My Paid Media Process",
+  "pmProcessIntro": "How I plan, execute, and optimize paid campaigns to drive measurable results",
+
+  "pmStep1Title": "Research & Audience Insights",
+  "pmStep1Point1": "Analyze target audience demographics, interests, and behaviors.",
+  "pmStep1Point2": "Review competitors’ ad strategies and positioning.",
+  "pmStep1Point3": "Define campaign objectives and key success metrics (KPIs).",
+  "pmStep1Point4": "Understand customer journey to optimize ad touchpoints.",
+
+  "pmStep2Title": "Campaign Strategy",
+  "pmStep2Point1": "Select platforms (Google Ads, Meta Ads, LinkedIn, TikTok, etc.).",
+  "pmStep2Point2": "Define ad formats, placements, and audience targeting.",
+  "pmStep2Point3": "Develop messaging and creatives tailored to each segment.",
+  "pmStep2Point4": "Set budgets and bidding strategies for maximum ROI.",
+
+  "pmStep3Title": "Execution & Optimization",
+  "pmStep3Point1": "Launch campaigns with audience-specific creatives and targeting.",
+  "pmStep3Point2": "A/B test ad copies, visuals, and CTAs for best performance.",
+  "pmStep3Point3": "Adjust bidding strategies and budgets in real time.",
+  "pmStep3Point4": "Continuously monitor conversions, CTR, and engagement.",
+
+  "pmStep4Title": "Reporting & Insights",
+  "pmStep4Point1": "Deliver transparent performance reports with key metrics.",
+  "pmStep4Point2": "Highlight cost per conversion, ROI, and audience engagement.",
+  "pmStep4Point3": "Provide actionable insights for scaling campaigns.",
+  "pmStep4Point4": "Refine targeting and creatives based on data-driven results.",
+
+  "pmCtaTitle": "Ready to Maximize Your Ad Performance?",
+  "pmCtaSubtitle": "Let’s create high-performing campaigns that bring measurable results, attract qualified leads, and grow your revenue.",
+  "pmCtaButton": "Register for Paid Media Services"
           }
         },
         vi: {
@@ -871,7 +993,37 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
-      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?"
+      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?",
+       "pmProcessTitle": "Quy Trình Quảng Cáo Trả Phí",
+  "pmProcessIntro": "Cách tôi lập kế hoạch, triển khai và tối ưu hóa các chiến dịch quảng cáo để mang lại kết quả đo lường được",
+
+  "pmStep1Title": "Nghiên Cứu & Hiểu Biết Về Khách Hàng",
+  "pmStep1Point1": "Phân tích nhân khẩu học, sở thích và hành vi của đối tượng mục tiêu.",
+  "pmStep1Point2": "Đánh giá chiến lược quảng cáo và vị thế của đối thủ cạnh tranh.",
+  "pmStep1Point3": "Xác định mục tiêu chiến dịch và các chỉ số đo lường thành công (KPIs).",
+  "pmStep1Point4": "Hiểu hành trình khách hàng để tối ưu điểm chạm quảng cáo.",
+
+  "pmStep2Title": "Chiến Lược Chiến Dịch",
+  "pmStep2Point1": "Lựa chọn nền tảng (Google Ads, Meta Ads, LinkedIn, TikTok, v.v.).",
+  "pmStep2Point2": "Xác định định dạng quảng cáo, vị trí hiển thị và đối tượng mục tiêu.",
+  "pmStep2Point3": "Phát triển thông điệp và sáng tạo nội dung phù hợp với từng nhóm khách hàng.",
+  "pmStep2Point4": "Thiết lập ngân sách và chiến lược đấu thầu để tối đa hóa ROI.",
+
+  "pmStep3Title": "Triển Khai & Tối Ưu Hóa",
+  "pmStep3Point1": "Khởi chạy chiến dịch với nội dung sáng tạo và nhắm mục tiêu cụ thể.",
+  "pmStep3Point2": "Thực hiện A/B test nội dung, hình ảnh và CTA để tìm ra hiệu quả nhất.",
+  "pmStep3Point3": "Điều chỉnh chiến lược đấu thầu và ngân sách theo thời gian thực.",
+  "pmStep3Point4": "Liên tục theo dõi chuyển đổi, CTR và mức độ tương tác.",
+
+  "pmStep4Title": "Báo Cáo & Phân Tích",
+  "pmStep4Point1": "Cung cấp báo cáo hiệu suất minh bạch với các chỉ số chính.",
+  "pmStep4Point2": "Làm nổi bật chi phí cho mỗi chuyển đổi, ROI và mức độ tương tác.",
+  "pmStep4Point3": "Đưa ra các gợi ý hành động để mở rộng quy mô chiến dịch.",
+  "pmStep4Point4": "Tinh chỉnh nhắm mục tiêu và nội dung dựa trên dữ liệu thực tế.",
+
+  "pmCtaTitle": "Sẵn Sàng Tối Ưu Hiệu Suất Quảng Cáo?",
+  "pmCtaSubtitle": "Hãy cùng xây dựng các chiến dịch quảng cáo hiệu quả, mang lại kết quả đo lường được, thu hút khách hàng tiềm năng chất lượng và tăng trưởng doanh thu.",
+  "pmCtaButton": "Đăng Ký Dịch Vụ Quảng Cáo Trả Phí"
           }
         }
       }
