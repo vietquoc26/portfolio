@@ -220,62 +220,85 @@
   </div>
 </section>
 
-<!-- Compact Process Section -->
-<section id="process" class="py-20 px-6 bg-gray-50 dark:bg-gray-800">
-  <div class="max-w-3xl mx-auto">
-    
-    <!-- Header -->
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white" data-i18n="processTitle">
-        My SEO Process
-      </h2>
-      <p class="text-gray-500 dark:text-gray-400 mt-3 text-lg" data-i18n="processIntro">
-        How I plan and manage the entire SEO process for my client
-      </p>
-    </div>
 
-    <!-- Steps -->
-    <ol class="space-y-8 relative border-l border-gray-200 dark:border-gray-700">
-      
+ <!-- Project Section -->
+<section class="py-12 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white" data-i18n="processTitle">My SEO Process</h2>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-12" data-i18n="processIntro">
+      How I plan and manage the entire SEO process for my client
+    </p>
+
+    <div class="space-y-8 relative">
+      <!-- Vertical line -->
+      <div class="absolute left-4 top-0 h-full w-0.5 bg-gray-300 dark:bg-gray-600"></div>
+
       <!-- Step 1 -->
-      <li class="ml-6">
-        <span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold">1</span>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="step1title">Research</h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="step1desc">
-          Keyword research, competitor analysis, and market insights.
-        </p>
-      </li>
+      <div class="relative pl-12">
+        <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold">1</div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer" onclick="toggleStep('step1')">
+          <span data-i18n="step1title">Research</span>
+        </h3>
+        <ul id="step1desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+          <li data-i18n="step1point1">Keyword research, competitor analysis, and market insights.</li>
+          <li data-i18n="step1point2">Identify high-potential keywords based on search volume and intent.</li>
+          <li data-i18n="step1point3">Analyze competitors’ strengths, weaknesses, and backlink profiles.</li>
+          <li data-i18n="step1point4">Study market trends and audience behavior to uncover growth opportunities.</li>
+        </ul>
+      </div>
 
       <!-- Step 2 -->
-      <li class="ml-6">
-        <span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-green-600 text-white text-xs font-bold">2</span>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="step2title">Strategy</h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="step2desc">
-          Build a tailored roadmap for SEO visibility and conversions.
-        </p>
-      </li>
+      <div class="relative pl-12">
+        <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-green-500 text-white font-bold">2</div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer" onclick="toggleStep('step2')">
+          <span data-i18n="step2title">Strategy</span>
+        </h3>
+        <ul id="step2desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+          <li data-i18n="step2point1">Build a tailored roadmap for SEO visibility and conversions.</li>
+          <li data-i18n="step2point2">Define clear SEO goals aligned with client business objectives.</li>
+          <li data-i18n="step2point3">Develop a content plan that targets buyer journey stages.</li>
+          <li data-i18n="step2point4">Prioritize technical, on-page, and off-page improvements.</li>
+        </ul>
+      </div>
 
       <!-- Step 3 -->
-      <li class="ml-6">
-        <span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold">3</span>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="step3title">Execution</h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="step3desc">
-          Optimize content, fix technical issues, and build authority.
-        </p>
-      </li>
+      <div class="relative pl-12">
+        <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-purple-500 text-white font-bold">3</div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer" onclick="toggleStep('step3')">
+          <span data-i18n="step3title">Execution</span>
+        </h3>
+        <ul id="step3desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+          <li data-i18n="step3point1">Optimize content, fix technical issues, and build authority.</li>
+          <li data-i18n="step3point2">Implement on-page optimizations (meta tags, headings, schema, internal linking).</li>
+          <li data-i18n="step3point3">Enhance user experience with fast loading, mobile-friendliness, and secure browsing.</li>
+          <li data-i18n="step3point4">Build domain authority through ethical link-building and outreach campaigns.</li>
+        </ul>
+      </div>
 
       <!-- Step 4 -->
-      <li class="ml-6">
-        <span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-yellow-600 text-white text-xs font-bold">4</span>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="step4title">Reporting</h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="step4desc">
-          Transparent performance reporting with growth insights.
-        </p>
-      </li>
-
-    </ol>
+      <div class="relative pl-12">
+        <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-yellow-500 text-white font-bold">4</div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer" onclick="toggleStep('step4')">
+          <span data-i18n="step4title">Reporting</span>
+        </h3>
+        <ul id="step4desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+          <li data-i18n="step4point1">Transparent performance reporting with growth insights.</li>
+          <li data-i18n="step4point2">Provide regular SEO reports with rankings, traffic, and conversions.</li>
+          <li data-i18n="step4point3">Highlight key wins, areas of improvement, and actionable next steps.</li>
+          <li data-i18n="step4point4">Continuously refine strategy based on data-driven results.</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  function toggleStep(stepId) {
+    const desc = document.getElementById(stepId + "desc");
+    desc.classList.toggle("hidden");
+  }
+</script>
+
 
 
 
@@ -741,14 +764,29 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?",
       "processTitle":"My SEO Process",
       "processIntro":"How I plan and manage the entire SEO process for my client",
-      "step1title":"Research",
-      "step1desc":"Keyword research, competitor analysis, and market insights.",
-      "step2title":"Strategy",
-      "step2desc":"Build a tailored roadmap for SEO visibility and conversions.",
-      "step3title":"Execution",
-      "step3desc":"Optimize content, fix technical issues, and build authority.",
-      "step4title":"Reporting",
-      "step4desc":"Transparent performance reporting with growth insights.",
+        "step1title": "Research",
+  "step1point1": "Keyword research, competitor analysis, and market insights.",
+  "step1point2": "Identify high-potential keywords based on search volume and intent.",
+  "step1point3": "Analyze competitors’ strengths, weaknesses, and backlink profiles.",
+  "step1point4": "Study market trends and audience behavior to uncover growth opportunities.",
+
+  "step2title": "Strategy",
+  "step2point1": "Build a tailored roadmap for SEO visibility and conversions.",
+  "step2point2": "Define clear SEO goals aligned with client business objectives.",
+  "step2point3": "Develop a content plan that targets buyer journey stages.",
+  "step2point4": "Prioritize technical, on-page, and off-page improvements.",
+
+  "step3title": "Execution",
+  "step3point1": "Optimize content, fix technical issues, and build authority.",
+  "step3point2": "Implement on-page optimizations (meta tags, headings, schema, internal linking).",
+  "step3point3": "Enhance user experience with fast loading, mobile-friendliness, and secure browsing.",
+  "step3point4": "Build domain authority through ethical link-building and outreach campaigns.",
+
+  "step4title": "Reporting",
+  "step4point1": "Transparent performance reporting with growth insights.",
+  "step4point2": "Provide regular SEO reports with rankings, traffic, and conversions.",
+  "step4point3": "Highlight key wins, areas of improvement, and actionable next steps.",
+  "step4point4": "Continuously refine strategy based on data-driven results."
 
           }
         },
@@ -797,14 +835,29 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?",
       "processTitle": "Quy trình SEO của tôi",
       "processIntro": "Cách tôi lập kế hoạch và quản lý toàn bộ quy trình SEO cho khách hàng",
-      "step1title": "Nghiên cứu",
-      "step1desc": "Nghiên cứu từ khóa, phân tích đối thủ cạnh tranh và xu hướng thị trường.",
-      "step2title": "Chiến lược",
-      "step2desc": "Xây dựng lộ trình SEO phù hợp nhằm tăng khả năng hiển thị và chuyển đổi.",
-      "step3title": "Triển khai",
-      "step3desc": "Tối ưu nội dung, khắc phục vấn đề kỹ thuật và xây dựng độ uy tín.",
-      "step4title": "Báo cáo",
-      "step4desc": "Báo cáo hiệu suất minh bạch với các phân tích và đề xuất phát triển.",
+       "step1title": "Nghiên cứu",
+  "step1point1": "Nghiên cứu từ khóa, phân tích đối thủ cạnh tranh và xu hướng thị trường.",
+  "step1point2": "Xác định các từ khóa tiềm năng dựa trên lượng tìm kiếm và mục đích tìm kiếm.",
+  "step1point3": "Phân tích điểm mạnh, điểm yếu và hồ sơ backlink của đối thủ.",
+  "step1point4": "Nghiên cứu xu hướng thị trường và hành vi khách hàng để tìm cơ hội tăng trưởng.",
+
+  "step2title": "Chiến lược",
+  "step2point1": "Xây dựng lộ trình SEO phù hợp nhằm tăng khả năng hiển thị và chuyển đổi.",
+  "step2point2": "Xác định mục tiêu SEO rõ ràng phù hợp với mục tiêu kinh doanh của khách hàng.",
+  "step2point3": "Phát triển kế hoạch nội dung nhắm vào các giai đoạn trong hành trình khách hàng.",
+  "step2point4": "Ưu tiên các cải thiện kỹ thuật, on-page và off-page.",
+
+  "step3title": "Triển khai",
+  "step3point1": "Tối ưu nội dung, khắc phục vấn đề kỹ thuật và xây dựng độ uy tín.",
+  "step3point2": "Thực hiện tối ưu on-page (thẻ meta, heading, schema, internal linking).",
+  "step3point3": "Cải thiện trải nghiệm người dùng: tốc độ tải nhanh, thân thiện di động, bảo mật.",
+  "step3point4": "Xây dựng độ uy tín tên miền thông qua liên kết chất lượng và chiến dịch outreach.",
+
+  "step4title": "Báo cáo",
+  "step4point1": "Báo cáo minh bạch về hiệu suất với các phân tích tăng trưởng.",
+  "step4point2": "Cung cấp báo cáo định kỳ về thứ hạng, lưu lượng truy cập và chuyển đổi.",
+  "step4point3": "Nêu bật những thành tựu, điểm cần cải thiện và bước tiếp theo cụ thể.",
+  "step4point4": "Liên tục điều chỉnh chiến lược dựa trên dữ liệu thực tế."
           }
         }
       }
