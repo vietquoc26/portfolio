@@ -9,7 +9,7 @@
   <meta name="author" content="Hồ Nguyễn Quốc Việt">
   
   <title>Viet | SEO Projects</title>
-  <link href="./output.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="canonical" href="https://www.vietportfolio.work.gd/project/SEO-projects/" />
   <script src="https://unpkg.com/i18next@21.6.14/i18next.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -219,6 +219,64 @@
     </div>
   </div>
 </section>
+
+<!-- Compact Process Section -->
+<section id="process" class="py-20 px-6 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-3xl mx-auto">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white" data-i18n="processTitle">
+        My SEO Process
+      </h2>
+      <p class="text-gray-500 dark:text-gray-400 mt-3 text-lg" data-i18n="processIntro">
+        How I plan and manage the entire SEO process for my client
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <ol class="space-y-8 relative border-l border-gray-200 dark:border-gray-700">
+      
+      <!-- Step 1 -->
+      <li class="ml-6">
+        <span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold">1</span>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="step1title">Research</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="step1desc">
+          Keyword research, competitor analysis, and market insights.
+        </p>
+      </li>
+
+      <!-- Step 2 -->
+      <li class="ml-6">
+        <span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-green-600 text-white text-xs font-bold">2</span>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="step2title">Strategy</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="step2desc">
+          Build a tailored roadmap for SEO visibility and conversions.
+        </p>
+      </li>
+
+      <!-- Step 3 -->
+      <li class="ml-6">
+        <span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold">3</span>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="step3title">Execution</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="step3desc">
+          Optimize content, fix technical issues, and build authority.
+        </p>
+      </li>
+
+      <!-- Step 4 -->
+      <li class="ml-6">
+        <span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-yellow-600 text-white text-xs font-bold">4</span>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-i18n="step4title">Reporting</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="step4desc">
+          Transparent performance reporting with growth insights.
+        </p>
+      </li>
+
+    </ol>
+  </div>
+</section>
+
 
 
 <!-- Chatbot Toggle Button -->
@@ -680,7 +738,17 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
-      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?"
+      "chatbot.defaultMessage":"Hello 👋<br>How can I help you today?",
+      "processTitle":"My SEO Process",
+      "processIntro":"How I plan and manage the entire SEO process for my client",
+      "step1title":"Research",
+      "step1desc":"Keyword research, competitor analysis, and market insights.",
+      "step2title":"Strategy",
+      "step2desc":"Build a tailored roadmap for SEO visibility and conversions.",
+      "step3title":"Execution",
+      "step3desc":"Optimize content, fix technical issues, and build authority.",
+      "step4title":"Reporting",
+      "step4desc":"Transparent performance reporting with growth insights.",
 
           }
         },
@@ -726,7 +794,17 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       "contentWriting": "Content Writing",
       "paidMedia":"Paid Media",
       "videoEditing":"Video Editing",
-      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?"
+      "chatbot.defaultMessage":"Xin chào 👋<br>Tôi có thể giúp gì cho bạn hôm nay?",
+      "processTitle": "Quy trình SEO của tôi",
+      "processIntro": "Cách tôi lập kế hoạch và quản lý toàn bộ quy trình SEO cho khách hàng",
+      "step1title": "Nghiên cứu",
+      "step1desc": "Nghiên cứu từ khóa, phân tích đối thủ cạnh tranh và xu hướng thị trường.",
+      "step2title": "Chiến lược",
+      "step2desc": "Xây dựng lộ trình SEO phù hợp nhằm tăng khả năng hiển thị và chuyển đổi.",
+      "step3title": "Triển khai",
+      "step3desc": "Tối ưu nội dung, khắc phục vấn đề kỹ thuật và xây dựng độ uy tín.",
+      "step4title": "Báo cáo",
+      "step4desc": "Báo cáo hiệu suất minh bạch với các phân tích và đề xuất phát triển.",
           }
         }
       }
