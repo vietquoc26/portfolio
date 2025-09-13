@@ -221,7 +221,7 @@
 </section>
 
 
- <!-- Project Section -->
+<!-- Project Section -->
 <section class="py-12 bg-gray-50 dark:bg-gray-800">
   <div class="max-w-3xl mx-auto px-6">
     <h2 class="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white" data-i18n="processTitle">My SEO Process</h2>
@@ -234,11 +234,13 @@
       <div class="absolute left-4 top-0 h-full w-0.5 bg-gray-300 dark:bg-gray-600"></div>
 
       <!-- Step 1 -->
-      <div class="relative pl-12">
-        <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold">1</div>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer" onclick="toggleStep('step1')">
-          <span data-i18n="step1title">Research</span>
-        </h3>
+      <div class="relative pl-12 group">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleStep('step1')">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-transform duration-200 group-hover:scale-110">1</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 group-hover:text-blue-500">
+            <span data-i18n="step1title">Research</span>
+          </h3>
+        </div>
         <ul id="step1desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
           <li data-i18n="step1point1">Keyword research, competitor analysis, and market insights.</li>
           <li data-i18n="step1point2">Identify high-potential keywords based on search volume and intent.</li>
@@ -248,11 +250,13 @@
       </div>
 
       <!-- Step 2 -->
-      <div class="relative pl-12">
-        <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-green-500 text-white font-bold">2</div>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer" onclick="toggleStep('step2')">
-          <span data-i18n="step2title">Strategy</span>
-        </h3>
+      <div class="relative pl-12 group">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleStep('step2')">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-green-500 text-white font-bold transition-transform duration-200 group-hover:scale-110">2</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 group-hover:text-green-500">
+            <span data-i18n="step2title">Strategy</span>
+          </h3>
+        </div>
         <ul id="step2desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
           <li data-i18n="step2point1">Build a tailored roadmap for SEO visibility and conversions.</li>
           <li data-i18n="step2point2">Define clear SEO goals aligned with client business objectives.</li>
@@ -262,11 +266,13 @@
       </div>
 
       <!-- Step 3 -->
-      <div class="relative pl-12">
-        <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-purple-500 text-white font-bold">3</div>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer" onclick="toggleStep('step3')">
-          <span data-i18n="step3title">Execution</span>
-        </h3>
+      <div class="relative pl-12 group">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleStep('step3')">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-purple-500 text-white font-bold transition-transform duration-200 group-hover:scale-110">3</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 group-hover:text-purple-500">
+            <span data-i18n="step3title">Execution</span>
+          </h3>
+        </div>
         <ul id="step3desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
           <li data-i18n="step3point1">Optimize content, fix technical issues, and build authority.</li>
           <li data-i18n="step3point2">Implement on-page optimizations (meta tags, headings, schema, internal linking).</li>
@@ -276,11 +282,13 @@
       </div>
 
       <!-- Step 4 -->
-      <div class="relative pl-12">
-        <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-yellow-500 text-white font-bold">4</div>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer" onclick="toggleStep('step4')">
-          <span data-i18n="step4title">Reporting</span>
-        </h3>
+      <div class="relative pl-12 group">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleStep('step4')">
+          <div class="absolute left-0 flex items-center justify-center w-8 h-8 rounded-full bg-yellow-500 text-white font-bold transition-transform duration-200 group-hover:scale-110">4</div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 group-hover:text-yellow-500">
+            <span data-i18n="step4title">Reporting</span>
+          </h3>
+        </div>
         <ul id="step4desc" class="hidden mt-2 list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
           <li data-i18n="step4point1">Transparent performance reporting with growth insights.</li>
           <li data-i18n="step4point2">Provide regular SEO reports with rankings, traffic, and conversions.</li>
@@ -291,6 +299,14 @@
     </div>
   </div>
 </section>
+
+<script>
+  function toggleStep(stepId) {
+    const desc = document.getElementById(stepId + "desc");
+    desc.classList.toggle("hidden");
+  }
+</script>
+
 
 <script>
   function toggleStep(stepId) {
