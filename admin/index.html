@@ -323,14 +323,13 @@ background-color: #f0f9ff;
 <section id="about" class="relative group py-20 bg-gray-50 dark:bg-gray-800 rounded-xl shadow">
 
   <!-- Edit Button -->
-  <button id="editAboutBtn"
-    class="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
+  <button class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
     <i class="fas fa-edit mr-1"></i> Edit About
   </button>
 
   <!-- Save Button -->
   <button id="saveAboutBtn"
-    class="absolute top-4 right-40 bg-green-600 text-white px-3 py-1 rounded hidden items-center">
+    class="absolute top-4 right-36 bg-green-600 text-white px-3 py-1 rounded hidden">
     <i class="fas fa-save mr-1"></i> Save
   </button>
 
@@ -341,8 +340,7 @@ background-color: #f0f9ff;
       <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-72 h-4 bg-yellow-400 rounded-full rotate-[-5deg] z-20 md:left-24 md:-translate-x-0 md:w-80 md:h-5"></div>
 
       <div class="relative w-80 h-80 mx-auto md:mx-0">
-        <img id="aboutImage"
-          src="Avatar.jpg"
+        <img src="Avatar.jpg"
           alt="Viet working"
           class="rounded-full shadow-xl w-80 h-80 object-cover z-10 relative">
       </div>
@@ -352,44 +350,68 @@ background-color: #f0f9ff;
     <div class="text-gray-800 dark:text-gray-200">
 
       <h2 class="text-4xl font-extrabold mb-6 leading-snug text-gray-900 dark:text-white editable"
-        data-field="headline">
+        contenteditable="true"
+        data-i18n="aboutHeadline">
         About Me
       </h2>
 
       <p class="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed editable"
-        data-field="intro">
+        contenteditable="true"
+        data-i18n="aboutIntro">
         I’m a Marketing and Content Specialist with 5 years of experience in SEO, paid media, and creative campaigns.
       </p>
 
       <ul class="space-y-2 text-sm md:text-base text-gray-700 dark:text-gray-300 list-disc list-inside mb-6">
 
         <li>
-          <strong class="editable" data-field="peopleTitle">People</strong>:
-          <span class="editable" data-field="peopleText">
+          <span class="editable font-bold"
+            contenteditable="true"
+            data-i18n="aboutPeople">
+            People
+          </span>:
+
+          <span class="editable"
+            contenteditable="true"
+            data-i18n="aboutPeopleText">
             Collaborated with 50+ clients worldwide
           </span>
         </li>
 
         <li>
-          <strong class="editable" data-field="brandsTitle">Brands</strong>:
-          <span class="editable" data-field="brandsText">
+          <span class="editable font-bold"
+            contenteditable="true"
+            data-i18n="aboutBrands">
+            Brands
+          </span>:
+
+          <span class="editable"
+            contenteditable="true"
+            data-i18n="aboutBrandsText">
             Worked with top-tier companies
           </span>
         </li>
 
         <li>
-          <strong class="editable" data-field="everyoneTitle">Everyone</strong>:
-          <span class="editable" data-field="everyoneText">
+          <span class="editable font-bold"
+            contenteditable="true"
+            data-i18n="aboutEveryone">
+            Everyone
+          </span>:
+
+          <span class="editable"
+            contenteditable="true"
+            data-i18n="aboutEveryoneText">
             Passionate about delivering impact
           </span>
         </li>
 
       </ul>
 
-      <div class="editable inline-block px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition"
-        data-field="buttonText">
+      <button class="editable inline-block px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition"
+        contenteditable="true"
+        data-i18n="findOutMore">
         Find Out More
-      </div>
+      </button>
 
     </div>
   </div>
