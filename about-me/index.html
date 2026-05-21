@@ -197,234 +197,315 @@
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 <script>
-  AOS.init();
+  AOS.init({
+    duration: 800,
+    once: true
+  });
 </script>
 
 <!-- Experience Timeline Section -->
-<section id="milestone" class="py-20 px-4 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white">
+<section 
+  id="milestone" 
+  class="py-20 px-4 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-white overflow-hidden"
+>
 
-  <div class="max-w-4xl mx-auto">
+  <div class="max-w-5xl mx-auto">
 
+    <!-- Section Title -->
     <h2 
-      class="text-4xl font-extrabold mb-16 text-center" 
-      data-i18n="experienceTimelineTitle">
-      Experience Timeline
+      class="text-4xl md:text-5xl font-extrabold mb-20 text-center"
+      data-i18n="experienceTimelineTitle"
+    >
+      Experience
     </h2>
 
-    <!-- Timeline Container -->
-    <div class="border-l-4 border-blue-500 pl-6 pt-6 space-y-10 relative">
+    <!-- Timeline Wrapper -->
+    <div class="relative pl-12">
 
-      <!-- Milestone 0 -->
+      <!-- Timeline Line -->
+      <div class="absolute left-3 top-0 bottom-0 w-1 bg-blue-500 rounded-full"></div>
+
+      <!-- ================= MILESTONE 0 ================= -->
       <div 
-        class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" 
-        data-aos="fade-up">
+        class="relative mb-16"
+        data-aos="fade-up"
+      >
 
-        <span class="absolute -left-[36px] top-4 w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></span>
+        <!-- Timeline Dot -->
+        <span class="absolute -left-[37px] top-5 w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 border-4 border-gray-50 dark:border-gray-800 z-10"></span>
 
-        <h3 class="text-3xl font-bold" data-i18n="position0">
-          Marketing Leader
-        </h3>
+        <!-- Card -->
+        <div class="transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl p-4 rounded-xl">
+          
+          <h3 
+            class="text-3xl font-bold"
+            data-i18n="position0"
+          >
+            Marketing Leader
+          </h3>
 
-        <p class="text-xl mb-1 text-blue-600 dark:text-blue-400 font-semibold" data-i18n="company0">
-          Portico & Bridge Vietnam
-        </p>
+          <p 
+            class="text-xl text-blue-600 dark:text-blue-400 font-semibold mt-1"
+            data-i18n="company0"
+          >
+            Portico & Bridge Vietnam
+          </p>
 
-        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400 font-semibold" data-i18n="period0">
-          August 2025 – May 2026
-        </p>
+          <p 
+            class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-semibold"
+            data-i18n="period0"
+          >
+            August 2025 – May 2026
+          </p>
 
-        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+          <ul class="list-disc pl-5 mt-4 space-y-2 text-gray-700 dark:text-gray-300">
 
-          <li data-i18n="task0.1">
-            Lead the marketing team and manage overall campaign execution
-          </li>
+            <li data-i18n="task0.1">
+              Lead the marketing team and manage overall campaign execution
+            </li>
 
-          <li data-i18n="task0.2">
-            Develop SEO, content, and paid advertising strategies
-          </li>
+            <li data-i18n="task0.2">
+              Develop SEO, content, and paid advertising strategies
+            </li>
 
-          <li data-i18n="task0.3">
-            Coordinate with designers, content creators, and sales teams
-          </li>
+            <li data-i18n="task0.3">
+              Coordinate with designers, content creators, and sales teams
+            </li>
 
-          <li data-i18n="task0.4">
-            Monitor KPI performance and optimize campaign effectiveness
-          </li>
+            <li data-i18n="task0.4">
+              Monitor KPI performance and optimize campaign effectiveness
+            </li>
 
-          <li data-i18n="task0.5">
-            Manage social media channels and branding activities
-          </li>
+            <li data-i18n="task0.5">
+              Manage social media channels and branding activities
+            </li>
 
-        </ul>
+          </ul>
+        </div>
       </div>
 
-      <!-- Milestone 1 -->
+      <!-- ================= MILESTONE 1 ================= -->
       <div 
-        class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" 
-        data-aos="fade-up" 
-        data-aos-delay="100">
+        class="relative mb-16"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
 
-        <span class="absolute -left-[36px] top-4 w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></span>
+        <!-- Timeline Dot -->
+        <span class="absolute -left-[37px] top-5 w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 border-4 border-gray-50 dark:border-gray-800 z-10"></span>
 
-        <h3 class="text-3xl font-bold" data-i18n="position1">
-          Account Manager
-        </h3>
+        <!-- Card -->
+        <div class="transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl p-4 rounded-xl">
 
-        <p class="text-xl mb-1 text-blue-600 dark:text-blue-400 font-semibold" data-i18n="company1">
-          BiziBusiness Digital Agency
-        </p>
+          <h3 
+            class="text-3xl font-bold"
+            data-i18n="position1"
+          >
+            Account Manager
+          </h3>
 
-        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400 font-semibold" data-i18n="period1">
-          August 2024 – August 2025
-        </p>
+          <p 
+            class="text-xl text-blue-600 dark:text-blue-400 font-semibold mt-1"
+            data-i18n="company1"
+          >
+            BiziBusiness Digital Agency
+          </p>
 
-        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+          <p 
+            class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-semibold"
+            data-i18n="period1"
+          >
+            August 2024 – August 2025
+          </p>
 
-          <li data-i18n="task1.1">
-            Communicate with clients and the in-house team to ensure the progress of the SEO project
-          </li>
+          <ul class="list-disc pl-5 mt-4 space-y-2 text-gray-700 dark:text-gray-300">
 
-          <li data-i18n="task1.2">
-            Deliver SEO articles, optimize keyword performance, and create a performance report
-          </li>
+            <li data-i18n="task1.1">
+              Communicate with clients and the in-house team to ensure the progress of the SEO project
+            </li>
 
-          <li data-i18n="task1.3">
-            Run Google ads and Meta ads for clients
-          </li>
+            <li data-i18n="task1.2">
+              Deliver SEO articles, optimize keyword performance, and create a performance report
+            </li>
 
-        </ul>
+            <li data-i18n="task1.3">
+              Run Google Ads and Meta Ads for clients
+            </li>
+
+          </ul>
+        </div>
       </div>
 
-      <!-- Milestone 2 -->
+      <!-- ================= MILESTONE 2 ================= -->
       <div 
-        class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" 
-        data-aos="fade-up" 
-        data-aos-delay="200">
+        class="relative mb-16"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
 
-        <span class="absolute -left-[36px] top-4 w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></span>
+        <!-- Timeline Dot -->
+        <span class="absolute -left-[37px] top-5 w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 border-4 border-gray-50 dark:border-gray-800 z-10"></span>
 
-        <h3 class="text-3xl font-bold" data-i18n="position2">
-          Social Media Executive - Content Writer - Video Editor
-        </h3>
+        <!-- Card -->
+        <div class="transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl p-4 rounded-xl">
 
-        <p class="text-xl mb-1 text-blue-600 dark:text-blue-400 font-semibold" data-i18n="company2">
-          TechOne Digital Agency
-        </p>
+          <h3 
+            class="text-3xl font-bold"
+            data-i18n="position2"
+          >
+            Social Media Executive - Content Writer - Video Editor
+          </h3>
 
-        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400 font-semibold" data-i18n="period2">
-          July 2023 – July 2024
-        </p>
+          <p 
+            class="text-xl text-blue-600 dark:text-blue-400 font-semibold mt-1"
+            data-i18n="company2"
+          >
+            TechOne Digital Agency
+          </p>
 
-        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+          <p 
+            class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-semibold"
+            data-i18n="period2"
+          >
+            July 2023 – July 2024
+          </p>
 
-          <li data-i18n="task2.1">
-            Conduct social media content plan
-          </li>
+          <ul class="list-disc pl-5 mt-4 space-y-2 text-gray-700 dark:text-gray-300">
 
-          <li data-i18n="task2.2">
-            Shoot short videos and distribute content on social channels (Facebook, TikTok, Instagram, YouTube)
-          </li>
+            <li data-i18n="task2.1">
+              Conduct social media content plan
+            </li>
 
-          <li data-i18n="task2.3">
-            Biggest achievement:
-            <ul class="list-disc pl-5 mt-1">
-              <li data-i18n="task2.3.1">
-                Grow TikTok channels from 30 followers to 1000 followers
-              </li>
-            </ul>
-          </li>
+            <li data-i18n="task2.2">
+              Shoot short videos and distribute content on social channels
+            </li>
 
-          <li data-i18n="task2.4">
-            Edit and distribute social videos for TechOne’s clients (STAARLABS)
-          </li>
+            <li data-i18n="task2.3">
+              Grow TikTok channels from 30 followers to 1000 followers
+            </li>
 
-          <li data-i18n="task2.5">
-            Write SEO articles and social posts for clients
-          </li>
+            <li data-i18n="task2.4">
+              Edit and distribute social videos for clients
+            </li>
 
-        </ul>
+            <li data-i18n="task2.5">
+              Write SEO articles and social posts for clients
+            </li>
+
+          </ul>
+        </div>
       </div>
 
-      <!-- Milestone 3 -->
+      <!-- ================= MILESTONE 3 ================= -->
       <div 
-        class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" 
-        data-aos="fade-up" 
-        data-aos-delay="300">
+        class="relative mb-16"
+        data-aos="fade-up"
+        data-aos-delay="300"
+      >
 
-        <span class="absolute -left-[36px] top-4 w-5 h-5 bg-gradient-to-r from-pink-500 to-red-500 rounded-full"></span>
+        <!-- Timeline Dot -->
+        <span class="absolute -left-[37px] top-5 w-5 h-5 rounded-full bg-gradient-to-r from-pink-500 to-red-500 border-4 border-gray-50 dark:border-gray-800 z-10"></span>
 
-        <h3 class="text-3xl font-semibold" data-i18n="position3">
-          Content Writer
-        </h3>
+        <!-- Card -->
+        <div class="transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl p-4 rounded-xl">
 
-        <p class="text-xl mb-1 text-blue-600 dark:text-blue-400 font-semibold" data-i18n="company3">
-          Beyond Compass (The One Vietnam)
-        </p>
+          <h3 
+            class="text-3xl font-bold"
+            data-i18n="position3"
+          >
+            Content Writer
+          </h3>
 
-        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400" data-i18n="period3">
-          November 2022 – May 2023
-        </p>
+          <p 
+            class="text-xl text-blue-600 dark:text-blue-400 font-semibold mt-1"
+            data-i18n="company3"
+          >
+            Beyond Compass (The One Vietnam)
+          </p>
 
-        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+          <p 
+            class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-semibold"
+            data-i18n="period3"
+          >
+            November 2022 – May 2023
+          </p>
 
-          <li data-i18n="task3.1">
-            Brainstorm ideas to build the website in the early phase
-          </li>
+          <ul class="list-disc pl-5 mt-4 space-y-2 text-gray-700 dark:text-gray-300">
 
-          <li data-i18n="task3.2">
-            Support text content for UX-UI designers
-          </li>
+            <li data-i18n="task3.1">
+              Brainstorm ideas to build the website in the early phase
+            </li>
 
-          <li data-i18n="task3.3">
-            Write blogs for the website and other social media channels
-          </li>
+            <li data-i18n="task3.2">
+              Support text content for UX-UI designers
+            </li>
 
-          <li data-i18n="task3.4">
-            Plan overall marketing and content strategies across all promotion channels
-          </li>
+            <li data-i18n="task3.3">
+              Write blogs for the website and social media channels
+            </li>
 
-        </ul>
+            <li data-i18n="task3.4">
+              Plan overall marketing and content strategies
+            </li>
+
+          </ul>
+        </div>
       </div>
 
-      <!-- Milestone 4 -->
+      <!-- ================= MILESTONE 4 ================= -->
       <div 
-        class="relative transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl p-3 rounded-lg group" 
-        data-aos="fade-up" 
-        data-aos-delay="400">
+        class="relative"
+        data-aos="fade-up"
+        data-aos-delay="400"
+      >
 
-        <span class="absolute -left-[36px] top-4 w-5 h-5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></span>
+        <!-- Timeline Dot -->
+        <span class="absolute -left-[37px] top-5 w-5 h-5 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 border-4 border-gray-50 dark:border-gray-800 z-10"></span>
 
-        <h3 class="text-3xl font-bold" data-i18n="position4">
-          Internship Designer
-        </h3>
+        <!-- Card -->
+        <div class="transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl p-4 rounded-xl">
 
-        <p class="text-xl mb-1 text-blue-600 dark:text-blue-400 font-semibold" data-i18n="company4">
-          HPT Vietnam
-        </p>
+          <h3 
+            class="text-3xl font-bold"
+            data-i18n="position4"
+          >
+            Internship Designer
+          </h3>
 
-        <p class="text-sm mb-1 text-gray-600 dark:text-gray-400 font-semibold" data-i18n="period4">
-          August 2020 – October 2020
-        </p>
+          <p 
+            class="text-xl text-blue-600 dark:text-blue-400 font-semibold mt-1"
+            data-i18n="company4"
+          >
+            HPT Vietnam
+          </p>
 
-        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+          <p 
+            class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-semibold"
+            data-i18n="period4"
+          >
+            August 2020 – October 2020
+          </p>
 
-          <li data-i18n="task4.1">
-            Design all brand media publications for the company
-          </li>
+          <ul class="list-disc pl-5 mt-4 space-y-2 text-gray-700 dark:text-gray-300">
 
-          <li data-i18n="task4.2">
-            Design images of minigames to promote internal events for employees
-          </li>
+            <li data-i18n="task4.1">
+              Design all brand media publications for the company
+            </li>
 
-          <li data-i18n="task4.3">
-            Collaborate with content teams to illustrate insightful and engaging banners
-          </li>
+            <li data-i18n="task4.2">
+              Design minigame images for internal events
+            </li>
 
-          <li data-i18n="task4.4">
-            Support managers to design presentations when pitching up with clients
-          </li>
+            <li data-i18n="task4.3">
+              Collaborate with content teams to create banners
+            </li>
 
-        </ul>
+            <li data-i18n="task4.4">
+              Support managers with client presentation design
+            </li>
+
+          </ul>
+        </div>
       </div>
 
     </div>
