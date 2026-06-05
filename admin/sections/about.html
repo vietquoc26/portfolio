@@ -1,0 +1,307 @@
+<!-- ABOUT SECTION EDITOR -->
+<section id="aboutEditor" class="space-y-8">
+
+  <h2 class="text-2xl font-bold">About Section Editor</h2>
+
+  <!-- Profile -->
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+    <h3 class="text-lg font-semibold mb-4">Profile Information</h3>
+
+    <div class="space-y-4">
+
+      <div>
+        <label class="block mb-1 font-medium">Profile Image URL</label>
+        <input
+          id="aboutImage"
+          type="text"
+          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+          placeholder="Avatar.jpg"
+        >
+      </div>
+
+      <div>
+        <label class="block mb-1 font-medium">Section Title</label>
+        <input
+          id="aboutTitle"
+          type="text"
+          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+          placeholder="About Me"
+        >
+      </div>
+
+      <div>
+        <label class="block mb-1 font-medium">Introduction</label>
+        <textarea
+          id="aboutIntro"
+          rows="4"
+          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+        ></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Skills List -->
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+    <h3 class="text-lg font-semibold mb-4">About Skills</h3>
+
+    <div id="aboutSkillsContainer" class="space-y-3">
+
+      <input
+        type="text"
+        class="aboutSkill w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+        placeholder="Skill 1"
+      >
+
+      <input
+        type="text"
+        class="aboutSkill w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+        placeholder="Skill 2"
+      >
+
+      <input
+        type="text"
+        class="aboutSkill w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+        placeholder="Skill 3"
+      >
+
+      <input
+        type="text"
+        class="aboutSkill w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+        placeholder="Skill 4"
+      >
+
+      <input
+        type="text"
+        class="aboutSkill w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+        placeholder="Skill 5"
+      >
+
+      <input
+        type="text"
+        class="aboutSkill w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+        placeholder="Skill 6"
+      >
+
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+    <h3 class="text-lg font-semibold mb-4">Highlight Numbers</h3>
+
+    <div class="grid md:grid-cols-3 gap-4">
+
+      <div>
+        <label class="block mb-1">TOEIC Score</label>
+        <input
+          id="aboutNumber1"
+          type="text"
+          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+          placeholder="860"
+        >
+      </div>
+
+      <div>
+        <label class="block mb-1">Years Experience</label>
+        <input
+          id="aboutNumber2"
+          type="text"
+          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+          placeholder="5+"
+        >
+      </div>
+
+      <div>
+        <label class="block mb-1">Completed Projects</label>
+        <input
+          id="aboutNumber3"
+          type="text"
+          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700"
+          placeholder="20+"
+        >
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Save Button -->
+  <div>
+    <button
+      id="saveAboutBtn"
+      class="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+    >
+      Save About Section
+    </button>
+  </div>
+
+</section>
+
+<script>
+// ========================================
+// ABOUT SECTION - LOAD DATA
+// ========================================
+
+async function loadAboutData() {
+  try {
+
+    // ========================================
+    // DEMO DATA
+    // Replace with Supabase later
+    // ========================================
+
+    const aboutData = {
+      image: "Avatar.jpg",
+
+      aboutTitle: "About Me",
+
+      intro:
+        "When diving into each project, I have dedicated all the following skills to supporting businesses in reaching all core objectives:",
+
+      aboutSkill1:
+        "Support creating all-aspect content strategies to approach target audiences",
+
+      aboutSkill2:
+        "Writing high-converting landing pages",
+
+      aboutSkill3:
+        "Conduct comprehensive email marketing campaigns",
+
+      aboutSkill4:
+        "Create content and design interactive images across social media channels",
+
+      aboutSkill5:
+        "Edit engaging videos to support building brand identities",
+
+      aboutSkill6:
+        "Produce videos and creative content for digital marketing campaigns",
+
+      number1: "860",
+      toeicScore: "TOEIC Score",
+
+      number2: "5+",
+      yearsExperience: "Years Experience",
+
+      number3: "20+",
+      completedProjects: "Completed Projects"
+    };
+
+    // ========================================
+    // MAIN CONTENT
+    // ========================================
+
+    document.getElementById("aboutImage").value =
+      aboutData.image || "";
+
+    document.getElementById("aboutTitle").value =
+      aboutData.aboutTitle || "";
+
+    document.getElementById("aboutIntro").value =
+      aboutData.intro || "";
+
+    // ========================================
+    // SKILLS
+    // ========================================
+
+    document.getElementById("aboutSkill1").value =
+      aboutData.aboutSkill1 || "";
+
+    document.getElementById("aboutSkill2").value =
+      aboutData.aboutSkill2 || "";
+
+    document.getElementById("aboutSkill3").value =
+      aboutData.aboutSkill3 || "";
+
+    document.getElementById("aboutSkill4").value =
+      aboutData.aboutSkill4 || "";
+
+    document.getElementById("aboutSkill5").value =
+      aboutData.aboutSkill5 || "";
+
+    document.getElementById("aboutSkill6").value =
+      aboutData.aboutSkill6 || "";
+
+    // ========================================
+    // HIGHLIGHT NUMBERS
+    // ========================================
+
+    document.getElementById("number1").value =
+      aboutData.number1 || "";
+
+    document.getElementById("toeicScore").value =
+      aboutData.toeicScore || "";
+
+    document.getElementById("number2").value =
+      aboutData.number2 || "";
+
+    document.getElementById("yearsExperience").value =
+      aboutData.yearsExperience || "";
+
+    document.getElementById("number3").value =
+      aboutData.number3 || "";
+
+    document.getElementById("completedProjects").value =
+      aboutData.completedProjects || "";
+
+    console.log("✅ About section loaded successfully");
+
+  } catch (error) {
+    console.error("❌ Error loading About section:", error);
+  }
+}
+
+// ========================================
+// INITIALIZE
+// ========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadAboutData();
+});
+
+// ========================================
+// ABOUT SECTION - SAVE DATA
+// ========================================
+
+async function saveAboutData() {
+  try {
+
+    const aboutData = {
+      image: document.getElementById("aboutImage")?.value || "",
+
+      aboutTitle: document.getElementById("aboutTitle")?.value || "",
+
+      intro: document.getElementById("aboutIntro")?.value || "",
+
+      aboutSkill1: document.getElementById("aboutSkill1")?.value || "",
+      aboutSkill2: document.getElementById("aboutSkill2")?.value || "",
+      aboutSkill3: document.getElementById("aboutSkill3")?.value || "",
+      aboutSkill4: document.getElementById("aboutSkill4")?.value || "",
+      aboutSkill5: document.getElementById("aboutSkill5")?.value || "",
+      aboutSkill6: document.getElementById("aboutSkill6")?.value || "",
+
+      number1: document.getElementById("number1")?.value || "",
+      toeicScore: document.getElementById("toeicScore")?.value || "",
+
+      number2: document.getElementById("number2")?.value || "",
+      yearsExperience: document.getElementById("yearsExperience")?.value || "",
+
+      number3: document.getElementById("number3")?.value || "",
+      completedProjects: document.getElementById("completedProjects")?.value || ""
+    };
+
+    // ========================================
+    // TEMPORARY
+    // Replace with Supabase later
+    // ========================================
+
+    console.log("Saving About Data:", aboutData);
+
+    alert("✅ About section saved successfully!");
+
+  } catch (error) {
+    console.error("❌ Error saving About section:", error);
+    alert("❌ Failed to save About section.");
+  }
+}
+
+</script>
