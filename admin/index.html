@@ -693,7 +693,6 @@ class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-
 </div>
 
 <div id="aboutTab" class="tab-content hidden">
-<h2 class="text-2xl font-bold">About section</h2>
 </div>
 
 <div id="seoTab" class="tab-content hidden">
@@ -748,9 +747,17 @@ window.location.href = "https://www.vietportfolio.work.gd/login/";
 });
 
 // Tab switching
-function switchTab(tabId) {
-document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
-document.getElementById(tabId).classList.remove("hidden");
+async function switchTab(tabId) {
+
+  document.querySelectorAll(".tab-content")
+    .forEach(el => el.classList.add("hidden"));
+
+  document.getElementById(tabId)
+    .classList.remove("hidden");
+
+  if (tabId === "aboutTab") {
+    await loadAboutPage();
+  }
 }
 
 switchTab("dashboardTab");
@@ -1566,7 +1573,23 @@ window.addEventListener('DOMContentLoaded', () => {
   loadResultsContent()
 })
 
+async function loadAboutPage() {
+  const container = document.getElementById("aboutTab");
 
+  if (container.dataset.loaded) return;
+
+  try {
+    const response = await fetch("about.html");
+    const html = await response.text();
+
+    container.innerHTML = html;
+    container.dataset.loaded = "true";
+
+    loadAboutContent(); // your Supabase loader
+  } catch (err) {
+    console.error("Failed to load about page:", err);
+  }
+}
 
 
 </script>
