@@ -689,4 +689,859 @@ class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-
 </div>
 </section>
 
+  <script>
+(async function() {
+const token = localStorage.getItem("token");
+if (!token) {
+window.location.href = "https://www.vietportfolio.work.gd/login/";
+return;
+}
+try {
+const res = await fetch("https://portfolio-backend-zmdt.onrender.com/api/auth/verify", {
+method: "GET",
+headers: { "Authorization": `Bearer ${token}` }
+});
+if (res.ok) {
+document.getElementById("adminWrapper").style.display = "block";
+} else {
+localStorage.removeItem("token");
+localStorage.removeItem("isLoggedIn");
+window.location.href = "https://www.vietportfolio.work.gd/login/";
+}
+} catch (err) {
+console.error("Auth check failed", err);
+localStorage.removeItem("token");
+window.location.href = "https://www.vietportfolio.work.gd/login/";
+}
+})();
+
+// Logout
+document.getElementById("logoutBtn").addEventListener("click", () => {
+localStorage.removeItem("isLoggedIn");
+localStorage.removeItem("token");
+window.location.href = "https://www.vietportfolio.work.gd/login/";
+});
+
+// Tab switching
+function switchTab(tabId) {
+document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+document.getElementById(tabId).classList.remove("hidden");
+}
+
+switchTab("dashboardTab");
+
+// Toggle submenu
+function toggleSubmenu(id) {
+document.getElementById(id).classList.toggle("hidden");
+}
+
+// 🌙 Dark Mode
+const toggleBtn = document.getElementById("darkModeToggle");
+const toggleIcon = document.getElementById("darkModeIcon");
+
+if (localStorage.getItem("theme") === "dark" || 
+(!localStorage.getItem("theme") && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+document.documentElement.classList.add("dark");
+toggleIcon.classList.replace("fa-moon", "fa-sun");
+toggleIcon.classList.replace("text-yellow-400", "text-orange-400");
+}
+
+toggleBtn.addEventListener("click", () => {
+document.documentElement.classList.toggle("dark");
+if (document.documentElement.classList.contains("dark")) {
+localStorage.setItem("theme", "dark");
+toggleIcon.classList.replace("fa-moon", "fa-sun");
+toggleIcon.classList.replace("text-yellow-400", "text-orange-400");
+} else {
+localStorage.setItem("theme", "light");
+toggleIcon.classList.replace("fa-sun", "fa-moon");
+toggleIcon.classList.replace("text-orange-400", "text-yellow-400");
+}
+});
+
+// ✅ Drag & Drop for Contact Form
+const draggables = document.querySelectorAll("#contactForm .draggable");
+const container = document.getElementById("contactForm");
+
+draggables.forEach(draggable => {
+draggable.addEventListener("dragstart", () => {
+draggable.classList.add("dragging");
+});
+
+draggable.addEventListener("dragend", () => {
+draggable.classList.remove("dragging");
+});
+});
+
+container.addEventListener("dragover", e => {
+e.preventDefault();
+const afterElement = getDragAfterElement(container, e.clientY);
+const dragging = document.querySelector(".dragging");
+if (afterElement == null) {
+container.appendChild(dragging);
+} else {
+container.insertBefore(dragging, afterElement);
+}
+});
+
+function getDragAfterElement(container, y) {
+const draggableElements = [...container.querySelectorAll(".draggable:not(.dragging)")];
+return draggableElements.reduce((closest, child) => {
+const box = child.getBoundingClientRect();
+const offset = y - box.top - box.height / 2;
+if (offset < 0 && offset > closest.offset) {
+return { offset: offset, element: child };
+} else {
+return closest;
+}
+}, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+</script>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+  // --- Supabase Setup ---
+  const supabaseUrl = 'https://hcuomhpujakrffuzqyyf.supabase.co'
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdW9taHB1amFrcmZmdXpxeXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MTUxNjYsImV4cCI6MjA5NDE5MTE2Nn0.O8-uti4KtpmmTLtBxVfCCT7Vbq4QWUeqUjTmqnugWJs'
+  const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+  const editBtn = document.querySelector('.edit-btn')
+  let currentLang = 'en'
+
+  // --- Language Toggle ---
+  document.getElementById('lang-en')?.addEventListener('click', () => { 
+    currentLang = 'en'
+    loadHeroContent()
+  })
+  document.getElementById('lang-vi')?.addEventListener('click', () => { 
+    currentLang = 'vi'
+    loadHeroContent()
+  })
+
+// --- Toggle Edit Mode for HERO ---
+const heroEditBtn = document.getElementById('editHero')
+const saveHeroBtn = document.getElementById('saveHero')
+const uploadLabel = document.getElementById('uploadLabel') // 👈 added
+
+heroEditBtn?.addEventListener('click', () => {
+  const heroSection = document.getElementById('hero')
+  if (!heroSection) return
+
+  const editableElements = heroSection.querySelectorAll('.editable')
+  const isEditing = editableElements[0]?.contentEditable === 'true'
+
+  editableElements.forEach(el => {
+    el.contentEditable = !isEditing
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
+  })
+
+  if (isEditing) {
+    // leaving edit mode
+    saveHeroBtn.classList.add('hidden')
+    heroEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
+
+    // hide image upload overlay
+    uploadLabel?.classList.add('hidden')
+  } else {
+    // entering edit mode
+    saveHeroBtn.classList.remove('hidden')
+    heroEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+
+    // show image upload overlay
+    uploadLabel?.classList.remove('hidden')
+  }
+})
+
+// --- Save button saves ---
+saveHeroBtn?.addEventListener('click', async () => {
+  await saveHeroContent()
+  saveHeroBtn.classList.add('hidden')
+  heroEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Hero'
+
+  // turn off edit mode
+  const heroSection = document.getElementById('hero')
+  const editableElements = heroSection.querySelectorAll('.editable')
+  editableElements.forEach(el => (el.contentEditable = 'false'))
+
+  // also hide image upload after saving
+  uploadLabel?.classList.add('hidden')
+})
+
+
+  // --- Load Hero Content ---
+  async function loadHeroContent() {
+    const heroSection = document.getElementById('hero')
+    if (!heroSection) return
+
+    const editableElements = heroSection.querySelectorAll('.editable')
+    const { data, error } = await supabase.from('hero_content').select('*')
+
+    if (error) {
+      console.error('❌ Error loading hero content:', error.message)
+      return
+    }
+
+    editableElements.forEach(el => {
+      const key = el.getAttribute('data-i18n')
+      const row = data.find(d => d.key === key)
+      if (row) {
+        el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+      }
+    })
+
+    // Hero Image (row id = 1)
+    const { data: heroRow, error: heroError } = await supabase
+      .from('hero_content')
+      .select('image_url')
+      .eq('id', 1)
+      .single()
+
+    if (!heroError && heroRow?.image_url) {
+      document.getElementById('heroImage').src = heroRow.image_url
+    }
+  }
+
+  // --- Save Hero Content ---
+  async function saveHeroContent() {
+    const heroSection = document.getElementById('hero')
+    if (!heroSection) return
+
+    const editableElements = heroSection.querySelectorAll('.editable')
+
+    for (const el of editableElements) {
+      const key = el.getAttribute('data-i18n')
+      const text = el.innerText.trim()
+
+      const updates =
+        currentLang === 'en'
+          ? { key, en_text: text }
+          : { key, vi_text: text }
+
+      // ✅ upsert by key
+      const { error } = await supabase
+        .from('hero_content')
+        .upsert(updates, { onConflict: 'key' })
+
+      if (error) {
+        console.error(`❌ Failed to save hero:${key}`, error.message)
+      } else {
+        console.log(`✅ Saved hero:${key}`)
+      }
+    }
+
+    alert('Hero content saved! ✅')
+  }
+
+  // --- Image Preview + Upload ---
+window.previewImage = async function (input) {
+  if (input.files && input.files[0]) {
+    const file = input.files[0]
+
+    // Show preview immediately
+    const reader = new FileReader()
+    reader.onload = e => {
+      document.getElementById('heroImage').src = e.target.result
+    }
+    reader.readAsDataURL(file)
+
+    // Always create a unique filename (prevents overwrite errors)
+    const fileName = `hero-${Date.now()}-${file.name}`
+
+    // Upload to Supabase storage
+    const { error: uploadError } = await supabase
+      .storage
+      .from('hero')       // 👈 make sure your bucket is named "hero"
+      .upload(fileName, file, { cacheControl: '3600' })
+
+    if (uploadError) {
+      console.error('❌ Upload failed:', uploadError.message)
+      return
+    }
+
+    // Get public URL for the uploaded file
+    const { data } = supabase.storage.from('hero').getPublicUrl(fileName)
+    const publicUrl = data.publicUrl
+
+    // Update DB (⚠️ don’t hardcode id=1 if it’s not correct)
+    const { error: dbError } = await supabase
+      .from('hero_content')
+      .update({ image_url: publicUrl })
+      .eq('key', 'heroImage')   // 👈 safer: use a "key" column (like greeting/intro)
+      // .eq('id', 1)            // ❌ only use if you are sure id=1 is correct
+
+    if (dbError) {
+      console.error('❌ Failed to update DB:', dbError.message)
+    } else {
+      console.log('✅ Image uploaded & DB updated:', publicUrl)
+    }
+  }
+}
+
+
+  /* ================= SKILLS SECTION ================= */
+
+// --- Language Toggle ---
+  document.getElementById('lang-en')?.addEventListener('click', () => { 
+    currentLang = 'en'
+    loadSkillsContent()
+  })
+  document.getElementById('lang-vi')?.addEventListener('click', () => { 
+    currentLang = 'vi'
+    loadSkillsContent()
+  })
+
+// --- Toggle Edit Mode for SKILLS ---
+const skillsEditBtn = document.querySelector('#skills .edit-btn')
+const saveSkillsBtn = document.getElementById('saveSkillsBtn')
+
+skillsEditBtn?.addEventListener('click', () => {
+  const skillsSection = document.getElementById('skills')
+  if (!skillsSection) return
+
+  const editableElements = skillsSection.querySelectorAll('.editable')
+  const isEditing = editableElements[0]?.contentEditable === 'true'
+
+  editableElements.forEach(el => {
+    el.contentEditable = !isEditing
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
+  })
+
+  if (isEditing) {
+    // leaving edit mode
+    saveSkillsBtn.classList.add('hidden')
+    skillsEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Skills'
+  } else {
+    // entering edit mode
+    saveSkillsBtn.classList.remove('hidden')
+    skillsEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+  }
+})
+
+// --- Save button saves ---
+saveSkillsBtn?.addEventListener('click', async () => {
+  await saveSkillsContent()
+  saveSkillsBtn.classList.add('hidden')
+  skillsEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Skills'
+
+  // turn off edit mode
+  const skillsSection = document.getElementById('skills')
+  const editableElements = skillsSection.querySelectorAll('.editable')
+  editableElements.forEach(el => (el.contentEditable = 'false'))
+})
+
+
+// --- Load Skills Content ---
+async function loadSkillsContent() {
+  const skillsSection = document.getElementById('skills')
+  if (!skillsSection) return
+
+  const editableElements = skillsSection.querySelectorAll('.editable')
+  const { data, error } = await supabase.from('skill_content').select('*')
+
+  if (error) {
+    console.error('❌ Error loading skills content:', error.message)
+    return
+  }
+
+  editableElements.forEach(el => {
+    const key = el.getAttribute('data-i18n')
+    const row = data.find(d => d.key === key)
+    if (row) {
+      el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+    }
+  })
+}
+
+// --- Save Skills Content ---
+async function saveSkillsContent() {
+  const skillsSection = document.getElementById('skills')
+  if (!skillsSection) return
+
+  const editableElements = skillsSection.querySelectorAll('.editable')
+
+  for (const el of editableElements) {
+    const key = el.getAttribute('data-i18n')
+    const text = el.innerText.trim()
+
+    const updates =
+      currentLang === 'en'
+        ? { key, en_text: text }
+        : { key, vi_text: text }
+
+    const { error } = await supabase
+      .from('skill_content')
+      .upsert(updates, { onConflict: 'key' })
+
+    if (error) {
+      console.error(`❌ Failed to save skill:${key}`, error.message)
+    } else {
+      console.log(`✅ Saved skill:${key}`)
+    }
+  }
+
+  alert('Skills content saved! ✅')
+}
+
+
+/* ================= ABOUT SECTION ================= */
+
+// --- Language Toggle ---
+document.getElementById('lang-en')?.addEventListener('click', () => {
+  currentLang = 'en'
+  loadAboutContent()
+})
+
+document.getElementById('lang-vi')?.addEventListener('click', () => {
+  currentLang = 'vi'
+  loadAboutContent()
+})
+
+
+// =============================
+// ABOUT BUTTONS
+// =============================
+
+const aboutEditBtn = document.querySelector('#about .edit-btn')
+const saveAboutBtn = document.getElementById('saveAboutBtn')
+
+
+// =============================
+// TOGGLE EDIT MODE
+// =============================
+
+aboutEditBtn?.addEventListener('click', async () => {
+
+  const aboutSection = document.getElementById('about')
+
+  if (!aboutSection) return
+
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
+
+  const isEditing =
+    editableElements[0]?.contentEditable === 'true'
+
+
+  editableElements.forEach(el => {
+
+    el.contentEditable =
+      isEditing ? 'false' : 'true'
+
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
+    el.classList.toggle('rounded', !isEditing)
+
+  })
+
+
+  if (isEditing) {
+
+    saveAboutBtn.classList.add('hidden')
+
+    aboutEditBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit About'
+
+    await loadAboutContent()
+
+  } else {
+
+    saveAboutBtn.classList.remove('hidden')
+
+    aboutEditBtn.innerHTML =
+      '<i class="fas fa-times mr-1"></i> Cancel'
+  }
+})
+
+
+// =============================
+// SAVE BUTTON
+// =============================
+
+saveAboutBtn?.addEventListener('click', async () => {
+
+  await saveAboutContent()
+
+  saveAboutBtn.classList.add('hidden')
+
+  aboutEditBtn.innerHTML =
+    '<i class="fas fa-edit mr-1"></i> Edit About'
+
+
+  const aboutSection =
+    document.getElementById('about')
+
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
+
+
+  editableElements.forEach(el => {
+
+    el.contentEditable = 'false'
+
+    el.classList.remove(
+      'border',
+      'border-dashed',
+      'p-1',
+      'rounded'
+    )
+  })
+
+})
+
+
+// =============================
+// LOAD CONTENT
+// =============================
+
+async function loadAboutContent() {
+
+  const aboutSection =
+    document.getElementById('about')
+
+  if (!aboutSection) return
+
+
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
+
+
+  const { data, error } =
+    await supabase
+      .from('about_content')
+      .select('*')
+
+
+  if (error) {
+
+    console.error(
+      '❌ Error loading about content:',
+      error.message
+    )
+
+    return
+  }
+
+
+  editableElements.forEach(el => {
+
+    const key =
+      el.getAttribute('data-i18n')
+
+    const row =
+      data.find(d => d.key === key)
+
+    if (row) {
+
+      el.innerText =
+        currentLang === 'en'
+          ? row.en_text
+          : row.vi_text
+    }
+  })
+}
+
+
+// =============================
+// SAVE CONTENT
+// =============================
+
+async function saveAboutContent() {
+
+  const aboutSection =
+    document.getElementById('about')
+
+  if (!aboutSection) return
+
+
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
+
+
+  for (const el of editableElements) {
+
+    const key =
+      el.getAttribute('data-i18n')
+
+    const text =
+      el.innerText.trim()
+
+
+    const updates =
+      currentLang === 'en'
+        ? {
+            key,
+            en_text: text
+          }
+        : {
+            key,
+            vi_text: text
+          }
+
+
+    const { error } =
+      await supabase
+        .from('about_content')
+        .upsert(updates, {
+          onConflict: 'key'
+        })
+
+
+    if (error) {
+
+      console.error(
+        `❌ Failed to save about: ${key}`,
+        error.message
+      )
+
+    } else {
+
+      console.log(
+        `✅ Saved about: ${key}`
+      )
+    }
+  }
+
+  alert('About content saved! ✅')
+}
+
+
+// =============================
+// INITIAL LOAD
+// =============================
+
+loadAboutContent()
+
+/* ================= PROJECT SECTION ================= */
+// --- Language Toggle for PROJECTS ---
+document.getElementById('lang-en')?.addEventListener('click', () => { 
+  currentLang = 'en'
+  loadProjectsContent()
+})
+document.getElementById('lang-vi')?.addEventListener('click', () => { 
+  currentLang = 'vi'
+  loadProjectsContent()
+})
+
+// --- Toggle Edit Mode for PROJECTS ---
+const projectEditBtn = document.querySelector('#projects .edit-btn')
+const saveProjectBtn = document.getElementById('saveProjects')
+
+projectEditBtn?.addEventListener('click', async () => {
+  const projectSection = document.getElementById('projects')
+  if (!projectSection) return
+
+  const editableElements = projectSection.querySelectorAll('.editable')
+  const isEditing = editableElements[0]?.contentEditable === 'true'
+
+  editableElements.forEach(el => {
+    el.contentEditable = !isEditing
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
+  })
+
+  if (isEditing) {
+    // Cancel clicked → exit edit mode
+    saveProjectBtn.classList.add('hidden')
+    projectEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Projects'
+    await loadProjectsContent() // revert unsaved changes
+  } else {
+    // Entering edit mode
+    saveProjectBtn.classList.remove('hidden')
+    projectEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+  }
+})
+
+// --- Save button saves ---
+saveProjectBtn?.addEventListener('click', async () => {
+  await saveProjectsContent()
+  saveProjectBtn.classList.add('hidden')
+  projectEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Projects'
+
+  // turn off edit mode
+  const projectSection = document.getElementById('projects')
+  const editableElements = projectSection.querySelectorAll('.editable')
+  editableElements.forEach(el => (el.contentEditable = 'false'))
+})
+
+// --- Load Projects Content ---
+async function loadProjectsContent() {
+  const projectSection = document.getElementById('projects')
+  if (!projectSection) return
+
+  const editableElements = projectSection.querySelectorAll('.editable')
+  const { data, error } = await supabase.from('projects_content').select('*')
+
+  if (error) {
+    console.error('❌ Error loading projects content:', error.message)
+    return
+  }
+
+  editableElements.forEach(el => {
+    const key = el.getAttribute('data-i18n')
+    const row = data.find(d => d.key === key)
+    if (row) {
+      el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+      el.dataset.rowId = row.id // store row id for saving
+    }
+  })
+}
+
+// --- Save Projects Content ---
+async function saveProjectsContent() {
+  const projectSection = document.getElementById('projects')
+  if (!projectSection) return
+
+  const editableElements = projectSection.querySelectorAll('.editable')
+
+  for (const el of editableElements) {
+    const key = el.getAttribute('data-i18n')
+    const text = el.innerText.trim()
+    const rowId = el.dataset.rowId // get stored ID
+
+    const updates =
+      currentLang === 'en'
+        ? { id: rowId, key, en_text: text }
+        : { id: rowId, key, vi_text: text }
+
+    const { error } = await supabase
+      .from('projects_content')
+      .upsert(updates, { onConflict: 'id' }) // use ID for conflict check
+
+    if (error) {
+      console.error(`❌ Failed to save project:${key}`, error.message)
+    } else {
+      console.log(`✅ Saved project:${key}`)
+    }
+  }
+
+  alert('Projects content saved! ✅')
+}
+
+/* ================= RESULTS SECTION ================= */
+
+// --- Language Toggle for RESULTS ---
+document.getElementById('lang-en')?.addEventListener('click', () => { 
+  currentLang = 'en'
+  loadResultsContent()
+})
+document.getElementById('lang-vi')?.addEventListener('click', () => { 
+  currentLang = 'vi'
+  loadResultsContent()
+})
+
+// --- Toggle Edit Mode for RESULTS ---
+const resultEditBtn = document.querySelector('#results .edit-btn')
+const saveResultBtn = document.querySelector('#results .save-btn')
+
+resultEditBtn?.addEventListener('click', async () => {
+  const resultSection = document.getElementById('results')
+  if (!resultSection) return
+
+  const editableElements = resultSection.querySelectorAll('.editable')
+  const isEditing = editableElements[0]?.contentEditable === 'true'
+
+  editableElements.forEach(el => {
+    el.contentEditable = !isEditing
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
+  })
+
+  if (isEditing) {
+    // Cancel clicked → exit edit mode
+    saveResultBtn.classList.add('hidden')
+    resultEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Results'
+    await loadResultsContent() // revert unsaved changes
+  } else {
+    // Entering edit mode
+    saveResultBtn.classList.remove('hidden')
+    resultEditBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Cancel'
+  }
+})
+
+// --- Save button saves ---
+saveResultBtn?.addEventListener('click', async () => {
+  await saveResultsContent()
+  saveResultBtn.classList.add('hidden')
+  resultEditBtn.innerHTML = '<i class="fas fa-edit mr-1"></i> Edit Results'
+
+  // turn off edit mode
+  const resultSection = document.getElementById('results')
+  const editableElements = resultSection.querySelectorAll('.editable')
+  editableElements.forEach(el => (el.contentEditable = 'false'))
+})
+
+// --- Load Results Content ---
+async function loadResultsContent() {
+  const resultSection = document.getElementById('results')
+  if (!resultSection) return
+
+  const editableElements = resultSection.querySelectorAll('.editable')
+  const { data, error } = await supabase.from('results_content').select('*')
+
+  if (error) {
+    console.error('❌ Error loading results content:', error.message)
+    return
+  }
+
+  editableElements.forEach(el => {
+    const key = el.getAttribute('data-i18n')
+    const row = data.find(d => d.key === key)
+    if (row) {
+      el.innerText = currentLang === 'en' ? row.en_text : row.vi_text
+      el.dataset.rowId = row.id // store row id for saving
+    }
+  })
+}
+
+// --- Save Results Content ---
+async function saveResultsContent() {
+  const resultSection = document.getElementById('results')
+  if (!resultSection) return
+
+  const editableElements = resultSection.querySelectorAll('.editable')
+
+  for (const el of editableElements) {
+    const key = el.getAttribute('data-i18n')
+    const text = el.innerText.trim()
+    const rowId = el.dataset.rowId // get stored ID
+
+    const updates =
+      currentLang === 'en'
+        ? { id: rowId, key, en_text: text }
+        : { id: rowId, key, vi_text: text }
+
+    const { error } = await supabase
+      .from('results_content')
+      .upsert(updates, { onConflict: 'id' })
+
+    if (error) {
+      console.error(`❌ Failed to save result:${key}`, error.message)
+    } else {
+      console.log(`✅ Saved result:${key}`)
+    }
+  }
+
+  alert('Results content saved! ✅')
+}
+
+/* ================= STARTUP ================= */
+window.addEventListener('DOMContentLoaded', () => {
+  loadHeroContent()
+  loadSkillsContent()
+  loadAboutContent()
+  loadProjectsContent()
+  loadResultsContent()
+})
+
+
+</script>
+
 </div>
