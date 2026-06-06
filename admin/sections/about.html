@@ -1,265 +1,381 @@
 <h2 class="text-2xl font-bold mb-6">About Editor</h2>
 
-<!-- ABOUT -->
-<section id="about" class="py-20 px-6">
-  <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
+<!-- ABOUT PAGE EDITOR -->
+<section id="aboutPageEditor"
+  class="relative group py-12 bg-gray-50 dark:bg-gray-800 rounded-xl shadow">
 
-    <!-- Profile Image -->
-    <div class="flex justify-center">
-      <div class="w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden">
-        <img
-          src="Avatar.jpg"
-          alt="Ho Nguyen Quoc Viet"
-          class="w-full h-full object-cover object-top"
-        />
+  <!-- ACTION BUTTONS -->
+  <div class="absolute top-4 right-4 flex gap-2 z-50">
+
+    <button
+      class="edit-btn bg-blue-600 text-white px-4 py-2 rounded">
+      <i class="fas fa-edit mr-1"></i>
+      Edit
+    </button>
+
+    <button
+      id="saveAboutBtn"
+      class="bg-green-600 text-white px-4 py-2 rounded">
+      <i class="fas fa-save mr-1"></i>
+      Save
+    </button>
+
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- ========================= -->
+    <!-- ABOUT -->
+    <!-- ========================= -->
+
+    <section class="py-12">
+
+      <div class="grid md:grid-cols-[2fr_3fr] gap-12 items-center">
+
+        <!-- IMAGE -->
+
+        <div class="relative">
+
+          <div
+            class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-72 h-4 bg-yellow-400 rounded-full rotate-[-5deg] z-20 md:left-24 md:-translate-x-0 md:w-80 md:h-5">
+          </div>
+
+          <div class="relative w-80 h-80 mx-auto md:mx-0">
+
+            <img
+              id="aboutImage"
+              src="Avatar.jpg"
+              alt="Profile"
+              class="rounded-full shadow-xl w-80 h-80 object-cover relative z-10">
+
+            <label
+              class="absolute bottom-3 right-3 bg-black/70 text-white px-3 py-1 rounded cursor-pointer text-sm z-20">
+
+              Change Image
+
+              <input
+                type="file"
+                id="aboutImageUpload"
+                class="hidden"
+                accept="image/*">
+
+            </label>
+
+          </div>
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <div>
+
+          <h2
+            class="editable text-4xl font-extrabold mb-6"
+            contenteditable="true">
+            About Me
+          </h2>
+
+          <p
+            class="editable mb-6 leading-relaxed"
+            contenteditable="true">
+            I am Ho Nguyen Quoc Viet, a Digital Marketing Specialist with
+            over 5 years of experience in SEO, Content Marketing, Paid Media,
+            Account Management and Video Editing.
+          </p>
+
+          <ul class="space-y-3 list-disc list-inside">
+
+            <li class="editable" contenteditable="true">
+              SEO Strategy & Technical SEO
+            </li>
+
+            <li class="editable" contenteditable="true">
+              Content Marketing & Copywriting
+            </li>
+
+            <li class="editable" contenteditable="true">
+              Google Ads & Meta Ads Campaigns
+            </li>
+
+            <li class="editable" contenteditable="true">
+              Website Management & CRO
+            </li>
+
+            <li class="editable" contenteditable="true">
+              Account Management
+            </li>
+
+            <li class="editable" contenteditable="true">
+              Video Editing & Creative Production
+            </li>
+
+          </ul>
+
+          <button
+            class="editable mt-8 px-6 py-3 bg-blue-600 text-white rounded-full"
+            contenteditable="true">
+            Download CV
+          </button>
+
+        </div>
+
       </div>
-    </div>
 
-    <!-- About Content -->
-    <div class="space-y-6">
-      <h2 class="text-4xl md:text-5xl font-bold">
-        About Me
+    </section>
+
+    <!-- ========================= -->
+    <!-- MILESTONES -->
+    <!-- ========================= -->
+
+    <section class="py-12">
+
+      <h2
+        class="editable text-4xl font-bold text-center mb-10"
+        contenteditable="true">
+        Key Milestones
       </h2>
 
-      <p class="text-lg leading-relaxed">
-        I am Ho Nguyen Quoc Viet, a Digital Marketing Specialist with over
-        5 years of experience in SEO, Content Marketing, Paid Media,
-        Account Management, and Video Editing.
-      </p>
+      <div class="grid md:grid-cols-3 gap-6">
 
-      <p class="leading-relaxed">
-        My passion is helping businesses achieve sustainable growth through
-        strategic marketing initiatives that combine creativity, data,
-        and business objectives.
-      </p>
+        <div class="bg-white dark:bg-gray-700 p-8 rounded-xl text-center">
 
-      <ul class="list-disc list-inside space-y-2">
-        <li>SEO Strategy & Technical SEO</li>
-        <li>Content Marketing & Copywriting</li>
-        <li>Google Ads & Meta Ads</li>
-        <li>Website Management</li>
-        <li>Client & Account Management</li>
-        <li>Video Editing & Creative Production</li>
-      </ul>
-    </div>
+          <h3
+            class="editable text-5xl font-bold text-yellow-500"
+            contenteditable="true">
+            860
+          </h3>
+
+          <p
+            class="editable mt-3"
+            contenteditable="true">
+            TOEIC Score
+          </p>
+
+        </div>
+
+        <div class="bg-white dark:bg-gray-700 p-8 rounded-xl text-center">
+
+          <h3
+            class="editable text-5xl font-bold text-yellow-500"
+            contenteditable="true">
+            5+
+          </h3>
+
+          <p
+            class="editable mt-3"
+            contenteditable="true">
+            Years Experience
+          </p>
+
+        </div>
+
+        <div class="bg-white dark:bg-gray-700 p-8 rounded-xl text-center">
+
+          <h3
+            class="editable text-5xl font-bold text-yellow-500"
+            contenteditable="true">
+            20+
+          </h3>
+
+          <p
+            class="editable mt-3"
+            contenteditable="true">
+            Completed Projects
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- EXPERIENCE -->
+    <!-- ========================= -->
+
+    <section class="py-12">
+
+      <h2
+        class="editable text-4xl font-bold text-center mb-12"
+        contenteditable="true">
+        Professional Experience
+      </h2>
+
+      <div class="space-y-6">
+
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-xl">
+
+          <h3
+            class="editable text-2xl font-semibold"
+            contenteditable="true">
+            Account Manager
+          </h3>
+
+          <p
+            class="editable mt-3"
+            contenteditable="true">
+            Managed clients, coordinated projects, and ensured successful
+            campaign execution.
+          </p>
+
+        </div>
+
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-xl">
+
+          <h3
+            class="editable text-2xl font-semibold"
+            contenteditable="true">
+            SEO Specialist
+          </h3>
+
+          <p
+            class="editable mt-3"
+            contenteditable="true">
+            Conducted keyword research, SEO audits, content optimization,
+            and performance reporting.
+          </p>
+
+        </div>
+
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-xl">
+
+          <h3
+            class="editable text-2xl font-semibold"
+            contenteditable="true">
+            Content Writer
+          </h3>
+
+          <p
+            class="editable mt-3"
+            contenteditable="true">
+            Produced blogs, landing pages, website content,
+            and marketing materials.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- PROJECTS -->
+    <!-- ========================= -->
+
+    <section class="py-12">
+
+      <h2
+        class="editable text-4xl font-bold text-center mb-12"
+        contenteditable="true">
+        Featured Projects
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="bg-white dark:bg-gray-700 rounded-xl p-6">
+
+          <h3
+            class="editable text-xl font-bold mb-3"
+            contenteditable="true">
+            SEO Projects
+          </h3>
+
+          <p
+            class="editable"
+            contenteditable="true">
+            SEO campaigns focused on organic growth.
+          </p>
+
+        </div>
+
+        <div class="bg-white dark:bg-gray-700 rounded-xl p-6">
+
+          <h3
+            class="editable text-xl font-bold mb-3"
+            contenteditable="true">
+            Content Writing
+          </h3>
+
+          <p
+            class="editable"
+            contenteditable="true">
+            Blogs, website content, landing pages and social media.
+          </p>
+
+        </div>
+
+        <div class="bg-white dark:bg-gray-700 rounded-xl p-6">
+
+          <h3
+            class="editable text-xl font-bold mb-3"
+            contenteditable="true">
+            Video Editing
+          </h3>
+
+          <p
+            class="editable"
+            contenteditable="true">
+            Promotional videos and social media content.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- TESTIMONIALS -->
+    <!-- ========================= -->
+
+    <section class="py-12">
+
+      <h2
+        class="editable text-4xl font-bold text-center mb-12"
+        contenteditable="true">
+        Testimonials
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-xl">
+
+          <p
+            class="editable italic"
+            contenteditable="true">
+            "Viet consistently delivered high-quality work and helped
+            our campaigns achieve measurable growth."
+          </p>
+
+          <h4
+            class="editable mt-4 font-semibold"
+            contenteditable="true">
+            Marketing Manager
+          </h4>
+
+        </div>
+
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-xl">
+
+          <p
+            class="editable italic"
+            contenteditable="true">
+            "Excellent communication, strong SEO expertise and
+            proactive project management."
+          </p>
+
+          <h4
+            class="editable mt-4 font-semibold"
+            contenteditable="true">
+            Client Partner
+          </h4>
+
+        </div>
+
+      </div>
+
+    </section>
 
   </div>
-</section>
-
-<!-- MILESTONES -->
-<section id="milestones" class="py-16 px-6">
-  <div class="max-w-6xl mx-auto">
-
-    <h2 class="text-4xl font-bold text-center mb-12">
-      Key Milestones
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-
-      <div>
-        <h3 class="text-5xl font-bold">
-          860
-        </h3>
-
-        <p class="mt-3 uppercase tracking-wide">
-          TOEIC Score
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-5xl font-bold">
-          5+
-        </h3>
-
-        <p class="mt-3 uppercase tracking-wide">
-          Years Experience
-        </p>
-      </div>
-
-      <div>
-        <h3 class="text-5xl font-bold">
-          20+
-        </h3>
-
-        <p class="mt-3 uppercase tracking-wide">
-          Completed Projects
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience" class="py-20 px-6">
-
-  <div class="max-w-5xl mx-auto">
-
-    <h2 class="text-4xl font-bold text-center mb-12">
-      Professional Experience
-    </h2>
-
-    <div class="space-y-10">
-
-      <div class="border rounded-xl p-6">
-        <h3 class="text-2xl font-semibold">
-          Account Manager
-        </h3>
-
-        <p class="mt-3">
-          Managed client relationships, coordinated project execution,
-          prepared reports, and ensured campaign success across multiple
-          industries.
-        </p>
-      </div>
-
-      <div class="border rounded-xl p-6">
-        <h3 class="text-2xl font-semibold">
-          SEO Specialist
-        </h3>
-
-        <p class="mt-3">
-          Conducted keyword research, technical audits, content optimization,
-          backlink strategies, and SEO performance reporting.
-        </p>
-      </div>
-
-      <div class="border rounded-xl p-6">
-        <h3 class="text-2xl font-semibold">
-          Content Writer & Editor
-        </h3>
-
-        <p class="mt-3">
-          Produced website content, blog articles, landing pages,
-          social media content, and marketing materials.
-        </p>
-      </div>
-
-      <div class="border rounded-xl p-6">
-        <h3 class="text-2xl font-semibold">
-          Video Editor
-        </h3>
-
-        <p class="mt-3">
-          Edited promotional videos, event recaps, product showcases,
-          and social media video campaigns.
-        </p>
-      </div>
-
-    </div>
-
-  </div>
 
 </section>
-
-<!-- PROJECTS -->
-<section id="projects" class="py-20 px-6">
-
-  <div class="max-w-7xl mx-auto">
-
-    <h2 class="text-4xl font-bold text-center mb-12">
-      Featured Projects
-    </h2>
-
-    <div class="grid md:grid-cols-3 gap-8">
-
-      <div class="border rounded-xl p-6">
-        <h3 class="text-2xl font-semibold mb-4">
-          SEO Projects
-        </h3>
-
-        <p>
-          SEO campaigns focused on increasing organic traffic,
-          improving keyword rankings, and generating qualified leads.
-        </p>
-
-        <a
-          href="/project/SEO-projects/"
-          class="inline-block mt-5 font-semibold"
-        >
-          View Project →
-        </a>
-      </div>
-
-      <div class="border rounded-xl p-6">
-        <h3 class="text-2xl font-semibold mb-4">
-          Content Writing
-        </h3>
-
-        <p>
-          Website content, landing pages, blog articles,
-          and social media content for various industries.
-        </p>
-
-        <a
-          href="/project/content-projects/"
-          class="inline-block mt-5 font-semibold"
-        >
-          View Project →
-        </a>
-      </div>
-
-      <div class="border rounded-xl p-6">
-        <h3 class="text-2xl font-semibold mb-4">
-          Video Editing
-        </h3>
-
-        <p>
-          Promotional videos, event recaps,
-          social media videos, and product showcases.
-        </p>
-
-        <a
-          href="/project/video-editing/"
-          class="inline-block mt-5 font-semibold"
-        >
-          View Project →
-        </a>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials" class="py-20 px-6">
-
-  <div class="max-w-5xl mx-auto">
-
-    <h2 class="text-4xl font-bold text-center mb-12">
-      Testimonials
-    </h2>
-
-    <div class="grid md:grid-cols-2 gap-8">
-
-      <div class="border rounded-xl p-6">
-        <p class="italic">
-          "Viet consistently delivered high-quality work and helped our
-          campaigns achieve measurable growth."
-        </p>
-
-        <h4 class="font-semibold mt-4">
-          Marketing Manager
-        </h4>
-      </div>
-
-      <div class="border rounded-xl p-6">
-        <p class="italic">
-          "Excellent communication, strong SEO expertise, and a proactive
-          approach to managing projects."
-        </p>
-
-        <h4 class="font-semibold mt-4">
-          Client Partner
-        </h4>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-```
