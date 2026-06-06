@@ -28,100 +28,124 @@
     <!-- ABOUT -->
     <!-- ========================= -->
 
-    <section class="py-12">
 
-      <div class="grid md:grid-cols-[2fr_3fr] gap-12 items-center">
+<section
+  id="about"
+  class="relative group min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800"
+>
 
-        <!-- IMAGE -->
+  <!-- Edit Button -->
 
-        <div class="relative">
+<button
+ class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center"> <i class="fas fa-edit mr-1"></i>
+Edit About </button>
 
-          <div
-            class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-72 h-4 bg-yellow-400 rounded-full rotate-[-5deg] z-20 md:left-24 md:-translate-x-0 md:w-80 md:h-5">
-          </div>
+  <!-- Save Button -->
 
-          <div class="relative w-80 h-80 mx-auto md:mx-0">
+<button
+ id="saveAboutBtn"
+ class="absolute top-4 right-36 bg-green-600 text-white px-3 py-1 rounded hidden"> <i class="fas fa-save mr-1"></i>
+Save </button>
 
-            <img
-              id="aboutImage"
-              src="Avatar.jpg"
-              alt="Profile"
-              class="rounded-full shadow-xl w-80 h-80 object-cover relative z-10">
+  <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
-            <label
-              class="absolute bottom-3 right-3 bg-black/70 text-white px-3 py-1 rounded cursor-pointer text-sm z-20">
+```
+<!-- Image Column -->
+<div class="relative flex justify-center items-center">
 
-              Change Image
+  <!-- Circular Image -->
+  <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+    <img
+      src="Avatar.jpg"
+      alt="Viet"
+      class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+  </div>
 
-              <input
-                type="file"
-                id="aboutImageUpload"
-                class="hidden"
-                accept="image/*">
+  <!-- Floating Icons -->
+  <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
+    <i class="fas fa-lightbulb"></i>
+  </div>
 
-            </label>
+  <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
+    <i class="fas fa-code"></i>
+  </div>
 
-          </div>
+  <div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
+    <i class="fas fa-rocket"></i>
+  </div>
 
-        </div>
+</div>
 
-        <!-- CONTENT -->
+<!-- Text Column -->
+<div class="space-y-6 text-left animate-fade-in-left">
 
-        <div>
+  <h1
+    class="editable text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white"
+    contenteditable="true">
+    About Me
+  </h1>
 
-          <h2
-            class="editable text-4xl font-extrabold mb-6"
-            contenteditable="true">
-            About Me
-          </h2>
+  <p
+    class="editable text-base leading-relaxed text-gray-700 dark:text-gray-300"
+    contenteditable="true">
+    When diving into each project, I have dedicated all the following skills to supporting businesses in reaching all core objectives:
+  </p>
 
-          <p
-            class="editable mb-6 leading-relaxed"
-            contenteditable="true">
-            I am Ho Nguyen Quoc Viet, a Digital Marketing Specialist with
-            over 5 years of experience in SEO, Content Marketing, Paid Media,
-            Account Management and Video Editing.
-          </p>
+  <ul class="list-disc list-inside space-y-1 text-sm md:text-base text-gray-700 dark:text-gray-300">
 
-          <ul class="space-y-3 list-disc list-inside">
+    <li class="editable" contenteditable="true">
+      Support creating all-aspect content strategies to approach target audiences
+    </li>
 
-            <li class="editable" contenteditable="true">
-              SEO Strategy & Technical SEO
-            </li>
+    <li class="editable" contenteditable="true">
+      Writing high-converting landing pages
+    </li>
 
-            <li class="editable" contenteditable="true">
-              Content Marketing & Copywriting
-            </li>
+    <li class="editable" contenteditable="true">
+      Conduct comprehensive email marketing campaigns
+    </li>
 
-            <li class="editable" contenteditable="true">
-              Google Ads & Meta Ads Campaigns
-            </li>
+    <li class="editable" contenteditable="true">
+      Create content and design interactive images across social media channels
+    </li>
 
-            <li class="editable" contenteditable="true">
-              Website Management & CRO
-            </li>
+    <li class="editable" contenteditable="true">
+      Edit engaging videos to support building brand identities
+    </li>
 
-            <li class="editable" contenteditable="true">
-              Account Management
-            </li>
+    <li class="editable" contenteditable="true">
+      Execute SEO strategies to improve website visibility and organic growth
+    </li>
 
-            <li class="editable" contenteditable="true">
-              Video Editing & Creative Production
-            </li>
+  </ul>
 
-          </ul>
+  <!-- Action Buttons -->
+  <div class="flex flex-wrap gap-4 pt-4">
 
-          <button
-            class="editable mt-8 px-6 py-3 bg-blue-600 text-white rounded-full"
-            contenteditable="true">
-            Download CV
-          </button>
+    <a
+      href="https://drive.google.com/file/d/1UMiObwUvQK3-OyqcVD8r8yRmDPY3UKL5/view?usp=sharing"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 px-8 py-4
+             bg-blue-600 hover:bg-blue-700
+             dark:bg-white dark:hover:bg-gray-100
+             text-white dark:text-gray-900 text-lg
+             font-semibold rounded-full shadow-lg hover:shadow-xl
+             transition-all duration-300 hover:-translate-y-1"
+    >
+      <i class="fas fa-download"></i>
+      Download My CV
+    </a>
 
-        </div>
+  </div>
 
-      </div>
+</div>
+```
 
-    </section>
+  </div>
+
+</section>
+
 
     <!-- ========================= -->
     <!-- MILESTONES -->
