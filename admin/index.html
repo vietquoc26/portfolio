@@ -1573,23 +1573,35 @@ window.addEventListener('DOMContentLoaded', () => {
   loadResultsContent()
 })
 
-async function loadAboutPage() {
-  const container = document.getElementById("aboutTab");
-
-  if (container.dataset.loaded) return;
-
+async function loadTabContent(tabId, filePath) {
   try {
-    const response = await fetch("about.html");
+    const response = await fetch(filePath);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load ${filePath}`);
+    }
+
     const html = await response.text();
 
-    container.innerHTML = html;
-    container.dataset.loaded = "true";
+    document.getElementById(tabId).innerHTML = html;
+  } catch (error) {
+    console.error(error);
 
-    loadAboutContent(); // your Supabase loader
-  } catch (err) {
-    console.error("Failed to load about page:", err);
+    document.getElementById(tabId).innerHTML = `
+      <div class="text-red-500">
+        Failed to load content.
+      </div>
+    `;
   }
 }
+
+// Load all tabs
+loadTabContent("aboutTab", "./sections/about.html");
+loadTabContent("seoTab", "./sections/seo.html");
+loadTabContent("contentTab", "./sections/content.html");
+loadTabContent("videoTab", "./sections/video.html");
+loadTabContent("paidMediaTab", "./sections/paid-media.html");
+loadTabContent("contactTab", "./sections/contact.html");
 
 
 </script>
