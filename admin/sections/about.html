@@ -1097,6 +1097,66 @@ document
 
   })
 
+// --- Toggle Edit Mode for About Section ---
+
+let isAboutEditing = false
+
+const aboutEditBtn =
+  document.querySelector('#about .edit-btn')
+
+const saveAboutBtn =
+  document.getElementById('saveAboutBtn')
+
+const aboutSection =
+  document.getElementById('aboutPageEditor')
+
+function toggleAboutEditMode(state) {
+  isAboutEditing = state
+
+  if (!aboutSection) return
+
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
+
+  editableElements.forEach(el => {
+    el.contentEditable = state
+
+    el.classList.toggle('border', state)
+    el.classList.toggle('border-dashed', state)
+    el.classList.toggle('p-1', state)
+  })
+
+  // toggle inputs (image + CV)
+  const imageInput = document.getElementById('aboutImageUrl')
+  const cvInput = document.getElementById('cvLink')
+
+  if (imageInput) imageInput.disabled = !state
+  if (cvInput) cvInput.disabled = !state
+
+  // button UI
+  if (state) {
+    saveAboutBtn?.classList.remove('hidden')
+    aboutEditBtn.innerHTML =
+      '<i class="fas fa-times mr-1"></i> Cancel'
+  } else {
+    saveAboutBtn?.classList.add('hidden')
+    aboutEditBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit About'
+  }
+}
+
+// EVENT TOGGLE
+aboutEditBtn?.addEventListener('click', async () => {
+  if (!aboutSection) return
+
+  if (isAboutEditing) {
+    toggleAboutEditMode(false)
+    await loadAboutContent() // revert changes
+  } else {
+    toggleAboutEditMode(true)
+  }
+})
+
 // =============================
 // EDIT MODE
 // =============================
