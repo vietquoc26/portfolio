@@ -8,8 +8,10 @@
   <button
     id="saveAboutBtn"
     class="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg z-50">
+
     <i class="fas fa-save mr-2"></i>
-    Save About Section
+    Save
+
   </button>
 
   <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
@@ -20,156 +22,88 @@
       <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
 
         <img
-          id="aboutPreviewImage"
+          id="aboutImage"
           src="Avatar.jpg"
           class="w-full h-full object-cover object-top rounded-full">
 
       </div>
 
-      <!-- Image URL -->
-      <div class="absolute -bottom-24 w-full max-w-md">
-        <label class="block font-medium mb-2">
-          Profile Image URL
-        </label>
+      <div class="absolute -bottom-20 w-full max-w-md">
 
         <input
           id="aboutImageUrl"
           type="text"
-          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700">
+          placeholder="Image URL"
+          class="w-full border rounded-lg px-4 py-2">
+
       </div>
 
     </div>
 
     <!-- TEXT COLUMN -->
-    <div class="space-y-6">
+    <div class="space-y-6 text-left">
 
-      <!-- ABOUT TITLE -->
-      <div>
-        <label class="font-semibold">
-          About Title (EN)
-        </label>
+      <h1
+        id="aboutTitle"
+        contenteditable="true"
+        class="text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white border-b border-dashed">
 
-        <input
-          id="aboutTitleEn"
-          type="text"
-          class="w-full mt-2 border rounded-lg px-4 py-3">
-      </div>
+        ABOUT ME
 
-      <div>
-        <label class="font-semibold">
-          About Title (VI)
-        </label>
+      </h1>
 
-        <input
-          id="aboutTitleVi"
-          type="text"
-          class="w-full mt-2 border rounded-lg px-4 py-3">
-      </div>
+      <p
+        id="aboutDescription"
+        contenteditable="true"
+        class="text-base leading-relaxed text-gray-700 dark:text-gray-300 border-b border-dashed">
 
-      <!-- DESCRIPTION -->
-      <div>
-        <label class="font-semibold">
-          Description (EN)
-        </label>
+      </p>
 
-        <textarea
-          id="aboutDescriptionEn"
-          rows="4"
-          class="w-full mt-2 border rounded-lg px-4 py-3"></textarea>
-      </div>
+      <ul class="list-disc list-inside space-y-1 text-sm md:text-base text-gray-700 dark:text-gray-300">
 
-      <div>
-        <label class="font-semibold">
-          Description (VI)
-        </label>
+        <li id="bullet1" contenteditable="true"></li>
+        <li id="bullet2" contenteditable="true"></li>
+        <li id="bullet3" contenteditable="true"></li>
+        <li id="bullet4" contenteditable="true"></li>
+        <li id="bullet5" contenteditable="true"></li>
+        <li id="bullet6" contenteditable="true"></li>
 
-        <textarea
-          id="aboutDescriptionVi"
-          rows="4"
-          class="w-full mt-2 border rounded-lg px-4 py-3"></textarea>
-      </div>
+      </ul>
 
-      <!-- CV -->
-      <div class="grid md:grid-cols-2 gap-4">
+      <div class="flex flex-wrap gap-4 pt-4">
 
-        <div>
-          <label class="font-semibold">
-            CV Button Text (EN)
-          </label>
+        <a
+          id="cvBtn"
+          href="#"
+          class="inline-flex items-center gap-2 px-6 py-3
+                 bg-blue-600 text-white
+                 font-semibold rounded-full">
 
-          <input
-            id="cvButtonTextEn"
-            type="text"
-            class="w-full mt-2 border rounded-lg px-4 py-3">
-        </div>
+          <i class="fas fa-download"></i>
 
-        <div>
-          <label class="font-semibold">
-            CV Button Text (VI)
-          </label>
+          <span
+            id="cvBtnText"
+            contenteditable="true">
 
-          <input
-            id="cvButtonTextVi"
-            type="text"
-            class="w-full mt-2 border rounded-lg px-4 py-3">
-        </div>
+            Download My CV
+
+          </span>
+
+        </a>
 
       </div>
 
-      <div>
-        <label class="font-semibold">
-          CV Download Link
-        </label>
-
-        <input
-          id="cvLink"
-          type="text"
-          class="w-full mt-2 border rounded-lg px-4 py-3">
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- BULLETS -->
-  <div class="absolute left-0 right-0 bottom-[-450px] max-w-7xl mx-auto px-6">
-
-    <h3 class="text-xl font-bold mb-6">
-      About Bullet Points
-    </h3>
-
-    <div class="grid md:grid-cols-2 gap-6">
-
-      <!-- ENGLISH -->
-      <div class="space-y-4">
-
-        <textarea id="bullet1En" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet2En" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet3En" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet4En" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet5En" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet6En" rows="2" class="w-full border rounded-lg p-3"></textarea>
-
-      </div>
-
-      <!-- VIETNAMESE -->
-      <div class="space-y-4">
-
-        <textarea id="bullet1Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet2Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet3Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet4Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet5Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
-        <textarea id="bullet6Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
-
-      </div>
+      <input
+        id="cvLink"
+        type="text"
+        placeholder="CV Download Link"
+        class="w-full border rounded-lg px-4 py-2 mt-4">
 
     </div>
 
   </div>
 
 </section>
-
 
 
     <!-- ========================= -->
