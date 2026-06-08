@@ -980,3 +980,181 @@ Designed social content strategies and engagement plans.
   </div>
 
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const editBtn = document.querySelector(".edit-btn");
+  const saveBtn = document.getElementById("saveAboutBtn");
+
+  const editableElements = [
+    document.getElementById("aboutTitle"),
+    document.getElementById("aboutDescription"),
+    document.getElementById("bullet1"),
+    document.getElementById("bullet2"),
+    document.getElementById("bullet3"),
+    document.getElementById("bullet4"),
+    document.getElementById("bullet5"),
+    document.getElementById("bullet6"),
+    document.getElementById("cvBtnText")
+  ];
+
+  // =====================================
+  // LOAD ABOUT SECTION
+  // =====================================
+
+  async function loadAbout() {
+    try {
+
+      const { data, error } = await supabase
+        .from("about_section")
+        .select("*")
+        .single();
+
+      if (error) throw error;
+
+      document.getElementById("aboutTitle").textContent =
+        data.title || "";
+
+      document.getElementById("aboutDescription").textContent =
+        data.description || "";
+
+      document.getElementById("bullet1").textContent =
+        data.bullet_1 || "";
+
+      document.getElementById("bullet2").textContent =
+        data.bullet_2 || "";
+
+      document.getElementById("bullet3").textContent =
+        data.bullet_3 || "";
+
+      document.getElementById("bullet4").textContent =
+        data.bullet_4 || "";
+
+      document.getElementById("bullet5").textContent =
+        data.bullet_5 || "";
+
+      document.getElementById("bullet6").textContent =
+        data.bullet_6 || "";
+
+      if (data.image_url) {
+        document.getElementById("aboutImage").src =
+          data.image_url;
+      }
+
+      document.getElementById("cvBtn").href =
+        data.cv_link || "#";
+
+      document.getElementById("cvBtnText").textContent =
+        data.cv_button_text || "Download My CV";
+
+    } catch (err) {
+      console.error("Load About Error:", err);
+    }
+  }
+
+  // =====================================
+  // ENABLE EDIT MODE
+  // =====================================
+
+  editBtn.addEventListener("click", () => {
+
+    editableElements.forEach(el => {
+      el.contentEditable = true;
+      el.classList.add(
+        "ring-2",
+        "ring-blue-500",
+        "rounded",
+        "p-1"
+      );
+    });
+
+    saveBtn.classList.remove("hidden");
+  });
+
+  // =====================================
+  // SAVE ABOUT SECTION
+  // =====================================
+
+  saveBtn.addEventListener("click", async () => {
+
+    try {
+
+      const payload = {
+
+        title:
+          document.getElementById("aboutTitle").innerText.trim(),
+
+        description:
+          document.getElementById("aboutDescription").innerText.trim(),
+
+        bullet_1:
+          document.getElementById("bullet1").innerText.trim(),
+
+        bullet_2:
+          document.getElementById("bullet2").innerText.trim(),
+
+        bullet_3:
+          document.getElementById("bullet3").innerText.trim(),
+
+        bullet_4:
+          document.getElementById("bullet4").innerText.trim(),
+
+        bullet_5:
+          document.getElementById("bullet5").innerText.trim(),
+
+        bullet_6:
+          document.getElementById("bullet6").innerText.trim(),
+
+        image_url:
+          document.getElementById("aboutImage").src,
+
+        cv_link:
+          document.getElementById("cvBtn").href,
+
+        cv_button_text:
+          document.getElementById("cvBtnText").innerText.trim(),
+
+        updated_at:
+          new Date().toISOString()
+      };
+
+      const { error } = await supabase
+        .from("about_section")
+        .update(payload)
+        .eq("id", 1);
+
+      if (error) throw error;
+
+      editableElements.forEach(el => {
+        el.contentEditable = false;
+        el.classList.remove(
+          "ring-2",
+          "ring-blue-500",
+          "rounded",
+          "p-1"
+        );
+      });
+
+      saveBtn.classList.add("hidden");
+
+      alert("About section saved successfully!");
+
+    } catch (err) {
+
+      console.error("Save Error:", err);
+
+      alert("Failed to save About section.");
+
+    }
+
+  });
+
+  // =====================================
+  // INITIAL LOAD
+  // =====================================
+
+  loadAbout();
+
+});
+</script>
