@@ -1038,159 +1038,160 @@ Designed social content strategies and engagement plans.
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  const editBtn = document.querySelector(".edit-btn");
   const saveBtn = document.getElementById("saveAboutBtn");
 
-  const editableElements = [
-    document.getElementById("aboutTitle"),
-    document.getElementById("aboutDescription"),
-    document.getElementById("bullet1"),
-    document.getElementById("bullet2"),
-    document.getElementById("bullet3"),
-    document.getElementById("bullet4"),
-    document.getElementById("bullet5"),
-    document.getElementById("bullet6"),
-    document.getElementById("cvBtnText")
-  ];
+  // =========================
+  // LOAD ABOUT CONTENT
+  // =========================
 
-  // =====================================
-  // LOAD ABOUT SECTION
-  // =====================================
+  async function loadAboutEditor() {
 
-  async function loadAbout() {
     try {
 
+      // TEXT CONTENT
       const { data, error } = await supabase
         .from("about_section")
-        .select("*")
-        .single();
+        .select("*");
 
       if (error) throw error;
 
-      document.getElementById("aboutTitle").textContent =
-        data.title || "";
+      const content = {};
 
-      document.getElementById("aboutDescription").textContent =
-        data.description || "";
+      data.forEach(row => {
+        content[row.key] = row;
+      });
 
-      document.getElementById("bullet1").textContent =
-        data.bullet_1 || "";
+      // TITLE
+      document.getElementById("aboutTitleEn").value =
+        content.about_title?.en_text || "";
 
-      document.getElementById("bullet2").textContent =
-        data.bullet_2 || "";
+      document.getElementById("aboutTitleVi").value =
+        content.about_title?.vi_text || "";
 
-      document.getElementById("bullet3").textContent =
-        data.bullet_3 || "";
+      // DESCRIPTION
+      document.getElementById("aboutDescriptionEn").value =
+        content.about_description?.en_text || "";
 
-      document.getElementById("bullet4").textContent =
-        data.bullet_4 || "";
+      document.getElementById("aboutDescriptionVi").value =
+        content.about_description?.vi_text || "";
 
-      document.getElementById("bullet5").textContent =
-        data.bullet_5 || "";
+      // BULLETS
+      for (let i = 1; i <= 6; i++) {
 
-      document.getElementById("bullet6").textContent =
-        data.bullet_6 || "";
+        const key = `about_bullet_${i}`;
 
-      if (data.image_url) {
-        document.getElementById("aboutImage").src =
-          data.image_url;
+        document.getElementById(`bullet${i}En`).value =
+          content[key]?.en_text || "";
+
+        document.getElementById(`bullet${i}Vi`).value =
+          content[key]?.vi_text || "";
+
       }
 
-      document.getElementById("cvBtn").href =
-        data.cv_link || "#";
+      // CV BUTTON
+      document.getElementById("cvButtonTextEn").value =
+        content.cv_button_text?.en_text || "";
 
-      document.getElementById("cvBtnText").textContent =
-        data.cv_button_text || "Download My CV";
+      document.getElementById("cvButtonTextVi").value =
+        content.cv_button_text?.vi_text || "";
+
+      // SETTINGS
+      const { data: settings } = await supabase
+        .from("about_section_settings")
+        .select("*")
+        .eq("id", 1)
+        .single();
+
+      if (settings) {
+
+        document.getElementById("aboutImageUrl").value =
+          settings.image_url || "";
+
+        document.getElementById("cvLink").value =
+          settings.cv_link || "";
+
+      }
 
     } catch (err) {
+
       console.error("Load About Error:", err);
+
     }
+
   }
 
-  // =====================================
-  // ENABLE EDIT MODE
-  // =====================================
-
-  editBtn.addEventListener("click", () => {
-
-    editableElements.forEach(el => {
-      el.contentEditable = true;
-      el.classList.add(
-        "ring-2",
-        "ring-blue-500",
-        "rounded",
-        "p-1"
-      );
-    });
-
-    saveBtn.classList.remove("hidden");
-  });
-
-  // =====================================
-  // SAVE ABOUT SECTION
-  // =====================================
+  // =========================
+  // SAVE ABOUT CONTENT
+  // =========================
 
   saveBtn.addEventListener("click", async () => {
 
     try {
 
-      const payload = {
+      const updates = [
 
-        title:
-          document.getElementById("aboutTitle").innerText.trim(),
+        {
+          key: "about_title",
+          en_text: document.getElementById("aboutTitleEn").value,
+          vi_text: document.getElementById("aboutTitleVi").value
+        },
 
-        description:
-          document.getElementById("aboutDescription").innerText.trim(),
+        {
+          key: "about_description",
+          en_text: document.getElementById("aboutDescriptionEn").value,
+          vi_text: document.getElementById("aboutDescriptionVi").value
+        },
 
-        bullet_1:
-          document.getElementById("bullet1").innerText.trim(),
+        {
+          key: "cv_button_text",
+          en_text: document.getElementById("cvButtonTextEn").value,
+          vi_text: document.getElementById("cvButtonTextVi").value
+        }
 
-        bullet_2:
-          document.getElementById("bullet2").innerText.trim(),
+      ];
 
-        bullet_3:
-          document.getElementById("bullet3").innerText.trim(),
+      // BULLETS
 
-        bullet_4:
-          document.getElementById("bullet4").innerText.trim(),
+      for (let i = 1; i <= 6; i++) {
 
-        bullet_5:
-          document.getElementById("bullet5").innerText.trim(),
+        updates.push({
+          key: `about_bullet_${i}`,
+          en_text: document.getElementById(`bullet${i}En`).value,
+          vi_text: document.getElementById(`bullet${i}Vi`).value
+        });
 
-        bullet_6:
-          document.getElementById("bullet6").innerText.trim(),
+      }
 
-        image_url:
-          document.getElementById("aboutImage").src,
+      // UPSERT TEXT CONTENT
 
-        cv_link:
-          document.getElementById("cvBtn").href,
-
-        cv_button_text:
-          document.getElementById("cvBtnText").innerText.trim(),
-
-        updated_at:
-          new Date().toISOString()
-      };
-
-      const { error } = await supabase
+      const { error: textError } = await supabase
         .from("about_section")
-        .update(payload)
-        .eq("id", 1);
-
-      if (error) throw error;
-
-      editableElements.forEach(el => {
-        el.contentEditable = false;
-        el.classList.remove(
-          "ring-2",
-          "ring-blue-500",
-          "rounded",
-          "p-1"
+        .upsert(
+          updates,
+          {
+            onConflict: "key"
+          }
         );
-      });
 
-      saveBtn.classList.add("hidden");
+      if (textError) throw textError;
+
+      // SAVE SETTINGS
+
+      const { error: settingsError } = await supabase
+        .from("about_section_settings")
+        .upsert({
+          id: 1,
+          image_url:
+            document.getElementById("aboutImageUrl").value,
+
+          cv_link:
+            document.getElementById("cvLink").value,
+
+          updated_at:
+            new Date().toISOString()
+        });
+
+      if (settingsError) throw settingsError;
 
       alert("About section saved successfully!");
 
@@ -1204,11 +1205,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  // =====================================
+  // =========================
   // INITIAL LOAD
-  // =====================================
+  // =========================
 
-  loadAbout();
+  loadAboutEditor();
 
 });
 </script>
