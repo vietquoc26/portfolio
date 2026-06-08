@@ -1578,123 +1578,160 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
       mobileArrow.classList.toggle("rotate-180");
     });
   });
-</script>
 
-<script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-const supabase = createClient(
-  'https://hcuomhpujakrffuzqyyf.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdW9taHB1amFrcmZmdXpxeXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MTUxNjYsImV4cCI6MjA5NDE5MTE2Nn0.O8-uti4KtpmmTLtBxVfCCT7Vbq4QWUeqUjTmqnugWJs'
-);
+/* ================= CORE LOADER ================= */
+async function loadSectionContent(sectionId) {
 
-async function loadAboutSection() {
+  const section = document.getElementById(sectionId)
+  if (!section) return
 
-  try {
+  // Capture original content once
+  captureFallbacks(section)
 
-    const currentLang =
-      localStorage.getItem('lang') || 'en';
+  const editableElements =
+    section.querySelectorAll('[data-i18n]')
 
-    // ==========================
-    // LOAD TEXT CONTENT
-    // ==========================
+  const tableName =
+    tableMap[sectionId] ||
+    `${sectionId}_content`
 
-    const { data: content, error: contentError } =
-      await supabase
-        .from('about_section')
-        .select('*');
+  const { data, error } =
+    await supabase
+      .from(tableName)
+      .select('*')
 
-    if (contentError) throw contentError;
-
-    content.forEach(row => {
-
-      const element = document.querySelector(
-        `[data-i18n="${row.key}"]`
-      );
-
-      if (!element) return;
-
-      element.innerHTML =
-        currentLang === 'vi'
-          ? (row.vi_text || '')
-          : (row.en_text || '');
-
-    });
-
-    // ==========================
-    // LOAD SETTINGS
-    // ==========================
-
-    const { data: settings, error: settingsError } =
-      await supabase
-        .from('about_section_settings')
-        .select('*')
-        .eq('id', 1)
-        .single();
-
-    if (settingsError) throw settingsError;
-
-    // Image
-
-    const aboutImage =
-      document.getElementById('aboutImage');
-
-    if (
-      aboutImage &&
-      settings.image_url
-    ) {
-      aboutImage.src =
-        settings.image_url;
-    }
-
-    // CV Link
-
-    const cvBtn =
-      document.getElementById('cvBtn');
-
-    if (
-      cvBtn &&
-      settings.cv_link
-    ) {
-      cvBtn.href =
-        settings.cv_link;
-    }
-
-  } catch (error) {
-
+  if (error) {
     console.error(
-      'Error loading About Section:',
-      error
-    );
-
+      `❌ Error loading ${sectionId}:`,
+      error.message
+    )
+    return
   }
 
+  const byKey = {}
+
+  data?.forEach(row => {
+    if (row?.key) {
+      byKey[row.key] = row
+    }
+  })
+
+  editableElements.forEach(el => {
+
+    const key =
+      el.getAttribute('data-i18n')
+
+    const row =
+      byKey[key]
+
+    let supaText = ''
+
+    if (row) {
+      supaText =
+        currentLang === 'en'
+          ? (row.en_text || '')
+          : (row.vi_text || '')
+    }
+
+    if (
+      supaText &&
+      supaText.trim() !== ''
+    ) {
+
+      el.innerHTML = supaText
+      el.dataset.supabaseApplied = 'true'
+
+    } else {
+
+      delete el.dataset.supabaseApplied
+
+      el.innerHTML =
+        getFallbackText(key, el)
+    }
+  })
+
+  /* ================= HERO IMAGE ================= */
+
+  if (sectionId === 'hero') {
+
+    const {
+      data: heroRow,
+      error: heroError
+    } = await supabase
+      .from('hero_content')
+      .select('image_url')
+      .eq('id', 1)
+      .single()
+
+    if (
+      !heroError &&
+      heroRow?.image_url
+    ) {
+
+      const img =
+        document.getElementById('heroImage')
+
+      if (img)
+        img.src =
+          heroRow.image_url
+    }
+  }
+
+  /* ================= ABOUT SETTINGS ================= */
+
+  if (sectionId === 'about') {
+
+    const {
+      data: settings,
+      error: settingsError
+    } = await supabase
+      .from('about_section_settings')
+      .select('*')
+      .eq('id', 1)
+      .single()
+
+    if (
+      !settingsError &&
+      settings
+    ) {
+
+      // About Image
+
+      const aboutImg =
+        section.querySelector('img')
+
+      if (
+        aboutImg &&
+        settings.image_url
+      ) {
+        aboutImg.src =
+          settings.image_url
+      }
+
+      // CV Button
+
+      const cvBtn =
+        section.querySelector(
+          '[data-i18n="downloadCV"]'
+        )
+
+      if (
+        cvBtn &&
+        settings.cv_link
+      ) {
+        cvBtn.href =
+          settings.cv_link
+      }
+    }
+  }
 }
 
-// Initial load
-loadAboutSection();
-
-// Optional: make available globally
-window.loadAboutSection =
-  loadAboutSection;
 
 
-
-  function highlightActiveLang(lang) {
-  const btnEn = document.getElementById('btn-en');
-  const btnVi = document.getElementById('btn-vi');
-  if (!btnEn || !btnVi) return;
-
-  btnEn.classList.toggle('bg-white', lang === 'en');
-  btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
-  btnVi.classList.toggle('bg-white', lang === 'vi');
-  btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
-}
-
-document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'));
-document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'));
 
 </script>
+
 
 
 </body>
