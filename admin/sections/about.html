@@ -1,215 +1,128 @@
-<h2 class="text-2xl font-bold mb-6">About Editor</h2>
+<!-- TITLE -->
+<div>
 
-<!-- ABOUT EDITOR -->
-<section
-  id="aboutPageEditor"
-  class="relative min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow overflow-hidden">
+  <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+    Title
+  </label>
 
-  <!-- ACTION BUTTONS -->
-  <div class="absolute top-4 right-4 flex gap-3 z-50">
+  <h1
+    id="aboutTitle"
+    data-i18n="about_title"
+    contenteditable="false"
+    class="editable text-4xl md:text-5xl font-bold text-gray-900 dark:text-white border-b border-dashed pb-2 outline-none">
 
-    <button
-      id="editAboutBtn"
-      class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow transition">
+    ABOUT ME
 
-      <i class="fas fa-pen mr-2"></i>
-      Edit
+  </h1>
 
-    </button>
+</div>
 
-    <button
-      id="saveAboutBtn"
-      class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow transition">
+<!-- DESCRIPTION -->
+<div>
 
-      <i class="fas fa-save mr-2"></i>
-      Save
+  <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+    Description
+  </label>
 
-    </button>
+  <p
+    id="aboutDescription"
+    data-i18n="about_description"
+    contenteditable="false"
+    class="editable min-h-[120px] text-base leading-relaxed text-gray-700 dark:text-gray-300 border rounded-lg p-4 outline-none">
 
-  </div>
+  </p>
 
-  <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
+</div>
 
-    <!-- ========================= -->
-    <!-- IMAGE COLUMN -->
-    <!-- ========================= -->
-    <div class="flex flex-col items-center">
+<!-- BULLET POINTS -->
+<div>
 
-      <div
-        class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl">
+  <label class="block mb-3 font-medium text-gray-700 dark:text-gray-300">
+    Highlights
+  </label>
 
-        <img
-          id="aboutImage"
-          src="Avatar.jpg"
-          alt="Profile"
-          class="w-full h-full object-cover object-top">
+  <ul class="space-y-2">
 
-      </div>
+    <li
+      id="bullet1"
+      data-i18n="about_bullet_1"
+      contenteditable="false"
+      class="editable border rounded-lg p-2 outline-none">
+    </li>
 
-      <div class="w-full max-w-md mt-8">
+    <li
+      id="bullet2"
+      data-i18n="about_bullet_2"
+      contenteditable="false"
+      class="editable border rounded-lg p-2 outline-none">
+    </li>
 
-        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
-          Profile Image URL
-        </label>
+    <li
+      id="bullet3"
+      data-i18n="about_bullet_3"
+      contenteditable="false"
+      class="editable border rounded-lg p-2 outline-none">
+    </li>
 
-        <input
-          id="aboutImageUrl"
-          type="text"
-          disabled
-          placeholder="https://..."
-          class="w-full border rounded-lg px-4 py-3
-                 bg-gray-100 dark:bg-gray-800
-                 dark:text-white">
+    <li
+      id="bullet4"
+      data-i18n="about_bullet_4"
+      contenteditable="false"
+      class="editable border rounded-lg p-2 outline-none">
+    </li>
 
-      </div>
+    <li
+      id="bullet5"
+      data-i18n="about_bullet_5"
+      contenteditable="false"
+      class="editable border rounded-lg p-2 outline-none">
+    </li>
 
-    </div>
+    <li
+      id="bullet6"
+      data-i18n="about_bullet_6"
+      contenteditable="false"
+      class="editable border rounded-lg p-2 outline-none">
+    </li>
 
-    <!-- ========================= -->
-    <!-- TEXT COLUMN -->
-    <!-- ========================= -->
-    <div class="space-y-6">
+  </ul>
 
-      <!-- TITLE -->
-      <div>
+</div>
 
-        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
-          Title
-        </label>
+<!-- CV BUTTON PREVIEW -->
+<div>
 
-        <h1
-          id="aboutTitle"
-          contenteditable="false"
-          class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white border-b border-dashed pb-2 outline-none">
+  <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+    CV Button Text
+  </label>
 
-          ABOUT ME
+  <div class="flex flex-wrap gap-4">
 
-        </h1>
+    <a
+      id="cvBtn"
+      href="#"
+      target="_blank"
+      class="inline-flex items-center gap-2 px-6 py-3
+             bg-blue-600 hover:bg-blue-700
+             text-white font-semibold rounded-full transition">
 
-      </div>
+      <i class="fas fa-download"></i>
 
-      <!-- DESCRIPTION -->
-      <div>
+      <span
+        id="cvBtnText"
+        data-i18n="cv_button_text"
+        contenteditable="false"
+        class="editable outline-none">
 
-        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
-          Description
-        </label>
+        Download My CV
 
-        <p
-          id="aboutDescription"
-          contenteditable="false"
-          class="min-h-[120px] text-base leading-relaxed text-gray-700 dark:text-gray-300 border rounded-lg p-4 outline-none">
+      </span>
 
-        </p>
-
-      </div>
-
-      <!-- BULLET POINTS -->
-      <div>
-
-        <label class="block mb-3 font-medium text-gray-700 dark:text-gray-300">
-          Highlights
-        </label>
-
-        <ul class="space-y-2">
-
-          <li
-            id="bullet1"
-            contenteditable="false"
-            class="border rounded-lg p-2 outline-none">
-          </li>
-
-          <li
-            id="bullet2"
-            contenteditable="false"
-            class="border rounded-lg p-2 outline-none">
-          </li>
-
-          <li
-            id="bullet3"
-            contenteditable="false"
-            class="border rounded-lg p-2 outline-none">
-          </li>
-
-          <li
-            id="bullet4"
-            contenteditable="false"
-            class="border rounded-lg p-2 outline-none">
-          </li>
-
-          <li
-            id="bullet5"
-            contenteditable="false"
-            class="border rounded-lg p-2 outline-none">
-          </li>
-
-          <li
-            id="bullet6"
-            contenteditable="false"
-            class="border rounded-lg p-2 outline-none">
-          </li>
-
-        </ul>
-
-      </div>
-
-      <!-- CV BUTTON PREVIEW -->
-      <div>
-
-        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
-          CV Button Text
-        </label>
-
-        <div class="flex flex-wrap gap-4">
-
-          <a
-            id="cvBtn"
-            href="#"
-            target="_blank"
-            class="inline-flex items-center gap-2 px-6 py-3
-                   bg-blue-600 hover:bg-blue-700
-                   text-white font-semibold rounded-full transition">
-
-            <i class="fas fa-download"></i>
-
-            <span
-              id="cvBtnText"
-              contenteditable="false"
-              class="outline-none">
-
-              Download My CV
-
-            </span>
-
-          </a>
-
-        </div>
-
-      </div>
-
-      <!-- CV LINK -->
-      <div>
-
-        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
-          CV Download Link
-        </label>
-
-        <input
-          id="cvLink"
-          type="text"
-          disabled
-          placeholder="https://drive.google.com/..."
-          class="w-full border rounded-lg px-4 py-3
-                 bg-gray-100 dark:bg-gray-800
-                 dark:text-white">
-
-      </div>
-
-    </div>
+    </a>
 
   </div>
 
-</section>
+</div>
 
 <script>
 /* ===========================
@@ -1129,181 +1042,296 @@ Designed social content strategies and engagement plans.
 
 </section>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+<script
 
-  const saveBtn = document.getElementById("saveAboutBtn");
+/* ================= ABOUT SECTION ================= */
 
-  // =========================
-  // LOAD ABOUT CONTENT
-  // =========================
+// --- Language Toggle ---
 
-  async function loadAboutEditor() {
+document.getElementById('lang-en')?.addEventListener('click', () => {
+  currentLang = 'en'
+  loadAboutContent()
+})
 
-    try {
+document.getElementById('lang-vi')?.addEventListener('click', () => {
+  currentLang = 'vi'
+  loadAboutContent()
+})
 
-      // TEXT CONTENT
-      const { data, error } = await supabase
-        .from("about_section")
-        .select("*");
+// --- Edit Mode ---
 
-      if (error) throw error;
+const aboutEditBtn = document.getElementById('editAboutBtn')
+const saveAboutBtn = document.getElementById('saveAboutBtn')
 
-      const content = {};
+aboutEditBtn?.addEventListener('click', async () => {
 
-      data.forEach(row => {
-        content[row.key] = row;
-      });
+  const aboutSection =
+    document.getElementById('aboutPageEditor')
 
-      // TITLE
-      document.getElementById("aboutTitleEn").value =
-        content.about_title?.en_text || "";
+  if (!aboutSection) return
 
-      document.getElementById("aboutTitleVi").value =
-        content.about_title?.vi_text || "";
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
 
-      // DESCRIPTION
-      document.getElementById("aboutDescriptionEn").value =
-        content.about_description?.en_text || "";
+  const isEditing =
+    editableElements[0]?.contentEditable === 'true'
 
-      document.getElementById("aboutDescriptionVi").value =
-        content.about_description?.vi_text || "";
+  editableElements.forEach(el => {
 
-      // BULLETS
-      for (let i = 1; i <= 6; i++) {
+    el.contentEditable = !isEditing
 
-        const key = `about_bullet_${i}`;
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
 
-        document.getElementById(`bullet${i}En`).value =
-          content[key]?.en_text || "";
+  })
 
-        document.getElementById(`bullet${i}Vi`).value =
-          content[key]?.vi_text || "";
+  document.getElementById('aboutImageUrl').disabled =
+    isEditing
 
-      }
+  document.getElementById('cvLink').disabled =
+    isEditing
 
-      // CV BUTTON
-      document.getElementById("cvButtonTextEn").value =
-        content.cv_button_text?.en_text || "";
+  if (isEditing) {
 
-      document.getElementById("cvButtonTextVi").value =
-        content.cv_button_text?.vi_text || "";
+    saveAboutBtn.classList.add('hidden')
 
-      // SETTINGS
-      const { data: settings } = await supabase
-        .from("about_section_settings")
-        .select("*")
-        .eq("id", 1)
-        .single();
+    aboutEditBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit'
 
-      if (settings) {
+    await loadAboutContent()
 
-        document.getElementById("aboutImageUrl").value =
-          settings.image_url || "";
+  } else {
 
-        document.getElementById("cvLink").value =
-          settings.cv_link || "";
+    saveAboutBtn.classList.remove('hidden')
 
-      }
+    aboutEditBtn.innerHTML =
+      '<i class="fas fa-times mr-1"></i> Cancel'
 
-    } catch (err) {
+  }
 
-      console.error("Load About Error:", err);
+})
+
+// --- Save Button ---
+
+saveAboutBtn?.addEventListener('click', async () => {
+
+  await saveAboutContent()
+
+  saveAboutBtn.classList.add('hidden')
+
+  aboutEditBtn.innerHTML =
+    '<i class="fas fa-edit mr-1"></i> Edit'
+
+  const aboutSection =
+    document.getElementById('aboutPageEditor')
+
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
+
+  editableElements.forEach(el => {
+
+    el.contentEditable = 'false'
+
+    el.classList.remove(
+      'border',
+      'border-dashed',
+      'p-1'
+    )
+
+  })
+
+  document.getElementById('aboutImageUrl').disabled = true
+  document.getElementById('cvLink').disabled = true
+
+})
+
+
+// --- Load About Content ---
+
+async function loadAboutContent() {
+
+  const aboutSection =
+    document.getElementById('aboutPageEditor')
+
+  if (!aboutSection) return
+
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
+
+  const { data, error } = await supabase
+    .from('about_section')
+    .select('*')
+
+  if (error) {
+
+    console.error(
+      '❌ Error loading about content:',
+      error.message
+    )
+
+    return
+
+  }
+
+  editableElements.forEach(el => {
+
+    const key =
+      el.getAttribute('data-i18n')
+
+    const row =
+      data.find(d => d.key === key)
+
+    if (!row) return
+
+    el.innerText =
+      currentLang === 'en'
+        ? row.en_text
+        : row.vi_text
+
+    el.dataset.rowId = row.id
+
+  })
+
+  // SETTINGS
+
+  const { data: settings } =
+    await supabase
+      .from('about_section_settings')
+      .select('*')
+      .eq('id', 1)
+      .single()
+
+  if (settings) {
+
+    document.getElementById('aboutImageUrl').value =
+      settings.image_url || ''
+
+    document.getElementById('aboutImage').src =
+      settings.image_url || 'Avatar.jpg'
+
+    document.getElementById('cvLink').value =
+      settings.cv_link || ''
+
+    document.getElementById('cvBtn').href =
+      settings.cv_link || '#'
+
+  }
+
+}
+
+// --- Save About Content ---
+
+async function saveAboutContent() {
+
+  const aboutSection =
+    document.getElementById('aboutPageEditor')
+
+  if (!aboutSection) return
+
+  const editableElements =
+    aboutSection.querySelectorAll('.editable')
+
+  for (const el of editableElements) {
+
+    const key =
+      el.getAttribute('data-i18n')
+
+    const text =
+      el.innerText.trim()
+
+    const rowId =
+      el.dataset.rowId
+
+    const updates =
+      currentLang === 'en'
+        ? {
+            id: rowId,
+            key,
+            en_text: text
+          }
+        : {
+            id: rowId,
+            key,
+            vi_text: text
+          }
+
+    const { error } = await supabase
+      .from('about_section')
+      .upsert(
+        updates,
+        {
+          onConflict: 'id'
+        }
+      )
+
+    if (error) {
+
+      console.error(
+        `❌ Failed to save ${key}:`,
+        error.message
+      )
 
     }
 
   }
 
-  // =========================
-  // SAVE ABOUT CONTENT
-  // =========================
+  // SETTINGS
 
-  saveBtn.addEventListener("click", async () => {
+  const { error: settingsError } =
+    await supabase
+      .from('about_section_settings')
+      .upsert({
+        id: 1,
 
-    try {
+        image_url:
+          document.getElementById('aboutImageUrl').value,
 
-      const updates = [
+        cv_link:
+          document.getElementById('cvLink').value,
 
-        {
-          key: "about_title",
-          en_text: document.getElementById("aboutTitleEn").value,
-          vi_text: document.getElementById("aboutTitleVi").value
-        },
+        updated_at:
+          new Date().toISOString()
 
-        {
-          key: "about_description",
-          en_text: document.getElementById("aboutDescriptionEn").value,
-          vi_text: document.getElementById("aboutDescriptionVi").value
-        },
+      })
 
-        {
-          key: "cv_button_text",
-          en_text: document.getElementById("cvButtonTextEn").value,
-          vi_text: document.getElementById("cvButtonTextVi").value
-        }
+  if (settingsError) {
 
-      ];
+    console.error(
+      '❌ Settings save failed:',
+      settingsError.message
+    )
 
-      // BULLETS
+  }
 
-      for (let i = 1; i <= 6; i++) {
+  alert('About content saved! ✅')
 
-        updates.push({
-          key: `about_bullet_${i}`,
-          en_text: document.getElementById(`bullet${i}En`).value,
-          vi_text: document.getElementById(`bullet${i}Vi`).value
-        });
+}
 
-      }
+// --- Live Preview Image ---
 
-      // UPSERT TEXT CONTENT
+document
+  .getElementById('aboutImageUrl')
+  ?.addEventListener('input', e => {
 
-      const { error: textError } = await supabase
-        .from("about_section")
-        .upsert(
-          updates,
-          {
-            onConflict: "key"
-          }
-        );
+    document.getElementById('aboutImage').src =
+      e.target.value || 'Avatar.jpg'
 
-      if (textError) throw textError;
+  })
 
-      // SAVE SETTINGS
+// --- Live Preview CV Link ---
 
-      const { error: settingsError } = await supabase
-        .from("about_section_settings")
-        .upsert({
-          id: 1,
-          image_url:
-            document.getElementById("aboutImageUrl").value,
+document
+  .getElementById('cvLink')
+  ?.addEventListener('input', e => {
 
-          cv_link:
-            document.getElementById("cvLink").value,
+    document.getElementById('cvBtn').href =
+      e.target.value || '#'
 
-          updated_at:
-            new Date().toISOString()
-        });
+  })
 
-      if (settingsError) throw settingsError;
+// --- Initial Load ---
 
-      alert("About section saved successfully!");
+loadAboutContent()
 
-    } catch (err) {
-
-      console.error("Save Error:", err);
-
-      alert("Failed to save About section.");
-
-    }
-
-  });
-
-  // =========================
-  // INITIAL LOAD
-  // =========================
-
-  loadAboutEditor();
-
-});
 </script>
