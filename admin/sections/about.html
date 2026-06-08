@@ -2,74 +2,32 @@
 
 <section
   id="aboutPageEditor"
-  class="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+  class="relative min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
 
-  <div class="flex justify-end mb-6">
-    <button
-      id="saveAboutBtn"
-      class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+  <!-- Save Button -->
+  <button
+    id="saveAboutBtn"
+    class="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg z-50">
+    <i class="fas fa-save mr-2"></i>
+    Save About Section
+  </button>
 
-      <i class="fas fa-save mr-2"></i>
-      Save About Section
+  <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
-    </button>
-  </div>
+    <!-- IMAGE COLUMN -->
+    <div class="relative flex justify-center items-center">
 
-  <div class="grid md:grid-cols-2 gap-8">
+      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
 
-    <!-- LEFT COLUMN -->
-    <div class="space-y-5">
+        <img
+          id="aboutPreviewImage"
+          src="Avatar.jpg"
+          class="w-full h-full object-cover object-top rounded-full">
 
-      <div>
-        <label class="block font-medium mb-2">
-          About Title (EN)
-        </label>
-
-        <input
-          id="aboutTitleEn"
-          type="text"
-          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700">
       </div>
 
-      <div>
-        <label class="block font-medium mb-2">
-          About Title (VI)
-        </label>
-
-        <input
-          id="aboutTitleVi"
-          type="text"
-          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700">
-      </div>
-
-      <div>
-        <label class="block font-medium mb-2">
-          Description (EN)
-        </label>
-
-        <textarea
-          id="aboutDescriptionEn"
-          rows="5"
-          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700"></textarea>
-      </div>
-
-      <div>
-        <label class="block font-medium mb-2">
-          Description (VI)
-        </label>
-
-        <textarea
-          id="aboutDescriptionVi"
-          rows="5"
-          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700"></textarea>
-      </div>
-
-    </div>
-
-    <!-- RIGHT COLUMN -->
-    <div class="space-y-5">
-
-      <div>
+      <!-- Image URL -->
+      <div class="absolute -bottom-24 w-full max-w-md">
         <label class="block font-medium mb-2">
           Profile Image URL
         </label>
@@ -80,37 +38,93 @@
           class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700">
       </div>
 
+    </div>
+
+    <!-- TEXT COLUMN -->
+    <div class="space-y-6">
+
+      <!-- ABOUT TITLE -->
       <div>
-        <label class="block font-medium mb-2">
+        <label class="font-semibold">
+          About Title (EN)
+        </label>
+
+        <input
+          id="aboutTitleEn"
+          type="text"
+          class="w-full mt-2 border rounded-lg px-4 py-3">
+      </div>
+
+      <div>
+        <label class="font-semibold">
+          About Title (VI)
+        </label>
+
+        <input
+          id="aboutTitleVi"
+          type="text"
+          class="w-full mt-2 border rounded-lg px-4 py-3">
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div>
+        <label class="font-semibold">
+          Description (EN)
+        </label>
+
+        <textarea
+          id="aboutDescriptionEn"
+          rows="4"
+          class="w-full mt-2 border rounded-lg px-4 py-3"></textarea>
+      </div>
+
+      <div>
+        <label class="font-semibold">
+          Description (VI)
+        </label>
+
+        <textarea
+          id="aboutDescriptionVi"
+          rows="4"
+          class="w-full mt-2 border rounded-lg px-4 py-3"></textarea>
+      </div>
+
+      <!-- CV -->
+      <div class="grid md:grid-cols-2 gap-4">
+
+        <div>
+          <label class="font-semibold">
+            CV Button Text (EN)
+          </label>
+
+          <input
+            id="cvButtonTextEn"
+            type="text"
+            class="w-full mt-2 border rounded-lg px-4 py-3">
+        </div>
+
+        <div>
+          <label class="font-semibold">
+            CV Button Text (VI)
+          </label>
+
+          <input
+            id="cvButtonTextVi"
+            type="text"
+            class="w-full mt-2 border rounded-lg px-4 py-3">
+        </div>
+
+      </div>
+
+      <div>
+        <label class="font-semibold">
           CV Download Link
         </label>
 
         <input
           id="cvLink"
           type="text"
-          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700">
-      </div>
-
-      <div>
-        <label class="block font-medium mb-2">
-          CV Button Text (EN)
-        </label>
-
-        <input
-          id="cvButtonTextEn"
-          type="text"
-          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700">
-      </div>
-
-      <div>
-        <label class="block font-medium mb-2">
-          CV Button Text (VI)
-        </label>
-
-        <input
-          id="cvButtonTextVi"
-          type="text"
-          class="w-full border rounded-lg px-4 py-2 dark:bg-gray-700">
+          class="w-full mt-2 border rounded-lg px-4 py-3">
       </div>
 
     </div>
@@ -118,67 +132,35 @@
   </div>
 
   <!-- BULLETS -->
-  <div class="mt-10">
+  <div class="absolute left-0 right-0 bottom-[-450px] max-w-7xl mx-auto px-6">
 
-    <h3 class="text-lg font-semibold mb-4">
+    <h3 class="text-xl font-bold mb-6">
       About Bullet Points
     </h3>
 
     <div class="grid md:grid-cols-2 gap-6">
 
+      <!-- ENGLISH -->
       <div class="space-y-4">
 
-        <textarea id="bullet1En" rows="2"
-          placeholder="Bullet 1 (EN)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet2En" rows="2"
-          placeholder="Bullet 2 (EN)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet3En" rows="2"
-          placeholder="Bullet 3 (EN)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet4En" rows="2"
-          placeholder="Bullet 4 (EN)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet5En" rows="2"
-          placeholder="Bullet 5 (EN)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet6En" rows="2"
-          placeholder="Bullet 6 (EN)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
+        <textarea id="bullet1En" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet2En" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet3En" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet4En" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet5En" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet6En" rows="2" class="w-full border rounded-lg p-3"></textarea>
 
       </div>
 
+      <!-- VIETNAMESE -->
       <div class="space-y-4">
 
-        <textarea id="bullet1Vi" rows="2"
-          placeholder="Bullet 1 (VI)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet2Vi" rows="2"
-          placeholder="Bullet 2 (VI)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet3Vi" rows="2"
-          placeholder="Bullet 3 (VI)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet4Vi" rows="2"
-          placeholder="Bullet 4 (VI)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet5Vi" rows="2"
-          placeholder="Bullet 5 (VI)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
-
-        <textarea id="bullet6Vi" rows="2"
-          placeholder="Bullet 6 (VI)"
-          class="w-full border rounded-lg px-4 py-2"></textarea>
+        <textarea id="bullet1Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet2Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet3Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet4Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet5Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
+        <textarea id="bullet6Vi" rows="2" class="w-full border rounded-lg p-3"></textarea>
 
       </div>
 
