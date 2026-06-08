@@ -1580,21 +1580,29 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   });
 
 
-/* ================= CORE LOADER ================= */
+/* ================= CORE LOADER (FIXED) ================= */
 async function loadSectionContent(sectionId) {
 
   const section = document.getElementById(sectionId)
   if (!section) return
 
-  // Capture original content once
   captureFallbacks(section)
 
   const editableElements =
     section.querySelectorAll('[data-i18n]')
 
-  const tableName =
-    tableMap[sectionId] ||
-    `${sectionId}_content`
+  /* ✅ FIX 1: FORCE correct table mapping for ABOUT */
+  let tableName =
+    tableMap?.[sectionId]
+
+  if (!tableName) {
+
+    if (sectionId === 'about') {
+      tableName = 'about_section'
+    } else {
+      tableName = `${sectionId}_content`
+    }
+  }
 
   const { data, error } =
     await supabase
@@ -1612,116 +1620,96 @@ async function loadSectionContent(sectionId) {
   const byKey = {}
 
   data?.forEach(row => {
-    if (row?.key) {
-      byKey[row.key] = row
-    }
+    if (row?.key) byKey[row.key] = row
   })
 
   editableElements.forEach(el => {
 
-    const key =
-      el.getAttribute('data-i18n')
+    const key = el.getAttribute('data-i18n')
+    const row = byKey[key]
 
-    const row =
-      byKey[key]
-
-    let supaText = ''
+    let text = ''
 
     if (row) {
-      supaText =
+      text =
         currentLang === 'en'
-          ? (row.en_text || '')
-          : (row.vi_text || '')
+          ? row.en_text || ''
+          : row.vi_text || ''
     }
 
-    if (
-      supaText &&
-      supaText.trim() !== ''
-    ) {
-
-      el.innerHTML = supaText
+    if (text.trim()) {
+      el.innerHTML = text
       el.dataset.supabaseApplied = 'true'
-
     } else {
-
       delete el.dataset.supabaseApplied
-
-      el.innerHTML =
-        getFallbackText(key, el)
+      el.innerHTML = getFallbackText(key, el)
     }
   })
 
   /* ================= HERO IMAGE ================= */
-
   if (sectionId === 'hero') {
 
-    const {
-      data: heroRow,
-      error: heroError
-    } = await supabase
-      .from('hero_content')
-      .select('image_url')
-      .eq('id', 1)
-      .single()
+    const { data: heroRow } =
+      await supabase
+        .from('hero_section')
+        .select('image_url')
+        .eq('id', 1)
+        .single()
 
-    if (
-      !heroError &&
-      heroRow?.image_url
-    ) {
+    const img = document.getElementById('heroImage')
 
-      const img =
-        document.getElementById('heroImage')
-
-      if (img)
-        img.src =
-          heroRow.image_url
+    if (img && heroRow?.image_url) {
+      img.src = heroRow.image_url
     }
   }
 
-  /* ================= ABOUT SETTINGS ================= */
-
+  /* ================= ABOUT SETTINGS (FIXED) ================= */
   if (sectionId === 'about') {
 
-    const {
-      data: settings,
-      error: settingsError
-    } = await supabase
-      .from('about_section_settings')
-      .select('*')
-      .eq('id', 1)
-      .single()
+    const { data: settings, error: settingsError } =
+      await supabase
+        .from('about_section_settings')
+        .select('*')
+        .eq('id', 1)
+        .single()
 
-    if (
-      !settingsError &&
-      settings
-    ) {
+    if (!settingsError && settings) {
 
-      // About Image
-
+      /* ✅ FIX 2: target correct image explicitly */
       const aboutImg =
-        section.querySelector('img')
+        document.getElementById('aboutImage')
 
-      if (
-        aboutImg &&
-        settings.image_url
-      ) {
-        aboutImg.src =
-          settings.image_url
+      if (aboutImg && settings.image_url) {
+        aboutImg.src = settings.image_url
       }
 
-      // CV Button
+      const aboutUrlInput =
+        document.getElementById('aboutImageUrl')
 
+      if (aboutUrlInput) {
+        aboutUrlInput.value = settings.image_url || ''
+      }
+
+      const cvLink =
+        document.getElementById('cvLink')
+
+      if (cvLink) {
+        cvLink.value = settings.cv_link || ''
+      }
+
+      /* ✅ FIX 3: correct CV button (NOT data-i18n selector) */
       const cvBtn =
-        section.querySelector(
-          '[data-i18n="downloadCV"]'
-        )
+        document.getElementById('cvBtn')
 
-      if (
-        cvBtn &&
-        settings.cv_link
-      ) {
-        cvBtn.href =
-          settings.cv_link
+      if (cvBtn && settings.cv_link) {
+        cvBtn.href = settings.cv_link
+      }
+
+      const cvText =
+        document.getElementById('cvBtnText')
+
+      if (cvText && settings.cv_text) {
+        cvText.innerText = settings.cv_text
       }
     }
   }
