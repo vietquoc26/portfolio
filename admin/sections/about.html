@@ -1,103 +1,209 @@
 <h2 class="text-2xl font-bold mb-6">About Editor</h2>
 
+<!-- ABOUT EDITOR -->
 <section
   id="aboutPageEditor"
-  class="relative min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
+  class="relative min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow overflow-hidden">
 
-  <!-- Save Button -->
-  <button
-    id="saveAboutBtn"
-    class="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg z-50">
+  <!-- ACTION BUTTONS -->
+  <div class="absolute top-4 right-4 flex gap-3 z-50">
 
-    <i class="fas fa-save mr-2"></i>
-    Save
+    <button
+      id="editAboutBtn"
+      class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow transition">
 
-  </button>
+      <i class="fas fa-pen mr-2"></i>
+      Edit
+
+    </button>
+
+    <button
+      id="saveAboutBtn"
+      class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow transition">
+
+      <i class="fas fa-save mr-2"></i>
+      Save
+
+    </button>
+
+  </div>
 
   <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
+    <!-- ========================= -->
     <!-- IMAGE COLUMN -->
-    <div class="relative flex justify-center items-center">
+    <!-- ========================= -->
+    <div class="flex flex-col items-center">
 
-      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+      <div
+        class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl">
 
         <img
           id="aboutImage"
           src="Avatar.jpg"
-          class="w-full h-full object-cover object-top rounded-full">
+          alt="Profile"
+          class="w-full h-full object-cover object-top">
 
       </div>
 
-      <div class="absolute -bottom-20 w-full max-w-md">
+      <div class="w-full max-w-md mt-8">
+
+        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+          Profile Image URL
+        </label>
 
         <input
           id="aboutImageUrl"
           type="text"
-          placeholder="Image URL"
-          class="w-full border rounded-lg px-4 py-2">
+          disabled
+          placeholder="https://..."
+          class="w-full border rounded-lg px-4 py-3
+                 bg-gray-100 dark:bg-gray-800
+                 dark:text-white">
 
       </div>
 
     </div>
 
+    <!-- ========================= -->
     <!-- TEXT COLUMN -->
-    <div class="space-y-6 text-left">
+    <!-- ========================= -->
+    <div class="space-y-6">
 
-      <h1
-        id="aboutTitle"
-        contenteditable="true"
-        class="text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white border-b border-dashed">
+      <!-- TITLE -->
+      <div>
 
-        ABOUT ME
+        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+          Title
+        </label>
 
-      </h1>
+        <h1
+          id="aboutTitle"
+          contenteditable="false"
+          class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white border-b border-dashed pb-2 outline-none">
 
-      <p
-        id="aboutDescription"
-        contenteditable="true"
-        class="text-base leading-relaxed text-gray-700 dark:text-gray-300 border-b border-dashed">
+          ABOUT ME
 
-      </p>
-
-      <ul class="list-disc list-inside space-y-1 text-sm md:text-base text-gray-700 dark:text-gray-300">
-
-        <li id="bullet1" contenteditable="true"></li>
-        <li id="bullet2" contenteditable="true"></li>
-        <li id="bullet3" contenteditable="true"></li>
-        <li id="bullet4" contenteditable="true"></li>
-        <li id="bullet5" contenteditable="true"></li>
-        <li id="bullet6" contenteditable="true"></li>
-
-      </ul>
-
-      <div class="flex flex-wrap gap-4 pt-4">
-
-        <a
-          id="cvBtn"
-          href="#"
-          class="inline-flex items-center gap-2 px-6 py-3
-                 bg-blue-600 text-white
-                 font-semibold rounded-full">
-
-          <i class="fas fa-download"></i>
-
-          <span
-            id="cvBtnText"
-            contenteditable="true">
-
-            Download My CV
-
-          </span>
-
-        </a>
+        </h1>
 
       </div>
 
-      <input
-        id="cvLink"
-        type="text"
-        placeholder="CV Download Link"
-        class="w-full border rounded-lg px-4 py-2 mt-4">
+      <!-- DESCRIPTION -->
+      <div>
+
+        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+          Description
+        </label>
+
+        <p
+          id="aboutDescription"
+          contenteditable="false"
+          class="min-h-[120px] text-base leading-relaxed text-gray-700 dark:text-gray-300 border rounded-lg p-4 outline-none">
+
+        </p>
+
+      </div>
+
+      <!-- BULLET POINTS -->
+      <div>
+
+        <label class="block mb-3 font-medium text-gray-700 dark:text-gray-300">
+          Highlights
+        </label>
+
+        <ul class="space-y-2">
+
+          <li
+            id="bullet1"
+            contenteditable="false"
+            class="border rounded-lg p-2 outline-none">
+          </li>
+
+          <li
+            id="bullet2"
+            contenteditable="false"
+            class="border rounded-lg p-2 outline-none">
+          </li>
+
+          <li
+            id="bullet3"
+            contenteditable="false"
+            class="border rounded-lg p-2 outline-none">
+          </li>
+
+          <li
+            id="bullet4"
+            contenteditable="false"
+            class="border rounded-lg p-2 outline-none">
+          </li>
+
+          <li
+            id="bullet5"
+            contenteditable="false"
+            class="border rounded-lg p-2 outline-none">
+          </li>
+
+          <li
+            id="bullet6"
+            contenteditable="false"
+            class="border rounded-lg p-2 outline-none">
+          </li>
+
+        </ul>
+
+      </div>
+
+      <!-- CV BUTTON PREVIEW -->
+      <div>
+
+        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+          CV Button Text
+        </label>
+
+        <div class="flex flex-wrap gap-4">
+
+          <a
+            id="cvBtn"
+            href="#"
+            target="_blank"
+            class="inline-flex items-center gap-2 px-6 py-3
+                   bg-blue-600 hover:bg-blue-700
+                   text-white font-semibold rounded-full transition">
+
+            <i class="fas fa-download"></i>
+
+            <span
+              id="cvBtnText"
+              contenteditable="false"
+              class="outline-none">
+
+              Download My CV
+
+            </span>
+
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- CV LINK -->
+      <div>
+
+        <label class="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+          CV Download Link
+        </label>
+
+        <input
+          id="cvLink"
+          type="text"
+          disabled
+          placeholder="https://drive.google.com/..."
+          class="w-full border rounded-lg px-4 py-3
+                 bg-gray-100 dark:bg-gray-800
+                 dark:text-white">
+
+      </div>
 
     </div>
 
@@ -105,6 +211,78 @@
 
 </section>
 
+<script>
+/* ===========================
+   ENABLE EDIT MODE
+=========================== */
+
+document
+  .getElementById("editAboutBtn")
+  .addEventListener("click", () => {
+
+    const editableFields = [
+      "aboutTitle",
+      "aboutDescription",
+      "bullet1",
+      "bullet2",
+      "bullet3",
+      "bullet4",
+      "bullet5",
+      "bullet6",
+      "cvBtnText"
+    ];
+
+    editableFields.forEach(id => {
+      document
+        .getElementById(id)
+        .setAttribute("contenteditable", "true");
+
+      document
+        .getElementById(id)
+        .classList.add(
+          "ring-2",
+          "ring-yellow-400"
+        );
+    });
+
+    document.getElementById("aboutImageUrl").disabled = false;
+    document.getElementById("cvLink").disabled = false;
+
+    document
+      .getElementById("aboutImageUrl")
+      .classList.remove("bg-gray-100");
+
+    document
+      .getElementById("cvLink")
+      .classList.remove("bg-gray-100");
+  });
+
+/* ===========================
+   IMAGE PREVIEW
+=========================== */
+
+document
+  .getElementById("aboutImageUrl")
+  .addEventListener("input", function () {
+
+    const value = this.value.trim();
+
+    document.getElementById("aboutImage").src =
+      value || "Avatar.jpg";
+  });
+
+/* ===========================
+   CV LINK PREVIEW
+=========================== */
+
+document
+  .getElementById("cvLink")
+  .addEventListener("input", function () {
+
+    document.getElementById("cvBtn").href =
+      this.value || "#";
+  });
+</script>
 
     <!-- ========================= -->
     <!-- MILESTONES -->
