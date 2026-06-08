@@ -1580,6 +1580,105 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
   });
 </script>
 
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabase = createClient(
+  'https://hcuomhpujakrffuzqyyf.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdW9taHB1amFrcmZmdXpxeXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MTUxNjYsImV4cCI6MjA5NDE5MTE2Nn0.O8-uti4KtpmmTLtBxVfCCT7Vbq4QWUeqUjTmqnugWJs'
+);
+
+async function loadAboutSection() {
+
+  try {
+
+    const currentLang =
+      localStorage.getItem('lang') || 'en';
+
+    // ==========================
+    // LOAD TEXT CONTENT
+    // ==========================
+
+    const { data: content, error: contentError } =
+      await supabase
+        .from('about_section')
+        .select('*');
+
+    if (contentError) throw contentError;
+
+    content.forEach(row => {
+
+      const element = document.querySelector(
+        `[data-i18n="${row.key}"]`
+      );
+
+      if (!element) return;
+
+      element.innerHTML =
+        currentLang === 'vi'
+          ? (row.vi_text || '')
+          : (row.en_text || '');
+
+    });
+
+    // ==========================
+    // LOAD SETTINGS
+    // ==========================
+
+    const { data: settings, error: settingsError } =
+      await supabase
+        .from('about_section_settings')
+        .select('*')
+        .eq('id', 1)
+        .single();
+
+    if (settingsError) throw settingsError;
+
+    // Image
+
+    const aboutImage =
+      document.getElementById('aboutImage');
+
+    if (
+      aboutImage &&
+      settings.image_url
+    ) {
+      aboutImage.src =
+        settings.image_url;
+    }
+
+    // CV Link
+
+    const cvBtn =
+      document.getElementById('cvBtn');
+
+    if (
+      cvBtn &&
+      settings.cv_link
+    ) {
+      cvBtn.href =
+        settings.cv_link;
+    }
+
+  } catch (error) {
+
+    console.error(
+      'Error loading About Section:',
+      error
+    );
+
+  }
+
+}
+
+// Initial load
+loadAboutSection();
+
+// Optional: make available globally
+window.loadAboutSection =
+  loadAboutSection;
+
+</script>
 
 </body>
 
