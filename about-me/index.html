@@ -1678,7 +1678,24 @@ loadAboutSection();
 window.loadAboutSection =
   loadAboutSection;
 
+
+
+  function highlightActiveLang(lang) {
+  const btnEn = document.getElementById('btn-en');
+  const btnVi = document.getElementById('btn-vi');
+  if (!btnEn || !btnVi) return;
+
+  btnEn.classList.toggle('bg-white', lang === 'en');
+  btnEn.classList.toggle('dark:bg-gray-900', lang === 'en');
+  btnVi.classList.toggle('bg-white', lang === 'vi');
+  btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
+}
+
+document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'));
+document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'));
+
 </script>
+
 
 </body>
 
