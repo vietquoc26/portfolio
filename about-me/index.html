@@ -1615,16 +1615,16 @@ async function loadSectionContent(sectionId) {
 
   if (!tableName) {
 
-    if (sectionId === 'about') {
+    if (sectionId === 'aboutPageEditor') {
       tableName = 'about_section'
     } else {
-      tableName = `${sectionId}_content`
+      tableName = `${sectionId}_section`
     }
   }
 
   const { data, error } =
     await supabase
-      .from(tableName)
+      .from(about_section)
       .select('*')
 
   if (error) {
