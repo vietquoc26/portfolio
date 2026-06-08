@@ -1054,456 +1054,268 @@ Designed social content strategies and engagement plans.
 
 </section>
 
-<script type="module">
+<script /* ================= ABOUT SECTION ================= */
 
-import { createClient }
-from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+// --- Language Toggle ---
+document.getElementById('lang-en')?.addEventListener('click', () => {
+currentLang = 'en'
+loadAboutContent()
+})
 
-/* =========================
-   SUPABASE
-========================= */
+document.getElementById('lang-vi')?.addEventListener('click', () => {
+currentLang = 'vi'
+loadAboutContent()
+})
 
-const supabaseUrl =
-'https://hcuomhpujakrffuzqyyf.supabase.co'
+// --- Edit Mode ---
+const aboutEditBtn = document.getElementById('editAboutBtn')
+const saveAboutBtn = document.getElementById('saveAboutBtn')
 
-const supabaseAnonKey =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdW9taHB1amFrcmZmdXpxeXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MTUxNjYsImV4cCI6MjA5NDE5MTE2Nn0.O8-uti4KtpmmTLtBxVfCCT7Vbq4QWUeqUjTmqnugWJs'
+aboutEditBtn?.addEventListener('click', () => {
 
-const supabase =
-createClient(
-  supabaseUrl,
-  supabaseAnonKey
-)
+const aboutSection =
+document.getElementById('aboutPageEditor')
 
-let currentLang = 'en'
+if (!aboutSection) return
 
-/* =========================
-   LANGUAGE SWITCH
-========================= */
+const editableElements =
+aboutSection.querySelectorAll('.editable')
 
-document
-.getElementById('lang-en')
-?.addEventListener('click', () => {
+const isEditing =
+editableElements[0]?.contentEditable === 'true'
 
-  currentLang = 'en'
-  loadAboutContent()
+editableElements.forEach(el => {
+el.contentEditable = !isEditing
+
+```
+el.classList.toggle('border', !isEditing)
+el.classList.toggle('border-dashed', !isEditing)
+el.classList.toggle('p-1', !isEditing)
+```
 
 })
 
-document
-.getElementById('lang-vi')
-?.addEventListener('click', () => {
+document.getElementById('aboutImageUrl').disabled =
+isEditing
 
-  currentLang = 'vi'
-  loadAboutContent()
+document.getElementById('cvLink').disabled =
+isEditing
 
-})
+if (isEditing) {
 
-/* =========================
-   EDIT MODE
-========================= */
+```
+saveAboutBtn.classList.add('hidden')
 
-const aboutEditBtn =
-document.getElementById('editAboutBtn')
-
-const saveAboutBtn =
-document.getElementById('saveAboutBtn')
-
-aboutEditBtn?.addEventListener(
-'click',
-async () => {
-
-  const aboutSection =
-  document.getElementById(
-    'aboutPageEditor'
-  )
-
-  if (!aboutSection) return
-
-  const editableElements =
-  aboutSection.querySelectorAll(
-    '.editable'
-  )
-
-  const isEditing =
-  editableElements[0]?.contentEditable === 'true'
-
-  editableElements.forEach(el => {
-
-    el.contentEditable =
-    !isEditing
-
-    el.classList.toggle(
-      'border',
-      !isEditing
-    )
-
-    el.classList.toggle(
-      'border-dashed',
-      !isEditing
-    )
-
-    el.classList.toggle(
-      'p-1',
-      !isEditing
-    )
-
-  })
-
-  document.getElementById(
-    'aboutImageUrl'
-  ).disabled = isEditing
-
-  document.getElementById(
-    'cvLink'
-  ).disabled = isEditing
-
-  if (isEditing) {
-
-    saveAboutBtn.classList.add(
-      'hidden'
-    )
-
-    aboutEditBtn.innerHTML =
-    '<i class="fas fa-edit mr-1"></i> Edit'
-
-    await loadAboutContent()
-
-  } else {
-
-    saveAboutBtn.classList.remove(
-      'hidden'
-    )
-
-    aboutEditBtn.innerHTML =
-    '<i class="fas fa-times mr-1"></i> Cancel'
-
-  }
-
-})
-
-/* =========================
-   SAVE BUTTON
-========================= */
-
-saveAboutBtn?.addEventListener(
-'click',
-async () => {
-
-  await saveAboutContent()
-
-  saveAboutBtn.classList.add(
-    'hidden'
-  )
-
-  aboutEditBtn.innerHTML =
+aboutEditBtn.innerHTML =
   '<i class="fas fa-edit mr-1"></i> Edit'
 
-  const editableElements =
-  document.querySelectorAll(
-    '#aboutPageEditor .editable'
-  )
+loadAboutContent()
+```
 
-  editableElements.forEach(el => {
+} else {
 
-    el.contentEditable = false
+```
+saveAboutBtn.classList.remove('hidden')
 
-    el.classList.remove(
-      'border',
-      'border-dashed',
-      'p-1'
-    )
+aboutEditBtn.innerHTML =
+  '<i class="fas fa-times mr-1"></i> Cancel'
+```
 
-  })
-
-  document.getElementById(
-    'aboutImageUrl'
-  ).disabled = true
-
-  document.getElementById(
-    'cvLink'
-  ).disabled = true
-
+}
 })
 
-/* =========================
-   LOAD CONTENT
-========================= */
+// --- Save Button ---
+saveAboutBtn?.addEventListener('click', async () => {
 
+await saveAboutContent()
+
+saveAboutBtn.classList.add('hidden')
+
+aboutEditBtn.innerHTML =
+'<i class="fas fa-edit mr-1"></i> Edit'
+
+const editableElements =
+document.querySelectorAll(
+'#aboutPageEditor .editable'
+)
+
+editableElements.forEach(el => {
+el.contentEditable = false
+})
+
+document.getElementById('aboutImageUrl').disabled = true
+document.getElementById('cvLink').disabled = true
+})
+
+// --- Load Content ---
 async function loadAboutContent() {
 
-  try {
+const aboutSection =
+document.getElementById('aboutPageEditor')
 
-    const editableElements =
-    document.querySelectorAll(
-      '#aboutPageEditor .editable'
-    )
-
-    console.log(
-      'Editable Elements:',
-      editableElements.length
-    )
-
-    const {
-      data,
-      error
-    } = await supabase
-      .from('about_section')
-      .select('*')
-
-    if (error)
-      throw error
-
-    console.log(
-      'About Data:',
-      data
-    )
-
-    editableElements.forEach(el => {
-
-      const key =
-      el.dataset.i18n
-
-      const row =
-      data.find(
-        item =>
-        item.key === key
-      )
-
-      if (!row) {
-
-        console.warn(
-          `Missing key: ${key}`
-        )
-
-        return
-
-      }
-
-      el.textContent =
-      currentLang === 'en'
-      ? row.en_text || ''
-      : row.vi_text || ''
-
-      el.dataset.rowId =
-      row.id
-
-    })
-
-    /* SETTINGS */
-
-    const {
-      data: settings,
-      error: settingsError
-    } = await supabase
-      .from(
-        'about_section_settings'
-      )
-      .select('*')
-      .eq('id', 1)
-      .single()
-
-    if (
-      !settingsError &&
-      settings
-    ) {
-
-      document.getElementById(
-        'aboutImageUrl'
-      ).value =
-      settings.image_url || ''
-
-      document.getElementById(
-        'aboutImage'
-      ).src =
-      settings.image_url ||
-      'Avatar.jpg'
-
-      document.getElementById(
-        'cvLink'
-      ).value =
-      settings.cv_link || ''
-
-      document.getElementById(
-        'cvBtn'
-      ).href =
-      settings.cv_link || '#'
-
-    }
-
-  } catch (err) {
-
-    console.error(
-      'Load About Error:',
-      err
-    )
-
-  }
-
+if (!aboutSection) {
+console.error('❌ About section not found')
+return
 }
 
-/* =========================
-   SAVE CONTENT
-========================= */
+const editableElements =
+aboutSection.querySelectorAll('.editable')
 
+const { data, error } =
+await supabase
+.from('about_section')
+.select('*')
+
+if (error) {
+console.error(
+'❌ Error loading about content:',
+error.message
+)
+return
+}
+
+editableElements.forEach(el => {
+
+```
+const key =
+  el.getAttribute('data-i18n')
+
+const row =
+  data.find(
+    d => d.key === key
+  )
+
+if (row) {
+
+  el.innerText =
+    currentLang === 'en'
+      ? row.en_text
+      : row.vi_text
+}
+```
+
+})
+
+// SETTINGS
+
+const { data: settings } =
+await supabase
+.from('about_section_settings')
+.select('*')
+.eq('id', 1)
+.single()
+
+if (settings) {
+
+```
+document.getElementById('aboutImageUrl').value =
+  settings.image_url || ''
+
+document.getElementById('aboutImage').src =
+  settings.image_url || 'Avatar.jpg'
+
+document.getElementById('cvLink').value =
+  settings.cv_link || ''
+
+document.getElementById('cvBtn').href =
+  settings.cv_link || '#'
+```
+
+}
+}
+
+// --- Save Content ---
 async function saveAboutContent() {
 
-  try {
+const aboutSection =
+document.getElementById('aboutPageEditor')
 
-    const editableElements =
-    document.querySelectorAll(
-      '#aboutPageEditor .editable'
-    )
+if (!aboutSection) return
 
-    for (const el of editableElements) {
+const editableElements =
+aboutSection.querySelectorAll('.editable')
 
-      const key =
-      el.dataset.i18n
+for (const el of editableElements) {
 
-      const rowId =
-      el.dataset.rowId
+```
+const key =
+  el.getAttribute('data-i18n')
 
-      const text =
-      el.textContent.trim()
+const text =
+  el.innerText.trim()
 
-      const payload =
-      currentLang === 'en'
-      ? {
-          id: rowId,
-          key,
-          en_text: text
-        }
-      : {
-          id: rowId,
-          key,
-          vi_text: text
-        }
+const updates =
+  currentLang === 'en'
+    ? { key, en_text: text }
+    : { key, vi_text: text }
 
-      const { error } =
-      await supabase
-        .from('about_section')
-        .upsert(
-          payload,
-          {
-            onConflict: 'id'
-          }
-        )
-
-      if (error) {
-
-        console.error(
-          `Failed: ${key}`,
-          error
-        )
-
+const { error } =
+  await supabase
+    .from('about_section')
+    .upsert(
+      updates,
+      {
+        onConflict: 'key'
       }
-
-    }
-
-    /* SETTINGS */
-
-    const {
-      error: settingsError
-    } = await supabase
-      .from(
-        'about_section_settings'
-      )
-      .upsert({
-
-        id: 1,
-
-        image_url:
-        document.getElementById(
-          'aboutImageUrl'
-        ).value,
-
-        cv_link:
-        document.getElementById(
-          'cvLink'
-        ).value,
-
-        updated_at:
-        new Date()
-        .toISOString()
-
-      })
-
-    if (settingsError)
-      throw settingsError
-
-    alert(
-      'About content saved successfully!'
     )
 
-  } catch (err) {
-
-    console.error(
-      'Save Error:',
-      err
-    )
-
-    alert(
-      'Failed to save About content.'
-    )
-
-  }
+if (error) {
+  console.error(
+    `❌ Failed to save ${key}:`,
+    error.message
+  )
+}
+```
 
 }
 
-/* =========================
-   LIVE IMAGE PREVIEW
-========================= */
+// SETTINGS
 
+await supabase
+.from('about_section_settings')
+.upsert({
+id: 1,
+
+```
+  image_url:
+    document.getElementById('aboutImageUrl').value,
+
+  cv_link:
+    document.getElementById('cvLink').value,
+
+  updated_at:
+    new Date().toISOString()
+})
+```
+
+alert('About content saved! ✅')
+}
+
+// --- Live Image Preview ---
 document
-.getElementById(
-  'aboutImageUrl'
-)
-?.addEventListener(
-'input',
-e => {
+.getElementById('aboutImageUrl')
+?.addEventListener('input', e => {
 
-  document
-  .getElementById(
-    'aboutImage'
-  )
-  .src =
-  e.target.value ||
-  'Avatar.jpg'
+```
+document.getElementById('aboutImage').src =
+  e.target.value || 'Avatar.jpg'
+```
 
 })
 
-/* =========================
-   LIVE CV LINK
-========================= */
-
+// --- Live CV Link Preview ---
 document
-.getElementById(
-  'cvLink'
-)
-?.addEventListener(
-'input',
-e => {
+.getElementById('cvLink')
+?.addEventListener('input', e => {
 
-  document
-  .getElementById(
-    'cvBtn'
-  )
-  .href =
-  e.target.value ||
-  '#'
+```
+document.getElementById('cvBtn').href =
+  e.target.value || '#'
+```
 
 })
 
-/* =========================
-   INITIAL LOAD
-========================= */
-
-document.addEventListener(
-'DOMContentLoaded',
-() => {
-
-  loadAboutContent()
-
-})
+// --- Initial Load ---
+loadAboutContent()
 
 </script>
