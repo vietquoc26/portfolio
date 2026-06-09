@@ -1597,115 +1597,115 @@ async function loadTabContent(tabId, filePath) {
 
 /* ================= ABOUT SECTION ================= */
 
-// =============================
-// LANGUAGE TOGGLE
-// =============================
+document.addEventListener('DOMContentLoaded', () => {
 
-document.getElementById('lang-en')?.addEventListener('click', () => {
-  currentLang = 'en'
-  loadAboutSection()
-})
+  const aboutSectionEditBtn =
+    document.getElementById('editAboutSection')
 
-document.getElementById('lang-vi')?.addEventListener('click', () => {
-  currentLang = 'vi'
-  loadAboutSection()
-})
+  const saveAboutSectionBtn =
+    document.getElementById('saveAboutSection')
 
+  // =============================
+  // LANGUAGE TOGGLE
+  // =============================
 
-// =============================
-// BUTTONS
-// =============================
+  document.getElementById('lang-en')?.addEventListener('click', () => {
+    currentLang = 'en'
+    loadAboutSection()
+  })
 
-const aboutSectionEditBtn =
-  document.getElementById('editAboutSection')
+  document.getElementById('lang-vi')?.addEventListener('click', () => {
+    currentLang = 'vi'
+    loadAboutSection()
+  })
 
-const saveAboutSectionBtn =
-  document.getElementById('saveAboutSection')
+  // =============================
+  // TOGGLE EDIT MODE
+  // =============================
 
+  aboutSectionEditBtn?.addEventListener('click', async () => {
 
-// =============================
-// TOGGLE EDIT MODE
-// =============================
+    const section =
+      document.getElementById('aboutSection')
 
-aboutSectionEditBtn?.addEventListener('click', async () => {
+    if (!section) return
 
-  const section =
-    document.getElementById('aboutSection')
+    const editableElements =
+      section.querySelectorAll('.editable')
 
-  if (!section) return
+    const isEditing =
+      editableElements[0]?.contentEditable === 'true'
 
-  const editableElements =
-    section.querySelectorAll('.editable')
+    editableElements.forEach(el => {
 
-  const isEditing =
-    editableElements[0]?.contentEditable === 'true'
+      el.contentEditable =
+        isEditing ? 'false' : 'true'
 
-  editableElements.forEach(el => {
+      el.classList.toggle('border', !isEditing)
+      el.classList.toggle('border-dashed', !isEditing)
+      el.classList.toggle('border-blue-500', !isEditing)
+      el.classList.toggle('p-1', !isEditing)
+      el.classList.toggle('rounded', !isEditing)
 
-    el.contentEditable =
-      isEditing ? 'false' : 'true'
+    })
 
-    el.classList.toggle('border', !isEditing)
-    el.classList.toggle('border-dashed', !isEditing)
-    el.classList.toggle('border-blue-500', !isEditing)
-    el.classList.toggle('p-1', !isEditing)
-    el.classList.toggle('rounded', !isEditing)
+    if (isEditing) {
+
+      saveAboutSectionBtn.classList.add('hidden')
+
+      aboutSectionEditBtn.innerHTML =
+        '<i class="fas fa-edit mr-1"></i> Edit About'
+
+      await loadAboutSection()
+
+    } else {
+
+      saveAboutSectionBtn.classList.remove('hidden')
+
+      aboutSectionEditBtn.innerHTML =
+        '<i class="fas fa-times mr-1"></i> Cancel'
+
+    }
 
   })
 
-  if (isEditing) {
+  // =============================
+  // SAVE BUTTON
+  // =============================
+
+  saveAboutSectionBtn?.addEventListener('click', async () => {
+
+    await saveAboutSection()
 
     saveAboutSectionBtn.classList.add('hidden')
 
     aboutSectionEditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit About Section'
+      '<i class="fas fa-edit mr-1"></i> Edit About'
 
-    await loadAboutSection()
+    const section =
+      document.getElementById('aboutSection')
 
-  } else {
+    const editableElements =
+      section.querySelectorAll('.editable')
 
-    saveAboutSectionBtn.classList.remove('hidden')
+    editableElements.forEach(el => {
 
-    aboutSectionEditBtn.innerHTML =
-      '<i class="fas fa-times mr-1"></i> Cancel'
+      el.contentEditable = 'false'
 
-  }
+      el.classList.remove(
+        'border',
+        'border-dashed',
+        'border-blue-500',
+        'p-1',
+        'rounded'
+      )
 
-})
-
-
-// =============================
-// SAVE BUTTON
-// =============================
-
-saveAboutSectionBtn?.addEventListener('click', async () => {
-
-  await saveAboutSection()
-
-  saveAboutSectionBtn.classList.add('hidden')
-
-  aboutSectionEditBtn.innerHTML =
-    '<i class="fas fa-edit mr-1"></i> Edit About Section'
-
-  const section =
-    document.getElementById('aboutSection')
-
-  const editableElements =
-    section.querySelectorAll('.editable')
-
-  editableElements.forEach(el => {
-
-    el.contentEditable = 'false'
-
-    el.classList.remove(
-      'border',
-      'border-dashed',
-      'border-blue-500',
-      'p-1',
-      'rounded'
-    )
+    })
 
   })
+
+  // Initial load
+  loadAboutSection()
 
 })
 
@@ -1726,13 +1726,13 @@ async function loadAboutSection() {
 
   const { data, error } =
     await supabase
-      .from('About_Section')
+      .from('about_section')
       .select('*')
 
   if (error) {
 
     console.error(
-      '❌ Error loading About_Section:',
+      '❌ Error loading about_section:',
       error.message
     )
 
@@ -1749,7 +1749,7 @@ async function loadAboutSection() {
 
     if (!row) return
 
-    el.innerText =
+    el.textContent =
       currentLang === 'en'
         ? (row.en_text || '')
         : (row.vi_text || '')
@@ -1781,7 +1781,7 @@ async function saveAboutSection() {
     if (!key) continue
 
     const text =
-      el.innerText.trim()
+      el.textContent.trim()
 
     const updates =
       currentLang === 'en'
@@ -1797,12 +1797,9 @@ async function saveAboutSection() {
     const { error } =
       await supabase
         .from('about_section')
-        .upsert(
-          updates,
-          {
-            onConflict: 'key'
-          }
-        )
+        .upsert(updates, {
+          onConflict: 'key'
+        })
 
     if (error) {
 
@@ -1824,15 +1821,6 @@ async function saveAboutSection() {
   alert('About Section saved successfully! ✅')
 
 }
-
-
-// =============================
-// INITIAL LOAD
-// =============================
-
-document.addEventListener('DOMContentLoaded', () => {
-  loadAboutSection()
-})
 
 
 
