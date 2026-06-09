@@ -135,58 +135,75 @@
 
     <!-- Image Column -->
     <div class="relative flex justify-center items-center">
-      <!-- Circular Image -->
+
       <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
-        <img src="Avatar.jpg" alt="Viet" class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+        <img
+          id="aboutImage"
+          src="Avatar.jpg"
+          alt="Viet"
+          class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
       </div>
 
-      <!-- Floating Icons -->
       <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
         <i class="fas fa-lightbulb"></i>
       </div>
+
       <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
         <i class="fas fa-code"></i>
       </div>
+
       <div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
         <i class="fas fa-rocket"></i>
       </div>
+
     </div>
 
     <!-- Text Column -->
     <div class="space-y-6 text-left animate-fade-in-left">
-      <h1 class="text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white" data-i18n="aboutme"></h1>
 
-      <p class="text-base leading-relaxed text-gray-700 dark:text-gray-300" data-i18n="intro">
-        When diving into each project, I have dedicated all the following skills to supporting businesses in reaching all core objectives:
+      <h1
+        class="text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white"
+        data-i18n="aboutme">
+      </h1>
+
+      <p
+        class="text-base leading-relaxed text-gray-700 dark:text-gray-300"
+        data-i18n="intro">
       </p>
 
       <ul class="list-disc list-inside space-y-1 text-sm md:text-base text-gray-700 dark:text-gray-300">
-        <li data-i18n="aboutSkill1">Support creating all-aspect content strategies to approach target audiences</li>
-        <li data-i18n="aboutSkill2">Writing high-converting landing pages</li>
-        <li data-i18n="aboutSkill3">Conduct comprehensive email marketing campaigns</li>
-        <li data-i18n="aboutSkill4">Create content and design interactive images across social media channels</li>
-        <li data-i18n="aboutSkill5">Edit engaging videos to support building brand identities</li>
-        <li data-i18n="aboutSkill6">Edit engaging videos to support building brand identities</li>
+
+        <li data-i18n="aboutSkill1"></li>
+        <li data-i18n="aboutSkill2"></li>
+        <li data-i18n="aboutSkill3"></li>
+        <li data-i18n="aboutSkill4"></li>
+        <li data-i18n="aboutSkill5"></li>
+        <li data-i18n="aboutSkill6"></li>
+
       </ul>
 
-      <!-- Action Buttons -->
       <div class="flex flex-wrap gap-4 pt-4">
-       <a
-  href="https://drive.google.com/file/d/1UMiObwUvQK3-OyqcVD8r8yRmDPY3UKL5/view?usp=sharing"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="inline-flex items-center gap-2 px-6 py-3
-         bg-blue-600 hover:bg-blue-700
-         dark:bg-white dark:hover:bg-gray-100
-         text-white dark:text-gray-900
-         font-semibold rounded-full shadow-lg hover:shadow-xl
-         transition-all duration-300 hover:-translate-y-1"
-  data-i18n="downloadCV"
->
-  <i class="fas fa-download"></i>
-  Download My CV
-</a>
+
+        <a
+          id="cvBtn"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3
+                 bg-blue-600 hover:bg-blue-700
+                 dark:bg-white dark:hover:bg-gray-100
+                 text-white dark:text-gray-900
+                 font-semibold rounded-full shadow-lg hover:shadow-xl
+                 transition-all duration-300 hover:-translate-y-1">
+
+          <i class="fas fa-download"></i>
+
+          <span data-i18n="downloadCV"></span>
+
+        </a>
+
       </div>
+
     </div>
 
   </div>
@@ -1599,13 +1616,14 @@ let currentLang =
 async function loadAboutSection() {
 
   const section =
-    document.getElementById('about')
+    document.getElementById('aboutSection')
 
   if (!section) return
 
-  const editableElements =
+  const elements =
     section.querySelectorAll('[data-i18n]')
 
+  // Load text content
   const { data, error } =
     await supabase
       .from('about_section')
@@ -1614,33 +1632,35 @@ async function loadAboutSection() {
   if (error) {
 
     console.error(
-      'Failed loading about section:',
+      'Error loading about_section:',
       error.message
     )
 
     return
   }
 
-  editableElements.forEach(el => {
+  const contentMap = {}
+
+  data.forEach(row => {
+
+    contentMap[row.key] = row
+
+  })
+
+  elements.forEach(el => {
 
     const key =
-      el.dataset.i18n
+      el.getAttribute('data-i18n')
 
     const row =
-      data.find(item => item.key === key)
+      contentMap[key]
 
     if (!row) return
 
-    const content =
+    el.innerHTML =
       currentLang === 'en'
-        ? row.en_text
-        : row.vi_text
-
-    if (content) {
-
-      el.innerHTML = content
-
-    }
+        ? row.en_text || ''
+        : row.vi_text || ''
 
   })
 
