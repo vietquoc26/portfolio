@@ -1613,153 +1613,64 @@ let currentLang =
    LOAD ABOUT SECTION
 ========================= */
 
-async function loadAboutSection() {
+/* ================= ABOUT SECTION ================= */
 
-  const section =
-    document.getElementById('aboutSection')
+async function loadAboutSection(language = 'en') {
 
-  if (!section) return
+  try {
 
-  const elements =
-    section.querySelectorAll('[data-i18n]')
-
-  // Load text content
-  const { data, error } =
-    await supabase
+    const { data, error } = await supabase
       .from('about_section')
       .select('*')
 
-  if (error) {
+    if (error) throw error
 
-    console.error(
-      'Error loading about_section:',
-      error.message
-    )
+    // Convert array into object
+    const content = {}
 
-    return
+    data.forEach(item => {
+      content[item.key] =
+        language === 'vi'
+          ? item.vi_text
+          : item.en_text
+    })
+
+    // Title
+    const title = document.querySelector('[data-i18n="aboutme"]')
+    if (title) title.textContent = content.aboutme || ''
+
+    // Intro
+    const intro = document.querySelector('[data-i18n="intro"]')
+    if (intro) intro.textContent = content.intro || ''
+
+    // Skills
+    const skills = [
+      'aboutSkill1',
+      'aboutSkill2',
+      'aboutSkill3',
+      'aboutSkill4',
+      'aboutSkill5',
+      'aboutSkill6'
+    ]
+
+    skills.forEach(key => {
+      const el = document.querySelector(`[data-i18n="${key}"]`)
+      if (el) el.textContent = content[key] || ''
+    })
+
+    // Download CV button text
+    const cvBtnText =
+      document.querySelector('[data-i18n="downloadCV"]')
+
+    if (cvBtnText) {
+      cvBtnText.textContent =
+        content.downloadCV || ''
+    }
+
+  } catch (err) {
+    console.error('Error loading About section:', err)
   }
-
-  const contentMap = {}
-
-  data.forEach(row => {
-
-    contentMap[row.key] = row
-
-  })
-
-  elements.forEach(el => {
-
-    const key =
-      el.getAttribute('data-i18n')
-
-    const row =
-      contentMap[key]
-
-    if (!row) return
-
-    el.innerHTML =
-      currentLang === 'en'
-        ? row.en_text || ''
-        : row.vi_text || ''
-
-  })
-
 }
-
-
-/* =========================
-   ABOUT IMAGE + CV SETTINGS
-========================= */
-
-async function loadAboutSettings() {
-
-  const { data, error } =
-    await supabase
-      .from('about_section_settings')
-      .select('*')
-      .eq('id', 1)
-      .single()
-
-  if (error || !data) return
-
-  const aboutImage =
-    document.getElementById('aboutImage')
-
-  if (
-    aboutImage &&
-    data.image_url
-  ) {
-
-    aboutImage.src =
-      data.image_url
-
-  }
-
-  const cvBtn =
-    document.getElementById('cvBtn')
-
-  if (
-    cvBtn &&
-    data.cv_link
-  ) {
-
-    cvBtn.href =
-      data.cv_link
-
-  }
-
-}
-
-
-/* =========================
-   LANGUAGE SWITCH
-========================= */
-
-document
-  .getElementById('lang-en')
-  ?.addEventListener('click', () => {
-
-    currentLang = 'en'
-
-    localStorage.setItem(
-      'lang',
-      'en'
-    )
-
-    loadAboutSection()
-
-  })
-
-document
-  .getElementById('lang-vi')
-  ?.addEventListener('click', () => {
-
-    currentLang = 'vi'
-
-    localStorage.setItem(
-      'lang',
-      'vi'
-    )
-
-    loadAboutSection()
-
-  })
-
-
-/* =========================
-   INITIAL LOAD
-========================= */
-
-document.addEventListener(
-  'DOMContentLoaded',
-  async () => {
-
-    await loadAboutSection()
-
-    await loadAboutSettings()
-
-  }
-)
 
 
 
