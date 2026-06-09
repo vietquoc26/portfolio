@@ -1602,76 +1602,92 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const supabase = createClient(
   'https://hcuomhpujakrffuzqyyf.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdW9taHB1amFrcmZmdXpxeXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MTUxNjYsImV4cCI6MjA5NDE5MTE2Nn0.O8-uti4KtpmmTLtBxVfCCT7Vbq4QWUeqUjTmqnugWJs'
+  'YOUR_ANON_KEY'
 )
 
-let currentLang =
+const currentLang =
   localStorage.getItem('lang') || 'en'
-
 
 /* =========================
    LOAD ABOUT SECTION
 ========================= */
 
-/* ================= ABOUT SECTION ================= */
-
 async function loadAboutSection(language = 'en') {
 
   try {
 
+    console.log('Loading About Section...')
+
     const { data, error } = await supabase
       .from('about_section')
       .select('*')
+      .order('id')
 
-    if (error) throw error
+    if (error) {
+      console.error('Supabase Error:', error)
+      return
+    }
 
-    // Convert array into object
-    const content = {}
+    console.log('About Data:', data)
 
     data.forEach(item => {
-      content[item.key] =
+
+      const value =
         language === 'vi'
           ? item.vi_text
           : item.en_text
+
+      const elements = document.querySelectorAll(
+        `[data-i18n="${item.key}"]`
+      )
+
+      console.log(
+        `Key: ${item.key}`,
+        'Elements Found:',
+        elements.length
+      )
+
+      elements.forEach(el => {
+        el.textContent = value || ''
+      })
+
     })
 
-    // Title
-    const title = document.querySelector('[data-i18n="aboutme"]')
-    if (title) title.textContent = content.aboutme || ''
-
-    // Intro
-    const intro = document.querySelector('[data-i18n="intro"]')
-    if (intro) intro.textContent = content.intro || ''
-
-    // Skills
-    const skills = [
-      'aboutSkill1',
-      'aboutSkill2',
-      'aboutSkill3',
-      'aboutSkill4',
-      'aboutSkill5',
-      'aboutSkill6'
-    ]
-
-    skills.forEach(key => {
-      const el = document.querySelector(`[data-i18n="${key}"]`)
-      if (el) el.textContent = content[key] || ''
-    })
-
-    // Download CV button text
-    const cvBtnText =
-      document.querySelector('[data-i18n="downloadCV"]')
-
-    if (cvBtnText) {
-      cvBtnText.textContent =
-        content.downloadCV || ''
-    }
+    console.log('About Section Loaded Successfully')
 
   } catch (err) {
-    console.error('Error loading About section:', err)
+
+    console.error(
+      'Error loading About Section:',
+      err
+    )
+
   }
+
 }
 
+/* =========================
+   INITIAL LOAD
+========================= */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  async () => {
+    await loadAboutSection(currentLang)
+  }
+)
+
+/* =========================
+   OPTIONAL LANGUAGE SWITCH
+========================= */
+
+window.changeLanguage = async function(lang) {
+
+  localStorage.setItem('lang', lang)
+
+  await loadAboutSection(lang)
+
+}
 
 
 
