@@ -1596,104 +1596,139 @@ document.getElementById('chatbot-close').addEventListener('click', () => {
     });
   });
 
+</script>
 
-type="module">
+<script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
+/* ================= SUPABASE ================= */
 const supabase = createClient(
   'https://hcuomhpujakrffuzqyyf.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdW9taHB1amFrcmZmdXpxeXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MTUxNjYsImV4cCI6MjA5NDE5MTE2Nn0.O8-uti4KtpmmTLtBxVfCCT7Vbq4QWUeqUjTmqnugWJs'
 )
 
-const currentLang =
-  localStorage.getItem('lang') || 'en'
+/* ================= LANGUAGE ================= */
+let currentLang = localStorage.getItem('lang') || 'en'
 
-/* =========================
-   LOAD ABOUT SECTION
-========================= */
+/* ================= FALLBACK HELPERS ================= */
+function captureFallbacks(root = document) {
+  const nodes = root.querySelectorAll('[data-i18n]')
 
-async function loadAboutSection(language = 'en') {
-
-  try {
-
-    console.log('Loading About Section...')
-
-    const { data, error } = await supabase
-      .from('about_section')
-      .select('*')
-      .order('id')
-
-    if (error) {
-      console.error('Supabase Error:', error)
-      return
+  nodes.forEach(el => {
+    if (!el.dataset.fallback) {
+      el.dataset.fallback = (el.innerHTML || '').trim()
     }
-
-    console.log('About Data:', data)
-
-    data.forEach(item => {
-
-      const value =
-        language === 'vi'
-          ? item.vi_text
-          : item.en_text
-
-      const elements = document.querySelectorAll(
-        `[data-i18n="${item.key}"]`
-      )
-
-      console.log(
-        `Key: ${item.key}`,
-        'Elements Found:',
-        elements.length
-      )
-
-      elements.forEach(el => {
-        el.textContent = value || ''
-      })
-
-    })
-
-    console.log('About Section Loaded Successfully')
-
-  } catch (err) {
-
-    console.error(
-      'Error loading About Section:',
-      err
-    )
-
-  }
-
+  })
 }
 
-/* =========================
-   INITIAL LOAD
-========================= */
+function getFallbackText(key, el) {
+  return (el?.dataset?.fallback ?? '').trim()
+}
 
-document.addEventListener(
-  'DOMContentLoaded',
-  async () => {
-    await loadAboutSection(currentLang)
+/* ================= ABOUT LOADER ================= */
+async function loadAboutSection() {
+
+  const section = document.getElementById('about')
+
+  if (!section) {
+    console.error('❌ About section not found')
+    return
   }
-)
 
-/* =========================
-   OPTIONAL LANGUAGE SWITCH
-========================= */
+  captureFallbacks(section)
 
-window.changeLanguage = async function(lang) {
+  const editableElements =
+    section.querySelectorAll('[data-i18n]')
+
+  const { data, error } = await supabase
+    .from('about_section')
+    .select('*')
+
+  if (error) {
+    console.error(
+      '❌ Error loading about_section:',
+      error.message
+    )
+    return
+  }
+
+  console.log('About Data:', data)
+
+  const byKey = Object.create(null)
+
+  if (Array.isArray(data)) {
+    for (const row of data) {
+      if (row && row.key) {
+        byKey[row.key] = row
+      }
+    }
+  }
+
+  editableElements.forEach(el => {
+
+    const key = el.getAttribute('data-i18n')
+
+    const row = byKey[key]
+
+    let supaText = ''
+
+    if (row) {
+      supaText =
+        currentLang === 'en'
+          ? (row.en_text || '')
+          : (row.vi_text || '')
+    }
+
+    if (supaText && supaText.trim() !== '') {
+
+      el.innerHTML = supaText
+
+      el.dataset.supabaseApplied = 'true'
+
+    } else {
+
+      delete el.dataset.supabaseApplied
+
+      el.innerHTML = getFallbackText(key, el)
+
+    }
+
+  })
+
+  console.log('✅ About section loaded')
+}
+
+/* ================= LANGUAGE SWITCH ================= */
+async function setLanguage(lang) {
+
+  if (!lang) return
+
+  currentLang = lang
 
   localStorage.setItem('lang', lang)
 
-  await loadAboutSection(lang)
-
+  await loadAboutSection()
 }
 
+/* ================= BUTTONS ================= */
+document.getElementById('btn-en')
+  ?.addEventListener('click', () => setLanguage('en'))
 
+document.getElementById('btn-vi')
+  ?.addEventListener('click', () => setLanguage('vi'))
 
+/* ================= STARTUP ================= */
+window.addEventListener(
+  'DOMContentLoaded',
+  async () => {
+
+    captureFallbacks(document)
+
+    await loadAboutSection()
+
+  }
+)
 </script>
-
-
 
 </body>
 
