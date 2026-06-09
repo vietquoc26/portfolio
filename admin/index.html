@@ -1796,7 +1796,7 @@ async function saveAboutSection() {
 
     const { error } =
       await supabase
-        .from('About_Section')
+        .from('about_section')
         .upsert(
           updates,
           {
