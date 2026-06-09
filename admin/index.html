@@ -1573,42 +1573,63 @@ window.addEventListener('DOMContentLoaded', () => {
   loadResultsContent()
 })
 
+/* ==========================================
+   LOAD TAB CONTENT
+========================================== */
+
 async function loadTabContent(tabId, filePath) {
+
   try {
-    const response = await fetch(filePath);
+
+    const response = await fetch(filePath)
 
     if (!response.ok) {
-      throw new Error(`Failed to load ${filePath}`);
+      throw new Error(`Failed to load ${filePath}`)
     }
 
-    const html = await response.text();
+    const html = await response.text()
 
-    document.getElementById(tabId).innerHTML = html;
+    document.getElementById(tabId).innerHTML = html
+
+    // Initialize About Section AFTER html is injected
+    if (tabId === 'aboutTab') {
+
+      initAboutSection()
+
+      await loadAboutSection()
+
+    }
+
   } catch (error) {
-    console.error(error);
+
+    console.error(error)
 
     document.getElementById(tabId).innerHTML = `
       <div class="text-red-500">
         Failed to load content.
       </div>
-    `;
+    `
   }
 }
 
 
+/* ==========================================
+   LOAD ALL TABS
+========================================== */
 
-// Load all tabs
-loadTabContent("aboutTab", "./sections/about.html");
-loadTabContent("seoTab", "./sections/seo.html");
-loadTabContent("contentTab", "./sections/content.html");
-loadTabContent("videoTab", "./sections/video.html");
-loadTabContent("paidMediaTab", "./sections/paid-media.html");
-loadTabContent("contactTab", "./sections/contact.html");
+loadTabContent("aboutTab", "./sections/about.html")
+loadTabContent("seoTab", "./sections/seo.html")
+loadTabContent("contentTab", "./sections/content.html")
+loadTabContent("videoTab", "./sections/video.html")
+loadTabContent("paidMediaTab", "./sections/paid-media.html")
+loadTabContent("contactTab", "./sections/contact.html")
 
 
-/* ================= ABOUT SECTION ================= */
+/* ==========================================
+   ABOUT SECTION INIT
+========================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAboutSection() {
 
   const aboutSectionEditBtn =
     document.getElementById('editAboutSection')
@@ -1616,25 +1637,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const saveAboutSectionBtn =
     document.getElementById('saveAboutSection')
 
+  if (!aboutSectionEditBtn) return
+
   // =============================
   // LANGUAGE TOGGLE
   // =============================
 
   document.getElementById('lang-en')?.addEventListener('click', () => {
+
     currentLang = 'en'
+
     loadAboutSection()
+
   })
 
   document.getElementById('lang-vi')?.addEventListener('click', () => {
+
     currentLang = 'vi'
+
     loadAboutSection()
+
   })
 
   // =============================
-  // TOGGLE EDIT MODE
+  // EDIT BUTTON
   // =============================
 
-  aboutSectionEditBtn?.addEventListener('click', async () => {
+  aboutSectionEditBtn.addEventListener('click', async () => {
 
     const section =
       document.getElementById('aboutSection')
@@ -1715,15 +1744,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   })
 
-  // Initial load
-  loadAboutSection()
-
-})
+}
 
 
-// =============================
-// LOAD CONTENT
-// =============================
+/* ==========================================
+   LOAD ABOUT SECTION
+========================================== */
 
 async function loadAboutSection() {
 
@@ -1736,7 +1762,9 @@ async function loadAboutSection() {
     section.querySelectorAll('.editable')
 
   const { data, error } =
-    await supabase.from('about_section').select('*')
+    await supabase
+      .from('about_section')
+      .select('*')
 
   if (error) {
 
@@ -1768,9 +1796,9 @@ async function loadAboutSection() {
 }
 
 
-// =============================
-// SAVE CONTENT
-// =============================
+/* ==========================================
+   SAVE ABOUT SECTION
+========================================== */
 
 async function saveAboutSection() {
 
@@ -1806,9 +1834,12 @@ async function saveAboutSection() {
     const { error } =
       await supabase
         .from('about_section')
-        .upsert(updates, {
-          onConflict: 'key'
-        })
+        .upsert(
+          updates,
+          {
+            onConflict: 'key'
+          }
+        )
 
     if (error) {
 
@@ -1830,7 +1861,6 @@ async function saveAboutSection() {
   alert('About Section saved successfully! ✅')
 
 }
-
 
 </script>
 
