@@ -1697,5 +1697,19 @@ window.addEventListener('DOMContentLoaded', async () => {
   gtag('config', 'G-4Y9LLYLF90');
 </script>
 
+<script>
+if (
+  window.location.hostname === "vietportfolio.work.gd"
+) {
+  window.location.replace(
+    "https://vietportfolio.com" +
+    window.location.pathname +
+    window.location.search +
+    window.location.hash
+  );
+}
+</script>
+
+
 </body>
 </html>
