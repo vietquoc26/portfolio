@@ -1646,6 +1646,7 @@ function initAboutSection() {
   document.getElementById('lang-en')?.addEventListener('click', () => {
 
     currentLang = 'en'
+
     loadAboutSection()
 
   })
@@ -1653,6 +1654,7 @@ function initAboutSection() {
   document.getElementById('lang-vi')?.addEventListener('click', () => {
 
     currentLang = 'vi'
+
     loadAboutSection()
 
   })
@@ -1663,12 +1665,13 @@ function initAboutSection() {
 
   aboutSectionEditBtn.addEventListener('click', async () => {
 
-    const editableElements =
-      document.querySelectorAll(
-        '.about-group .editable'
-      )
+    const section =
+      document.getElementById('aboutSection')
 
-    if (!editableElements.length) return
+    if (!section) return
+
+    const editableElements =
+      section.querySelectorAll('.editable')
 
     const isEditing =
       editableElements[0]?.contentEditable === 'true'
@@ -1688,7 +1691,7 @@ function initAboutSection() {
 
     if (isEditing) {
 
-      saveAboutSectionBtn?.classList.add('hidden')
+      saveAboutSectionBtn.classList.add('hidden')
 
       aboutSectionEditBtn.innerHTML =
         '<i class="fas fa-edit mr-1"></i> Edit About'
@@ -1697,7 +1700,7 @@ function initAboutSection() {
 
     } else {
 
-      saveAboutSectionBtn?.classList.remove('hidden')
+      saveAboutSectionBtn.classList.remove('hidden')
 
       aboutSectionEditBtn.innerHTML =
         '<i class="fas fa-times mr-1"></i> Cancel'
@@ -1719,10 +1722,11 @@ function initAboutSection() {
     aboutSectionEditBtn.innerHTML =
       '<i class="fas fa-edit mr-1"></i> Edit About'
 
+    const section =
+      document.getElementById('aboutSection')
+
     const editableElements =
-      document.querySelectorAll(
-        '.about-group .editable'
-      )
+      section.querySelectorAll('.editable')
 
     editableElements.forEach(el => {
 
@@ -1749,15 +1753,13 @@ function initAboutSection() {
 
 async function loadAboutSection() {
 
-  const editableElements =
-    document.querySelectorAll(
-      '.about-group .editable'
-    )
+  const section =
+    document.getElementById('aboutSection')
 
-  if (!editableElements.length) {
-    console.warn('⚠️ No editable elements found')
-    return
-  }
+  if (!section) return
+
+  const editableElements =
+    section.querySelectorAll('.editable')
 
   const { data, error } =
     await supabase
@@ -1774,35 +1776,22 @@ async function loadAboutSection() {
     return
   }
 
-  const byKey = {}
-
-  data.forEach(row => {
-    byKey[row.key] = row
-  })
-
   editableElements.forEach(el => {
 
     const key =
       el.getAttribute('data-i18n')
 
-    if (!key) return
-
-    const row = byKey[key]
+    const row =
+      data.find(item => item.key === key)
 
     if (!row) return
 
-    const text =
+    el.textContent =
       currentLang === 'en'
         ? (row.en_text || '')
         : (row.vi_text || '')
 
-    el.innerHTML = text
-
   })
-
-  console.log(
-    `✅ About Section Loaded (${editableElements.length} fields)`
-  )
 
 }
 
@@ -1813,12 +1802,13 @@ async function loadAboutSection() {
 
 async function saveAboutSection() {
 
-  const editableElements =
-    document.querySelectorAll(
-      '.about-group .editable'
-    )
+  const section =
+    document.getElementById('aboutSection')
 
-  if (!editableElements.length) return
+  if (!section) return
+
+  const editableElements =
+    section.querySelectorAll('.editable')
 
   for (const el of editableElements) {
 
@@ -1828,7 +1818,7 @@ async function saveAboutSection() {
     if (!key) continue
 
     const text =
-      el.innerHTML.trim()
+      el.textContent.trim()
 
     const updates =
       currentLang === 'en'
@@ -1868,11 +1858,11 @@ async function saveAboutSection() {
 
   }
 
-  alert(
-    'About Section saved successfully! ✅'
-  )
+  alert('About Section saved successfully! ✅')
 
 }
+
+</script>
 
 
 </body>
