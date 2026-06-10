@@ -1626,135 +1626,50 @@ loadTabContent("contactTab", "./sections/contact.html")
 
 
 /* ==========================================
-   ABOUT SECTION INIT
+   GLOBAL LANGUAGE
 ========================================== */
 
-function initAboutSection() {
+let currentLang = 'en'
 
-  const aboutSectionEditBtn =
-    document.getElementById('editAboutSection')
+/* ==========================================
+   SECTION CONFIG
+========================================== */
 
-  const saveAboutSectionBtn =
-    document.getElementById('saveAboutSection')
+const sectionConfigs = {
 
-  if (!aboutSectionEditBtn) return
+  about: {
+    sectionId: 'aboutSection',
+    editBtnId: 'editAboutSection',
+    saveBtnId: 'saveAboutSection',
+    table: 'about_section',
+    label: 'About'
+  },
 
-  // =============================
-  // LANGUAGE TOGGLE
-  // =============================
-
-  document.getElementById('lang-en')?.addEventListener('click', () => {
-
-    currentLang = 'en'
-
-    loadAboutSection()
-
-  })
-
-  document.getElementById('lang-vi')?.addEventListener('click', () => {
-
-    currentLang = 'vi'
-
-    loadAboutSection()
-
-  })
-
-  // =============================
-  // EDIT BUTTON
-  // =============================
-
-  aboutSectionEditBtn.addEventListener('click', async () => {
-
-    const section =
-      document.getElementById('aboutSection')
-
-    if (!section) return
-
-    const editableElements =
-      section.querySelectorAll('.editable')
-
-    const isEditing =
-      editableElements[0]?.contentEditable === 'true'
-
-    editableElements.forEach(el => {
-
-      el.contentEditable =
-        isEditing ? 'false' : 'true'
-
-      el.classList.toggle('border', !isEditing)
-      el.classList.toggle('border-dashed', !isEditing)
-      el.classList.toggle('border-blue-500', !isEditing)
-      el.classList.toggle('p-1', !isEditing)
-      el.classList.toggle('rounded', !isEditing)
-
-    })
-
-    if (isEditing) {
-
-      saveAboutSectionBtn.classList.add('hidden')
-
-      aboutSectionEditBtn.innerHTML =
-        '<i class="fas fa-edit mr-1"></i> Edit About'
-
-      await loadAboutSection()
-
-    } else {
-
-      saveAboutSectionBtn.classList.remove('hidden')
-
-      aboutSectionEditBtn.innerHTML =
-        '<i class="fas fa-times mr-1"></i> Cancel'
-
-    }
-
-  })
-
-  // =============================
-  // SAVE BUTTON
-  // =============================
-
-  saveAboutSectionBtn?.addEventListener('click', async () => {
-
-    await saveAboutSection()
-
-    saveAboutSectionBtn.classList.add('hidden')
-
-    aboutSectionEditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit About'
-
-    const section =
-      document.getElementById('aboutSection')
-
-    const editableElements =
-      section.querySelectorAll('.editable')
-
-    editableElements.forEach(el => {
-
-      el.contentEditable = 'false'
-
-      el.classList.remove(
-        'border',
-        'border-dashed',
-        'border-blue-500',
-        'p-1',
-        'rounded'
-      )
-
-    })
-
-  })
+  highlights: {
+    sectionId: 'highlights',
+    editBtnId: 'editHighlights',
+    saveBtnId: 'saveHighlights',
+    table: 'about_section',
+    label: 'Highlights'
+  }
 
 }
 
-
 /* ==========================================
-   LOAD ABOUT SECTION
+   LOAD SECTION
 ========================================== */
 
-async function loadAboutSection() {
+async function loadSection(sectionName) {
+
+  const config =
+    sectionConfigs[sectionName]
+
+  if (!config) return
 
   const section =
-    document.getElementById('aboutSection')
+    document.getElementById(
+      config.sectionId
+    )
 
   if (!section) return
 
@@ -1763,13 +1678,13 @@ async function loadAboutSection() {
 
   const { data, error } =
     await supabase
-      .from('about_section')
+      .from(config.table)
       .select('*')
 
   if (error) {
 
     console.error(
-      '❌ Error loading about_section:',
+      `❌ Error loading ${config.label}:`,
       error.message
     )
 
@@ -1781,6 +1696,8 @@ async function loadAboutSection() {
     const key =
       el.getAttribute('data-i18n')
 
+    if (!key) return
+
     const row =
       data.find(item => item.key === key)
 
@@ -1788,22 +1705,28 @@ async function loadAboutSection() {
 
     el.textContent =
       currentLang === 'en'
-        ? (row.en_text || '')
-        : (row.vi_text || '')
+        ? (row.en || row.en_text || '')
+        : (row.vi || row.vi_text || '')
 
   })
 
 }
 
-
 /* ==========================================
-   SAVE ABOUT SECTION
+   SAVE SECTION
 ========================================== */
 
-async function saveAboutSection() {
+async function saveSection(sectionName) {
+
+  const config =
+    sectionConfigs[sectionName]
+
+  if (!config) return
 
   const section =
-    document.getElementById('aboutSection')
+    document.getElementById(
+      config.sectionId
+    )
 
   if (!section) return
 
@@ -1824,16 +1747,16 @@ async function saveAboutSection() {
       currentLang === 'en'
         ? {
             key,
-            en_text: text
+            en: text
           }
         : {
             key,
-            vi_text: text
+            vi: text
           }
 
     const { error } =
       await supabase
-        .from('about_section')
+        .from(config.table)
         .upsert(
           updates,
           {
@@ -1858,11 +1781,242 @@ async function saveAboutSection() {
 
   }
 
-  alert('About Section saved successfully! ✅')
+  alert(
+    `${config.label} saved successfully! ✅`
+  )
 
 }
 
-</script>
+/* ==========================================
+   TOGGLE EDIT MODE
+========================================== */
+
+function toggleEditMode(
+  sectionName,
+  isEditing
+) {
+
+  const config =
+    sectionConfigs[sectionName]
+
+  const section =
+    document.getElementById(
+      config.sectionId
+    )
+
+  if (!section) return
+
+  const editableElements =
+    section.querySelectorAll('.editable')
+
+  editableElements.forEach(el => {
+
+    el.contentEditable =
+      isEditing ? 'true' : 'false'
+
+    el.classList.toggle(
+      'border',
+      isEditing
+    )
+
+    el.classList.toggle(
+      'border-dashed',
+      isEditing
+    )
+
+    el.classList.toggle(
+      'border-blue-500',
+      isEditing
+    )
+
+    el.classList.toggle(
+      'p-1',
+      isEditing
+    )
+
+    el.classList.toggle(
+      'rounded',
+      isEditing
+    )
+
+  })
+
+}
+
+/* ==========================================
+   INIT SECTION
+========================================== */
+
+function initSection(
+  sectionName
+) {
+
+  const config =
+    sectionConfigs[sectionName]
+
+  if (!config) return
+
+  const editBtn =
+    document.getElementById(
+      config.editBtnId
+    )
+
+  const saveBtn =
+    document.getElementById(
+      config.saveBtnId
+    )
+
+  if (!editBtn) return
+
+  editBtn.addEventListener(
+    'click',
+    async () => {
+
+      const section =
+        document.getElementById(
+          config.sectionId
+        )
+
+      const firstEditable =
+        section.querySelector(
+          '.editable'
+        )
+
+      const isEditing =
+        firstEditable?.contentEditable === 'true'
+
+      if (isEditing) {
+
+        toggleEditMode(
+          sectionName,
+          false
+        )
+
+        saveBtn.classList.add(
+          'hidden'
+        )
+
+        editBtn.innerHTML =
+          `<i class="fas fa-edit mr-1"></i> Edit ${config.label}`
+
+        await loadSection(
+          sectionName
+        )
+
+      } else {
+
+        toggleEditMode(
+          sectionName,
+          true
+        )
+
+        saveBtn.classList.remove(
+          'hidden'
+        )
+
+        editBtn.innerHTML =
+          '<i class="fas fa-times mr-1"></i> Cancel'
+
+      }
+
+    }
+  )
+
+  saveBtn?.addEventListener(
+    'click',
+    async () => {
+
+      await saveSection(
+        sectionName
+      )
+
+      toggleEditMode(
+        sectionName,
+        false
+      )
+
+      saveBtn.classList.add(
+        'hidden'
+      )
+
+      editBtn.innerHTML =
+        `<i class="fas fa-edit mr-1"></i> Edit ${config.label}`
+
+    }
+  )
+
+}
+
+/* ==========================================
+   LANGUAGE SWITCH
+========================================== */
+
+document
+  .getElementById('lang-en')
+  ?.addEventListener(
+    'click',
+    async () => {
+
+      currentLang = 'en'
+
+      for (const sectionName in sectionConfigs) {
+
+        await loadSection(
+          sectionName
+        )
+
+      }
+
+    }
+  )
+
+document
+  .getElementById('lang-vi')
+  ?.addEventListener(
+    'click',
+    async () => {
+
+      currentLang = 'vi'
+
+      for (const sectionName in sectionConfigs) {
+
+        await loadSection(
+          sectionName
+        )
+
+      }
+
+    }
+  )
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  async () => {
+
+    Object.keys(
+      sectionConfigs
+    ).forEach(sectionName => {
+
+      initSection(
+        sectionName
+      )
+
+    })
+
+    for (const sectionName in sectionConfigs) {
+
+      await loadSection(
+        sectionName
+      )
+
+    }
+
+  }
+)
 
 
 </body>
