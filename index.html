@@ -130,6 +130,20 @@ body:not(.loading-lang) {
   transition: opacity 0.25s ease-in-out;
 }
   </style>
+
+<script>
+if (
+  window.location.hostname === "vietportfolio.work.gd"
+) {
+  window.location.replace(
+    "https://vietportfolio.com" +
+    window.location.pathname +
+    window.location.search +
+    window.location.hash
+  );
+}
+</script>
+
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white font-sans opacity-0 transition-opacity duration-300" onload="document.body.classList.remove('opacity-0')">
 
@@ -1695,19 +1709,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-4Y9LLYLF90');
-</script>
-
-<script>
-if (
-  window.location.hostname === "vietportfolio.work.gd"
-) {
-  window.location.replace(
-    "https://vietportfolio.com" +
-    window.location.pathname +
-    window.location.search +
-    window.location.hash
-  );
-}
 </script>
 
 
