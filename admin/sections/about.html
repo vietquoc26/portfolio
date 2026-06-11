@@ -1,219 +1,109 @@
 <h2 class="text-2xl font-bold mb-6">About Editor</h2>
 
-<!-- ABOUT SECTION EDITOR -->
 <section id="aboutSection"
-  class="relative group min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
+  class="relative group min-h-[80vh] py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
 
-  <!-- Edit Button -->
-  <button id="editAboutSection"
-    class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-    <i class="fas fa-edit mr-1"></i>
-    Edit About
-  </button>
+  <!-- EDIT / SAVE (CHUNG) -->
+  <div class="absolute top-4 right-4 flex gap-2 z-20">
 
-  <!-- Save Button -->
-  <button id="saveAboutSection"
-    class="absolute top-4 right-28 bg-green-600 text-white px-3 py-1 rounded hidden">
-    <i class="fas fa-save mr-1"></i>
-    Save
-  </button>
-
-  <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
-
-    <!-- Image Column -->
-    <div class="relative flex justify-center items-center">
-
-      <!-- Circular Image -->
-      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
-
-        <img
-          id="aboutImage"
-          src="Avatar.jpg"
-          alt="Viet"
-          class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
-
-        <!-- Upload Overlay -->
-        <label id="aboutUploadLabel"
-          class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden">
-          <i class="fas fa-camera"></i>
-          <input
-            type="file"
-            class="hidden"
-            onchange="previewAboutImage(this)">
-        </label>
-
-      </div>
-
-      <!-- Floating Icons -->
-      <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
-        <i class="fas fa-lightbulb"></i>
-      </div>
-
-      <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
-        <i class="fas fa-code"></i>
-      </div>
-
-      <div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
-        <i class="fas fa-rocket"></i>
-      </div>
-
-    </div>
-
-    <!-- Text Column -->
-    <div class="space-y-6 text-left animate-fade-in-left">
-
-      <h1
-        class="editable text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white"
-        contenteditable="false"
-        data-i18n="aboutme">
-      </h1>
-
-      <p
-        class="editable text-base leading-relaxed text-gray-700 dark:text-gray-300"
-        contenteditable="false"
-        data-i18n="intro">
-      </p>
-
-      <ul class="list-disc list-inside space-y-1 text-sm md:text-base text-gray-700 dark:text-gray-300">
-
-        <li
-          class="editable"
-          contenteditable="false"
-          data-i18n="aboutSkill1">
-        </li>
-
-        <li
-          class="editable"
-          contenteditable="false"
-          data-i18n="aboutSkill2">
-        </li>
-
-        <li
-          class="editable"
-          contenteditable="false"
-          data-i18n="aboutSkill3">
-        </li>
-
-        <li
-          class="editable"
-          contenteditable="false"
-          data-i18n="aboutSkill4">
-        </li>
-
-        <li
-          class="editable"
-          contenteditable="false"
-          data-i18n="aboutSkill5">
-        </li>
-
-        <li
-          class="editable"
-          contenteditable="false"
-          data-i18n="aboutSkill6">
-        </li>
-
-      </ul>
-
-      <!-- Download CV -->
-      <div class="flex flex-wrap gap-4 pt-4">
-
-        <span
-          class="editable inline-flex items-center gap-2 px-6 py-3
-                 bg-blue-600 hover:bg-blue-700
-                 dark:bg-white dark:hover:bg-gray-100
-                 text-white dark:text-gray-900
-                 font-semibold rounded-full shadow-lg hover:shadow-xl
-                 transition-all duration-300 hover:-translate-y-1"
-          contenteditable="false"
-          data-i18n="downloadCV">
-
-          <i class="fas fa-download"></i>
-          Download My CV
-
-        </span>
-
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-    <!-- Highlight Numbers -->
-<section
-  id="highlights"
-  class="py-16 px-6 mb-14 bg-white dark:bg-gray-900 text-center relative"
->
-
-  <!-- Section Controls -->
-  <div class="absolute top-4 right-4 flex gap-2">
-    <button
-      id="editHighlights"
-      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-    >
+    <button id="editAboutSection"
+      class="bg-blue-600 text-white px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition">
       Edit
     </button>
 
-    <button
-      id="saveHighlights"
-      class="hidden px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-    >
+    <button id="saveAboutSection"
+      class="hidden bg-green-600 text-white px-4 py-2 rounded">
       Save
     </button>
+
   </div>
 
-  <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
+  <div class="max-w-7xl mx-auto w-full space-y-20">
 
-    <!-- Item 1 -->
-    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md">
-      <h3
-        class="editable text-5xl font-extrabold text-blue-600 dark:text-yellow-400"
-        data-i18n="number1"
-      >
-        860
-      </h3>
+    <!-- ================= ABOUT CONTENT ================= -->
+    <div class="grid md:grid-cols-2 gap-16 items-center">
 
-      <p
-        class="editable text-sm uppercase mt-2 tracking-wide text-gray-600 dark:text-yellow-300"
-        data-i18n="toeicScore"
-      >
-        TOEIC SCORE
-      </p>
+      <!-- IMAGE -->
+      <div class="relative flex justify-center items-center">
+
+        <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+
+          <img id="aboutImage"
+            src="Avatar.jpg"
+            class="w-full h-full object-cover object-top rounded-full">
+
+          <label id="aboutUploadLabel"
+            class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden">
+            <input type="file" class="hidden" onchange="previewAboutImage(this)">
+            <i class="fas fa-camera"></i>
+          </label>
+
+        </div>
+
+        <!-- icons -->
+        <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow text-purple-600">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+
+        <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow text-blue-600">
+          <i class="fas fa-code"></i>
+        </div>
+
+      </div>
+
+      <!-- TEXT -->
+      <div class="space-y-6 text-left">
+
+        <h1 class="editable text-4xl md:text-5xl font-bold text-gray-900 dark:text-white"
+          contenteditable="false"
+          data-i18n="aboutme"></h1>
+
+        <p class="editable text-gray-700 dark:text-gray-300"
+          contenteditable="false"
+          data-i18n="intro"></p>
+
+        <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
+
+          <li class="editable" data-i18n="aboutSkill1"></li>
+          <li class="editable" data-i18n="aboutSkill2"></li>
+          <li class="editable" data-i18n="aboutSkill3"></li>
+          <li class="editable" data-i18n="aboutSkill4"></li>
+          <li class="editable" data-i18n="aboutSkill5"></li>
+          <li class="editable" data-i18n="aboutSkill6"></li>
+
+        </ul>
+
+      </div>
     </div>
 
-    <!-- Item 2 -->
-    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md">
-      <h3
-        class="editable text-5xl font-extrabold text-blue-600 dark:text-yellow-400"
-        data-i18n="number2"
-      >
-        5+
-      </h3>
+    <!-- ================= HIGHLIGHTS (GỘP VÀO ABOUT) ================= -->
+    <div class="text-center">
 
-      <p
-        class="editable text-sm uppercase mt-2 tracking-wide text-gray-600 dark:text-yellow-300"
-        data-i18n="yearsExperience"
-      >
-        YEARS EXPERIENCE
-      </p>
-    </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
 
-    <!-- Item 3 -->
-    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md">
-      <h3
-        class="editable text-5xl font-extrabold text-blue-600 dark:text-yellow-400"
-        data-i18n="number3"
-      >
-        20+
-      </h3>
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md">
+          <h3 class="editable text-5xl font-extrabold text-blue-600 dark:text-yellow-400"
+            data-i18n="number1">860</h3>
+          <p class="editable text-sm uppercase mt-2 text-gray-600 dark:text-yellow-300"
+            data-i18n="toeicScore">TOEIC SCORE</p>
+        </div>
 
-      <p
-        class="editable text-sm uppercase mt-2 tracking-wide text-gray-600 dark:text-yellow-300"
-        data-i18n="completedProjects"
-      >
-        COMPLETED PROJECTS
-      </p>
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md">
+          <h3 class="editable text-5xl font-extrabold text-blue-600 dark:text-yellow-400"
+            data-i18n="number2">5+</h3>
+          <p class="editable text-sm uppercase mt-2 text-gray-600 dark:text-yellow-300"
+            data-i18n="yearsExperience">YEARS EXPERIENCE</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md">
+          <h3 class="editable text-5xl font-extrabold text-blue-600 dark:text-yellow-400"
+            data-i18n="number3">20+</h3>
+          <p class="editable text-sm uppercase mt-2 text-gray-600 dark:text-yellow-300"
+            data-i18n="completedProjects">COMPLETED PROJECTS</p>
+        </div>
+
+      </div>
+
     </div>
 
   </div>
