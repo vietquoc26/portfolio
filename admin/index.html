@@ -1868,27 +1868,58 @@ async function saveAboutSection() {
 
 function initHighlightsSection() {
 
-  const editHighlightsBtn =
+  const highlightsEditBtn =
     document.getElementById('editHighlights')
 
   const saveHighlightsBtn =
     document.getElementById('saveHighlights')
 
-  if (!editHighlightsBtn) return
+  if (!highlightsEditBtn) {
+    console.error('❌ editHighlights button not found')
+    return
+  }
+
+  // =============================
+  // LANGUAGE TOGGLE
+  // =============================
+
+  document.getElementById('lang-en')?.addEventListener('click', () => {
+
+    currentLang = 'en'
+
+    loadHighlightsSection()
+
+  })
+
+  document.getElementById('lang-vi')?.addEventListener('click', () => {
+
+    currentLang = 'vi'
+
+    loadHighlightsSection()
+
+  })
 
   // =============================
   // EDIT BUTTON
   // =============================
 
-  editHighlightsBtn.addEventListener('click', async () => {
+  highlightsEditBtn.addEventListener('click', async () => {
 
     const section =
       document.getElementById('highlights')
 
-    if (!section) return
+    if (!section) {
+      console.error('❌ highlights section not found')
+      return
+    }
 
     const editableElements =
       section.querySelectorAll('.editable')
+
+    if (!editableElements.length) {
+      console.error('❌ No editable elements found')
+      return
+    }
 
     const isEditing =
       editableElements[0]?.contentEditable === 'true'
@@ -1908,18 +1939,18 @@ function initHighlightsSection() {
 
     if (isEditing) {
 
-      saveHighlightsBtn.classList.add('hidden')
+      saveHighlightsBtn?.classList.add('hidden')
 
-      editHighlightsBtn.innerHTML =
+      highlightsEditBtn.innerHTML =
         '<i class="fas fa-edit mr-1"></i> Edit'
 
       await loadHighlightsSection()
 
     } else {
 
-      saveHighlightsBtn.classList.remove('hidden')
+      saveHighlightsBtn?.classList.remove('hidden')
 
-      editHighlightsBtn.innerHTML =
+      highlightsEditBtn.innerHTML =
         '<i class="fas fa-times mr-1"></i> Cancel'
 
     }
@@ -1936,11 +1967,13 @@ function initHighlightsSection() {
 
     saveHighlightsBtn.classList.add('hidden')
 
-    editHighlightsBtn.innerHTML =
+    highlightsEditBtn.innerHTML =
       '<i class="fas fa-edit mr-1"></i> Edit'
 
     const section =
       document.getElementById('highlights')
+
+    if (!section) return
 
     const editableElements =
       section.querySelectorAll('.editable')
@@ -1973,7 +2006,10 @@ async function loadHighlightsSection() {
   const section =
     document.getElementById('highlights')
 
-  if (!section) return
+  if (!section) {
+    console.error('❌ highlights section not found')
+    return
+  }
 
   const editableElements =
     section.querySelectorAll('.editable')
@@ -1991,7 +2027,6 @@ async function loadHighlightsSection() {
     )
 
     return
-
   }
 
   editableElements.forEach(el => {
@@ -2002,7 +2037,14 @@ async function loadHighlightsSection() {
     const row =
       data.find(item => item.key === key)
 
-    if (!row) return
+    if (!row) {
+
+      console.warn(
+        `⚠️ Missing key in Supabase: ${key}`
+      )
+
+      return
+    }
 
     el.textContent =
       currentLang === 'en'
@@ -2023,7 +2065,10 @@ async function saveHighlightsSection() {
   const section =
     document.getElementById('highlights')
 
-  if (!section) return
+  if (!section) {
+    console.error('❌ highlights section not found')
+    return
+  }
 
   const editableElements =
     section.querySelectorAll('.editable')
@@ -2091,13 +2136,22 @@ document.addEventListener(
   'DOMContentLoaded',
   async () => {
 
-    await loadHighlightsSection()
+    if (
+      document.getElementById('highlights')
+    ) {
 
-    initHighlightsSection()
+      await loadHighlightsSection()
+
+      initHighlightsSection()
+
+      console.log(
+        '✅ Highlights initialized'
+      )
+
+    }
 
   }
 )
-
 
 
 </script>
