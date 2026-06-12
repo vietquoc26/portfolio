@@ -1608,80 +1608,113 @@ const supabase = createClient(
 )
 
 /* ================= LANGUAGE ================= */
-let currentLang = localStorage.getItem('lang') || 'en'
+let currentLang =
+  localStorage.getItem('lang') || 'en'
 
 /* ================= FALLBACK HELPERS ================= */
 function captureFallbacks(root = document) {
-  const nodes = root.querySelectorAll('[data-i18n]')
+
+  const nodes =
+    root.querySelectorAll('[data-i18n]')
 
   nodes.forEach(el => {
+
     if (!el.dataset.fallback) {
-      el.dataset.fallback = (el.innerHTML || '').trim()
+
+      el.dataset.fallback =
+        (el.innerHTML || '').trim()
+
     }
+
   })
+
 }
 
-function getFallbackText(key, el) {
-  return (el?.dataset?.fallback ?? '').trim()
+function getFallbackText(el) {
+
+  return (
+    el?.dataset?.fallback ?? ''
+  ).trim()
+
 }
 
-/* ================= ABOUT LOADER ================= */
-async function loadAboutSection() {
+/* ================= LOAD ABOUT + HIGHLIGHTS ================= */
+async function loadAboutContent() {
 
-  const section = document.getElementById('aboutSection')
+  const containers =
+    document.querySelectorAll(
+      '#aboutSection, #highlights'
+    )
 
-  if (!section) {
-    console.error('❌ About section not found')
+  if (!containers.length) {
+
+    console.error(
+      '❌ AboutSection and Highlights not found'
+    )
+
     return
+
   }
 
-  captureFallbacks(section)
+  containers.forEach(container =>
+    captureFallbacks(container)
+  )
 
   const editableElements =
-    section.querySelectorAll('[data-i18n]')
+    document.querySelectorAll(
+      '#aboutSection [data-i18n], #highlights [data-i18n]'
+    )
 
-  const { data, error } = await supabase
-    .from('about_section')
-    .select('*')
+  const { data, error } =
+    await supabase
+      .from('about_section')
+      .select('*')
 
   if (error) {
+
     console.error(
       '❌ Error loading about_section:',
       error.message
     )
+
     return
+
   }
 
-  console.log('About Data:', data)
+  const byKey = {}
 
-  const byKey = Object.create(null)
+  data.forEach(row => {
 
-  if (Array.isArray(data)) {
-    for (const row of data) {
-      if (row && row.key) {
-        byKey[row.key] = row
-      }
+    if (row.key) {
+
+      byKey[row.key] = row
+
     }
-  }
+
+  })
 
   editableElements.forEach(el => {
 
-    const key = el.getAttribute('data-i18n')
+    const key =
+      el.getAttribute('data-i18n')
 
-    const row = byKey[key]
+    const row =
+      byKey[key]
 
-    let supaText = ''
+    let value = ''
 
     if (row) {
-      supaText =
+
+      value =
         currentLang === 'en'
           ? (row.en_text || '')
           : (row.vi_text || '')
+
     }
 
-    if (supaText && supaText.trim() !== '') {
+    if (value.trim()) {
 
-      el.innerHTML = supaText
+      el.innerHTML = value
 
       el.dataset.supabaseApplied = 'true'
 
@@ -1689,13 +1722,17 @@ async function loadAboutSection() {
 
       delete el.dataset.supabaseApplied
 
-      el.innerHTML = getFallbackText(key, el)
+      el.innerHTML =
+        getFallbackText(el)
 
     }
 
   })
 
-  console.log('✅ About section loaded')
+  console.log(
+    '✅ About + Highlights loaded'
+  )
+
 }
 
 /* ================= LANGUAGE SWITCH ================= */
@@ -1705,17 +1742,29 @@ async function setLanguage(lang) {
 
   currentLang = lang
 
-  localStorage.setItem('lang', lang)
+  localStorage.setItem(
+    'lang',
+    lang
+  )
 
-  await loadAboutSection()
+  await loadAboutContent()
+
 }
 
 /* ================= BUTTONS ================= */
-document.getElementById('btn-en')
-  ?.addEventListener('click', () => setLanguage('en'))
+document
+  .getElementById('btn-en')
+  ?.addEventListener(
+    'click',
+    () => setLanguage('en')
+  )
 
-document.getElementById('btn-vi')
-  ?.addEventListener('click', () => setLanguage('vi'))
+document
+  .getElementById('btn-vi')
+  ?.addEventListener(
+    'click',
+    () => setLanguage('vi')
+  )
 
 /* ================= STARTUP ================= */
 window.addEventListener(
@@ -1724,10 +1773,17 @@ window.addEventListener(
 
     captureFallbacks(document)
 
-    await loadAboutSection()
+    await loadAboutContent()
 
   }
 )
+
+/* ================= EXPORT ================= */
+window.loadAboutContent =
+  loadAboutContent
+
+window.setLanguage =
+  setLanguage
 </script>
 
 </body>
