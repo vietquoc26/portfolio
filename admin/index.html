@@ -1861,6 +1861,133 @@ async function saveAboutSection() {
 
 }
 
+
+/* ==========================================
+   HIGHLIGHTS SECTION
+========================================== */
+
+async function initHighlightsSection() {
+  const editBtn = document.getElementById('editHighlights')
+  const saveBtn = document.getElementById('saveHighlights')
+  const section = document.getElementById('highlights')
+
+  if (!section) return
+
+  const editableElements =
+    section.querySelectorAll('.editable')
+
+  /* =========================
+     LOAD DATA FROM SUPABASE
+  ========================= */
+  async function loadHighlights() {
+    try {
+      const { data, error } = await supabase
+        .from('about_section')
+        .select('*')
+        .eq('id', 1)
+        .single()
+
+      if (error) throw error
+
+      editableElements.forEach(el => {
+        const key = el.dataset.i18n
+
+        if (data[key] !== undefined) {
+          el.textContent = data[key]
+        }
+      })
+
+    } catch (err) {
+      console.error(
+        'Error loading highlights:',
+        err.message
+      )
+    }
+  }
+
+  /* =========================
+     ENABLE EDIT MODE
+  ========================= */
+  editBtn.addEventListener('click', () => {
+
+    editableElements.forEach(el => {
+      el.contentEditable = true
+
+      el.classList.add(
+        'ring-2',
+        'ring-blue-400',
+        'rounded',
+        'p-1'
+      )
+    })
+
+    editBtn.classList.add('hidden')
+    saveBtn.classList.remove('hidden')
+  })
+
+  /* =========================
+     SAVE DATA
+  ========================= */
+  saveBtn.addEventListener('click', async () => {
+
+    const updateData = {}
+
+    editableElements.forEach(el => {
+      const key = el.dataset.i18n
+      updateData[key] = el.textContent.trim()
+    })
+
+    try {
+
+      const { error } = await supabase
+        .from('about_section')
+        .update(updateData)
+        .eq('id', 1)
+
+      if (error) throw error
+
+      editableElements.forEach(el => {
+        el.contentEditable = false
+
+        el.classList.remove(
+          'ring-2',
+          'ring-blue-400',
+          'rounded',
+          'p-1'
+        )
+      })
+
+      saveBtn.classList.add('hidden')
+      editBtn.classList.remove('hidden')
+
+      alert('Highlights updated successfully!')
+
+    } catch (err) {
+
+      console.error(
+        'Error saving highlights:',
+        err.message
+      )
+
+      alert('Failed to save changes.')
+    }
+  })
+
+  /* =========================
+     INITIAL LOAD
+  ========================= */
+  await loadHighlights()
+}
+
+/* ==========================================
+   INIT
+========================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  initHighlightsSection
+)
+
 </script>
 
 
