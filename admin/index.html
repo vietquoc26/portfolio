@@ -1601,12 +1601,9 @@ async function loadTabContent(tabId, filePath) {
       // Highlights Section
   initHighlightsSection()
   await loadHighlightsSection()
-  
-  initMilestoneSection()
-  await loadMilestoneSection ()
 
     }
-
+    
 
   } catch (error) {
 
@@ -2272,7 +2269,7 @@ async function loadMilestoneSection() {
 
   const { data, error } =
     await supabase
-      .from('about_section')
+      .from('milestone_section')
       .select('*')
 
   if (error) {
@@ -2341,7 +2338,7 @@ async function saveMilestoneSection() {
 
     const { error } =
       await supabase
-        .from('milestone_section')
+        .from('about_section')
         .upsert(
           updates,
           {
