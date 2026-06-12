@@ -1594,15 +1594,19 @@ async function loadTabContent(tabId, filePath) {
     // Initialize About Section AFTER html is injected
     if (tabId === 'aboutTab') {
 
-      initAboutSection()
+  // About Section
+  initAboutSection()
+  await loadAboutSection()
 
-      await loadAboutSection()
-
-      // Highlights Section
+  // Highlights Section
   initHighlightsSection()
   await loadHighlightsSection()
 
-    }
+  // Milestone Section
+  initMilestoneSection()
+  await loadMilestoneSection()
+
+}
     
 
   } catch (error) {
