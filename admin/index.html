@@ -2273,7 +2273,7 @@ async function loadMilestoneSection() {
 
   const { data, error } =
     await supabase
-      .from('milestone_section')
+      .from('about_section')
       .select('*')
 
   if (error) {
