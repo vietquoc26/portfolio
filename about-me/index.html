@@ -1628,17 +1628,17 @@ function getFallbackText(key, el) {
 /* ================= ABOUT LOADER ================= */
 async function loadAboutSection() {
 
-const aboutGroups = document.querySelectorAll('.about-group')
+  const section = document.getElementById('aboutSection')
 
-if (!aboutGroups.length) {
-  console.error('❌ No about-group elements found')
-  return
-}
+  if (!section) {
+    console.error('❌ About section not found')
+    return
+  }
 
-aboutGroups.forEach(group => captureFallbacks(group))
+  captureFallbacks(section)
 
-const editableElements =
-  document.querySelectorAll('.about-group [data-i18n]')
+  const editableElements =
+    section.querySelectorAll('[data-i18n]')
 
   const { data, error } = await supabase
     .from('about_section')
