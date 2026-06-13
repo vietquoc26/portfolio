@@ -572,6 +572,39 @@
    <!-- Projects Section (Admin Editable, Improved Layout) -->
 
   <div class="absolute top-4 right-4 flex gap-2">
+<style>
+  .swiper-slide {
+    display: flex;
+    height: auto;
+  }
+
+  .swiper-slide .card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  .dark .swiper-slide .card {
+    background: #374151;
+  }
+
+  .swiper-slide .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .swiper-slide .card .p-4 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
     <!-- Edit Button -->
     <button class="edit-btn bg-blue-600 text-white px-3 py-1 rounded hidden group-hover:flex items-center">
       <i class="fas fa-edit mr-1"></i> Edit Projects
