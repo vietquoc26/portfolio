@@ -1610,6 +1610,9 @@ async function loadTabContent(tabId, filePath) {
   initProjectsSection()
   await loadProjectsSection()
 
+  // Skills 1 Section
+  await loadSkills1Content()
+
 }
     
 
@@ -2625,6 +2628,238 @@ async function saveProjectsSection() {
 initProjectsSection()
 
 loadProjectsSection()
+
+
+/* ================= SKILLS 1 SECTION ================= */
+
+// --- Language Toggle ---
+document.getElementById('lang-en')?.addEventListener('click', () => {
+  currentLang = 'en'
+  loadSkills1Content()
+})
+
+document.getElementById('lang-vi')?.addEventListener('click', () => {
+  currentLang = 'vi'
+  loadSkills1Content()
+})
+
+
+// --- Toggle Edit Mode for SKILLS 1 ---
+const skills1EditBtn =
+  document.querySelector('#skills1 .edit-btn')
+
+const saveSkills1Btn =
+  document.getElementById('saveSkills1Btn')
+
+skills1EditBtn?.addEventListener('click', () => {
+
+  const skillsSection =
+    document.getElementById('skills1')
+
+  if (!skillsSection) return
+
+  const editableElements =
+    skillsSection.querySelectorAll('.editable')
+
+  const isEditing =
+    editableElements[0]?.contentEditable === 'true'
+
+  editableElements.forEach(el => {
+
+    el.contentEditable = !isEditing
+
+    el.classList.toggle(
+      'border',
+      !isEditing
+    )
+
+    el.classList.toggle(
+      'border-dashed',
+      !isEditing
+    )
+
+    el.classList.toggle(
+      'p-1',
+      !isEditing
+    )
+
+  })
+
+  if (isEditing) {
+
+    saveSkills1Btn.classList.add('hidden')
+
+    skills1EditBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit Skills'
+
+  } else {
+
+    saveSkills1Btn.classList.remove('hidden')
+
+    skills1EditBtn.innerHTML =
+      '<i class="fas fa-times mr-1"></i> Cancel'
+
+  }
+
+})
+
+
+// --- Save Button ---
+saveSkills1Btn?.addEventListener(
+  'click',
+  async () => {
+
+    await saveSkills1Content()
+
+    saveSkills1Btn.classList.add(
+      'hidden'
+    )
+
+    skills1EditBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit Skills'
+
+    const skillsSection =
+      document.getElementById('skills1')
+
+    const editableElements =
+      skillsSection.querySelectorAll(
+        '.editable'
+      )
+
+    editableElements.forEach(el => {
+
+      el.contentEditable = 'false'
+
+      el.classList.remove(
+        'border',
+        'border-dashed',
+        'p-1'
+      )
+
+    })
+
+  }
+)
+
+
+// --- Load Skills 1 Content ---
+async function loadSkills1Content() {
+
+  const skillsSection =
+    document.getElementById('skills1')
+
+  if (!skillsSection) return
+
+  const editableElements =
+    skillsSection.querySelectorAll(
+      '.editable'
+    )
+
+  const { data, error } =
+    await supabase
+      .from('skill_content')
+      .select('*')
+
+  if (error) {
+
+    console.error(
+      '❌ Error loading skills1 content:',
+      error.message
+    )
+
+    return
+
+  }
+
+  editableElements.forEach(el => {
+
+    const key =
+      el.getAttribute('data-i18n')
+
+    const row =
+      data.find(
+        d => d.key === key
+      )
+
+    if (row) {
+
+      el.innerText =
+        currentLang === 'en'
+          ? row.en_text
+          : row.vi_text
+
+    }
+
+  })
+
+}
+
+
+// --- Save Skills 1 Content ---
+async function saveSkills1Content() {
+
+  const skillsSection =
+    document.getElementById('skills1')
+
+  if (!skillsSection) return
+
+  const editableElements =
+    skillsSection.querySelectorAll(
+      '.editable'
+    )
+
+  for (const el of editableElements) {
+
+    const key =
+      el.getAttribute('data-i18n')
+
+    const text =
+      el.innerText.trim()
+
+    const updates =
+      currentLang === 'en'
+        ? {
+            key,
+            en_text: text
+          }
+        : {
+            key,
+            vi_text: text
+          }
+
+    const { error } =
+      await supabase
+        .from('skill_content')
+        .upsert(
+          updates,
+          {
+            onConflict: 'key'
+          }
+        )
+
+    if (error) {
+
+      console.error(
+        `❌ Failed to save skill1: ${key}`,
+        error.message
+      )
+
+    } else {
+
+      console.log(
+        `✅ Saved skill1: ${key}`
+      )
+
+    }
+
+  }
+
+  alert(
+    'Skills section saved! ✅'
+  )
+
+}
+
 
 </script>
 
