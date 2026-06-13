@@ -2162,7 +2162,7 @@ document.addEventListener(
   }
 )
 
-//* ==========================================
+/* ==========================================
    MILESTONE SECTION INIT
 ========================================== */
 
@@ -2174,42 +2174,27 @@ function initMilestoneSection() {
   const saveBtn =
     document.getElementById('saveMilestone')
 
-  if (!editBtn) {
-    console.error('❌ editMilestone button not found')
-    return
-  }
-
-  // Prevent duplicate listeners
-  if (editBtn.dataset.initialized) return
-  editBtn.dataset.initialized = 'true'
+  if (!editBtn) return
 
   editBtn.addEventListener('click', async () => {
 
     const section =
       document.getElementById('milestone')
 
-    if (!section) {
-      console.error('❌ milestone section not found')
-      return
-    }
+    if (!section) return
 
     const editableElements =
       section.querySelectorAll('[data-i18n]')
 
-    if (!editableElements.length) {
-      console.error('❌ No milestone editable elements found')
-      return
-    }
-
     const isEditing =
-      editableElements[0].contentEditable === 'true'
+      editableElements[0]?.contentEditable === 'true'
 
     editableElements.forEach(el => {
 
+      el.classList.add('editable')
+
       el.contentEditable =
         isEditing ? 'false' : 'true'
-
-      el.classList.add('editable')
 
       el.classList.toggle('border', !isEditing)
       el.classList.toggle('border-dashed', !isEditing)
@@ -2221,7 +2206,7 @@ function initMilestoneSection() {
 
     if (isEditing) {
 
-      saveBtn?.classList.add('hidden')
+      saveBtn.classList.add('hidden')
 
       editBtn.innerHTML =
         '<i class="fas fa-edit mr-1"></i> Edit'
@@ -2230,7 +2215,7 @@ function initMilestoneSection() {
 
     } else {
 
-      saveBtn?.classList.remove('hidden')
+      saveBtn.classList.remove('hidden')
 
       editBtn.innerHTML =
         '<i class="fas fa-times mr-1"></i> Cancel'
@@ -2250,8 +2235,6 @@ function initMilestoneSection() {
 
     const section =
       document.getElementById('milestone')
-
-    if (!section) return
 
     const editableElements =
       section.querySelectorAll('[data-i18n]')
@@ -2283,17 +2266,10 @@ async function loadMilestoneSection() {
   const section =
     document.getElementById('milestone')
 
-  if (!section) {
-    console.error('❌ milestone section not found')
-    return
-  }
+  if (!section) return
 
   const editableElements =
     section.querySelectorAll('[data-i18n]')
-
-  console.log(
-    `📌 Found ${editableElements.length} milestone elements`
-  )
 
   const { data, error } =
     await supabase
@@ -2303,7 +2279,7 @@ async function loadMilestoneSection() {
   if (error) {
 
     console.error(
-      '❌ Error loading about_section:',
+      '❌ Error loading milestone_section:',
       error.message
     )
 
@@ -2318,14 +2294,7 @@ async function loadMilestoneSection() {
     const row =
       data.find(item => item.key === key)
 
-    if (!row) {
-
-      console.warn(
-        `⚠️ Missing key in Supabase: ${key}`
-      )
-
-      return
-    }
+    if (!row) return
 
     el.innerHTML =
       currentLang === 'en'
@@ -2333,8 +2302,6 @@ async function loadMilestoneSection() {
         : (row.vi_text || '')
 
   })
-
-  console.log('✅ Milestone loaded')
 
 }
 
@@ -2347,10 +2314,7 @@ async function saveMilestoneSection() {
   const section =
     document.getElementById('milestone')
 
-  if (!section) {
-    console.error('❌ milestone section not found')
-    return
-  }
+  if (!section) return
 
   const editableElements =
     section.querySelectorAll('[data-i18n]')
@@ -2393,12 +2357,6 @@ async function saveMilestoneSection() {
         error.message
       )
 
-    } else {
-
-      console.log(
-        `✅ Saved ${key}`
-      )
-
     }
 
   }
@@ -2411,6 +2369,7 @@ async function saveMilestoneSection() {
 
 
 </script>
+
 
 
 </body>
