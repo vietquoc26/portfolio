@@ -1685,7 +1685,7 @@ async function loadAboutContent() {
 
   const containers =
     document.querySelectorAll(
-      '#aboutSection, #highlights, #milestone'
+      '#aboutSection, #highlights, #milestone, #project'
     )
 
   if (!containers.length) {
@@ -1704,7 +1704,7 @@ async function loadAboutContent() {
 
   const editableElements =
     document.querySelectorAll(
-      '#aboutSection [data-i18n], #highlights [data-i18n], #milestone [data-i18n]'
+      '#aboutSection [data-i18n], #highlights [data-i18n], #milestone [data-i18n], #project [data-i18n]'
     )
 
   const { data, error } =
