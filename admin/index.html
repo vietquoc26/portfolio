@@ -2261,6 +2261,26 @@ function initMilestoneSection() {
 
 }
 
+// =============================
+  // LANGUAGE TOGGLE
+  // =============================
+
+  document.getElementById('lang-en')?.addEventListener('click', () => {
+
+    currentLang = 'en'
+
+    loadMilestoneSection()
+
+  })
+
+  document.getElementById('lang-vi')?.addEventListener('click', () => {
+
+    currentLang = 'vi'
+
+    loadMilestoneSection()
+
+  })
+
 /* ==========================================
    LOAD MILESTONE SECTION
 ========================================== */
