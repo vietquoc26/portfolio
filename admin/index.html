@@ -2487,6 +2487,26 @@ function initProjectsSection() {
 
 }
 
+// =============================
+  // LANGUAGE TOGGLE
+  // =============================
+
+  document.getElementById('lang-en')?.addEventListener('click', () => {
+
+    currentLang = 'en'
+
+    loadProjectsSection()
+
+  })
+
+  document.getElementById('lang-vi')?.addEventListener('click', () => {
+
+    currentLang = 'vi'
+
+    loadProjectsSection()
+
+  })
+
 /* ==========================================
    LOAD PROJECTS SECTION
 ========================================== */
