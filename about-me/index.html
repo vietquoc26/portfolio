@@ -1355,33 +1355,12 @@
       btnVi.classList.toggle('dark:bg-gray-900', lang === 'vi');
     }
 
-    async function mergeSheetTranslations() {
-      try {
-        const url = 'https://sheetdb.io/api/v1/tmz40soq9xyqu'; // 🔁 Update this
-        const res = await fetch(url);
-        const data = await res.json();
-
-        const lang = i18next.language;
-        const overrides = {};
-
-        data.forEach(row => {
-          if (row.key && row[lang]) {
-            overrides[row.key] = row[lang].replace(/\\n/g, '\n').replace(/<br>/g, '\n');
-          }
-        });
-
-        i18next.addResources(lang, 'translation', overrides);
-        updateContent();
-      } catch (error) {
-        console.error('Failed to fetch sheet overrides:', error);
-      }
-    }
   </script>
 
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const skillSection = document.querySelector("#skills");
+    const skillSection = document.querySelector("#skills1");
     const bars = document.querySelectorAll(".progress-bar");
     const numbers = document.querySelectorAll(".fade-in-number");
 
