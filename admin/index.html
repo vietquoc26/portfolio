@@ -1611,6 +1611,7 @@ async function loadTabContent(tabId, filePath) {
   await loadProjectsSection()
 
   // Skills 1 Section
+  initloadSkills1Content ()
   await loadSkills1Content()
 
 }
@@ -2630,96 +2631,66 @@ initProjectsSection()
 loadProjectsSection()
 
 
-/* ================= SKILLS 1 SECTION ================= */
+/* ==========================================
+SKILLS 1 SECTION INIT
+========================================== */
 
-// --- Language Toggle ---
-document.getElementById('lang-en')?.addEventListener('click', () => {
-  currentLang = 'en'
-  loadSkills1Content()
-})
+function initSkills1Section() {
 
-document.getElementById('lang-vi')?.addEventListener('click', () => {
-  currentLang = 'vi'
-  loadSkills1Content()
-})
+const skillsSection =
+document.getElementById('skills1')
 
+if (!skillsSection) {
+console.error('❌ Skills1 section not found')
+return
+}
 
-// --- Toggle Edit Mode for SKILLS 1 ---
-const skills1EditBtn =
-  document.querySelector('#skills1 .edit-btn')
+const editBtn =
+skillsSection.querySelector('.edit-btn')
 
-const saveSkills1Btn =
-  document.getElementById('saveSkills1Btn')
+const saveBtn =
+document.getElementById('saveSkills1Btn')
 
-skills1EditBtn?.addEventListener('click', () => {
+// Prevent duplicate listeners
+if (editBtn) {
 
-  const skillsSection =
-    document.getElementById('skills1')
+```
+const newEditBtn =
+  editBtn.cloneNode(true)
 
-  if (!skillsSection) return
+editBtn.parentNode.replaceChild(
+  newEditBtn,
+  editBtn
+)
 
-  const editableElements =
-    skillsSection.querySelectorAll('.editable')
+newEditBtn.addEventListener(
+  'click',
+  toggleSkills1EditMode
+)
+```
 
-  const isEditing =
-    editableElements[0]?.contentEditable === 'true'
+}
 
-  editableElements.forEach(el => {
+if (saveBtn) {
 
-    el.contentEditable = !isEditing
+```
+const newSaveBtn =
+  saveBtn.cloneNode(true)
 
-    el.classList.toggle(
-      'border',
-      !isEditing
-    )
+saveBtn.parentNode.replaceChild(
+  newSaveBtn,
+  saveBtn
+)
 
-    el.classList.toggle(
-      'border-dashed',
-      !isEditing
-    )
-
-    el.classList.toggle(
-      'p-1',
-      !isEditing
-    )
-
-  })
-
-  if (isEditing) {
-
-    saveSkills1Btn.classList.add('hidden')
-
-    skills1EditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit Skills'
-
-  } else {
-
-    saveSkills1Btn.classList.remove('hidden')
-
-    skills1EditBtn.innerHTML =
-      '<i class="fas fa-times mr-1"></i> Cancel'
-
-  }
-
-})
-
-
-// --- Save Button ---
-saveSkills1Btn?.addEventListener(
+newSaveBtn.addEventListener(
   'click',
   async () => {
 
     await saveSkills1Content()
 
-    saveSkills1Btn.classList.add(
+    newSaveBtn.classList.add(
       'hidden'
     )
-
-    skills1EditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit Skills'
-
-    const skillsSection =
-      document.getElementById('skills1')
 
     const editableElements =
       skillsSection.querySelectorAll(
@@ -2728,7 +2699,8 @@ saveSkills1Btn?.addEventListener(
 
     editableElements.forEach(el => {
 
-      el.contentEditable = 'false'
+      el.contentEditable =
+        'false'
 
       el.classList.remove(
         'border',
@@ -2738,127 +2710,312 @@ saveSkills1Btn?.addEventListener(
 
     })
 
+    const editButton =
+      skillsSection.querySelector(
+        '.edit-btn'
+      )
+
+    if (editButton) {
+
+      editButton.innerHTML =
+        '<i class="fas fa-edit mr-1"></i> Edit Skills'
+
+    }
+
+  }
+)
+```
+
+}
+
+// Language Switch
+document
+.getElementById('lang-en')
+?.addEventListener(
+'click',
+async () => {
+
+    currentLang = 'en'
+
+    await loadSkills1Content()
+
   }
 )
 
+document
+.getElementById('lang-vi')
+?.addEventListener(
+'click',
+async () => {
 
-// --- Load Skills 1 Content ---
-async function loadSkills1Content() {
+    currentLang = 'vi'
 
-  const skillsSection =
-    document.getElementById('skills1')
-
-  if (!skillsSection) return
-
-  const editableElements =
-    skillsSection.querySelectorAll(
-      '.editable'
-    )
-
-  const { data, error } =
-    await supabase
-      .from('skill_content')
-      .select('*')
-
-  if (error) {
-
-    console.error(
-      '❌ Error loading skills1 content:',
-      error.message
-    )
-
-    return
+    await loadSkills1Content()
 
   }
-
-  editableElements.forEach(el => {
-
-    const key =
-      el.getAttribute('data-i18n')
-
-    const row =
-      data.find(
-        d => d.key === key
-      )
-
-    if (row) {
-
-      el.innerText =
-        currentLang === 'en'
-          ? row.en_text
-          : row.vi_text
-
-    }
-
-  })
+)
 
 }
 
+/* ==========================================
+TOGGLE EDIT MODE
+========================================== */
 
-// --- Save Skills 1 Content ---
+function toggleSkills1EditMode() {
+
+const skillsSection =
+document.getElementById('skills1')
+
+if (!skillsSection) return
+
+const editableElements =
+skillsSection.querySelectorAll(
+'.editable'
+)
+
+if (!editableElements.length)
+return
+
+const isEditing =
+editableElements[0]
+.contentEditable === 'true'
+
+editableElements.forEach(el => {
+
+```
+el.contentEditable =
+  (!isEditing).toString()
+
+el.classList.toggle(
+  'border',
+  !isEditing
+)
+
+el.classList.toggle(
+  'border-dashed',
+  !isEditing
+)
+
+el.classList.toggle(
+  'p-1',
+  !isEditing
+)
+```
+
+})
+
+const saveBtn =
+document.getElementById(
+'saveSkills1Btn'
+)
+
+if (isEditing) {
+
+```
+saveBtn?.classList.add(
+  'hidden'
+)
+
+this.innerHTML =
+  '<i class="fas fa-edit mr-1"></i> Edit Skills'
+```
+
+} else {
+
+```
+saveBtn?.classList.remove(
+  'hidden'
+)
+
+this.innerHTML =
+  '<i class="fas fa-times mr-1"></i> Cancel'
+```
+
+}
+
+}
+
+/* ==========================================
+LOAD SKILLS CONTENT
+========================================== */
+
+async function loadSkills1Content() {
+
+const skillsSection =
+document.getElementById('skills1')
+
+if (!skillsSection) {
+
+```
+console.error(
+  '❌ Skills1 section not found'
+)
+
+return
+```
+
+}
+
+const editableElements =
+skillsSection.querySelectorAll(
+'[data-i18n]'
+)
+
+const { data, error } =
+await supabase
+.from('skill_content')
+.select('*')
+
+if (error) {
+
+```
+console.error(
+  '❌ Error loading skills:',
+  error.message
+)
+
+return
+```
+
+}
+
+editableElements.forEach(el => {
+
+```
+const key =
+  el.dataset.i18n
+
+const row =
+  data.find(
+    item =>
+      item.key === key
+  )
+
+if (!row) return
+
+const content =
+  currentLang === 'en'
+    ? row.en_text
+    : row.vi_text
+
+if (content !== null &&
+    content !== undefined) {
+
+  el.textContent =
+    content
+
+}
+```
+
+})
+
+console.log(
+'✅ Skills1 loaded'
+)
+
+}
+
+/* ==========================================
+SAVE SKILLS CONTENT
+========================================== */
+
 async function saveSkills1Content() {
 
-  const skillsSection =
-    document.getElementById('skills1')
+const skillsSection =
+document.getElementById('skills1')
 
-  if (!skillsSection) return
+if (!skillsSection) return
 
-  const editableElements =
-    skillsSection.querySelectorAll(
-      '.editable'
+const editableElements =
+skillsSection.querySelectorAll(
+'[data-i18n]'
+)
+
+for (const el of editableElements) {
+
+const key =
+  el.dataset.i18n
+
+const text =
+  el.textContent.trim()
+
+const payload = {
+  key
+}
+
+if (
+  currentLang === 'en'
+) {
+
+  payload.en_text =
+    text
+
+} else {
+
+  payload.vi_text =
+    text
+
+}
+
+const { error } =
+  await supabase
+    .from('skill_content')
+    .upsert(
+      payload,
+      {
+        onConflict:
+          'key'
+      }
     )
 
-  for (const el of editableElements) {
+if (error) {
 
-    const key =
-      el.getAttribute('data-i18n')
+  console.error(
+    `❌ Failed to save ${key}`,
+    error.message
+  )
 
-    const text =
-      el.innerText.trim()
+} else {
 
-    const updates =
-      currentLang === 'en'
-        ? {
-            key,
-            en_text: text
-          }
-        : {
-            key,
-            vi_text: text
-          }
-
-    const { error } =
-      await supabase
-        .from('skill_content')
-        .upsert(
-          updates,
-          {
-            onConflict: 'key'
-          }
-        )
-
-    if (error) {
-
-      console.error(
-        `❌ Failed to save skill1: ${key}`,
-        error.message
-      )
-
-    } else {
-
-      console.log(
-        `✅ Saved skill1: ${key}`
-      )
-
-    }
-
-  }
-
-  alert(
-    'Skills section saved! ✅'
+  console.log(
+    `✅ Saved ${key}`
   )
 
 }
+
+}
+
+alert(
+'Skills section saved successfully! ✅'
+)
+
+}
+
+/* ==========================================
+OPTIONAL RELOAD FUNCTION
+========================================== */
+
+async function refreshSkills1Section() {
+
+await loadSkills1Content()
+
+}
+
+/* ==========================================
+AUTO INIT
+========================================== */
+
+document.addEventListener(
+'DOMContentLoaded',
+async () => {
+
+initSkills1Section()
+
+await loadSkills1Content()
+
+}
+)
+
 
 
 </script>
