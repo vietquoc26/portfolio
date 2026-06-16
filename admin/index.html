@@ -2653,8 +2653,6 @@ document.getElementById('saveSkills1Btn')
 
 // Prevent duplicate listeners
 if (editBtn) {
-
-```
 const newEditBtn =
   editBtn.cloneNode(true)
 
@@ -2667,13 +2665,11 @@ newEditBtn.addEventListener(
   'click',
   toggleSkills1EditMode
 )
-```
 
 }
 
 if (saveBtn) {
 
-```
 const newSaveBtn =
   saveBtn.cloneNode(true)
 
@@ -2724,7 +2720,6 @@ newSaveBtn.addEventListener(
 
   }
 )
-```
 
 }
 
@@ -2782,7 +2777,6 @@ editableElements[0]
 
 editableElements.forEach(el => {
 
-```
 el.contentEditable =
   (!isEditing).toString()
 
@@ -2800,7 +2794,6 @@ el.classList.toggle(
   'p-1',
   !isEditing
 )
-```
 
 })
 
@@ -2811,25 +2804,23 @@ document.getElementById(
 
 if (isEditing) {
 
-```
 saveBtn?.classList.add(
   'hidden'
 )
 
 this.innerHTML =
   '<i class="fas fa-edit mr-1"></i> Edit Skills'
-```
 
 } else {
 
-```
+
 saveBtn?.classList.remove(
   'hidden'
 )
 
 this.innerHTML =
   '<i class="fas fa-times mr-1"></i> Cancel'
-```
+
 
 }
 
@@ -2846,13 +2837,11 @@ document.getElementById('skills1')
 
 if (!skillsSection) {
 
-```
 console.error(
   '❌ Skills1 section not found'
 )
 
 return
-```
 
 }
 
@@ -2868,20 +2857,17 @@ await supabase
 
 if (error) {
 
-```
 console.error(
   '❌ Error loading skills:',
   error.message
 )
 
 return
-```
 
 }
 
 editableElements.forEach(el => {
 
-```
 const key =
   el.dataset.i18n
 
@@ -2905,7 +2891,6 @@ if (content !== null &&
     content
 
 }
-```
 
 })
 
