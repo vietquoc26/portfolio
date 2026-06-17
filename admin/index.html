@@ -162,15 +162,30 @@ background-color: #f0f9ff;
     <!-- Image Column -->
     <div class="relative flex justify-center items-center">
       <!-- Circular Image -->
-      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full border-8 border-white shadow-2xl z-10">
-        <img id="heroImage" src="Avatar.jpg" alt="Viet" class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+      <div
+  id="heroImageContainer"
+  class="relative w-80 h-80 md:w-96 md:h-96 rounded-full border-8 border-white shadow-2xl z-10 overflow-hidden">
+        <img
+  id="heroImage"
+  src="Avatar.jpg"
+  alt="Hero Image"
+  class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
 
         <!-- Upload Overlay -->
-<label id="uploadLabel"
-  class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden">
+<label
+  id="uploadLabel"
+  for="heroImageInput"
+  class="absolute bottom-2 right-2 bg-black/60 text-white px-3 py-2 rounded-full cursor-pointer hidden hover:bg-black/80 transition z-20">
+
   <i class="fas fa-camera"></i>
-  <input type="file" class="hidden" onchange="previewImage(this)" />
+
 </label>
+
+<input
+  id="heroImageInput"
+  type="file"
+  accept="image/*"
+  class="hidden">
 
       <!-- Floating Icons -->
       <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
@@ -924,18 +939,6 @@ saveHeroBtn?.addEventListener('click', async () => {
       }
     })
 
-    // Hero Image (row id = 1)
-    const { data: heroRow, error: heroError } = await supabase
-      .from('hero_content')
-      .select('image_url')
-      .eq('id', 1)
-      .single()
-
-    if (!heroError && heroRow?.image_url) {
-      document.getElementById('heroImage').src = heroRow.image_url
-    }
-  }
-
   // --- Save Hero Content ---
   async function saveHeroContent() {
     const heroSection = document.getElementById('hero')
@@ -967,27 +970,79 @@ saveHeroBtn?.addEventListener('click', async () => {
     alert('Hero content saved! ✅')
   }
 
- async function loadHeroImage() {
+ /* ================= HERO IMAGE ================= */
 
-  const { data, error } = await supabase
-    .from('portfolio_images')
-    .select('image_path')
-    .eq('section', 'hero')
-    .eq('image_key', 'avatar')
-    .single();
+async function loadHeroImage() {
+  try {
 
-  if (error) {
-    console.error(error);
-    return;
+    const heroImage = document.getElementById('heroImage');
+
+    if (!heroImage) {
+      console.error('heroImage element not found');
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('website_images')
+      .select('*')
+      .eq('section', 'hero')
+      .eq('image_key', 'avatar')
+      .single();
+
+    if (error) {
+      console.error('Database Error:', error);
+
+      heroImage.src = 'Avatar.jpg';
+      return;
+    }
+
+    if (!data?.image_path) {
+      console.warn('No image_path found');
+
+      heroImage.src = 'Avatar.jpg';
+      return;
+    }
+
+    console.log('Hero Image Record:', data);
+
+    const { data: publicData } = supabase.storage
+      .from('portfolio-images') // <-- YOUR BUCKET NAME
+      .getPublicUrl(data.image_path);
+
+    if (!publicData?.publicUrl) {
+      console.error('Failed to generate public URL');
+
+      heroImage.src = 'avatar.jpg';
+      return;
+    }
+
+    console.log('Hero Image URL:', publicData.publicUrl);
+
+    heroImage.src = publicData.publicUrl;
+
+    if (data.alt_text) {
+      heroImage.alt = data.alt_text;
+    }
+
+  } catch (err) {
+
+    console.error('loadHeroImage Error:', err);
+
+    const heroImage =
+      document.getElementById('heroImage');
+
+    if (heroImage) {
+      heroImage.src = 'avatar.jpg';
+    }
+
   }
-
-  const { data: publicData } = supabase.storage
-    .from('portfolio-images')
-    .getPublicUrl(data.image_path);
-
-  document.getElementById('heroImage').src =
-    publicData.publicUrl;
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+  await loadHeroImage();
+
+});
 
 
   /* ================= SKILLS SECTION ================= */
