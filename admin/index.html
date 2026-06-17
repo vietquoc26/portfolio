@@ -1207,22 +1207,14 @@ async function loadHeroImage() {
 
 async function uploadHeroImage() {
 
-  if (!selectedHeroFile)
-    return
+  if (!selectedHeroFile) return
 
   try {
 
-    const extension =
-      selectedHeroFile.name
-        .split('.')
-        .pop()
-
     const filePath =
-      `hero/avatar-${Date.now()}.${extension}`
+      'hero/avatar.jpg'
 
-    const {
-      error: uploadError
-    } =
+    const { error: uploadError } =
       await supabase.storage
         .from('portfolio-images')
         .upload(
@@ -1236,9 +1228,7 @@ async function uploadHeroImage() {
     if (uploadError)
       throw uploadError
 
-    const {
-      error: dbError
-    } =
+    const { error: dbError } =
       await supabase
         .from('website_images')
         .upsert({
@@ -1254,15 +1244,12 @@ async function uploadHeroImage() {
     selectedHeroFile = null
 
     console.log(
-      '✅ Hero image updated'
+      'Hero image updated'
     )
 
   } catch (err) {
 
-    console.error(
-      '❌ Upload failed',
-      err
-    )
+    console.error(err)
 
   }
 

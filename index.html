@@ -1620,6 +1620,33 @@ function highlightActiveLang(lang) {
 document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'));
 document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'));
 
+async function loadHeroImage() {
+
+  const { data } =
+    await supabase
+      .from('website_images')
+      .select('*')
+      .eq('section', 'hero')
+      .eq('image_key', 'avatar')
+      .single()
+
+  if (!data) return
+
+  const { data: publicData } =
+    supabase.storage
+      .from('portfolio-images')
+      .getPublicUrl(
+        data.image_path
+      )
+
+  document.getElementById(
+    'heroImage'
+  ).src =
+    publicData.publicUrl +
+    '?t=' +
+    Date.now()
+}
+
 
   /* ================= STARTUP ================= */
 window.addEventListener('DOMContentLoaded', async () => {
