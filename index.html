@@ -1534,6 +1534,19 @@ const tableName = tableMap[sectionId] || (sectionId + '_content');
     }
   });
 
+  if (sectionId === 'hero') {
+    const { data: heroRow, error: heroError } = await supabase
+      .from('hero_content')
+      .select('image_url')
+      .eq('id', 1)
+      .single();
+    if (!heroError && heroRow?.image_url) {
+      const img = document.getElementById('heroImage');
+      if (img) img.src = heroRow.image_url;
+    }
+  }
+}
+
 /* ==========================================
    LOAD HERO IMAGE (FRONT END)
 ========================================== */
