@@ -187,55 +187,66 @@ background-color: #f0f9ff;
     </div>
 
     <!-- IMAGE COLUMN -->
-    <div class="relative flex justify-center items-center">
+<div class="relative flex justify-center items-center">
 
-      <!-- HERO IMAGE CONTAINER -->
-      <div id="heroImageContainer"
-        class="relative w-80 h-80 md:w-96 md:h-96 rounded-full border-8 border-white shadow-2xl overflow-hidden z-10">
+  <!-- HERO IMAGE CONTAINER -->
+  <div
+    id="heroImageContainer"
+    class="relative w-80 h-80 md:w-96 md:h-96 rounded-full border-8 border-white shadow-2xl overflow-hidden z-10">
 
-        <!-- HERO IMAGE -->
-        <img id="heroImage"
-          src=""
-          alt="Hero Image"
-          class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+    <!-- HERO IMAGE -->
+    <img
+      id="heroImage"
+      src=""
+      alt="Hero Image"
+      class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
 
-        <!-- IMAGE UPLOAD BUTTON -->
-        <label id="uploadLabel"
-          for="heroImageInput"
-          class="absolute bottom-3 right-3 w-10 h-10 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center cursor-pointer hidden transition z-20">
+    <!-- IMAGE UPLOAD OVERLAY -->
+    <label
+      id="uploadLabel"
+      for="heroImageInput"
+      class="absolute inset-0 hidden items-center justify-center rounded-full bg-black/50 text-white cursor-pointer z-30 transition">
 
-          <i class="fas fa-camera"></i>
+      <div class="text-center">
 
-        </label>
+        <i class="fas fa-camera text-4xl mb-3"></i>
 
-        <!-- HIDDEN FILE INPUT -->
-        <input
-          id="heroImageInput"
-          type="file"
-          accept="image/*"
-          class="hidden">
+        <p class="font-medium">
+          Change Photo
+        </p>
 
       </div>
 
-      <!-- FLOATING ICON -->
-      <div
-        class="absolute top-4 left-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-purple-600 text-xl z-20">
-        <i class="fas fa-lightbulb"></i>
-      </div>
+    </label>
 
-      <!-- FLOATING ICON -->
-      <div
-        class="absolute bottom-4 right-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-blue-600 text-xl z-20">
-        <i class="fas fa-code"></i>
-      </div>
+    <!-- FILE INPUT -->
+    <input
+      id="heroImageInput"
+      type="file"
+      accept="image/*"
+      class="hidden">
 
-      <!-- FLOATING ICON -->
-      <div
-        class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-pink-500 text-xl z-20">
-        <i class="fas fa-rocket"></i>
-      </div>
+  </div>
 
-    </div>
+  <!-- FLOATING ICON -->
+  <div
+    class="absolute top-4 left-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-purple-600 text-xl z-20">
+    <i class="fas fa-lightbulb"></i>
+  </div>
+
+  <!-- FLOATING ICON -->
+  <div
+    class="absolute bottom-4 right-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-blue-600 text-xl z-20">
+    <i class="fas fa-code"></i>
+  </div>
+
+  <!-- FLOATING ICON -->
+  <div
+    class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-pink-500 text-xl z-20">
+    <i class="fas fa-rocket"></i>
+  </div>
+
+</div>
 
   </div>
 
