@@ -967,49 +967,26 @@ saveHeroBtn?.addEventListener('click', async () => {
     alert('Hero content saved! ✅')
   }
 
-  // --- Image Preview + Upload ---
-window.previewImage = async function (input) {
-  if (input.files && input.files[0]) {
-    const file = input.files[0]
+ async function loadHeroImage() {
 
-    // Show preview immediately
-    const reader = new FileReader()
-    reader.onload = e => {
-      document.getElementById('heroImage').src = e.target.result
-    }
-    reader.readAsDataURL(file)
+  const { data, error } = await supabase
+    .from('website_images')
+    .select('image_path')
+    .eq('section', 'hero')
+    .eq('image_key', 'avatar')
+    .single();
 
-    // Always create a unique filename (prevents overwrite errors)
-    const fileName = `hero-${Date.now()}-${file.name}`
-
-    // Upload to Supabase storage
-    const { error: uploadError } = await supabase
-      .storage
-      .from('hero')       // 👈 make sure your bucket is named "hero"
-      .upload(fileName, file, { cacheControl: '3600' })
-
-    if (uploadError) {
-      console.error('❌ Upload failed:', uploadError.message)
-      return
-    }
-
-    // Get public URL for the uploaded file
-    const { data } = supabase.storage.from('hero').getPublicUrl(fileName)
-    const publicUrl = data.publicUrl
-
-    // Update DB (⚠️ don’t hardcode id=1 if it’s not correct)
-    const { error: dbError } = await supabase
-      .from('hero_content')
-      .update({ image_url: publicUrl })
-      .eq('key', 'heroImage')   // 👈 safer: use a "key" column (like greeting/intro)
-      // .eq('id', 1)            // ❌ only use if you are sure id=1 is correct
-
-    if (dbError) {
-      console.error('❌ Failed to update DB:', dbError.message)
-    } else {
-      console.log('✅ Image uploaded & DB updated:', publicUrl)
-    }
+  if (error) {
+    console.error(error);
+    return;
   }
+
+  const { data: publicData } = supabase.storage
+    .from('portfolio-images')
+    .getPublicUrl(data.image_path);
+
+  document.getElementById('heroImage').src =
+    publicData.publicUrl;
 }
 
 
@@ -2630,145 +2607,136 @@ initProjectsSection()
 
 loadProjectsSection()
 
-
 /* ==========================================
-   SKILLS SECTION
+   SKILLS SECTION INIT
 ========================================== */
 
 function initSkillsSection() {
 
-  const section =
-    document.getElementById('skills1')
-
-  if (!section) return
-
   const editBtn =
-    document.getElementById(
-      'editSkillsSection'
-    )
+    document.getElementById('editSkillsSection')
 
   const saveBtn =
-    document.getElementById(
-      'saveSkillsSection'
-    )
+    document.getElementById('saveSkillsSection')
 
-  /* ------------------------------
-     EDIT MODE
-  ------------------------------ */
+  if (!editBtn) return
 
-  editBtn?.addEventListener(
-    'click',
-    () => {
+  editBtn.addEventListener('click', async () => {
 
-      const elements =
-        section.querySelectorAll(
-          '[data-i18n]'
-        )
+    const section =
+      document.getElementById('skills1')
 
-      const isEditing =
-        elements[0]?.contentEditable ===
-        'true'
+    if (!section) return
 
-      elements.forEach(el => {
+    const editableElements =
+      section.querySelectorAll('[data-i18n]')
 
-        el.contentEditable =
-          (!isEditing).toString()
+    const isEditing =
+      editableElements[0]?.contentEditable === 'true'
 
-        el.classList.toggle(
-          'border',
-          !isEditing
-        )
+    editableElements.forEach(el => {
 
-        el.classList.toggle(
-          'border-dashed',
-          !isEditing
-        )
+      el.classList.add('editable')
 
-        el.classList.toggle(
-          'rounded',
-          !isEditing
-        )
+      el.contentEditable =
+        isEditing ? 'false' : 'true'
 
-        el.classList.toggle(
-          'p-1',
-          !isEditing
-        )
+      el.classList.toggle('border', !isEditing)
+      el.classList.toggle('border-dashed', !isEditing)
+      el.classList.toggle('border-blue-500', !isEditing)
+      el.classList.toggle('p-1', !isEditing)
+      el.classList.toggle('rounded', !isEditing)
 
-      })
+    })
 
-      if (isEditing) {
+    if (isEditing) {
 
-        saveBtn?.classList.add(
-          'hidden'
-        )
-
-        editBtn.innerHTML =
-          'Edit'
-
-      } else {
-
-        saveBtn?.classList.remove(
-          'hidden'
-        )
-
-        editBtn.innerHTML =
-          'Cancel'
-
-      }
-
-    }
-  )
-
-  /* ------------------------------
-     SAVE
-  ------------------------------ */
-
-  saveBtn?.addEventListener(
-    'click',
-    async () => {
-
-      await saveSkillsContent()
-
-      saveBtn.classList.add(
-        'hidden'
-      )
+      saveBtn.classList.add('hidden')
 
       editBtn.innerHTML =
-        'Edit'
+        '<i class="fas fa-edit mr-1"></i> Edit'
 
-      section
-        .querySelectorAll(
-          '[data-i18n]'
-        )
-        .forEach(el => {
+      await loadSkillsSection()
 
-          el.contentEditable =
-            'false'
+    } else {
 
-          el.classList.remove(
-            'border',
-            'border-dashed',
-            'rounded',
-            'p-1'
-          )
+      saveBtn.classList.remove('hidden')
 
-        })
+      editBtn.innerHTML =
+        '<i class="fas fa-times mr-1"></i> Cancel'
 
     }
-  )
+
+  })
+
+  saveBtn?.addEventListener('click', async () => {
+
+    await saveSkillsSection()
+
+    saveBtn.classList.add('hidden')
+
+    editBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit'
+
+    const section =
+      document.getElementById('skills1')
+
+    const editableElements =
+      section.querySelectorAll('[data-i18n]')
+
+    editableElements.forEach(el => {
+
+      el.contentEditable = 'false'
+
+      el.classList.remove(
+        'border',
+        'border-dashed',
+        'border-blue-500',
+        'p-1',
+        'rounded'
+      )
+
+    })
+
+  })
 
 }
 
+
 /* ==========================================
-   LOAD SKILLS
+   LANGUAGE TOGGLE
 ========================================== */
 
-async function loadSkillsContent() {
+document.getElementById('lang-en')?.addEventListener('click', () => {
+
+  currentLang = 'en'
+
+  loadSkillsSection()
+
+})
+
+document.getElementById('lang-vi')?.addEventListener('click', () => {
+
+  currentLang = 'vi'
+
+  loadSkillsSection()
+
+})
+
+
+/* ==========================================
+   LOAD SKILLS SECTION
+========================================== */
+
+async function loadSkillsSection() {
 
   const section =
     document.getElementById('skills1')
 
   if (!section) return
+
+  const editableElements =
+    section.querySelectorAll('[data-i18n]')
 
   const { data, error } =
     await supabase
@@ -2778,108 +2746,88 @@ async function loadSkillsContent() {
   if (error) {
 
     console.error(
-      '❌ Skills Load Error',
-      error
+      '❌ Error loading skills section:',
+      error.message
     )
 
     return
 
   }
 
-  const elements =
-    section.querySelectorAll(
-      '[data-i18n]'
-    )
-
-  elements.forEach(el => {
+  editableElements.forEach(el => {
 
     const key =
-      el.dataset.i18n
+      el.getAttribute('data-i18n')
 
     const row =
       data.find(
-        item =>
-          item.key === key
+        item => item.key === key
       )
 
     if (!row) return
 
-    const content =
+    el.innerHTML =
       currentLang === 'en'
-        ? row.en_text
-        : row.vi_text
-
-    el.textContent =
-      content || ''
+        ? (row.en_text || '')
+        : (row.vi_text || '')
 
   })
 
   updateSkillProgressBars()
 
-  console.log(
-    '✅ Skills Loaded'
-  )
-
 }
 
+
 /* ==========================================
-   SAVE SKILLS
+   SAVE SKILLS SECTION
 ========================================== */
 
-async function saveSkillsContent() {
+async function saveSkillsSection() {
 
   const section =
     document.getElementById('skills1')
 
   if (!section) return
 
-  const elements =
-    section.querySelectorAll(
-      '[data-i18n]'
-    )
+  const editableElements =
+    section.querySelectorAll('[data-i18n]')
 
-  for (const el of elements) {
+  for (const el of editableElements) {
 
     const key =
-      el.dataset.i18n
+      el.getAttribute('data-i18n')
+
+    if (!key) continue
 
     const text =
-      el.textContent.trim()
+      el.innerHTML.trim()
 
-    const payload = {
-      key
-    }
-
-    if (
+    const updates =
       currentLang === 'en'
-    ) {
-
-      payload.en_text =
-        text
-
-    } else {
-
-      payload.vi_text =
-        text
-
-    }
+        ? {
+            key,
+            en_text: text
+          }
+        : {
+            key,
+            vi_text: text
+          }
 
     const { error } =
       await supabase
         .from('about_section')
         .upsert(
-          payload,
+          updates,
           {
-            onConflict:
-              'key'
+            onConflict: 'key'
           }
         )
 
     if (error) {
 
       console.error(
-        `❌ Failed ${key}`,
-        error
+        `❌ Failed saving ${key}:`,
+        error.message
       )
 
     }
@@ -2889,10 +2837,11 @@ async function saveSkillsContent() {
   updateSkillProgressBars()
 
   alert(
-    'Skills saved successfully ✅'
+    'Skills Section saved successfully! ✅'
   )
 
 }
+
 
 /* ==========================================
    UPDATE PROGRESS BARS
@@ -2900,12 +2849,12 @@ async function saveSkillsContent() {
 
 function updateSkillProgressBars() {
 
-  const cards =
+  const progressBars =
     document.querySelectorAll(
       '#skills1 .progress-bar'
     )
 
-  cards.forEach(bar => {
+  progressBars.forEach(bar => {
 
     const card =
       bar.closest('.p-7')
@@ -2926,9 +2875,7 @@ function updateSkillProgressBars() {
           .replace('%', '')
       )
 
-    if (
-      isNaN(value)
-    )
+    if (isNaN(value))
       return
 
     bar.style.width =
@@ -2942,51 +2889,6 @@ function updateSkillProgressBars() {
   })
 
 }
-
-/* ==========================================
-   LANGUAGE SWITCH
-========================================== */
-
-document
-  .getElementById('lang-en')
-  ?.addEventListener(
-    'click',
-    async () => {
-
-      currentLang = 'en'
-
-      await loadSkillsContent()
-
-    }
-  )
-
-document
-  .getElementById('lang-vi')
-  ?.addEventListener(
-    'click',
-    async () => {
-
-      currentLang = 'vi'
-
-      await loadSkillsContent()
-
-    }
-  )
-
-/* ==========================================
-   INITIALIZE
-========================================== */
-
-document.addEventListener(
-  'DOMContentLoaded',
-  async () => {
-
-    initSkillsSection()
-
-    await loadSkillsContent()
-
-  }
-)
 
 
 </script>
