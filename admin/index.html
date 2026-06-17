@@ -967,49 +967,26 @@ saveHeroBtn?.addEventListener('click', async () => {
     alert('Hero content saved! ✅')
   }
 
-  // --- Image Preview + Upload ---
-window.previewImage = async function (input) {
-  if (input.files && input.files[0]) {
-    const file = input.files[0]
+ async function loadHeroImage() {
 
-    // Show preview immediately
-    const reader = new FileReader()
-    reader.onload = e => {
-      document.getElementById('heroImage').src = e.target.result
-    }
-    reader.readAsDataURL(file)
+  const { data, error } = await supabase
+    .from('website_images')
+    .select('image_path')
+    .eq('section', 'hero')
+    .eq('image_key', 'avatar')
+    .single();
 
-    // Always create a unique filename (prevents overwrite errors)
-    const fileName = `hero-${Date.now()}-${file.name}`
-
-    // Upload to Supabase storage
-    const { error: uploadError } = await supabase
-      .storage
-      .from('hero')       // 👈 make sure your bucket is named "hero"
-      .upload(fileName, file, { cacheControl: '3600' })
-
-    if (uploadError) {
-      console.error('❌ Upload failed:', uploadError.message)
-      return
-    }
-
-    // Get public URL for the uploaded file
-    const { data } = supabase.storage.from('hero').getPublicUrl(fileName)
-    const publicUrl = data.publicUrl
-
-    // Update DB (⚠️ don’t hardcode id=1 if it’s not correct)
-    const { error: dbError } = await supabase
-      .from('hero_content')
-      .update({ image_url: publicUrl })
-      .eq('key', 'heroImage')   // 👈 safer: use a "key" column (like greeting/intro)
-      // .eq('id', 1)            // ❌ only use if you are sure id=1 is correct
-
-    if (dbError) {
-      console.error('❌ Failed to update DB:', dbError.message)
-    } else {
-      console.log('✅ Image uploaded & DB updated:', publicUrl)
-    }
+  if (error) {
+    console.error(error);
+    return;
   }
+
+  const { data: publicData } = supabase.storage
+    .from('portfolio-images')
+    .getPublicUrl(data.image_path);
+
+  document.getElementById('heroImage').src =
+    publicData.publicUrl;
 }
 
 
