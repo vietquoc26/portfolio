@@ -1127,83 +1127,84 @@ function initHeroImagePreview() {
 
 async function uploadHeroImage() {
 
+  console.log('===== START HERO IMAGE UPLOAD =====')
+
+  console.log('selectedHeroFile:', selectedHeroFile)
+
   if (!selectedHeroFile) {
-
-    console.log(
-      'No image selected'
-    )
-
+    alert('No image selected')
     return
-
   }
 
   try {
 
-    const filePath =
-      'hero/avatar.jpg'
+    const filePath = 'hero/avatar.jpg'
 
-    console.log(
-      'Uploading image...'
-    )
+    console.log('Uploading to:', filePath)
 
     const uploadResult =
-  await supabase.storage
-    .from('portfolio-images')
-    .upload(
-      filePath,
-      selectedHeroFile,
-      {
-        upsert: true
-      }
-    )
+      await supabase.storage
+        .from('portfolio-images')
+        .upload(
+          filePath,
+          selectedHeroFile,
+          {
+            upsert: true
+          }
+        )
 
-console.log('UPLOAD RESULT:', uploadResult)
+    console.log('UPLOAD RESULT:', uploadResult)
 
-const uploadError = uploadResult.error
+    if (uploadResult.error) {
+      console.error('UPLOAD ERROR:', uploadResult.error)
+      alert(
+        'Upload failed: ' +
+        uploadResult.error.message
+      )
+      return
+    }
 
-if (uploadError) {
-  console.error(uploadError)
-  throw uploadError
-}
+    console.log('Storage upload successful')
 
-    if (uploadError)
-      throw uploadError
-
-    const {
-      error: dbError
-    } =
+    const dbResult =
       await supabase
         .from('website_images')
-        .upsert({
-          section: 'hero',
-          image_key: 'avatar',
+        .update({
           image_path: filePath,
           alt_text: 'Hero Image'
         })
+        .eq('section', 'hero')
+        .eq('image_key', 'avatar')
 
-    if (dbError)
-      throw dbError
+    console.log('DB RESULT:', dbResult)
 
-    console.log(
-      'Image uploaded'
-    )
+    if (dbResult.error) {
+      console.error('DB ERROR:', dbResult.error)
+      alert(
+        'Database update failed: ' +
+        dbResult.error.message
+      )
+      return
+    }
 
-    selectedHeroFile =
-      null
+    console.log('Database update successful')
 
-  }
+    selectedHeroFile = null
 
-  catch (err) {
+    alert('Hero image uploaded successfully')
 
-    console.error(
-      'Upload failed:',
-      err
+  } catch (err) {
+
+    console.error('FULL ERROR:', err)
+
+    alert(
+      'Unexpected Error: ' +
+      err.message
     )
 
   }
 
 }
-
 /* ==========================================
    EDIT MODE
 ========================================== */
