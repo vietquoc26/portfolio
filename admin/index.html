@@ -1146,20 +1146,25 @@ async function uploadHeroImage() {
       'Uploading image...'
     )
 
-    const {
-      error: uploadError
-    } =
-      await supabase.storage
-        .from(
-          'portfolio-images'
-        )
-        .upload(
-          filePath,
-          selectedHeroFile,
-          {
-            upsert: true
-          }
-        )
+    const uploadResult =
+  await supabase.storage
+    .from('portfolio-images')
+    .upload(
+      filePath,
+      selectedHeroFile,
+      {
+        upsert: true
+      }
+    )
+
+console.log('UPLOAD RESULT:', uploadResult)
+
+const uploadError = uploadResult.error
+
+if (uploadError) {
+  console.error(uploadError)
+  throw uploadError
+}
 
     if (uploadError)
       throw uploadError
