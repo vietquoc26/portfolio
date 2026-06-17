@@ -904,114 +904,35 @@ return closest;
   const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjdW9taHB1amFrcmZmdXpxeXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MTUxNjYsImV4cCI6MjA5NDE5MTE2Nn0.O8-uti4KtpmmTLtBxVfCCT7Vbq4QWUeqUjTmqnugWJs'
   const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-  const editBtn = document.querySelector('.edit-btn')
-  let currentLang = 'en'
+ let currentLang = 'en'
 let selectedHeroFile = null
 
-// --- Language Toggle ---
-document.getElementById('lang-en')?.addEventListener('click', () => {
-  currentLang = 'en'
-  loadHeroContent()
-})
+let heroEditBtn
+let saveHeroBtn
+let uploadLabel
 
-document.getElementById('lang-vi')?.addEventListener('click', () => {
-  currentLang = 'vi'
-  loadHeroContent()
-})
-
-// --- Elements ---
-const heroEditBtn = document.getElementById('editHero')
-const saveHeroBtn = document.getElementById('saveHero')
-const uploadLabel = document.getElementById('uploadLabel')
-
-const heroImage = document.getElementById('heroImage')
-const heroImageInput = document.getElementById('heroImageInput')
+let heroImage
+let heroImageInput
 
 /* ==========================================
-   EDIT MODE
+   LANGUAGE SWITCHER
 ========================================== */
 
-heroEditBtn?.addEventListener('click', () => {
+document.getElementById('lang-en')
+  ?.addEventListener('click', () => {
 
-  const heroSection = document.getElementById('hero')
-  if (!heroSection) return
-
-  const editableElements =
-    heroSection.querySelectorAll('.editable')
-
-  const isEditing =
-    editableElements[0]?.contentEditable === 'true'
-
-  editableElements.forEach(el => {
-
-    el.contentEditable = !isEditing
-
-    el.classList.toggle('border', !isEditing)
-    el.classList.toggle('border-dashed', !isEditing)
-    el.classList.toggle('p-1', !isEditing)
+    currentLang = 'en'
+    loadHeroContent()
 
   })
 
-  if (isEditing) {
+document.getElementById('lang-vi')
+  ?.addEventListener('click', () => {
 
-    saveHeroBtn.classList.add('hidden')
-
-    heroEditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit Hero'
-
-    uploadLabel?.classList.add('hidden')
-
-  } else {
-
-    saveHeroBtn.classList.remove('hidden')
-
-    heroEditBtn.innerHTML =
-      '<i class="fas fa-times mr-1"></i> Cancel'
-
-    uploadLabel?.classList.remove('hidden')
-
-  }
-
-})
-
-/* ==========================================
-   SAVE BUTTON
-========================================== */
-
-saveHeroBtn?.addEventListener('click', async () => {
-
-  await saveHeroContent()
-
-  await uploadHeroImage()
-
-  await loadHeroImage()
-
-  const heroSection =
-    document.getElementById('hero')
-
-  const editableElements =
-    heroSection.querySelectorAll('.editable')
-
-  editableElements.forEach(el => {
-
-    el.contentEditable = false
-
-    el.classList.remove('border')
-    el.classList.remove('border-dashed')
-    el.classList.remove('p-1')
+    currentLang = 'vi'
+    loadHeroContent()
 
   })
-
-  saveHeroBtn.classList.add('hidden')
-
-  uploadLabel?.classList.add('hidden')
-
-  heroEditBtn.innerHTML =
-    '<i class="fas fa-edit mr-1"></i> Edit Hero'
-
-  alert('Hero content saved! ✅')
-
-})
 
 /* ==========================================
    LOAD HERO CONTENT
@@ -1034,11 +955,7 @@ async function loadHeroContent() {
 
   if (error) {
 
-    console.error(
-      '❌ Error loading hero content:',
-      error.message
-    )
-
+    console.error(error)
     return
 
   }
@@ -1046,19 +963,19 @@ async function loadHeroContent() {
   editableElements.forEach(el => {
 
     const key =
-      el.getAttribute('data-i18n')
+      el.dataset.i18n
 
     const row =
-      data.find(d => d.key === key)
+      data.find(
+        d => d.key === key
+      )
 
-    if (row) {
+    if (!row) return
 
-      el.innerText =
-        currentLang === 'en'
-          ? row.en_text
-          : row.vi_text
-
-    }
+    el.innerText =
+      currentLang === 'en'
+        ? row.en_text
+        : row.vi_text
 
   })
 
@@ -1070,23 +987,20 @@ async function loadHeroContent() {
 
 async function saveHeroContent() {
 
-  const heroSection =
-    document.getElementById('hero')
-
-  if (!heroSection) return
-
   const editableElements =
-    heroSection.querySelectorAll('.editable')
+    document.querySelectorAll(
+      '#hero .editable'
+    )
 
   for (const el of editableElements) {
 
     const key =
-      el.getAttribute('data-i18n')
+      el.dataset.i18n
 
     const text =
       el.innerText.trim()
 
-    const updates =
+    const payload =
       currentLang === 'en'
         ? {
             key,
@@ -1101,7 +1015,7 @@ async function saveHeroContent() {
       await supabase
         .from('hero_content')
         .upsert(
-          updates,
+          payload,
           {
             onConflict: 'key'
           }
@@ -1110,14 +1024,8 @@ async function saveHeroContent() {
     if (error) {
 
       console.error(
-        `❌ Failed to save hero:${key}`,
-        error.message
-      )
-
-    } else {
-
-      console.log(
-        `✅ Saved hero:${key}`
+        `Save failed: ${key}`,
+        error
       )
 
     }
@@ -1125,27 +1033,6 @@ async function saveHeroContent() {
   }
 
 }
-
-/* ==========================================
-   IMAGE PREVIEW
-========================================== */
-
-heroImageInput?.addEventListener(
-  'change',
-  e => {
-
-    const file =
-      e.target.files[0]
-
-    if (!file) return
-
-    selectedHeroFile = file
-
-    heroImage.src =
-      URL.createObjectURL(file)
-
-  }
-)
 
 /* ==========================================
    LOAD HERO IMAGE
@@ -1165,11 +1052,7 @@ async function loadHeroImage() {
 
     if (error) {
 
-      console.error(
-        'Hero image error:',
-        error
-      )
-
+      console.error(error)
       return
 
     }
@@ -1187,17 +1070,54 @@ async function loadHeroImage() {
         )
 
     heroImage.src =
-      publicData.publicUrl
+      `${publicData.publicUrl}?t=${Date.now()}`
 
     heroImage.alt =
       data.alt_text ||
       'Hero Image'
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.error(err)
 
   }
+
+}
+
+/* ==========================================
+   IMAGE PREVIEW
+========================================== */
+
+function initHeroImagePreview() {
+
+  heroImageInput
+    ?.addEventListener(
+      'change',
+      e => {
+
+        const file =
+          e.target.files[0]
+
+        console.log(
+          'Selected file:',
+          file
+        )
+
+        if (!file)
+          return
+
+        selectedHeroFile =
+          file
+
+        heroImage.src =
+          URL.createObjectURL(
+            file
+          )
+
+      }
+    )
 
 }
 
@@ -1207,16 +1127,32 @@ async function loadHeroImage() {
 
 async function uploadHeroImage() {
 
-  if (!selectedHeroFile) return
+  if (!selectedHeroFile) {
+
+    console.log(
+      'No image selected'
+    )
+
+    return
+
+  }
 
   try {
 
     const filePath =
       'hero/avatar.jpg'
 
-    const { error: uploadError } =
+    console.log(
+      'Uploading image...'
+    )
+
+    const {
+      error: uploadError
+    } =
       await supabase.storage
-        .from('portfolio-images')
+        .from(
+          'portfolio-images'
+        )
         .upload(
           filePath,
           selectedHeroFile,
@@ -1228,7 +1164,9 @@ async function uploadHeroImage() {
     if (uploadError)
       throw uploadError
 
-    const { error: dbError } =
+    const {
+      error: dbError
+    } =
       await supabase
         .from('website_images')
         .upsert({
@@ -1241,17 +1179,152 @@ async function uploadHeroImage() {
     if (dbError)
       throw dbError
 
-    selectedHeroFile = null
-
     console.log(
-      'Hero image updated'
+      'Image uploaded'
     )
 
-  } catch (err) {
-
-    console.error(err)
+    selectedHeroFile =
+      null
 
   }
+
+  catch (err) {
+
+    console.error(
+      'Upload failed:',
+      err
+    )
+
+  }
+
+}
+
+/* ==========================================
+   EDIT MODE
+========================================== */
+
+function initHeroEditor() {
+
+  heroEditBtn
+    ?.addEventListener(
+      'click',
+      () => {
+
+        const editableElements =
+          document.querySelectorAll(
+            '#hero .editable'
+          )
+
+        const isEditing =
+          editableElements[0]
+            ?.contentEditable ===
+          'true'
+
+        editableElements.forEach(
+          el => {
+
+            el.contentEditable =
+              !isEditing
+
+            el.classList.toggle(
+              'border',
+              !isEditing
+            )
+
+            el.classList.toggle(
+              'border-dashed',
+              !isEditing
+            )
+
+            el.classList.toggle(
+              'p-1',
+              !isEditing
+            )
+
+          }
+        )
+
+        if (isEditing) {
+
+          saveHeroBtn.classList.add(
+            'hidden'
+          )
+
+          uploadLabel.classList.add(
+            'hidden'
+          )
+
+          uploadLabel.classList.remove(
+            'flex'
+          )
+
+          heroEditBtn.innerHTML =
+            '<i class="fas fa-edit mr-1"></i> Edit Hero'
+
+        }
+
+        else {
+
+          saveHeroBtn.classList.remove(
+            'hidden'
+          )
+
+          uploadLabel.classList.remove(
+            'hidden'
+          )
+
+          uploadLabel.classList.add(
+            'flex'
+          )
+
+          heroEditBtn.innerHTML =
+            '<i class="fas fa-times mr-1"></i> Cancel'
+
+        }
+
+      }
+    )
+
+}
+
+/* ==========================================
+   SAVE BUTTON
+========================================== */
+
+function initSaveButton() {
+
+  saveHeroBtn
+    ?.addEventListener(
+      'click',
+      async () => {
+
+        await saveHeroContent()
+
+        await uploadHeroImage()
+
+        await loadHeroImage()
+
+        saveHeroBtn.classList.add(
+          'hidden'
+        )
+
+        uploadLabel.classList.add(
+          'hidden'
+        )
+
+        uploadLabel.classList.remove(
+          'flex'
+        )
+
+        heroEditBtn.innerHTML =
+          '<i class="fas fa-edit mr-1"></i> Edit Hero'
+
+        alert(
+          'Hero updated successfully ✅'
+        )
+
+      }
+    )
 
 }
 
@@ -1262,6 +1335,47 @@ async function uploadHeroImage() {
 document.addEventListener(
   'DOMContentLoaded',
   async () => {
+
+    heroEditBtn =
+      document.getElementById(
+        'editHero'
+      )
+
+    saveHeroBtn =
+      document.getElementById(
+        'saveHero'
+      )
+
+    uploadLabel =
+      document.getElementById(
+        'uploadLabel'
+      )
+
+    heroImage =
+      document.getElementById(
+        'heroImage'
+      )
+
+    heroImageInput =
+      document.getElementById(
+        'heroImageInput'
+      )
+
+    console.log(
+      'heroImage:',
+      heroImage
+    )
+
+    console.log(
+      'heroImageInput:',
+      heroImageInput
+    )
+
+    initHeroEditor()
+
+    initSaveButton()
+
+    initHeroImagePreview()
 
     await loadHeroContent()
 
