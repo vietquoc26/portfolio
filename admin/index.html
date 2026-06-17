@@ -970,7 +970,7 @@ saveHeroBtn?.addEventListener('click', async () => {
  async function loadHeroImage() {
 
   const { data, error } = await supabase
-    .from('website_images')
+    .from('portfolio_images')
     .select('image_path')
     .eq('section', 'hero')
     .eq('image_key', 'avatar')
