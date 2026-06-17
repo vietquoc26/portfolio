@@ -979,18 +979,6 @@ saveHeroBtn?.addEventListener('click', async () => {
       }
     })
 
-    // Hero Image (row id = 1)
-    const { data: heroRow, error: heroError } = await supabase
-      .from('hero_content')
-      .select('image_url')
-      .eq('id', 1)
-      .single()
-
-    if (!heroError && heroRow?.image_url) {
-      document.getElementById('heroImage').src = heroRow.image_url
-    }
-  }
-
   // --- Save Hero Content ---
   async function saveHeroContent() {
     const heroSection = document.getElementById('hero')
