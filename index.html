@@ -1534,17 +1534,73 @@ const tableName = tableMap[sectionId] || (sectionId + '_content');
     }
   });
 
-  if (sectionId === 'hero') {
-    const { data: heroRow, error: heroError } = await supabase
-      .from('hero_content')
-      .select('image_url')
-      .eq('id', 1)
-      .single();
-    if (!heroError && heroRow?.image_url) {
-      const img = document.getElementById('heroImage');
-      if (img) img.src = heroRow.image_url;
+/* ==========================================
+   LOAD HERO IMAGE (FRONT END)
+========================================== */
+
+async function loadHeroImage() {
+
+  try {
+
+    const heroImage =
+      document.getElementById('heroImage')
+
+    if (!heroImage) return
+
+    const { data, error } =
+      await supabase
+        .from('website_images')
+        .select('image_path, alt_text')
+        .eq('section', 'hero')
+        .eq('image_key', 'avatar')
+        .single()
+
+    if (error) {
+
+      console.error(
+        'Failed to load hero image:',
+        error.message
+      )
+
+      return
+
     }
+
+    if (!data?.image_path) {
+
+      console.warn(
+        'No hero image found'
+      )
+
+      return
+
+    }
+
+    const { data: publicData } =
+      supabase.storage
+        .from('portfolio-images')
+        .getPublicUrl(
+          data.image_path
+        )
+
+    heroImage.src =
+      publicData.publicUrl +
+      '?t=' +
+      Date.now()
+
+    heroImage.alt =
+      data.alt_text ||
+      'Hero Image'
+
+  } catch (err) {
+
+    console.error(
+      'loadHeroImage:',
+      err
+    )
+
   }
+
 }
 
  function reloadAllSections() {
@@ -1620,32 +1676,6 @@ function highlightActiveLang(lang) {
 document.getElementById('btn-en')?.addEventListener('click', () => setLanguage('en'));
 document.getElementById('btn-vi')?.addEventListener('click', () => setLanguage('vi'));
 
-async function loadHeroImage() {
-
-  const { data } =
-    await supabase
-      .from('website_images')
-      .select('*')
-      .eq('section', 'hero')
-      .eq('image_key', 'avatar')
-      .single()
-
-  if (!data) return
-
-  const { data: publicData } =
-    supabase.storage
-      .from('portfolio-images')
-      .getPublicUrl(
-        data.image_path
-      )
-
-  document.getElementById(
-    'heroImage'
-  ).src =
-    publicData.publicUrl +
-    '?t=' +
-    Date.now()
-}
 
 
   /* ================= STARTUP ================= */
