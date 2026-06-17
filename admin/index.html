@@ -121,69 +121,124 @@ background-color: #f0f9ff;
 <div id="homeTab" class="tab-content hidden space-y-12">
 <h2 class="text-2xl font-bold">Home Editor</h2>
 
-<!-- Hero -->
-<section id="hero" class="relative group min-h-[80vh] flex items-center justify-center py-12 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
+<!-- HERO SECTION -->
+<section id="hero"
+  class="relative group min-h-[80vh] flex items-center justify-center py-12 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow">
 
   <!-- Edit Button -->
-  <button id="editHero" class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">
+  <button id="editHero"
+    class="edit-btn absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition z-50">
     <i class="fas fa-edit mr-1"></i> Edit Hero
   </button>
-  <!-- Save Button (hidden by default) -->
-  <button id="saveHero" class="absolute top-4 right-28 bg-green-600 text-white px-3 py-1 rounded hidden">
+
+  <!-- Save Button -->
+  <button id="saveHero"
+    class="absolute top-4 right-28 bg-green-600 text-white px-3 py-1 rounded hidden z-50">
     <i class="fas fa-save mr-1"></i> Save
   </button>
 
   <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
-    <!-- Text Column -->
-    <div class="fade-in fade-delay-1 space-y-6 md:pr-6 text-center md:text-left" style="animation-name: fadeUp;">
+    <!-- TEXT COLUMN -->
+    <div class="fade-in fade-delay-1 space-y-6 md:pr-6 text-center md:text-left">
 
-      <h1 id="herotitle" class="text-4xl md:text-6xl font-bold leading-tight editable" contenteditable="false" data-i18n="greeting">
-        <!-- Title will load here -->
+      <h1 id="herotitle"
+        class="text-4xl md:text-6xl font-bold leading-tight editable"
+        contenteditable="false"
+        data-i18n="greeting">
       </h1>
 
-      <p id="herosubtitle" class="text-lg text-gray-700 dark:text-gray-300 editable" contenteditable="false" data-i18n="intro">
-        <!-- Subtitle will load here -->
+      <p id="herosubtitle"
+        class="text-lg text-gray-700 dark:text-gray-300 editable"
+        contenteditable="false"
+        data-i18n="intro">
       </p>
 
-      <!-- Buttons -->
+      <!-- CTA Buttons -->
       <div class="flex flex-wrap justify-center md:justify-start gap-4">
-        <span id="heroprojects" class="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition editable" contenteditable="false" data-i18n="projects"></span>
-        <span id="herocontact" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition editable" contenteditable="false" data-i18n="contact"></span>
+
+        <span id="heroprojects"
+          class="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition editable"
+          contenteditable="false"
+          data-i18n="projects">
+        </span>
+
+        <span id="herocontact"
+          class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition editable"
+          contenteditable="false"
+          data-i18n="contact">
+        </span>
+
       </div>
 
       <!-- Social Icons -->
       <div class="flex justify-center md:justify-start gap-4 text-2xl text-blue-600 dark:text-blue-400 -mt-2">
-        <i class="fab fa-facebook text-blue-600 hover:text-blue-800"></i>
-        <i class="fab fa-linkedin text-blue-600 hover:text-blue-800"></i>
+
+        <a href="#" aria-label="Facebook">
+          <i class="fab fa-facebook hover:text-blue-800 transition"></i>
+        </a>
+
+        <a href="#" aria-label="LinkedIn">
+          <i class="fab fa-linkedin hover:text-blue-800 transition"></i>
+        </a>
+
       </div>
+
     </div>
 
-    <!-- Image Column -->
+    <!-- IMAGE COLUMN -->
     <div class="relative flex justify-center items-center">
-      <!-- Circular Image -->
-      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full border-8 border-white shadow-2xl z-10">
-        <img id="heroImage" src="Avatar.jpg" alt="Viet" class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
 
-        <!-- Upload Overlay -->
-<label id="uploadLabel"
-  class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded cursor-pointer hidden">
-  <i class="fas fa-camera"></i>
-  <input type="file" class="hidden" onchange="previewImage(this)" />
-</label>
+      <!-- HERO IMAGE CONTAINER -->
+      <div id="heroImageContainer"
+        class="relative w-80 h-80 md:w-96 md:h-96 rounded-full border-8 border-white shadow-2xl overflow-hidden z-10">
 
-      <!-- Floating Icons -->
-      <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
+        <!-- HERO IMAGE -->
+        <img id="heroImage"
+          src=""
+          alt="Hero Image"
+          class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+
+        <!-- IMAGE UPLOAD BUTTON -->
+        <label id="uploadLabel"
+          for="heroImageInput"
+          class="absolute bottom-3 right-3 w-10 h-10 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center cursor-pointer hidden transition z-20">
+
+          <i class="fas fa-camera"></i>
+
+        </label>
+
+        <!-- HIDDEN FILE INPUT -->
+        <input
+          id="heroImageInput"
+          type="file"
+          accept="image/*"
+          class="hidden">
+
+      </div>
+
+      <!-- FLOATING ICON -->
+      <div
+        class="absolute top-4 left-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-purple-600 text-xl z-20">
         <i class="fas fa-lightbulb"></i>
       </div>
-      <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
+
+      <!-- FLOATING ICON -->
+      <div
+        class="absolute bottom-4 right-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-blue-600 text-xl z-20">
         <i class="fas fa-code"></i>
       </div>
-      <div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
+
+      <!-- FLOATING ICON -->
+      <div
+        class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-pink-500 text-xl z-20">
         <i class="fas fa-rocket"></i>
       </div>
+
     </div>
+
   </div>
+
 </section>
 
 
