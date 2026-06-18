@@ -2224,85 +2224,81 @@ function initAboutSection() {
    IMAGE PREVIEW
 ========================================== */
 
-function initAboutImagePreview() {
+aboutImageInput?.addEventListener(
+  'change',
+  e => {
 
-  aboutImageInput?.addEventListener(
-    'change',
-    e => {
+    const file =
+      e.target.files[0]
 
-      const file = e.target.files[0]
+    if (!file) return
 
-      console.log(
-        'Selected About File:',
-        file
-      )
-
-      if (!file) return
-
-      selectedAboutFile = file
-
-      aboutImage.src =
-        URL.createObjectURL(file)
-
-    }
-  )
-
-}
-
-
-/* ==========================================
-   LOAD ABOUT IMAGE
-========================================== */
-
-async function loadAboutImage() {
-
-  try {
-
-    const { data, error } =
-      await supabase
-        .from('website_images')
-        .select('*')
-        .eq('section', 'about')
-        .eq('image_key', 'avatar')
-        .single()
-
-    if (error) {
-
-      console.error(
-        'About image error:',
-        error
-      )
-
-      return
-
-    }
-
-    if (!data?.image_path)
-      return
-
-    const {
-      data: publicData
-    } =
-      supabase.storage
-        .from('portfolio-images')
-        .getPublicUrl(
-          data.image_path
-        )
+    selectedAboutFile = file
 
     aboutImage.src =
-      `${publicData.publicUrl}?t=${Date.now()}`
+      URL.createObjectURL(file)
 
-    aboutImage.alt =
-      data.alt_text ||
-      'About Image'
+    console.log(
+      '📷 About image selected'
+    )
+
+  }
+)
+
+/* ==========================================
+   LOAD ABOUT SECTION
+========================================== */
+
+async function loadAboutSection() {
+
+  const section =
+    document.getElementById(
+      'aboutSection'
+    )
+
+  if (!section) return
+
+  const editableElements =
+    section.querySelectorAll(
+      '.editable'
+    )
+
+  const { data, error } =
+    await supabase
+      .from('about_section')
+      .select('*')
+
+  if (error) {
+
+    console.error(
+      '❌ Error loading about_section:',
+      error.message
+    )
+
+    return
 
   }
 
-  catch (err) {
+  editableElements.forEach(el => {
 
-    console.error(err)
+    const key =
+      el.getAttribute(
+        'data-i18n'
+      )
 
-  }
+    const row =
+      data.find(
+        item => item.key === key
+      )
+
+    if (!row) return
+
+    el.textContent =
+      currentLang === 'en'
+        ? row.en_text || ''
+        : row.vi_text || ''
+
+  })
 
 }
 
@@ -2376,6 +2372,59 @@ async function saveAboutSection() {
 
 }
 
+/* ==========================================
+   LOAD ABOUT IMAGE
+========================================== */
+
+async function loadAboutImage() {
+
+  try {
+
+    const { data, error } =
+      await supabase
+        .from('website_images')
+        .select('*')
+        .eq('section', 'about')
+        .eq('image_key', 'avatar')
+        .single()
+
+    if (error) {
+
+      console.error(
+        'About image error:',
+        error
+      )
+
+      return
+
+    }
+
+    if (!data?.image_path)
+      return
+
+    const {
+      data: publicData
+    } =
+      supabase.storage
+        .from('portfolio-images')
+        .getPublicUrl(
+          data.image_path
+        )
+
+    aboutImage.src =
+      publicData.publicUrl +
+      '?t=' +
+      Date.now()
+
+  }
+
+  catch (err) {
+
+    console.error(err)
+
+  }
+
+}
 
 /* ==========================================
    UPLOAD ABOUT IMAGE
@@ -2383,36 +2432,22 @@ async function saveAboutSection() {
 
 async function uploadAboutImage() {
 
-  console.log(
-    '===== START ABOUT IMAGE UPLOAD ====='
-  )
-
-  console.log(
-    'selectedAboutFile:',
-    selectedAboutFile
-  )
-
-  if (!selectedAboutFile) {
-
-    console.log(
-      'No new image selected'
-    )
-
+  if (!selectedAboutFile)
     return
-
-  }
 
   try {
 
+    const fileExt =
+      selectedAboutFile.name
+        .split('.')
+        .pop()
+
     const filePath =
-      'about/avatar.jpg'
+      `about/avatar.${fileExt}`
 
-    console.log(
-      'Uploading to:',
-      filePath
-    )
-
-    const uploadResult =
+    const {
+      error: uploadError
+    } =
       await supabase.storage
         .from('portfolio-images')
         .upload(
@@ -2423,61 +2458,25 @@ async function uploadAboutImage() {
           }
         )
 
-    console.log(
-      'UPLOAD RESULT:',
-      uploadResult
-    )
+    if (uploadError)
+      throw uploadError
 
-    if (uploadResult.error) {
-
-      console.error(
-        'UPLOAD ERROR:',
-        uploadResult.error
-      )
-
-      alert(
-        'Upload failed: ' +
-        uploadResult.error.message
-      )
-
-      return
-
-    }
-
-    const dbResult =
+    const {
+      error: dbError
+    } =
       await supabase
         .from('website_images')
-        .update({
+        .upsert({
+          section: 'about',
+          image_key: 'avatar',
           image_path: filePath,
           alt_text: 'About Image'
         })
-        .eq('section', 'about')
-        .eq('image_key', 'avatar')
 
-    console.log(
-      'DB RESULT:',
-      dbResult
-    )
-
-    if (dbResult.error) {
-
-      console.error(
-        'DB ERROR:',
-        dbResult.error
-      )
-
-      alert(
-        'Database update failed: ' +
-        dbResult.error.message
-      )
-
-      return
-
-    }
+    if (dbError)
+      throw dbError
 
     selectedAboutFile = null
-
-    await loadAboutImage()
 
     console.log(
       '✅ About image uploaded'
@@ -2490,11 +2489,6 @@ async function uploadAboutImage() {
     console.error(
       'Upload About Image Error:',
       err
-    )
-
-    alert(
-      'Unexpected Error: ' +
-      err.message
     )
 
   }
