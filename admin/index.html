@@ -2141,16 +2141,19 @@ let aboutUploadLabel
 
       } else {
 
-        saveAboutSectionBtn
-          .classList.remove('hidden')
+  saveAboutSectionBtn
+    .classList.remove('hidden')
 
-        aboutUploadLabel
-          ?.classList.remove('hidden')
+  aboutUploadLabel
+    ?.classList.remove('hidden')
 
-        aboutSectionEditBtn.innerHTML =
-          '<i class="fas fa-times mr-1"></i> Cancel'
+  aboutUploadLabel
+    ?.classList.add('flex')
 
-      }
+  aboutSectionEditBtn.innerHTML =
+    '<i class="fas fa-times mr-1"></i> Cancel'
+
+}
 
     }
   )
@@ -2173,7 +2176,10 @@ let aboutUploadLabel
         .classList.add('hidden')
 
       aboutUploadLabel
-        ?.classList.add('hidden')
+      ?.classList.add('hidden')
+
+      aboutUploadLabel
+      ?.classList.remove('flex')
 
       aboutSectionEditBtn.innerHTML =
         '<i class="fas fa-edit mr-1"></i> Edit About'
