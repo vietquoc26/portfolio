@@ -2022,69 +2022,7 @@ window.setLanguage =
   setLanguage
 
 
-/* ==========================================
-   LOAD ABOUT IMAGE
-========================================== */
 
-async function loadAboutImage() {
-
-  try {
-
-    const aboutImage =
-      document.getElementById('aboutImage')
-
-    if (!aboutImage) return
-
-    const { data, error } =
-      await supabase
-        .from('website_images')
-        .select('image_path, alt_text')
-        .eq('section', 'about')
-        .eq('image_key', 'avatar')
-        .single()
-
-    if (error) {
-
-      console.error(
-        'About image error:',
-        error
-      )
-
-      return
-
-    }
-
-    if (!data?.image_path)
-      return
-
-    const { data: publicData } =
-      supabase.storage
-        .from('portfolio-images')
-        .getPublicUrl(
-          data.image_path
-        )
-
-    aboutImage.src =
-      publicData.publicUrl +
-      '?t=' +
-      Date.now()
-
-    aboutImage.alt =
-      data.alt_text ||
-      'About Image'
-
-  }
-
-  catch (err) {
-
-    console.error(
-      'loadAboutImage error:',
-      err
-    )
-
-  }
-
-}
 
 
   
