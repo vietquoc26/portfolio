@@ -130,48 +130,68 @@
 </nav>
 
 <!-- About -->
-<section id="aboutSection" class="about-group min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
+<!-- ABOUT SECTION -->
+<section
+  id="aboutSection"
+  class="min-h-[80vh] flex items-center justify-center py-20 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
+
   <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
-    <!-- Image Column -->
+    <!-- IMAGE COLUMN -->
     <div class="relative flex justify-center items-center">
 
-      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+      <div
+        class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+
         <img
           id="aboutImage"
-          src="Avatar.jpg"
-          alt="Viet"
+          src=""
+          alt="About Image"
           class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+
       </div>
 
-      <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
+      <div
+        class="absolute top-4 left-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-purple-600 text-xl">
+
         <i class="fas fa-lightbulb"></i>
+
       </div>
 
-      <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
+      <div
+        class="absolute bottom-4 right-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-blue-600 text-xl">
+
         <i class="fas fa-code"></i>
+
       </div>
 
-      <div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
+      <div
+        class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-pink-500 text-xl">
+
         <i class="fas fa-rocket"></i>
+
       </div>
 
     </div>
 
-    <!-- Text Column -->
+    <!-- TEXT COLUMN -->
     <div class="space-y-6 text-left animate-fade-in-left">
 
+      <!-- TITLE -->
       <h1
         class="text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white"
         data-i18n="aboutme">
       </h1>
 
+      <!-- DESCRIPTION -->
       <p
         class="text-base leading-relaxed text-gray-700 dark:text-gray-300"
         data-i18n="intro">
       </p>
 
-      <ul class="list-disc list-inside space-y-1 text-sm md:text-base text-gray-700 dark:text-gray-300">
+      <!-- SKILLS -->
+      <ul
+        class="list-disc list-inside space-y-2 text-sm md:text-base text-gray-700 dark:text-gray-300">
 
         <li data-i18n="aboutSkill1"></li>
         <li data-i18n="aboutSkill2"></li>
@@ -182,6 +202,7 @@
 
       </ul>
 
+      <!-- DOWNLOAD CV -->
       <div class="flex flex-wrap gap-4 pt-4">
 
         <a
@@ -207,7 +228,9 @@
     </div>
 
   </div>
+
 </section>
+
 
 <!-- Highlight Numbers -->
 <section
@@ -1997,6 +2020,74 @@ window.loadAboutContent =
 
 window.setLanguage =
   setLanguage
+
+
+/* ==========================================
+   LOAD ABOUT IMAGE
+========================================== */
+
+async function loadAboutImage() {
+
+  try {
+
+    const aboutImage =
+      document.getElementById('aboutImage')
+
+    if (!aboutImage) return
+
+    const { data, error } =
+      await supabase
+        .from('website_images')
+        .select('image_path, alt_text')
+        .eq('section', 'about')
+        .eq('image_key', 'avatar')
+        .single()
+
+    if (error) {
+
+      console.error(
+        'About image error:',
+        error
+      )
+
+      return
+
+    }
+
+    if (!data?.image_path)
+      return
+
+    const { data: publicData } =
+      supabase.storage
+        .from('portfolio-images')
+        .getPublicUrl(
+          data.image_path
+        )
+
+    aboutImage.src =
+      publicData.publicUrl +
+      '?t=' +
+      Date.now()
+
+    aboutImage.alt =
+      data.alt_text ||
+      'About Image'
+
+  }
+
+  catch (err) {
+
+    console.error(
+      'loadAboutImage error:',
+      err
+    )
+
+  }
+
+}
+
+
+  
 </script>
 
 </body>
