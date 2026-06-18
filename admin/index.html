@@ -2026,15 +2026,6 @@ loadTabContent("contactTab", "./sections/contact.html")
    ABOUT SECTION INIT
 ========================================== */
 
-let selectedAboutFile = null
-
-let aboutEditBtn
-let saveAboutBtn
-let aboutUploadLabel
-
-let aboutImage
-let aboutImageInput
-
 function initAboutSection() {
 
   const aboutSectionEditBtn =
@@ -2044,6 +2035,12 @@ function initAboutSection() {
     document.getElementById('saveAboutSection')
 
   if (!aboutSectionEditBtn) return
+
+  let selectedAboutFile = null
+
+let aboutImage
+let aboutImageInput
+let aboutUploadLabel
 
 
  
@@ -2179,7 +2176,7 @@ function initAboutSection() {
         .classList.add('hidden')
 
       aboutUploadLabel
-      ?.classList.add('hidden')
+    ?.classList.add('hidden')
 
       aboutUploadLabel
       ?.classList.remove('flex')
