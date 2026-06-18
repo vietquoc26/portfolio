@@ -2024,6 +2024,16 @@ loadTabContent("contactTab", "./sections/contact.html")
    ABOUT SECTION INIT
 ========================================== */
 
+let selectedAboutFile = null
+
+let aboutImage
+let aboutImageInput
+let aboutUploadLabel
+
+/* ==========================================
+   INIT ABOUT SECTION
+========================================== */
+
 function initAboutSection() {
 
   const aboutSectionEditBtn =
@@ -2034,113 +2044,361 @@ function initAboutSection() {
 
   if (!aboutSectionEditBtn) return
 
+  aboutImage =
+    document.getElementById('aboutImage')
+
+  aboutImageInput =
+    document.getElementById('aboutImageInput')
+
+  aboutUploadLabel =
+    document.getElementById('aboutUploadLabel')
+
+  initAboutImagePreview()
+
   // =============================
   // LANGUAGE TOGGLE
   // =============================
 
-  document.getElementById('lang-en')?.addEventListener('click', () => {
+  document.getElementById('lang-en')
+    ?.addEventListener('click', () => {
 
-    currentLang = 'en'
+      currentLang = 'en'
 
-    loadAboutSection()
+      loadAboutSection()
 
-  })
+    })
 
-  document.getElementById('lang-vi')?.addEventListener('click', () => {
+  document.getElementById('lang-vi')
+    ?.addEventListener('click', () => {
 
-    currentLang = 'vi'
+      currentLang = 'vi'
 
-    loadAboutSection()
+      loadAboutSection()
 
-  })
+    })
 
   // =============================
   // EDIT BUTTON
   // =============================
 
-  aboutSectionEditBtn.addEventListener('click', async () => {
+  aboutSectionEditBtn.addEventListener(
+    'click',
+    async () => {
 
-    const section =
-      document.getElementById('aboutSection')
+      const section =
+        document.getElementById(
+          'aboutSection'
+        )
 
-    if (!section) return
+      if (!section) return
 
-    const editableElements =
-      section.querySelectorAll('.editable')
+      const editableElements =
+        section.querySelectorAll(
+          '.editable'
+        )
 
-    const isEditing =
-      editableElements[0]?.contentEditable === 'true'
+      const isEditing =
+        editableElements[0]
+          ?.contentEditable ===
+        'true'
 
-    editableElements.forEach(el => {
+      editableElements.forEach(
+        el => {
 
-      el.contentEditable =
-        isEditing ? 'false' : 'true'
+          el.contentEditable =
+            isEditing
+              ? 'false'
+              : 'true'
 
-      el.classList.toggle('border', !isEditing)
-      el.classList.toggle('border-dashed', !isEditing)
-      el.classList.toggle('border-blue-500', !isEditing)
-      el.classList.toggle('p-1', !isEditing)
-      el.classList.toggle('rounded', !isEditing)
+          el.classList.toggle(
+            'border',
+            !isEditing
+          )
 
-    })
+          el.classList.toggle(
+            'border-dashed',
+            !isEditing
+          )
 
-    if (isEditing) {
+          el.classList.toggle(
+            'border-blue-500',
+            !isEditing
+          )
 
-      saveAboutSectionBtn.classList.add('hidden')
+          el.classList.toggle(
+            'p-1',
+            !isEditing
+          )
 
-      aboutSectionEditBtn.innerHTML =
-        '<i class="fas fa-edit mr-1"></i> Edit About'
+          el.classList.toggle(
+            'rounded',
+            !isEditing
+          )
 
-      await loadAboutSection()
+        }
+      )
 
-    } else {
+      if (isEditing) {
 
-      saveAboutSectionBtn.classList.remove('hidden')
+        saveAboutSectionBtn
+          .classList.add('hidden')
 
-      aboutSectionEditBtn.innerHTML =
-        '<i class="fas fa-times mr-1"></i> Cancel'
+        aboutUploadLabel
+          ?.classList.add('hidden')
+
+        aboutUploadLabel
+          ?.classList.remove('flex')
+
+        aboutSectionEditBtn.innerHTML =
+          '<i class="fas fa-edit mr-1"></i> Edit About'
+
+        await loadAboutSection()
+
+        await loadAboutImage()
+
+      }
+
+      else {
+
+        saveAboutSectionBtn
+          .classList.remove('hidden')
+
+        aboutUploadLabel
+          ?.classList.remove('hidden')
+
+        aboutUploadLabel
+          ?.classList.add('flex')
+
+        aboutSectionEditBtn.innerHTML =
+          '<i class="fas fa-times mr-1"></i> Cancel'
+
+      }
 
     }
-
-  })
+  )
 
   // =============================
   // SAVE BUTTON
   // =============================
 
-  saveAboutSectionBtn?.addEventListener('click', async () => {
+  saveAboutSectionBtn
+    ?.addEventListener(
+      'click',
+      async () => {
 
-    await saveAboutSection()
+        await saveAboutSection()
 
-    saveAboutSectionBtn.classList.add('hidden')
+        await uploadAboutImage()
 
-    aboutSectionEditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit About'
+        await loadAboutImage()
 
-    const section =
-      document.getElementById('aboutSection')
+        saveAboutSectionBtn
+          .classList.add('hidden')
 
-    const editableElements =
-      section.querySelectorAll('.editable')
+        aboutUploadLabel
+          ?.classList.add('hidden')
 
-    editableElements.forEach(el => {
+        aboutUploadLabel
+          ?.classList.remove('flex')
 
-      el.contentEditable = 'false'
+        aboutSectionEditBtn.innerHTML =
+          '<i class="fas fa-edit mr-1"></i> Edit About'
 
-      el.classList.remove(
-        'border',
-        'border-dashed',
-        'border-blue-500',
-        'p-1',
-        'rounded'
-      )
+        const section =
+          document.getElementById(
+            'aboutSection'
+          )
 
-    })
+        const editableElements =
+          section.querySelectorAll(
+            '.editable'
+          )
 
-  })
+        editableElements.forEach(
+          el => {
+
+            el.contentEditable =
+              'false'
+
+            el.classList.remove(
+              'border',
+              'border-dashed',
+              'border-blue-500',
+              'p-1',
+              'rounded'
+            )
+
+          }
+        )
+
+        alert(
+          'About Section saved successfully! ✅'
+        )
+
+      }
+    )
 
 }
 
+/* ==========================================
+   IMAGE PREVIEW
+========================================== */
+
+function initAboutImagePreview() {
+
+  if (!aboutImageInput)
+    return
+
+  aboutImageInput.addEventListener(
+    'change',
+    e => {
+
+      const file =
+        e.target.files[0]
+
+      if (!file)
+        return
+
+      selectedAboutFile =
+        file
+
+      aboutImage.src =
+        URL.createObjectURL(file)
+
+    }
+  )
+
+}
+
+/* ==========================================
+   LOAD ABOUT IMAGE
+========================================== */
+
+async function loadAboutImage() {
+
+  try {
+
+    const { data, error } =
+      await supabase
+        .from('website_images')
+        .select('*')
+        .eq('section', 'about')
+        .eq('image_key', 'avatar')
+        .single()
+
+    if (error) {
+
+      console.error(error)
+
+      return
+
+    }
+
+    if (!data?.image_path)
+      return
+
+    const {
+      data: publicData
+    } =
+      supabase.storage
+        .from('portfolio-images')
+        .getPublicUrl(
+          data.image_path
+        )
+
+    aboutImage.src =
+      `${publicData.publicUrl}?t=${Date.now()}`
+
+    aboutImage.alt =
+      data.alt_text ||
+      'About Image'
+
+  }
+
+  catch (err) {
+
+    console.error(err)
+
+  }
+
+}
+
+/* ==========================================
+   UPLOAD ABOUT IMAGE
+========================================== */
+
+async function uploadAboutImage() {
+
+  if (!selectedAboutFile)
+    return
+
+  try {
+
+    const filePath =
+      'about/avatar.jpg'
+
+    const uploadResult =
+      await supabase.storage
+        .from('portfolio-images')
+        .upload(
+          filePath,
+          selectedAboutFile,
+          {
+            upsert: true
+          }
+        )
+
+    if (uploadResult.error) {
+
+      console.error(
+        uploadResult.error
+      )
+
+      alert(
+        uploadResult.error.message
+      )
+
+      return
+
+    }
+
+    const dbResult =
+      await supabase
+        .from('website_images')
+        .update({
+          image_path: filePath,
+          alt_text: 'About Image'
+        })
+        .eq('section', 'about')
+        .eq('image_key', 'avatar')
+
+    if (dbResult.error) {
+
+      console.error(
+        dbResult.error
+      )
+
+      alert(
+        dbResult.error.message
+      )
+
+      return
+
+    }
+
+    selectedAboutFile = null
+
+  }
+
+  catch (err) {
+
+    console.error(err)
+
+    alert(err.message)
+
+  }
+
+}
 
 /* ==========================================
    LOAD ABOUT SECTION
@@ -2149,12 +2407,16 @@ function initAboutSection() {
 async function loadAboutSection() {
 
   const section =
-    document.getElementById('aboutSection')
+    document.getElementById(
+      'aboutSection'
+    )
 
   if (!section) return
 
   const editableElements =
-    section.querySelectorAll('.editable')
+    section.querySelectorAll(
+      '.editable'
+    )
 
   const { data, error } =
     await supabase
@@ -2169,27 +2431,40 @@ async function loadAboutSection() {
     )
 
     return
+
   }
 
-  editableElements.forEach(el => {
+  editableElements.forEach(
+    el => {
 
-    const key =
-      el.getAttribute('data-i18n')
+      const key =
+        el.getAttribute(
+          'data-i18n'
+        )
 
-    const row =
-      data.find(item => item.key === key)
+      const row =
+        data.find(
+          item =>
+            item.key === key
+        )
 
-    if (!row) return
+      if (!row) return
 
-    el.textContent =
-      currentLang === 'en'
-        ? (row.en_text || '')
-        : (row.vi_text || '')
+      el.textContent =
+        currentLang === 'en'
+          ? (
+              row.en_text ||
+              ''
+            )
+          : (
+              row.vi_text ||
+              ''
+            )
 
-  })
+    }
+  )
 
 }
-
 
 /* ==========================================
    SAVE ABOUT SECTION
@@ -2198,17 +2473,23 @@ async function loadAboutSection() {
 async function saveAboutSection() {
 
   const section =
-    document.getElementById('aboutSection')
+    document.getElementById(
+      'aboutSection'
+    )
 
   if (!section) return
 
   const editableElements =
-    section.querySelectorAll('.editable')
+    section.querySelectorAll(
+      '.editable'
+    )
 
   for (const el of editableElements) {
 
     const key =
-      el.getAttribute('data-i18n')
+      el.getAttribute(
+        'data-i18n'
+      )
 
     if (!key) continue
 
@@ -2226,36 +2507,36 @@ async function saveAboutSection() {
             vi_text: text
           }
 
-    const { error } =
-      await supabase
-        .from('about_section')
-        .upsert(
-          updates,
-          {
-            onConflict: 'key'
-          }
-        )
-
-    if (error) {
-
-      console.error(
-        `❌ Failed saving ${key}:`,
-        error.message
+    await supabase
+      .from('about_section')
+      .upsert(
+        updates,
+        {
+          onConflict: 'key'
+        }
       )
-
-    } else {
-
-      console.log(
-        `✅ Saved ${key}`
-      )
-
-    }
 
   }
 
-  alert('About Section saved successfully! ✅')
-
 }
+
+/* ==========================================
+   STARTUP
+========================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  async () => {
+
+    initAboutSection()
+
+    await loadAboutSection()
+
+    await loadAboutImage()
+
+  }
+)
+
 
 
 /* ==========================================
