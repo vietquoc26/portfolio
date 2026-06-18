@@ -210,51 +210,126 @@ body:not(.loading-lang) {
 
 
 <!-- Hero Section -->
-<section id="hero" class="min-h-[80vh] flex items-center justify-center py-12 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
-  <div class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
+<section
+  id="hero"
+  class="min-h-[80vh] flex items-center justify-center py-12 px-6 bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
 
-    <!-- Text Column -->
-    <div class="fade-in fade-delay-1 space-y-6 md:pr-6 text-center md:text-left" style="animation-name: fadeUp;">
-      <h1 id="herotitle" class="text-4xl md:text-6xl font-bold leading-tight" data-i18n="greeting"></h1>
-      <p id="herosubtitle" class="text-lg text-gray-700 dark:text-gray-300" data-i18n="intro"></p>
+  <div
+    class="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
 
-      <!-- Buttons -->
-      <div class="flex flex-wrap justify-center md:justify-start gap-4">
-        <a id="heroprojects" href="#projects" class="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition" data-i18n="projects">Projects</a>
-        <a id="herocontact" href="#contact" class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition" data-i18n="contact">Contact Me</a>
+    <!-- TEXT COLUMN -->
+    <div
+      class="fade-in fade-delay-1 space-y-6 md:pr-6 text-center md:text-left"
+      style="animation-name: fadeUp;">
+
+      <!-- HERO TITLE -->
+      <h1
+        id="herotitle"
+        class="text-4xl md:text-6xl font-bold leading-tight"
+        data-i18n="greeting">
+      </h1>
+
+      <!-- HERO SUBTITLE -->
+      <p
+        id="herosubtitle"
+        class="text-lg text-gray-700 dark:text-gray-300"
+        data-i18n="intro">
+      </p>
+
+      <!-- BUTTONS -->
+      <div
+        class="flex flex-wrap justify-center md:justify-start gap-4">
+
+        <a
+          id="heroprojects"
+          href="#projects"
+          class="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition"
+          data-i18n="projects">
+        </a>
+
+        <a
+          id="herocontact"
+          href="#contact"
+          class="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+          data-i18n="contact">
+        </a>
+
       </div>
 
-      <!-- Social Icons -->
-      <div class="flex justify-center md:justify-start gap-4 text-2xl text-blue-600 dark:text-blue-400 -mt-2">
-        <a href="https://www.facebook.com/honguyenquocviet150799/" target="_blank" class="hover:text-blue-800"><i class="fab fa-facebook"></i></a>
-        <a href="https://www.linkedin.com/in/ho-nguyen-quoc-viet/" target="_blank" class="hover:text-blue-800"><i class="fab fa-linkedin"></i></a>
+      <!-- SOCIAL ICONS -->
+      <div
+        class="flex justify-center md:justify-start gap-4 text-2xl text-blue-600 dark:text-blue-400 -mt-2">
+
+        <a
+          href="https://www.facebook.com/honguyenquocviet150799/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-blue-800 transition">
+
+          <i class="fab fa-facebook"></i>
+
+        </a>
+
+        <a
+          href="https://www.linkedin.com/in/ho-nguyen-quoc-viet/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-blue-800 transition">
+
+          <i class="fab fa-linkedin"></i>
+
+        </a>
+
       </div>
+
     </div>
 
-    <!-- Image Column -->
-    <div class="relative flex justify-center items-center">
-      <!-- Circular Image -->
-      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+    <!-- IMAGE COLUMN -->
+    <div
+      class="relative flex justify-center items-center">
+
+      <!-- HERO IMAGE CONTAINER -->
+      <div
+        id="heroImageContainer"
+        class="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-2xl z-10">
+
+        <!-- HERO IMAGE -->
         <img
-  id="heroImage"
-  src=""
-  alt="Hero Image"
-  class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+          id="heroImage"
+          src=""
+          alt="Hero Image"
+          class="w-full h-full object-cover object-top rounded-full shadow-lg transition-transform duration-300 hover:scale-105 animate-float">
+
       </div>
 
-      <!-- Floating Icons -->
-      <div class="absolute top-4 left-4 bg-white p-3 rounded-full shadow-lg text-purple-600 text-xl">
+      <!-- FLOATING ICON -->
+      <div
+        class="absolute top-4 left-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-purple-600 text-xl">
+
         <i class="fas fa-lightbulb"></i>
+
       </div>
-      <div class="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg text-blue-600 text-xl">
+
+      <!-- FLOATING ICON -->
+      <div
+        class="absolute bottom-4 right-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-blue-600 text-xl">
+
         <i class="fas fa-code"></i>
+
       </div>
-      <div class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg text-pink-500 text-xl">
+
+      <!-- FLOATING ICON -->
+      <div
+        class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg text-pink-500 text-xl">
+
         <i class="fas fa-rocket"></i>
+
       </div>
+
     </div>
 
   </div>
+
 </section>
 
 
