@@ -2023,21 +2023,6 @@ loadTabContent("contactTab", "./sections/contact.html")
 
 
 /* ==========================================
-   ABOUT IMAGE VARIABLES
-========================================== */
-
-const aboutImage =
-  document.getElementById('aboutImage')
-
-const aboutImageInput =
-  document.getElementById('aboutImageInput')
-
-const aboutUploadLabel =
-  document.getElementById('aboutUploadLabel')
-
-let selectedAboutFile = null
-
-/* ==========================================
    ABOUT SECTION INIT
 ========================================== */
 
@@ -2050,6 +2035,13 @@ function initAboutSection() {
     document.getElementById('saveAboutSection')
 
   if (!aboutSectionEditBtn) return
+
+  let selectedAboutFile = null
+
+let aboutImage
+let aboutImageInput
+let aboutUploadLabel
+
 
  
    /* =============================
@@ -2224,26 +2216,36 @@ function initAboutSection() {
    IMAGE PREVIEW
 ========================================== */
 
-aboutImageInput?.addEventListener(
-  'change',
-  e => {
+function initAboutImagePreview() {
 
-    const file =
-      e.target.files[0]
+  aboutImageInput
+    ?.addEventListener(
+      'change',
+      e => {
 
-    if (!file) return
+        const file =
+          e.target.files[0]
 
-    selectedAboutFile = file
+        console.log(
+          'Selected about file:',
+          file
+        )
 
-    aboutImage.src =
-      URL.createObjectURL(file)
+        if (!file)
+          return
 
-    console.log(
-      '📷 About image selected'
+        selectedAboutFile =
+          file
+
+        aboutImage.src =
+          URL.createObjectURL(
+            file
+          )
+
+      }
     )
 
-  }
-)
+}
 
 /* ==========================================
    LOAD ABOUT SECTION
@@ -2302,75 +2304,66 @@ async function loadAboutSection() {
 
 }
 
-/* ==========================================
-   SAVE ABOUT SECTION
-========================================== */
+/* =============================
+   SAVE BUTTON
+============================= */
 
-async function saveAboutSection() {
+saveAboutSectionBtn
+  ?.addEventListener(
+    'click',
+    async () => {
 
-  const section =
-    document.getElementById(
-      'aboutSection'
-    )
+      await saveAboutSection()
 
-  if (!section) return
+      await uploadAboutImage()
 
-  const editableElements =
-    section.querySelectorAll(
-      '.editable'
-    )
+      await loadAboutImage()
 
-  for (const el of editableElements) {
+      saveAboutSectionBtn
+        .classList.add('hidden')
 
-    const key =
-      el.getAttribute(
-        'data-i18n'
-      )
+      aboutUploadLabel
+        ?.classList.add('hidden')
 
-    if (!key) continue
+      aboutUploadLabel
+        ?.classList.remove('flex')
 
-    const text =
-      el.textContent.trim()
+      aboutSectionEditBtn.innerHTML =
+        '<i class="fas fa-edit mr-1"></i> Edit About'
 
-    const updates =
-      currentLang === 'en'
-        ? {
-            key,
-            en_text: text
-          }
-        : {
-            key,
-            vi_text: text
-          }
-
-    const { error } =
-      await supabase
-        .from('about_section')
-        .upsert(
-          updates,
-          {
-            onConflict: 'key'
-          }
+      const section =
+        document.getElementById(
+          'aboutSection'
         )
 
-    if (error) {
+      const editableElements =
+        section.querySelectorAll(
+          '.editable'
+        )
 
-      console.error(
-        `❌ Failed saving ${key}:`,
-        error.message
-      )
+      editableElements.forEach(el => {
 
-    } else {
+        el.contentEditable =
+          'false'
 
-      console.log(
-        `✅ Saved ${key}`
+        el.classList.remove(
+          'border',
+          'border-dashed',
+          'border-blue-500',
+          'p-1',
+          'rounded'
+        )
+
+      })
+
+      selectedAboutFile = null
+
+      alert(
+        'About updated successfully ✅'
       )
 
     }
-
-  }
-
-}
+  )
 
 /* ==========================================
    LOAD ABOUT IMAGE
@@ -2390,11 +2383,7 @@ async function loadAboutImage() {
 
     if (error) {
 
-      console.error(
-        'About image error:',
-        error
-      )
-
+      console.error(error)
       return
 
     }
@@ -2412,9 +2401,11 @@ async function loadAboutImage() {
         )
 
     aboutImage.src =
-      publicData.publicUrl +
-      '?t=' +
-      Date.now()
+      `${publicData.publicUrl}?t=${Date.now()}`
+
+    aboutImage.alt =
+      data.alt_text ||
+      'About Image'
 
   }
 
@@ -2432,22 +2423,36 @@ async function loadAboutImage() {
 
 async function uploadAboutImage() {
 
-  if (!selectedAboutFile)
+  console.log(
+    '===== START ABOUT IMAGE UPLOAD ====='
+  )
+
+  console.log(
+    'selectedAboutFile:',
+    selectedAboutFile
+  )
+
+  if (!selectedAboutFile) {
+
+    console.log(
+      'No image selected'
+    )
+
     return
+
+  }
 
   try {
 
-    const fileExt =
-      selectedAboutFile.name
-        .split('.')
-        .pop()
-
     const filePath =
-      `about/avatar.${fileExt}`
+      'about/avatar.jpg'
 
-    const {
-      error: uploadError
-    } =
+    console.log(
+      'Uploading to:',
+      filePath
+    )
+
+    const uploadResult =
       await supabase.storage
         .from('portfolio-images')
         .upload(
@@ -2458,28 +2463,58 @@ async function uploadAboutImage() {
           }
         )
 
-    if (uploadError)
-      throw uploadError
+    console.log(
+      'UPLOAD RESULT:',
+      uploadResult
+    )
 
-    const {
-      error: dbError
-    } =
+    if (uploadResult.error) {
+
+      console.error(
+        uploadResult.error
+      )
+
+      alert(
+        uploadResult.error.message
+      )
+
+      return
+
+    }
+
+    const dbResult =
       await supabase
         .from('website_images')
-        .upsert({
-          section: 'about',
-          image_key: 'avatar',
+        .update({
           image_path: filePath,
           alt_text: 'About Image'
         })
+        .eq('section', 'about')
+        .eq('image_key', 'avatar')
 
-    if (dbError)
-      throw dbError
+    console.log(
+      'DB RESULT:',
+      dbResult
+    )
+
+    if (dbResult.error) {
+
+      console.error(
+        dbResult.error
+      )
+
+      alert(
+        dbResult.error.message
+      )
+
+      return
+
+    }
 
     selectedAboutFile = null
 
-    console.log(
-      '✅ About image uploaded'
+    alert(
+      'About image uploaded successfully'
     )
 
   }
@@ -2487,14 +2522,61 @@ async function uploadAboutImage() {
   catch (err) {
 
     console.error(
-      'Upload About Image Error:',
+      'FULL ERROR:',
       err
+    )
+
+    alert(
+      err.message
     )
 
   }
 
 }
 
+/* ==========================================
+   INIT
+========================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  async () => {
+
+    aboutImage =
+      document.getElementById(
+        'aboutImage'
+      )
+
+    aboutImageInput =
+      document.getElementById(
+        'aboutImageInput'
+      )
+
+    aboutUploadLabel =
+      document.getElementById(
+        'aboutUploadLabel'
+      )
+
+    console.log(
+      'aboutImage:',
+      aboutImage
+    )
+
+    console.log(
+      'aboutImageInput:',
+      aboutImageInput
+    )
+
+    initAboutSection()
+
+    initAboutImagePreview()
+
+    await loadAboutSection()
+
+    await loadAboutImage()
+
+  }
+)
 
 /* ==========================================
    HIGHLIGHTS SECTION INIT
