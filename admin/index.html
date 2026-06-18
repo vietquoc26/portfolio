@@ -2022,44 +2022,254 @@ loadTabContent("paidMediaTab", "./sections/paid-media.html")
 loadTabContent("contactTab", "./sections/contact.html")
 
 
-let selectedAboutFile = null
+/* ==========================================
+   ABOUT SECTION INIT
+========================================== */
 
-let aboutEditBtn
-let saveAboutBtn
-let aboutUploadLabel
+function initAboutSection() {
+
+  const aboutSectionEditBtn =
+    document.getElementById('editAboutSection')
+
+  const saveAboutSectionBtn =
+    document.getElementById('saveAboutSection')
+
+  if (!aboutSectionEditBtn) return
+
+  let selectedAboutFile = null
 
 let aboutImage
 let aboutImageInput
+let aboutUploadLabel
+
+
+ 
+   /* =============================
+     LANGUAGE TOGGLE
+  ============================= */
+
+  document.getElementById('lang-en')
+    ?.addEventListener('click', () => {
+
+      currentLang = 'en'
+
+      loadAboutSection()
+
+    })
+
+  document.getElementById('lang-vi')
+    ?.addEventListener('click', () => {
+
+      currentLang = 'vi'
+
+      loadAboutSection()
+
+    })
+
+  /* =============================
+     EDIT BUTTON
+  ============================= */
+
+  aboutSectionEditBtn.addEventListener(
+    'click',
+    async () => {
+
+      const section =
+        document.getElementById(
+          'aboutSection'
+        )
+
+      if (!section) return
+
+      const editableElements =
+        section.querySelectorAll(
+          '.editable'
+        )
+
+      const isEditing =
+        editableElements[0]
+          ?.contentEditable === 'true'
+
+      editableElements.forEach(el => {
+
+        el.contentEditable =
+          isEditing
+            ? 'false'
+            : 'true'
+
+        el.classList.toggle(
+          'border',
+          !isEditing
+        )
+
+        el.classList.toggle(
+          'border-dashed',
+          !isEditing
+        )
+
+        el.classList.toggle(
+          'border-blue-500',
+          !isEditing
+        )
+
+        el.classList.toggle(
+          'p-1',
+          !isEditing
+        )
+
+        el.classList.toggle(
+          'rounded',
+          !isEditing
+        )
+
+      })
+
+      if (isEditing) {
+
+        saveAboutSectionBtn
+          .classList.add('hidden')
+
+        aboutUploadLabel
+          ?.classList.add('hidden')
+
+        aboutSectionEditBtn.innerHTML =
+          '<i class="fas fa-edit mr-1"></i> Edit About'
+
+        await loadAboutSection()
+
+        await loadAboutImage()
+
+      } else {
+
+  saveAboutSectionBtn
+    .classList.remove('hidden')
+
+  aboutUploadLabel
+    ?.classList.remove('hidden')
+
+  aboutUploadLabel
+    ?.classList.add('flex')
+
+  aboutSectionEditBtn.innerHTML =
+    '<i class="fas fa-times mr-1"></i> Cancel'
+
+}
+
+    }
+  )
+
+  /* =============================
+     SAVE BUTTON
+  ============================= */
+
+  saveAboutSectionBtn?.addEventListener(
+    'click',
+    async () => {
+
+      await saveAboutSection()
+
+      await uploadAboutImage()
+
+      await loadAboutImage()
+
+      saveAboutSectionBtn
+        .classList.add('hidden')
+
+      aboutUploadLabel
+      ?.classList.add('hidden')
+
+      aboutUploadLabel
+      ?.classList.remove('flex')
+
+      aboutSectionEditBtn.innerHTML =
+        '<i class="fas fa-edit mr-1"></i> Edit About'
+
+      const section =
+        document.getElementById(
+          'aboutSection'
+        )
+
+      const editableElements =
+        section.querySelectorAll(
+          '.editable'
+        )
+
+      editableElements.forEach(el => {
+
+        el.contentEditable =
+          'false'
+
+        el.classList.remove(
+          'border',
+          'border-dashed',
+          'border-blue-500',
+          'p-1',
+          'rounded'
+        )
+
+      })
+
+      alert(
+        'About Section saved successfully! ✅'
+      )
+
+    }
+  )
+
+}
 
 /* ==========================================
-   LANGUAGE SWITCHER
+   IMAGE PREVIEW
 ========================================== */
 
-document.getElementById('lang-en')
-  ?.addEventListener('click', () => {
-    currentLang = 'en'
-    loadAboutSection()
-  })
+function initAboutImagePreview() {
 
-document.getElementById('lang-vi')
-  ?.addEventListener('click', () => {
-    currentLang = 'vi'
-    loadAboutSection()
-  })
+  aboutImageInput
+    ?.addEventListener(
+      'change',
+      e => {
+
+        const file =
+          e.target.files[0]
+
+        console.log(
+          'Selected about file:',
+          file
+        )
+
+        if (!file)
+          return
+
+        selectedAboutFile =
+          file
+
+        aboutImage.src =
+          URL.createObjectURL(
+            file
+          )
+
+      }
+    )
+
+}
 
 /* ==========================================
-   LOAD ABOUT CONTENT
+   LOAD ABOUT SECTION
 ========================================== */
 
 async function loadAboutSection() {
 
-  const aboutSection =
-    document.getElementById('aboutSection')
+  const section =
+    document.getElementById(
+      'aboutSection'
+    )
 
-  if (!aboutSection) return
+  if (!section) return
 
   const editableElements =
-    aboutSection.querySelectorAll('.editable')
+    section.querySelectorAll(
+      '.editable'
+    )
 
   const { data, error } =
     await supabase
@@ -2067,77 +2277,99 @@ async function loadAboutSection() {
       .select('*')
 
   if (error) {
-    console.error(error)
+
+    console.error(
+      '❌ Error loading about_section:',
+      error.message
+    )
+
     return
+
   }
 
   editableElements.forEach(el => {
 
-    const key = el.dataset.i18n
+    const key =
+      el.getAttribute(
+        'data-i18n'
+      )
 
     const row =
-      data.find(d => d.key === key)
+      data.find(
+        item => item.key === key
+      )
 
     if (!row) return
 
-    el.innerText =
+    el.textContent =
       currentLang === 'en'
-        ? (row.en_text || '')
-        : (row.vi_text || '')
+        ? row.en_text || ''
+        : row.vi_text || ''
+
   })
 
 }
 
-/* ==========================================
-   SAVE ABOUT CONTENT
-========================================== */
+/* =============================
+   SAVE BUTTON
+============================= */
 
-async function saveAboutSection() {
+saveAboutSectionBtn
+  ?.addEventListener(
+    'click',
+    async () => {
 
-  const editableElements =
-    document.querySelectorAll(
-      '#aboutSection .editable'
-    )
+      await saveAboutSection()
 
-  for (const el of editableElements) {
+      await uploadAboutImage()
 
-    const key =
-      el.dataset.i18n
+      await loadAboutImage()
 
-    const text =
-      el.innerText.trim()
+      saveAboutSectionBtn
+        .classList.add('hidden')
 
-    const payload =
-      currentLang === 'en'
-        ? {
-            key,
-            en_text: text
-          }
-        : {
-            key,
-            vi_text: text
-          }
+      aboutUploadLabel
+        ?.classList.add('hidden')
 
-    const { error } =
-      await supabase
-        .from('about_section')
-        .upsert(
-          payload,
-          {
-            onConflict: 'key'
-          }
+      aboutUploadLabel
+        ?.classList.remove('flex')
+
+      aboutSectionEditBtn.innerHTML =
+        '<i class="fas fa-edit mr-1"></i> Edit About'
+
+      const section =
+        document.getElementById(
+          'aboutSection'
         )
 
-    if (error) {
-      console.error(
-        `Save failed: ${key}`,
-        error
+      const editableElements =
+        section.querySelectorAll(
+          '.editable'
+        )
+
+      editableElements.forEach(el => {
+
+        el.contentEditable =
+          'false'
+
+        el.classList.remove(
+          'border',
+          'border-dashed',
+          'border-blue-500',
+          'p-1',
+          'rounded'
+        )
+
+      })
+
+      selectedAboutFile = null
+
+      alert(
+        'About updated successfully ✅'
       )
+
     }
-
-  }
-
-}
+  )
 
 /* ==========================================
    LOAD ABOUT IMAGE
@@ -2146,8 +2378,6 @@ async function saveAboutSection() {
 async function loadAboutImage() {
 
   try {
-
-    if (!aboutImage) return
 
     const { data, error } =
       await supabase
@@ -2158,8 +2388,10 @@ async function loadAboutImage() {
         .single()
 
     if (error) {
+
       console.error(error)
       return
+
     }
 
     if (!data?.image_path)
@@ -2184,44 +2416,10 @@ async function loadAboutImage() {
   }
 
   catch (err) {
+
     console.error(err)
+
   }
-
-}
-
-/* ==========================================
-   IMAGE PREVIEW
-========================================== */
-
-function initAboutImagePreview() {
-
-  if (
-    !aboutImageInput ||
-    !aboutImage
-  ) return
-
-  aboutImageInput.addEventListener(
-    'change',
-    e => {
-
-      const file =
-        e.target.files[0]
-
-      console.log(
-        'Selected file:',
-        file
-      )
-
-      if (!file)
-        return
-
-      selectedAboutFile = file
-
-      aboutImage.src =
-        URL.createObjectURL(file)
-
-    }
-  )
 
 }
 
@@ -2255,6 +2453,11 @@ async function uploadAboutImage() {
     const filePath =
       'about/avatar.jpg'
 
+    console.log(
+      'Uploading to:',
+      filePath
+    )
+
     const uploadResult =
       await supabase.storage
         .from('portfolio-images')
@@ -2265,6 +2468,11 @@ async function uploadAboutImage() {
             upsert: true
           }
         )
+
+    console.log(
+      'UPLOAD RESULT:',
+      uploadResult
+    )
 
     if (uploadResult.error) {
 
@@ -2289,6 +2497,11 @@ async function uploadAboutImage() {
         })
         .eq('section', 'about')
         .eq('image_key', 'avatar')
+
+    console.log(
+      'DB RESULT:',
+      dbResult
+    )
 
     if (dbResult.error) {
 
@@ -2328,181 +2541,12 @@ async function uploadAboutImage() {
 }
 
 /* ==========================================
-   EDIT MODE
-========================================== */
-
-function initAboutEditor() {
-
-  aboutEditBtn?.addEventListener(
-    'click',
-    () => {
-
-      const editableElements =
-        document.querySelectorAll(
-          '#aboutSection .editable'
-        )
-
-      const isEditing =
-        editableElements[0]
-          ?.contentEditable === 'true'
-
-      editableElements.forEach(el => {
-
-        el.contentEditable =
-          !isEditing
-
-        el.classList.toggle(
-          'border',
-          !isEditing
-        )
-
-        el.classList.toggle(
-          'border-dashed',
-          !isEditing
-        )
-
-        el.classList.toggle(
-          'border-blue-500',
-          !isEditing
-        )
-
-        el.classList.toggle(
-          'p-1',
-          !isEditing
-        )
-
-        el.classList.toggle(
-          'rounded',
-          !isEditing
-        )
-
-      })
-
-      if (isEditing) {
-
-        saveAboutBtn.classList.add(
-          'hidden'
-        )
-
-        aboutUploadLabel.classList.add(
-          'hidden'
-        )
-
-        aboutUploadLabel.classList.remove(
-          'flex'
-        )
-
-        aboutEditBtn.innerHTML =
-          '<i class="fas fa-edit mr-1"></i> Edit About'
-
-        loadAboutSection()
-        loadAboutImage()
-
-      } else {
-
-        saveAboutBtn.classList.remove(
-          'hidden'
-        )
-
-        aboutUploadLabel.classList.remove(
-          'hidden'
-        )
-
-        aboutUploadLabel.classList.add(
-          'flex'
-        )
-
-        aboutEditBtn.innerHTML =
-          '<i class="fas fa-times mr-1"></i> Cancel'
-
-      }
-
-    }
-  )
-
-}
-
-/* ==========================================
-   SAVE BUTTON
-========================================== */
-
-function initSaveButton() {
-
-  saveAboutBtn?.addEventListener(
-    'click',
-    async () => {
-
-      await saveAboutSection()
-
-      await uploadAboutImage()
-
-      await loadAboutImage()
-
-      saveAboutBtn.classList.add(
-        'hidden'
-      )
-
-      aboutUploadLabel.classList.add(
-        'hidden'
-      )
-
-      aboutUploadLabel.classList.remove(
-        'flex'
-      )
-
-      aboutEditBtn.innerHTML =
-        '<i class="fas fa-edit mr-1"></i> Edit About'
-
-      document
-        .querySelectorAll(
-          '#aboutSection .editable'
-        )
-        .forEach(el => {
-
-          el.contentEditable =
-            'false'
-
-          el.classList.remove(
-            'border',
-            'border-dashed',
-            'border-blue-500',
-            'p-1',
-            'rounded'
-          )
-
-        })
-
-      alert(
-        'About updated successfully ✅'
-      )
-
-    }
-  )
-
-}
-
-/* ==========================================
    INIT
 ========================================== */
 
 document.addEventListener(
   'DOMContentLoaded',
   async () => {
-
-    aboutEditBtn =
-      document.getElementById(
-        'editAboutSection'
-      )
-
-    saveAboutBtn =
-      document.getElementById(
-        'saveAboutSection'
-      )
-
-    aboutUploadLabel =
-      document.getElementById(
-        'aboutUploadLabel'
-      )
 
     aboutImage =
       document.getElementById(
@@ -2512,6 +2556,11 @@ document.addEventListener(
     aboutImageInput =
       document.getElementById(
         'aboutImageInput'
+      )
+
+    aboutUploadLabel =
+      document.getElementById(
+        'aboutUploadLabel'
       )
 
     console.log(
@@ -2524,14 +2573,7 @@ document.addEventListener(
       aboutImageInput
     )
 
-    console.log(
-      'aboutUploadLabel:',
-      aboutUploadLabel
-    )
-
-    initAboutEditor()
-
-    initSaveButton()
+    initAboutSection()
 
     initAboutImagePreview()
 
