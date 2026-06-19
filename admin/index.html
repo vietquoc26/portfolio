@@ -9,6 +9,12 @@
         <script>
         tailwind.config = { darkMode: 'class' }
         </script>
+        <link
+  href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+  rel="stylesheet"
+/>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <style>
         .editable[contenteditable="true"]:focus {
@@ -2859,18 +2865,30 @@ function initMilestoneSection() {
 
     editableElements.forEach(el => {
 
-      el.classList.add('editable')
+  el.classList.add('editable')
 
-      el.contentEditable =
-        isEditing ? 'false' : 'true'
+  el.contentEditable =
+    isEditing ? 'false' : 'true'
 
-      el.classList.toggle('border', !isEditing)
-      el.classList.toggle('border-dashed', !isEditing)
-      el.classList.toggle('border-blue-500', !isEditing)
-      el.classList.toggle('p-1', !isEditing)
-      el.classList.toggle('rounded', !isEditing)
+  el.classList.toggle('border', !isEditing)
+  el.classList.toggle('border-dashed', !isEditing)
+  el.classList.toggle('border-blue-500', !isEditing)
+  el.classList.toggle('rounded', !isEditing)
 
-    })
+  if (
+    el.dataset.i18n?.startsWith('description')
+  ) {
+
+    el.classList.toggle('p-4', !isEditing)
+    el.classList.toggle('min-h-[150px]', !isEditing)
+
+  } else {
+
+    el.classList.toggle('p-1', !isEditing)
+
+  }
+
+})
 
     if (isEditing) {
 
@@ -2984,10 +3002,22 @@ async function loadMilestoneSection() {
 
     if (!row) return
 
-    el.innerHTML =
-      currentLang === 'en'
-        ? (row.en_text || '')
-        : (row.vi_text || '')
+    const value =
+  currentLang === 'en'
+    ? (row.en_text || '')
+    : (row.vi_text || '')
+
+if (
+  key.startsWith('description')
+) {
+
+  el.innerHTML = value
+
+} else {
+
+  el.textContent = value
+
+}
 
   })
 
@@ -3015,18 +3045,23 @@ async function saveMilestoneSection() {
     if (!key) continue
 
     const text =
-      el.innerHTML.trim()
+  key.startsWith('description')
+    ? el.innerHTML.trim()
+    : el.textContent.trim()
 
-    const updates =
-      currentLang === 'en'
-        ? {
-            key,
-            en_text: text
-          }
-        : {
-            key,
-            vi_text: text
-          }
+    const updates = {
+  key
+}
+
+if (currentLang === 'en') {
+
+  updates.en_text = text
+
+} else {
+
+  updates.vi_text = text
+
+}
 
     const { error } =
       await supabase
