@@ -1529,17 +1529,7 @@ document.getElementById('lang-vi')?.addEventListener('click', () => {
   loadAboutContent()
 })
 
-// =============================
-// ABOUT IMAGE
-// =============================
 
-const aboutImage =
-  document.getElementById('aboutImage')
-
-const aboutImageInput =
-  document.getElementById('aboutImageInput')
-
-let selectedAboutFile = null
 
 // =============================
 // ABOUT BUTTONS
@@ -1579,16 +1569,7 @@ aboutEditBtn?.addEventListener('click', async () => {
   })
 
 
- if (isEditing) {
-
-  aboutImage.classList.remove(
-    'editing',
-    'cursor-pointer',
-    'ring-4',
-    'ring-blue-500'
-  )
-
-  selectedAboutFile = null
+  if (isEditing) {
 
     saveAboutBtn.classList.add('hidden')
 
@@ -1599,51 +1580,13 @@ aboutEditBtn?.addEventListener('click', async () => {
 
   } else {
 
-  aboutImage.classList.add(
-    'editing',
-    'cursor-pointer',
-    'ring-4',
-    'ring-blue-500'
-  )
+    saveAboutBtn.classList.remove('hidden')
 
-  saveAboutBtn.classList.remove('hidden')
-
-  aboutEditBtn.innerHTML =
-    '<i class="fas fa-times mr-1"></i> Cancel'
-}
-
-// =============================
-// IMAGE PICKER
-// =============================
-
-aboutImage?.addEventListener('click', () => {
-
-  if (
-    !aboutImage.classList.contains(
-      'editing'
-    )
-  ) return
-
-  aboutImageInput.click()
-
+    aboutEditBtn.innerHTML =
+      '<i class="fas fa-times mr-1"></i> Cancel'
+  }
 })
 
-aboutImageInput?.addEventListener(
-  'change',
-  e => {
-
-    const file =
-      e.target.files?.[0]
-
-    if (!file) return
-
-    selectedAboutFile = file
-
-    aboutImage.src =
-      URL.createObjectURL(file)
-
-  }
-)
 
 // =============================
 // SAVE BUTTON
@@ -1730,33 +1673,6 @@ async function loadAboutContent() {
           : row.vi_text
     }
   })
-// =============================
-// LOAD IMAGE
-// =============================
-
-const { data: imageData } =
-  await supabase
-    .from('website_images')
-    .select('*')
-    .eq('section', 'about')
-    .single()
-
-if (
-  imageData?.image_path &&
-  aboutImage
-) {
-
-  const { data: publicUrlData } =
-    supabase.storage
-      .from('website-images')
-      .getPublicUrl(
-        imageData.image_path
-      )
-
-  aboutImage.src =
-    publicUrlData.publicUrl
-}
-
 }
 
 
@@ -1771,62 +1687,6 @@ async function saveAboutContent() {
 
   if (!aboutSection) return
 
-// =============================
-// SAVE IMAGE
-// =============================
-
-if (selectedAboutFile) {
-
-  try {
-
-    const fileExt =
-      selectedAboutFile.name
-        .split('.')
-        .pop()
-
-    const fileName =
-      `about-${Date.now()}.${fileExt}`
-
-    const { error: uploadError } =
-      await supabase.storage
-        .from('website-images')
-        .upload(
-          fileName,
-          selectedAboutFile,
-          {
-            cacheControl: '3600',
-            upsert: true
-          }
-        )
-
-    if (uploadError)
-      throw uploadError
-
-    const { error: dbError } =
-      await supabase
-        .from('website_images')
-        .upsert({
-          section: 'about',
-          image_path: fileName,
-          alt_text: 'About Image'
-        })
-
-    if (dbError)
-      throw dbError
-
-    console.log(
-      '✅ About image saved'
-    )
-
-  } catch (err) {
-
-    console.error(
-      '❌ About image save error:',
-      err
-    )
-
-  }
-}
 
   const editableElements =
     aboutSection.querySelectorAll('.editable')
@@ -1885,7 +1745,6 @@ if (selectedAboutFile) {
 // =============================
 
 loadAboutContent()
-loadAboutImage()
 
 /* ================= PROJECT SECTION ================= */
 // --- Language Toggle for PROJECTS ---
