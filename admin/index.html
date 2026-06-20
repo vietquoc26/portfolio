@@ -407,16 +407,27 @@ background-color: #f0f9ff;
 
   <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
 
-    <!-- Left Image -->
-    <div class="relative">
-      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-72 h-4 bg-yellow-400 rounded-full rotate-[-5deg] z-20 md:left-24 md:-translate-x-0 md:w-80 md:h-5"></div>
+  <!-- Left Image -->
+<div class="relative">
+  <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-72 h-4 bg-yellow-400 rounded-full rotate-[-5deg] z-20 md:left-24 md:-translate-x-0 md:w-80 md:h-5"></div>
 
-      <div class="relative w-80 h-80 mx-auto md:mx-0">
-        <img src="Avatar.jpg"
-          alt="Viet working"
-          class="rounded-full shadow-xl w-80 h-80 object-cover z-10 relative">
-      </div>
-    </div>
+  <div class="relative w-80 h-80 mx-auto md:mx-0">
+
+    <img
+      id="aboutImage"
+      src="Avatar.jpg"
+      alt="Viet working"
+      class="rounded-full shadow-xl w-80 h-80 object-cover z-10 relative">
+
+    <!-- Hidden File Input -->
+    <input
+      type="file"
+      id="aboutImageInput"
+      accept="image/*"
+      class="hidden">
+
+  </div>
+</div>
 
     <!-- Right Content -->
     <div class="text-gray-800 dark:text-gray-200">
@@ -1507,7 +1518,10 @@ async function saveSkillsContent() {
 
 /* ================= ABOUT SECTION ================= */
 
-// --- Language Toggle ---
+// =============================
+// LANGUAGE TOGGLE
+// =============================
+
 document.getElementById('lang-en')?.addEventListener('click', () => {
   currentLang = 'en'
   loadAboutContent()
@@ -1520,96 +1534,240 @@ document.getElementById('lang-vi')?.addEventListener('click', () => {
 
 
 // =============================
-// ABOUT BUTTONS
+// ELEMENTS
 // =============================
 
-const aboutEditBtn = document.querySelector('#about .edit-btn')
-const saveAboutBtn = document.getElementById('saveAboutBtn')
+const aboutEditBtn =
+  document.querySelector('#about .edit-btn')
+
+const saveAboutBtn =
+  document.getElementById('saveAboutBtn')
+
+const aboutImage =
+  document.getElementById('aboutImage')
+
+const aboutImageInput =
+  document.getElementById('aboutImageInput')
+
+let selectedAboutFile = null
 
 
 // =============================
-// TOGGLE EDIT MODE
+// IMAGE PICKER
 // =============================
 
-aboutEditBtn?.addEventListener('click', async () => {
+aboutImage?.addEventListener('click', () => {
 
-  const aboutSection = document.getElementById('about')
+  if (
+    !aboutImage.classList.contains(
+      'editing'
+    )
+  ) return
 
-  if (!aboutSection) return
+  aboutImageInput.click()
 
-  const editableElements =
-    aboutSection.querySelectorAll('.editable')
-
-  const isEditing =
-    editableElements[0]?.contentEditable === 'true'
-
-
-  editableElements.forEach(el => {
-
-    el.contentEditable =
-      isEditing ? 'false' : 'true'
-
-    el.classList.toggle('border', !isEditing)
-    el.classList.toggle('border-dashed', !isEditing)
-    el.classList.toggle('p-1', !isEditing)
-    el.classList.toggle('rounded', !isEditing)
-
-  })
-
-
-  if (isEditing) {
-
-    saveAboutBtn.classList.add('hidden')
-
-    aboutEditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit About'
-
-    await loadAboutContent()
-
-  } else {
-
-    saveAboutBtn.classList.remove('hidden')
-
-    aboutEditBtn.innerHTML =
-      '<i class="fas fa-times mr-1"></i> Cancel'
-  }
 })
+
+aboutImageInput?.addEventListener(
+  'change',
+  e => {
+
+    const file =
+      e.target.files?.[0]
+
+    if (!file) return
+
+    selectedAboutFile = file
+
+    aboutImage.src =
+      URL.createObjectURL(file)
+
+  }
+)
+
+
+// =============================
+// EDIT MODE
+// =============================
+
+aboutEditBtn?.addEventListener(
+  'click',
+  async () => {
+
+    const aboutSection =
+      document.getElementById('about')
+
+    if (!aboutSection) return
+
+    const editableElements =
+      aboutSection.querySelectorAll('.editable')
+
+    const isEditing =
+      editableElements[0]?.contentEditable === 'true'
+
+    editableElements.forEach(el => {
+
+      el.contentEditable =
+        isEditing ? 'false' : 'true'
+
+      el.classList.toggle(
+        'border',
+        !isEditing
+      )
+
+      el.classList.toggle(
+        'border-dashed',
+        !isEditing
+      )
+
+      el.classList.toggle(
+        'p-1',
+        !isEditing
+      )
+
+      el.classList.toggle(
+        'rounded',
+        !isEditing
+      )
+
+    })
+
+    if (isEditing) {
+
+      aboutImage.classList.remove(
+        'editing',
+        'cursor-pointer',
+        'ring-4',
+        'ring-blue-500'
+      )
+
+      selectedAboutFile = null
+
+      saveAboutBtn.classList.add(
+        'hidden'
+      )
+
+      aboutEditBtn.innerHTML =
+        '<i class="fas fa-edit mr-1"></i> Edit About'
+
+      await loadAboutContent()
+      await loadAboutImage()
+
+    } else {
+
+      aboutImage.classList.add(
+        'editing',
+        'cursor-pointer',
+        'ring-4',
+        'ring-blue-500'
+      )
+
+      saveAboutBtn.classList.remove(
+        'hidden'
+      )
+
+      aboutEditBtn.innerHTML =
+        '<i class="fas fa-times mr-1"></i> Cancel'
+
+    }
+
+  }
+)
 
 
 // =============================
 // SAVE BUTTON
 // =============================
 
-saveAboutBtn?.addEventListener('click', async () => {
+saveAboutBtn?.addEventListener(
+  'click',
+  async () => {
 
-  await saveAboutContent()
+    await saveAboutContent()
 
-  saveAboutBtn.classList.add('hidden')
-
-  aboutEditBtn.innerHTML =
-    '<i class="fas fa-edit mr-1"></i> Edit About'
-
-
-  const aboutSection =
-    document.getElementById('about')
-
-  const editableElements =
-    aboutSection.querySelectorAll('.editable')
-
-
-  editableElements.forEach(el => {
-
-    el.contentEditable = 'false'
-
-    el.classList.remove(
-      'border',
-      'border-dashed',
-      'p-1',
-      'rounded'
+    saveAboutBtn.classList.add(
+      'hidden'
     )
-  })
 
-})
+    aboutEditBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit About'
+
+    aboutImage.classList.remove(
+      'editing',
+      'cursor-pointer',
+      'ring-4',
+      'ring-blue-500'
+    )
+
+    const aboutSection =
+      document.getElementById('about')
+
+    const editableElements =
+      aboutSection.querySelectorAll('.editable')
+
+    editableElements.forEach(el => {
+
+      el.contentEditable = 'false'
+
+      el.classList.remove(
+        'border',
+        'border-dashed',
+        'p-1',
+        'rounded'
+      )
+
+    })
+
+    await loadAboutImage()
+
+  }
+)
+
+
+// =============================
+// LOAD IMAGE
+// =============================
+
+async function loadAboutImage() {
+
+  if (!aboutImage) return
+
+  const { data, error } =
+    await supabase
+      .from('website_images')
+      .select('*')
+      .eq(
+        'section',
+        'about_content'
+      )
+      .eq(
+        'image_key',
+        'profile'
+      )
+      .single()
+
+  if (error || !data) {
+
+    console.error(
+      '❌ About image not found',
+      error
+    )
+
+    return
+
+  }
+
+  const { data: publicUrlData } =
+    supabase.storage
+      .from('portfolio-images')
+      .getPublicUrl(
+        data.image_path
+      )
+
+  aboutImage.src =
+    publicUrlData.publicUrl
+
+}
 
 
 // =============================
@@ -1623,16 +1781,13 @@ async function loadAboutContent() {
 
   if (!aboutSection) return
 
-
   const editableElements =
     aboutSection.querySelectorAll('.editable')
-
 
   const { data, error } =
     await supabase
       .from('about_content')
       .select('*')
-
 
   if (error) {
 
@@ -1642,8 +1797,8 @@ async function loadAboutContent() {
     )
 
     return
-  }
 
+  }
 
   editableElements.forEach(el => {
 
@@ -1651,7 +1806,9 @@ async function loadAboutContent() {
       el.getAttribute('data-i18n')
 
     const row =
-      data.find(d => d.key === key)
+      data.find(
+        d => d.key === key
+      )
 
     if (row) {
 
@@ -1659,8 +1816,11 @@ async function loadAboutContent() {
         currentLang === 'en'
           ? row.en_text
           : row.vi_text
+
     }
+
   })
+
 }
 
 
@@ -1676,18 +1836,87 @@ async function saveAboutContent() {
   if (!aboutSection) return
 
 
-  const editableElements =
-    aboutSection.querySelectorAll('.editable')
+  // =============================
+  // SAVE IMAGE
+  // =============================
 
+  if (selectedAboutFile) {
+
+    try {
+
+      const imagePath =
+        'about-content/profile.jpg'
+
+      const {
+        error: uploadError
+      } =
+        await supabase.storage
+          .from('portfolio-images')
+          .upload(
+            imagePath,
+            selectedAboutFile,
+            {
+              cacheControl: '3600',
+              upsert: true
+            }
+          )
+
+      if (uploadError)
+        throw uploadError
+
+      const {
+        error: dbError
+      } =
+        await supabase
+          .from('website_images')
+          .upsert({
+            section:
+              'about_content',
+            image_key:
+              'profile',
+            image_path:
+              imagePath,
+            alt_text:
+              'About Profile Image'
+          })
+
+      if (dbError)
+        throw dbError
+
+      console.log(
+        '✅ About image saved'
+      )
+
+    } catch (err) {
+
+      console.error(
+        '❌ About image save error:',
+        err
+      )
+
+    }
+
+  }
+
+
+  // =============================
+  // SAVE TEXT
+  // =============================
+
+  const editableElements =
+    aboutSection.querySelectorAll(
+      '.editable'
+    )
 
   for (const el of editableElements) {
 
     const key =
-      el.getAttribute('data-i18n')
+      el.getAttribute(
+        'data-i18n'
+      )
 
     const text =
       el.innerText.trim()
-
 
     const updates =
       currentLang === 'en'
@@ -1700,14 +1929,16 @@ async function saveAboutContent() {
             vi_text: text
           }
 
-
     const { error } =
       await supabase
         .from('about_content')
-        .upsert(updates, {
-          onConflict: 'key'
-        })
-
+        .upsert(
+          updates,
+          {
+            onConflict:
+              'key'
+          }
+        )
 
     if (error) {
 
@@ -1716,15 +1947,14 @@ async function saveAboutContent() {
         error.message
       )
 
-    } else {
-
-      console.log(
-        `✅ Saved about: ${key}`
-      )
     }
+
   }
 
-  alert('About content saved! ✅')
+  alert(
+    'About content saved! ✅'
+  )
+
 }
 
 
@@ -1733,6 +1963,7 @@ async function saveAboutContent() {
 // =============================
 
 loadAboutContent()
+loadAboutImage()
 
 /* ================= PROJECT SECTION ================= */
 // --- Language Toggle for PROJECTS ---
