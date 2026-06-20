@@ -1749,54 +1749,29 @@ async function loadAboutContent() {
 
 }
 
-/* ================= ABOUT IMAGE ================= */
+async function loadAboutContentImage() {
 
-async function loadAboutImage() {
+  const aboutContentImage =
+    document.getElementById('aboutContentImage')
 
-  try {
+  if (!aboutContentImage) return
 
-    const aboutImage =
-      document.getElementById('aboutImage')
+  const { data, error } = await supabase
+    .from('website_images')
+    .select('image_path')
+    .eq('section', 'about_content')
+    .eq('image_key', 'profile')
+    .single()
 
-    if (!aboutImage) return
+  if (error || !data?.image_path) return
 
-    const { data, error } =
-      await supabase
-        .from('website_images')
-        .select('image_path, alt_text')
-        .eq('section', 'about')
-        .eq('image_key', 'profile')
-        .single()
+  const { data: publicData } = supabase
+    .storage
+    .from('portfolio-images')
+    .getPublicUrl(data.image_path)
 
-    if (error) {
-      console.error('About image error:', error)
-      return
-    }
-
-    if (!data?.image_path) return
-
-    const { data: publicData } =
-      supabase.storage
-        .from('portfolio-images')
-        .getPublicUrl(data.image_path)
-
-    aboutImage.src =
-      publicData.publicUrl +
-      '?t=' +
-      Date.now()
-
-    aboutImage.alt =
-      data.alt_text || 'About Image'
-
-  } catch (err) {
-
-    console.error(
-      'loadAboutImage error:',
-      err
-    )
-
-  }
-
+  aboutContentImage.src =
+    `${publicData.publicUrl}?t=${Date.now()}`
 }
 
 async function reloadAllSections() {
@@ -1812,6 +1787,7 @@ async function reloadAllSections() {
     ])
 
     await loadHeroImage()
+    loadAboutContentImage()
 
   } catch (err) {
 
