@@ -1779,14 +1779,19 @@ if (selectedAboutFile) {
 
   try {
 
-    const imagePath =
-      'about-content/profile.jpg'
+    const fileExt =
+      selectedAboutFile.name
+        .split('.')
+        .pop()
+
+    const fileName =
+      `about-${Date.now()}.${fileExt}`
 
     const { error: uploadError } =
       await supabase.storage
-        .from('portfolio-images')
+        .from('website-images')
         .upload(
-          imagePath,
+          fileName,
           selectedAboutFile,
           {
             cacheControl: '3600',
@@ -1801,10 +1806,9 @@ if (selectedAboutFile) {
       await supabase
         .from('website_images')
         .upsert({
-          section: 'about_content',
-          image_key: 'profile',
-          image_path: imagePath,
-          alt_text: 'About Profile Image'
+          section: 'about',
+          image_path: fileName,
+          alt_text: 'About Image'
         })
 
     if (dbError)
@@ -1822,8 +1826,8 @@ if (selectedAboutFile) {
     )
 
   }
-
 }
+
   const editableElements =
     aboutSection.querySelectorAll('.editable')
 
