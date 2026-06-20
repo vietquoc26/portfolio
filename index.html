@@ -480,7 +480,7 @@ body:not(.loading-lang) {
       </ul>
 
       <a
-        href="#"
+        href="./about-me/"
         class="inline-block px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition"
         data-i18n="findOutMore">
       </a>
@@ -1742,6 +1742,56 @@ async function loadAboutContent() {
 
     console.error(
       'loadAboutContent error:',
+      err
+    )
+
+  }
+
+}
+
+/* ================= ABOUT IMAGE ================= */
+
+async function loadAboutImage() {
+
+  try {
+
+    const aboutImage =
+      document.getElementById('aboutImage')
+
+    if (!aboutImage) return
+
+    const { data, error } =
+      await supabase
+        .from('website_images')
+        .select('image_path, alt_text')
+        .eq('section', 'about')
+        .eq('image_key', 'profile')
+        .single()
+
+    if (error) {
+      console.error('About image error:', error)
+      return
+    }
+
+    if (!data?.image_path) return
+
+    const { data: publicData } =
+      supabase.storage
+        .from('portfolio-images')
+        .getPublicUrl(data.image_path)
+
+    aboutImage.src =
+      publicData.publicUrl +
+      '?t=' +
+      Date.now()
+
+    aboutImage.alt =
+      data.alt_text || 'About Image'
+
+  } catch (err) {
+
+    console.error(
+      'loadAboutImage error:',
       err
     )
 
