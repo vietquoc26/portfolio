@@ -1740,7 +1740,7 @@ async function loadAboutContentImage() {
     .from('website_images')
     .select('*')
     .eq('section', 'about_content')
-    .eq('image_key', 'avatar')
+    .eq('image_key', 'profile')
     .single()
 
   if (error || !data?.image_path) return
@@ -1776,9 +1776,9 @@ async function uploadAboutContentImage() {
 
   await supabase.from('website_images').upsert({
     section: 'about_content',
-    image_key: 'avatar',
+    image_key: 'profile',
     image_path: filePath,
-    alt_text: 'About Content Image'
+    alt_text: 'viet working'
   }, {
     onConflict: 'section,image_key'
   })
