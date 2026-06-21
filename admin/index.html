@@ -2287,7 +2287,7 @@ async function uploadProjectImages() {
 
       const { error: dbError } =
         await supabase
-          .from('projects_content')
+          .from('website_images')
           .update({ image_path: filePath })
           .eq('key', projectKey)
 
@@ -2313,7 +2313,7 @@ async function loadProjectImages() {
 
   const { data, error } =
     await supabase
-      .from('projects_content')
+      .from('website_images')
       .select('key, image_path')
 
   if (error) {
