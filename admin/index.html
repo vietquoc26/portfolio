@@ -2022,13 +2022,15 @@ document.getElementById('lang-vi')?.addEventListener('click', () => {
   loadProjectImages()
 })
 
-/* ================= EDIT MODE ================= */
+/* ================= ELEMENTS ================= */
 
 const projectEditBtn =
-  document.querySelector('#projects .edit-btn')
+  document.getElementById('editProjects')
 
 const saveProjectBtn =
   document.getElementById('saveProjects')
+
+/* ================= EDIT MODE ================= */
 
 projectEditBtn?.addEventListener('click', async () => {
 
@@ -2043,6 +2045,7 @@ projectEditBtn?.addEventListener('click', async () => {
   const isEditing =
     editableElements[0]?.contentEditable === 'true'
 
+  // TOGGLE TEXT EDITING
   editableElements.forEach(el => {
 
     el.contentEditable = !isEditing
@@ -2053,6 +2056,27 @@ projectEditBtn?.addEventListener('click', async () => {
 
   })
 
+  // TOGGLE IMAGE LABEL (🔥 FIX FOR YOUR ISSUE)
+  const imageLabels =
+    section.querySelectorAll('label[for$="ImageInput"]')
+
+  imageLabels.forEach(label => {
+
+    if (isEditing) {
+
+      label.classList.add('hidden')
+      label.classList.remove('flex')
+
+    } else {
+
+      label.classList.remove('hidden')
+      label.classList.add('flex')
+
+    }
+
+  })
+
+  // UI STATE SWITCH
   if (isEditing) {
 
     saveProjectBtn.classList.add('hidden')
@@ -2098,9 +2122,18 @@ saveProjectBtn?.addEventListener('click', async () => {
     el.contentEditable = 'false'
   })
 
+  // hide image labels after save
+  const labels =
+    section.querySelectorAll('label[for$="ImageInput"]')
+
+  labels.forEach(label => {
+    label.classList.add('hidden')
+    label.classList.remove('flex')
+  })
+
 })
 
-/* ================= LOAD CONTENT ================= */
+/* ================= LOAD TEXT ================= */
 
 async function loadProjectsContent() {
 
@@ -2117,10 +2150,7 @@ async function loadProjectsContent() {
   const section =
     document.getElementById('projects')
 
-  const elements =
-    section.querySelectorAll('.editable')
-
-  elements.forEach(el => {
+  section.querySelectorAll('.editable').forEach(el => {
 
     const key =
       el.getAttribute('data-i18n')
@@ -2142,7 +2172,7 @@ async function loadProjectsContent() {
   })
 }
 
-/* ================= SAVE CONTENT ================= */
+/* ================= SAVE TEXT ================= */
 
 async function saveProjectsContent() {
 
@@ -2188,8 +2218,6 @@ function initProjectImagePreview() {
 
   const section =
     document.getElementById('projects')
-
-  if (!section) return
 
   const inputs =
     section.querySelectorAll('input[type="file"]')
