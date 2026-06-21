@@ -2163,53 +2163,6 @@ async function loadProjectsContent() {
   })
 }
 
-// --- Load Project Images ---
-async function loadProjectImages() {
-
-  try {
-
-    const { data, error } = await supabase
-      .from('website_images')
-      .select('image_key, image_path, alt_text')
-      .eq('section', 'projects')
-
-    if (error) throw error
-
-    const imageMap = {
-      project1: 'project1Image',
-      project2: 'project2Image',
-      project3: 'project3Image',
-      project4: 'project4Image',
-      project5: 'project5Image'
-    }
-
-    data.forEach(item => {
-
-      const img = document.getElementById(
-        imageMap[item.image_key]
-      )
-
-      if (!img) return
-
-      const { data: publicData } = supabase.storage
-        .from('portfolio-images')
-        .getPublicUrl(item.image_path)
-
-      img.src = publicData.publicUrl
-      img.alt = item.alt_text || ''
-
-    })
-
-  } catch (err) {
-
-    console.error(
-      '❌ Error loading project images:',
-      err.message
-    )
-
-  }
-
-}
 
 // --- Save Projects Content ---
 async function saveProjectsContent() {
