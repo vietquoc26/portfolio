@@ -2560,6 +2560,7 @@ document.addEventListener(
 )
 
 
+
 /* ==========================================
 RESULTS SECTION
 ========================================== */
@@ -2605,6 +2606,7 @@ resultEditBtn?.addEventListener('click', async () => {
   const isEditing =
     editableElements[0]?.contentEditable === 'true'
 
+  /* TEXT TOGGLE */
   editableElements.forEach(el => {
 
     el.contentEditable = !isEditing
@@ -2614,17 +2616,16 @@ resultEditBtn?.addEventListener('click', async () => {
     el.classList.toggle('p-1', !isEditing)
   })
 
+  /* IMAGE LABEL TOGGLE (CAMERA BUTTONS) */
   const imageLabels =
-    resultSection.querySelectorAll('label[for$="ImageInput"]')
+    resultSection.querySelectorAll('label[id^="resultUploadLabel"]')
 
   imageLabels.forEach(label => {
 
     if (isEditing) {
       label.classList.add('hidden')
-      label.classList.remove('flex')
     } else {
       label.classList.remove('hidden')
-      label.classList.add('flex')
     }
   })
 
@@ -2673,13 +2674,12 @@ saveResultBtn?.addEventListener('click', async () => {
       )
     })
 
-    const labels =
-      resultSection.querySelectorAll('label[for$="ImageInput"]')
+    /* HIDE CAMERA BUTTONS AFTER SAVE */
+    const imageLabels =
+      resultSection.querySelectorAll('label[id^="resultUploadLabel"]')
 
-    labels.forEach(label => {
-
+    imageLabels.forEach(label => {
       label.classList.add('hidden')
-      label.classList.remove('flex')
     })
 
     saveResultBtn.classList.add('hidden')
@@ -2796,7 +2796,7 @@ function initResultImagePreview() {
 }
 
 /* ==========================================
-UPLOAD IMAGES (FIXED STORAGE)
+UPLOAD IMAGES
 ========================================== */
 
 async function uploadResultImages() {
@@ -2813,7 +2813,7 @@ async function uploadResultImages() {
 
       const { error: uploadError } =
         await supabase.storage
-          .from('portfolio-images')   // ✅ FIXED HERE
+          .from('portfolio-images')
           .upload(filePath, file, { upsert: true })
 
       if (uploadError) {
@@ -2847,7 +2847,7 @@ async function uploadResultImages() {
 }
 
 /* ==========================================
-LOAD IMAGES (FIXED STORAGE)
+LOAD IMAGES
 ========================================== */
 
 async function loadResultImages() {
@@ -2876,8 +2876,12 @@ async function loadResultImages() {
 
     const { data: publicData } =
       supabase.storage
-        .from('portfolio-images')   // ✅ FIXED HERE
+        .from('portfolio-images')
         .getPublicUrl(row.image_path)
+
+    img.onerror = () => {
+      console.error('Image failed:', publicData.publicUrl)
+    }
 
     img.src =
       `${publicData.publicUrl}?v=${Date.now()}`
@@ -2895,6 +2899,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadResultsContent()
   await loadResultImages()
 })
+
+
 /* ================= STARTUP ================= */
 window.addEventListener('DOMContentLoaded', () => {
   loadHeroContent()
