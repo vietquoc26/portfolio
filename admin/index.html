@@ -2559,6 +2559,7 @@ document.addEventListener(
   }
 )
 
+
 /* ==========================================
 RESULTS SECTION
 ========================================== */
@@ -2795,7 +2796,7 @@ function initResultImagePreview() {
 }
 
 /* ==========================================
-UPLOAD IMAGES
+UPLOAD IMAGES (FIXED STORAGE)
 ========================================== */
 
 async function uploadResultImages() {
@@ -2812,7 +2813,7 @@ async function uploadResultImages() {
 
       const { error: uploadError } =
         await supabase.storage
-          .from('website-images')
+          .from('portfolio-images')   // ✅ FIXED HERE
           .upload(filePath, file, { upsert: true })
 
       if (uploadError) {
@@ -2846,7 +2847,7 @@ async function uploadResultImages() {
 }
 
 /* ==========================================
-LOAD IMAGES
+LOAD IMAGES (FIXED STORAGE)
 ========================================== */
 
 async function loadResultImages() {
@@ -2875,7 +2876,7 @@ async function loadResultImages() {
 
     const { data: publicData } =
       supabase.storage
-        .from('website-images')
+        .from('portfolio-images')   // ✅ FIXED HERE
         .getPublicUrl(row.image_path)
 
     img.src =
@@ -2894,7 +2895,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadResultsContent()
   await loadResultImages()
 })
-
 /* ================= STARTUP ================= */
 window.addEventListener('DOMContentLoaded', () => {
   loadHeroContent()
