@@ -1840,55 +1840,7 @@ const tableName = tableMap[sectionId] || (sectionId + '_content');
 
 }
 
-/* ================= HERO IMAGE ================= */
 
-async function loadHeroImage() {
-
-  try {
-
-    const heroImage =
-      document.getElementById('heroImage')
-
-    if (!heroImage) return
-
-    const { data, error } =
-      await supabase
-        .from('website_images')
-        .select('image_path, alt_text')
-        .eq('section', 'hero')
-        .eq('image_key', 'avatar')
-        .single()
-
-    if (error) {
-      console.error('Hero image error:', error)
-      return
-    }
-
-    if (!data?.image_path) return
-
-    const { data: publicData } =
-      supabase.storage
-        .from('portfolio-images')
-        .getPublicUrl(data.image_path)
-
-    heroImage.src =
-      publicData.publicUrl +
-      '?t=' +
-      Date.now()
-
-    heroImage.alt =
-      data.alt_text || 'Hero Image'
-
-  } catch (err) {
-
-    console.error(
-      'loadHeroImage error:',
-      err
-    )
-
-  }
-
-}
 
 /* ================= ABOUT CONTENT ================= */
 
@@ -1992,6 +1944,82 @@ async function reloadAllSections() {
   }
 
 }
+
+/* ================= PROJECT IMAGES ================= */
+
+async function loadProjectImages() {
+
+  try {
+
+    const { data, error } =
+      await supabase
+        .from('website_images')
+        .select('image_key, image_path, alt_text')
+        .eq('section', 'projects')
+
+    if (error) {
+      console.error(
+        'Project images error:',
+        error
+      )
+      return
+    }
+
+    data.forEach(row => {
+
+      if (!row.image_path) return
+
+      const imageElement =
+        document.getElementById(
+          `${row.image_key}Image`
+        )
+
+      if (!imageElement) {
+        console.warn(
+          `Missing image element: ${row.image_key}Image`
+        )
+        return
+      }
+
+      const { data: publicData } =
+        supabase.storage
+          .from('portfolio-images')
+          .getPublicUrl(
+            row.image_path
+          )
+
+      imageElement.src =
+        publicData.publicUrl +
+        '?t=' +
+        Date.now()
+
+      imageElement.alt =
+        row.alt_text ||
+        row.image_key
+
+    })
+
+  } catch (err) {
+
+    console.error(
+      'loadProjectImages error:',
+      err
+    )
+
+  }
+
+}
+
+/* ================= INIT ================= */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  async () => {
+
+    await loadProjectImages()
+
+  }
+)
 
   /* ================= LANGUAGE SWITCH ================= */
 async function setLanguage(lang) {
