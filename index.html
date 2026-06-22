@@ -494,15 +494,13 @@ body:not(.loading-lang) {
 
 
   <!-- Projects Section Redesigned with i18n + Carousel Effects + Glow/Fade + Hover Focus -->
-<<!-- Projects Section Redesigned with i18n + Carousel Effects + Glow/Fade + Hover Focus -->
 <section id="projects" class="py-20 bg-white dark:bg-gray-900 transition-colors">
-
 <style>
   .swiper-slide {
     transition: opacity 0.3s ease, filter 0.3s ease;
     opacity: 1;
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: 1rem; /* Match card shape */
     display: flex;
     will-change: box-shadow;
   }
@@ -522,196 +520,152 @@ body:not(.loading-lang) {
     background-color: #374151;
   }
 
+  /* Dim non-hovered slides */
   .swiper-wrapper:hover .swiper-slide:not(:hover) {
     filter: blur(2px);
     opacity: 0.4;
   }
 
+  /* Glow shadow on hover (no scale) */
   .swiper-slide:hover {
     z-index: 10;
   }
 
   .swiper-slide:hover .card {
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.5); /* Blue glow */
   }
 
-  .card-content {
-    padding: 1rem;
+  /* Ensure inner content fills space */
+  .swiper-slide .card .p-4 {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    text-align: left;
   }
 </style>
 
+
 <div class="max-w-7xl mx-auto px-6 text-center">
+    <h2 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white" data-i18n="projectssection"></h2>
+    <p class="mb-12 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto" data-i18n="projectIntro">
+    </p>
 
-  <h2 class="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white"
-      data-i18n="projectssection"></h2>
+    <div class="relative">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
 
-  <p class="mb-12 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
-     data-i18n="projectIntro"></p>
-
-  <div class="relative">
-
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper">
-
-        <!-- PROJECT 1 -->
+          <!-- Project Card 1 -->
         <div class="swiper-slide">
-          <div class="card">
+    <div class="card w-full sm:max-w-xs mx-auto">
+    <img src="SEO.png" alt="SEO Project" class="w-full h-[200px] object-cover">
+    <div class="p-4 text-left">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="project1"></h3>
+      <span class="inline-block bg-purple-200 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">SEO</span>
+      <p class="text-sm text-gray-700 dark:text-gray-300" data-i18n="projectdes1">
+      </p>
+   <a href="/project/SEO-projects/">
+  <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+    Read More
+  </button>
+</a>
 
-            <img id="project1Image" src="SEO.png" alt="SEO">
-
-            <div class="card-content">
-
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1"
-                  data-i18n="project1"></h3>
-
-              <span class="inline-block bg-purple-200 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full mb-2"
-                    data-i18n="project1_tag">
-                SEO
-              </span>
-
-              <p class="text-sm text-gray-700 dark:text-gray-300"
-                 data-i18n="projectdes1"></p>
-
-              <a href="/project/SEO-projects/"
-                 class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
-                <span data-i18n="readMore"></span>
-              </a>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- PROJECT 2 -->
-        <div class="swiper-slide">
-          <div class="card">
-
-            <img id="project2Image" src="seo content.png" alt="Content">
-
-            <div class="card-content">
-
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1"
-                  data-i18n="project2"></h3>
-
-              <span class="inline-block bg-green-200 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-2"
-                    data-i18n="project2_tag">
-                Content
-              </span>
-
-              <p class="text-sm text-gray-700 dark:text-gray-300"
-                 data-i18n="project2des"></p>
-
-              <a href="/project/content-projects/"
-                 class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
-                <span data-i18n="readMore"></span>
-              </a>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- PROJECT 3 -->
-        <div class="swiper-slide">
-          <div class="card">
-
-            <img id="project3Image" src="meta ad.png" alt="Ads">
-
-            <div class="card-content">
-
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1"
-                  data-i18n="project3"></h3>
-
-              <span class="inline-block bg-blue-200 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-2"
-                    data-i18n="project3_tag">
-                Ads
-              </span>
-
-              <p class="text-sm text-gray-700 dark:text-gray-300"
-                 data-i18n="project3des"></p>
-
-              <a href="/project/paid-media/"
-                 class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
-                <span data-i18n="readMore"></span>
-              </a>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- PROJECT 4 -->
-        <div class="swiper-slide">
-          <div class="card">
-
-            <img id="project4Image" src="video-editing.png" alt="Video">
-
-            <div class="card-content">
-
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1"
-                  data-i18n="project4"></h3>
-
-              <span class="inline-block bg-pink-200 text-pink-800 text-xs font-semibold px-3 py-1 rounded-full mb-2"
-                    data-i18n="project4_tag">
-                Video
-              </span>
-
-              <p class="text-sm text-gray-700 dark:text-gray-300"
-                 data-i18n="project4des"></p>
-
-              <a href="/project/video-editing/"
-                 class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
-                <span data-i18n="readMore"></span>
-              </a>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- PROJECT 5 -->
-        <div class="swiper-slide">
-          <div class="card">
-
-            <img id="project5Image" src="social content.png" alt="Social Media">
-
-            <div class="card-content">
-
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1"
-                  data-i18n="project5"></h3>
-
-              <span class="inline-block bg-indigo-200 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full mb-2"
-                    data-i18n="project5_tag">
-                Social Media
-              </span>
-
-              <p class="text-sm text-gray-700 dark:text-gray-300"
-                 data-i18n="project5des"></p>
-
-              <a href="/project/social-media/"
-                 class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700">
-                <span data-i18n="readMore"></span>
-              </a>
-
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
-
-    <!-- Navigation Buttons -->
-    <button class="swiper-button-prev absolute top-1/2 -left-4 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600 text-gray-900 dark:text-white">
-      Prev
-    </button>
-
-    <button class="swiper-button-next absolute top-1/2 -right-4 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600 text-gray-900 dark:text-white">
-      Next
-    </button>
-
   </div>
 </div>
 
+
+      <!-- Project Card 2 -->
+          <div class="swiper-slide">
+              <div class="card w-full sm:max-w-xs mx-auto">
+              <img src="seo content.png" alt="Content Project" class="w-full h-[200px] object-cover">
+              <div class="p-4 flex flex-col flex-grow text-left">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="project2"></h3>
+                <span class="inline-block bg-green-200 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Content</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow" data-i18n="project2des">
+                </p>
+                 <a href="/project/content-projects/">
+              <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+            </button>
+            </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 3 -->
+          <div class="swiper-slide">
+              <div class="card w-full sm:max-w-xs mx-auto">
+              <img src="meta ad.png" alt="Meta Ads" class="w-full h-[200px] object-cover">
+              <div class="p-4 flex flex-col flex-grow text-left">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="project3"></h3>
+                <span class="inline-block bg-blue-200 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Ads</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow" data-i18n="project3des">
+                </p>
+                <a href="/project/paid-media/">
+                <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+              </button>
+            </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 4 -->
+          <div class="swiper-slide">
+              <div class="card w-full sm:max-w-xs mx-auto">
+              <img src="video-editing.png" alt="Video Editing" class="w-full h-[200px] object-cover">
+              <div class="p-4 flex flex-col flex-grow text-left">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="project4"></h3>
+                <span class="inline-block bg-pink-200 text-pink-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Video</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow" data-i18n="project4des">
+                </p>
+              <a href="/project/video-editing/"
+                <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+              </button>
+              </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 5 -->
+          <div class="swiper-slide">
+             <div class="card w-full sm:max-w-xs mx-auto">
+              <img src="social content.png" alt="Web Design" class="w-full h-[200px] object-cover">
+              <div class="p-4 flex flex-col flex-grow text-left">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1" data-i18n="project5"></h3>
+                <span class="inline-block bg-indigo-200 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full mb-2">Social media</span>
+                <p class="text-sm text-gray-700 dark:text-gray-300 flex-grow" data-i18n="project5des">
+                Design social media strategies, manage content calendars, and track engagement metrics to optimize performance. 
+                </p>
+              <button class="mt-4 self-start px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-200" data-i18n="readMore">
+              </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+     <!-- Navigation Buttons -->
+<button class="swiper-button-prev absolute top-1/2 -left-4 -translate-y-1/2 z-10 
+  w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 
+  shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
+  text-gray-900 dark:text-white hover:scale-105 hover:shadow-blue-400/50
+  transition-all duration-300 ease-in-out hover:-translate-x-1">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+  <path d="M12 8l-4 4 4 4M16 12H8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
+
+<!-- Next Button -->
+<button class="swiper-button-next absolute top-1/2 -right-4 -translate-y-1/2 z-10 
+  w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 
+  shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
+  text-gray-900 dark:text-white hover:scale-105 hover:shadow-blue-400/50
+  transition-all duration-300 ease-in-out hover:translate-x-1">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" stroke="currentColor"/>
+    <path d="M12 8l4 4-4 4M8 12h8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
 </section>
   
 <!-- Results section -->
@@ -1845,8 +1799,6 @@ async function reloadAllSections() {
   }
 
 }
-
-
 
   /* ================= LANGUAGE SWITCH ================= */
 async function setLanguage(lang) {
