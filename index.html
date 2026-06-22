@@ -1935,6 +1935,63 @@ async function loadProjectImages() {
     console.error('loadProjectImages crash:', err)
   }
 }
+
+async function loadResultImages() {
+
+  try {
+
+    const { data, error } =
+      await supabase
+        .from('website_images')
+        .select('*')
+        .eq('section', 'results')
+
+    if (error) {
+      console.error('Load result images error:', error)
+      return
+    }
+
+    if (!data) return
+
+    console.log('Frontend Result Images:', data)
+
+    data.forEach(row => {
+
+      if (!row.image_path || !row.image_key) return
+
+      const img =
+        document.getElementById(
+          `resultImage${row.image_key.replace('result', '')}`
+        )
+
+      if (!img) {
+        console.warn(
+          `Missing image element: resultImage${row.image_key.replace('result', '')}`
+        )
+        return
+      }
+
+      const { data: publicData } =
+        supabase.storage
+          .from('portfolio-images')
+          .getPublicUrl(row.image_path)
+
+      if (!publicData?.publicUrl) return
+
+      img.onerror = () => {
+        console.error('Image failed:', publicData.publicUrl)
+      }
+
+      img.src =
+        `${publicData.publicUrl}?t=${Date.now()}`
+    })
+
+  } catch (err) {
+
+    console.error('loadResultImages crash:', err)
+  }
+}
+
 async function reloadAllSections() {
 
   try {
