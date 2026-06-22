@@ -768,7 +768,6 @@ body:not(.loading-lang) {
 
   <div class="space-y-12 max-w-6xl mx-auto">
 
-    ```html
 <!-- Card 1 -->
 <div class="relative flex flex-col md:flex-row items-center overflow-hidden rounded-2xl group transition-all duration-500">
   <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/50 via-indigo-300/10 to-transparent dark:from-indigo-400/40 dark:via-indigo-200/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20 pointer-events-none"></div>
@@ -2007,6 +2006,7 @@ async function reloadAllSections() {
     await loadHeroImage()
     loadAboutContentImage()
     loadProjectImages()
+    loadResultImages()
 
   } catch (err) {
 
