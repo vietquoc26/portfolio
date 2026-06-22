@@ -720,19 +720,37 @@ body:not(.loading-lang) {
     </div>
 
     <!-- Navigation Buttons -->
-    <button class="swiper-button-prev absolute top-1/2 -left-4 -translate-y-1/2 z-10
-      w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30
-      shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
-      text-gray-900 dark:text-white">
-      Prev
-    </button>
 
-    <button class="swiper-button-next absolute top-1/2 -right-4 -translate-y-1/2 z-10
-      w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30
-      shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
-      text-gray-900 dark:text-white">
-      Next
-    </button>
+<button class="swiper-button-prev absolute top-1/2 -left-4 -translate-y-1/2 z-10 
+  w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 
+  shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
+  text-gray-900 dark:text-white hover:scale-105 hover:shadow-blue-400/50
+  transition-all duration-300 ease-in-out hover:-translate-x-1
+  flex items-center justify-center">
+
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round"
+      d="M15 19l-7-7 7-7" />
+  </svg>
+
+</button>
+
+
+<!-- Next Button -->
+
+<button class="swiper-button-next absolute top-1/2 -right-4 -translate-y-1/2 z-10 
+  w-12 h-12 rounded-full bg-white/30 dark:bg-gray-700/30 
+  shadow-xl backdrop-blur-md border border-white/40 dark:border-gray-600
+  text-gray-900 dark:text-white hover:scale-105 hover:shadow-blue-400/50
+  transition-all duration-300 ease-in-out hover:translate-x-1
+  flex items-center justify-center">
+
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round"
+      d="M9 5l7 7-7 7" />
+  </svg>
+
+</button>
 
   </div>
 </div>
