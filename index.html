@@ -1846,6 +1846,60 @@ async function reloadAllSections() {
 
 }
 
+async function loadProjectImages() {
+
+  try {
+
+    const { data, error } = await supabase
+      .from('website_images')
+      .select('image_key, image_path, alt_text')
+      .eq('section', 'projects')
+
+    if (error) {
+      console.error('Project images error:', error)
+      return
+    }
+
+    if (!data || data.length === 0) return
+
+    data.forEach(row => {
+
+      // Safety check
+      if (!row.image_key || !row.image_path) return
+
+      // Match admin key → frontend ID
+      const imageElement = document.getElementById(
+        `${row.image_key}Image`
+      )
+
+      if (!imageElement) {
+        console.warn(`Missing image element: ${row.image_key}Image`)
+        return
+      }
+
+      const { data: publicData } = supabase
+        .storage
+        .from('portfolio-images')
+        .getPublicUrl(row.image_path)
+
+      if (!publicData?.publicUrl) return
+
+      imageElement.src =
+        `${publicData.publicUrl}?t=${Date.now()}`
+
+      imageElement.alt =
+        row.alt_text || row.image_key
+
+    })
+
+  } catch (err) {
+
+    console.error('loadProjectImages error:', err)
+
+  }
+
+}
+
   /* ================= LANGUAGE SWITCH ================= */
 async function setLanguage(lang) {
   if (!lang || lang === currentLang) {
