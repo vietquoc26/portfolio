@@ -1864,44 +1864,54 @@ async function loadAboutContentImage() {
 }
 
 async function loadProjectImages() {
+
   try {
-    const { data, error } = await supabase
-      .from('website_images')
-      .select('image_key, image_path, alt_text')
-      .eq('section', 'projects')
+
+    const { data, error } =
+      await supabase
+        .from('website_images')
+        .select('*')
+        .eq('section', 'projects')
 
     if (error) {
-      console.error('Project images error:', error)
+      console.error('Load project images error:', error)
       return
     }
 
-    if (!data || data.length === 0) return
+    if (!data) return
 
-    data.forEach((item) => {
-      if (!item.image_path || !item.image_key) return
+    console.log('Frontend Project Images:', data)
 
-      // Match your HTML IDs:
-      // project1Image, project2Image, etc.
-      const imgEl = document.getElementById(`${item.image_key}Image`)
+    data.forEach(row => {
 
-      if (!imgEl) {
-        console.warn(`Missing image element: ${item.image_key}Image`)
+      if (!row.image_path || !row.image_key) return
+
+      const img =
+        document.getElementById(`${row.image_key}Image`)
+
+      if (!img) {
+        console.warn(`Missing image element: ${row.image_key}Image`)
         return
       }
 
-      const { data: publicData } = supabase.storage
-        .from('portfolio-images')
-        .getPublicUrl(item.image_path)
+      const { data: publicData } =
+        supabase.storage
+          .from('portfolio-images')
+          .getPublicUrl(row.image_path)
 
-      imgEl.src = `${publicData.publicUrl}?t=${Date.now()}`
-      imgEl.alt = item.alt_text || item.image_key
+      if (!publicData?.publicUrl) return
+
+      img.onerror = () => {
+        console.error('Image failed:', publicData.publicUrl)
+      }
+
+      img.src = `${publicData.publicUrl}?t=${Date.now()}`
     })
 
   } catch (err) {
-    console.error('loadProjectImages error:', err)
+    console.error('loadProjectImages crash:', err)
   }
 }
-
 async function reloadAllSections() {
 
   try {
