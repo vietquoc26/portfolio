@@ -4044,133 +4044,156 @@ if (currentLang === 'en') {
 
 
 /* ==========================================
-   PROJECTS SECTION INIT
+PROJECTS SECTION (ADMIN)
 ========================================== */
 
-function initProjectsSection() {
+let selectedProjectFiles = {}
 
-  const editBtn =
-    document.getElementById('editProjectsBtn')
+const projectSection =
+  document.getElementById('projects1')
 
-  const saveBtn =
-    document.getElementById('saveProjectsBtn')
+const projectEditBtn =
+  document.getElementById('editProjectsBtn')
 
-  if (!editBtn) return
+const saveProjectBtn =
+  document.getElementById('saveProjectsBtn')
 
-  editBtn.addEventListener('click', async () => {
+/* ==========================================
+LANGUAGE SWITCH
+========================================== */
 
-    const section =
-      document.getElementById('projects1')
+document.getElementById('lang-en')
+?.addEventListener('click', async () => {
 
-    if (!section) return
+  currentLang = 'en'
+  await loadProjectsContent()
+})
 
-    const editableElements =
-      section.querySelectorAll('[data-i18n]')
+document.getElementById('lang-vi')
+?.addEventListener('click', async () => {
 
-    const isEditing =
-      editableElements[0]?.contentEditable === 'true'
+  currentLang = 'vi'
+  await loadProjectsContent()
+})
 
-    editableElements.forEach(el => {
+/* ==========================================
+EDIT MODE TOGGLE
+========================================== */
 
-      el.classList.add('editable')
+projectEditBtn?.addEventListener('click', async () => {
 
-      el.contentEditable =
-        isEditing ? 'false' : 'true'
+  const editableElements =
+    projectSection.querySelectorAll('.editable')
 
-      el.classList.toggle('border', !isEditing)
-      el.classList.toggle('border-dashed', !isEditing)
-      el.classList.toggle('border-blue-500', !isEditing)
-      el.classList.toggle('p-1', !isEditing)
-      el.classList.toggle('rounded', !isEditing)
+  const isEditing =
+    editableElements[0]?.contentEditable === 'true'
 
-    })
+  editableElements.forEach(el => {
+
+    el.contentEditable = !isEditing
+
+    el.classList.toggle('border', !isEditing)
+    el.classList.toggle('border-dashed', !isEditing)
+    el.classList.toggle('p-1', !isEditing)
+  })
+
+  /* IMAGE LABELS */
+  const imageLabels =
+    projectSection.querySelectorAll(
+      'label[for$="ImageInput"]'
+    )
+
+  imageLabels.forEach(label => {
 
     if (isEditing) {
 
-      saveBtn.classList.add('hidden')
-
-      editBtn.innerHTML =
-        '<i class="fas fa-edit mr-1"></i> Edit'
-
-      await loadProjectsSection()
+      label.classList.add('hidden')
+      label.classList.remove('flex')
 
     } else {
 
-      saveBtn.classList.remove('hidden')
-
-      editBtn.innerHTML =
-        '<i class="fas fa-times mr-1"></i> Cancel'
-
+      label.classList.remove('hidden')
+      label.classList.add('flex')
     }
-
   })
 
-  saveBtn?.addEventListener('click', async () => {
+  if (isEditing) {
 
-    await saveProjectsSection()
+    saveProjectBtn.classList.add('hidden')
 
-    saveBtn.classList.add('hidden')
-
-    editBtn.innerHTML =
+    projectEditBtn.innerHTML =
       '<i class="fas fa-edit mr-1"></i> Edit'
 
-    const section =
-      document.getElementById('projects')
+    await loadProjectsContent()
+    await loadProjectImages()
 
+  } else {
+
+    saveProjectBtn.classList.remove('hidden')
+
+    projectEditBtn.innerHTML =
+      '<i class="fas fa-times mr-1"></i> Cancel'
+  }
+})
+
+/* ==========================================
+SAVE BUTTON
+========================================== */
+
+saveProjectBtn?.addEventListener('click', async () => {
+
+  try {
+
+    await saveProjectsContent()
+    await uploadProjectImages()
+    await loadProjectImages()
+
+    /* disable edit mode */
     const editableElements =
-      section.querySelectorAll('[data-i18n]')
+      projectSection.querySelectorAll('.editable')
 
     editableElements.forEach(el => {
 
-      el.contentEditable = 'false'
+      el.contentEditable = false
 
       el.classList.remove(
         'border',
         'border-dashed',
-        'border-blue-500',
-        'p-1',
-        'rounded'
+        'p-1'
       )
-
     })
 
-  })
+    /* hide image upload labels */
+    const labels =
+      projectSection.querySelectorAll(
+        'label[for$="ImageInput"]'
+      )
 
-}
+    labels.forEach(label => {
 
-// =============================
-  // LANGUAGE TOGGLE
-  // =============================
+      label.classList.add('hidden')
+      label.classList.remove('flex')
+    })
 
-  document.getElementById('lang-en')?.addEventListener('click', () => {
+    saveProjectBtn.classList.add('hidden')
 
-    currentLang = 'en'
+    projectEditBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit'
 
-    loadProjectsSection()
+    alert('Projects updated successfully.')
 
-  })
+  } catch (err) {
 
-  document.getElementById('lang-vi')?.addEventListener('click', () => {
-
-    currentLang = 'vi'
-
-    loadProjectsSection()
-
-  })
+    console.error(err)
+    alert('Failed to save projects.')
+  }
+})
 
 /* ==========================================
-   LOAD PROJECTS SECTION
+LOAD CONTENT (TEXT)
 ========================================== */
 
-async function loadProjectsSection() {
-
-  const section =
-    document.getElementById('projects1')
-
-  if (!section) return
-
-  const editableElements =
-    section.querySelectorAll('[data-i18n]')
+async function loadProjectsContent() {
 
   const { data, error } =
     await supabase
@@ -4179,65 +4202,58 @@ async function loadProjectsSection() {
 
   if (error) {
 
-    console.error(
-      '❌ Error loading projects_section:',
-      error.message
-    )
-
+    console.error(error)
     return
-
   }
+
+  const editableElements =
+    projectSection.querySelectorAll('.editable')
 
   editableElements.forEach(el => {
 
-    const key =
-      el.getAttribute('data-i18n')
+    const key = el.dataset.i18n
+    if (!key) return
 
     const row =
       data.find(item => item.key === key)
 
     if (!row) return
 
-    el.innerHTML =
+    el.innerText =
       currentLang === 'en'
-        ? (row.en_text || '')
-        : (row.vi_text || '')
+        ? row.en_text || ''
+        : row.vi_text || ''
 
+    el.dataset.rowId = row.id
   })
-
 }
 
 /* ==========================================
-   SAVE PROJECTS SECTION
+SAVE CONTENT (TEXT)
 ========================================== */
 
-async function saveProjectsSection() {
-
-  const section =
-    document.getElementById('projects1')
-
-  if (!section) return
+async function saveProjectsContent() {
 
   const editableElements =
-    section.querySelectorAll('[data-i18n]')
+    projectSection.querySelectorAll('.editable')
 
   for (const el of editableElements) {
 
-    const key =
-      el.getAttribute('data-i18n')
-
+    const key = el.dataset.i18n
     if (!key) continue
 
-    const text =
-      el.innerHTML.trim()
+    const rowId = el.dataset.rowId
+    const text = el.innerText.trim()
 
-    const updates =
+    const payload =
       currentLang === 'en'
         ? {
+            id: rowId,
             key,
             en_text: text
           }
         : {
+            id: rowId,
             key,
             vi_text: text
           }
@@ -4245,37 +4261,161 @@ async function saveProjectsSection() {
     const { error } =
       await supabase
         .from('about_section')
-        .upsert(
-          updates,
-          {
-            onConflict: 'key'
-          }
-        )
+        .upsert(payload)
 
     if (error) {
 
-      console.error(
-        `❌ Failed saving ${key}:`,
-        error.message
-      )
-
+      console.error(`Save failed: ${key}`, error)
     }
-
   }
-
-  alert(
-    'Projects Section saved successfully! ✅'
-  )
-
 }
 
 /* ==========================================
-   INIT PROJECTS
+IMAGE PREVIEW INIT
 ========================================== */
 
-initProjectsSection()
+function initProjectImagePreview() {
 
-loadProjectsSection()
+  const fileInputs =
+    projectSection.querySelectorAll('input[type="file"]')
+
+  fileInputs.forEach(input => {
+
+    input.addEventListener('change', e => {
+
+      const file = e.target.files[0]
+      if (!file) return
+
+      const card =
+        input.closest('.card')
+
+      const img =
+        card?.querySelector('img')
+
+      if (!img) return
+
+      const imageKey =
+        img.id.replace('Image', '')
+
+      selectedProjectFiles[imageKey] = file
+
+      img.src = URL.createObjectURL(file)
+    })
+  })
+}
+
+/* ==========================================
+UPLOAD IMAGES
+========================================== */
+
+async function uploadProjectImages() {
+
+  for (const imageKey in selectedProjectFiles) {
+
+    const file =
+      selectedProjectFiles[imageKey]
+
+    if (!file) continue
+
+    try {
+
+      const ext =
+        file.name.split('.').pop()
+
+      const filePath =
+        `projects/${imageKey}.${ext}`
+
+      const { error: uploadError } =
+        await supabase.storage
+          .from('portfolio-images')
+          .upload(filePath, file, {
+            upsert: true
+          })
+
+      if (uploadError) {
+        console.error(uploadError)
+        continue
+      }
+
+      const { error: updateError } =
+        await supabase
+          .from('website_images')
+          .update({
+            image_path: filePath
+          })
+          .eq('section', 'projects')
+          .eq('image_key', imageKey)
+
+      if (updateError) {
+        console.error(updateError)
+        continue
+      }
+
+      console.log(`✅ Uploaded ${imageKey}`)
+
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  selectedProjectFiles = {}
+}
+
+/* ==========================================
+LOAD IMAGES
+========================================== */
+
+async function loadProjectImages() {
+
+  const { data, error } =
+    await supabase
+      .from('website_images')
+      .select('*')
+      .eq('section', 'projects')
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  data.forEach(row => {
+
+    if (!row.image_path) return
+
+    const img =
+      document.getElementById(
+        `${row.image_key}Image`
+      )
+
+    if (!img) return
+
+    const { data: publicData } =
+      supabase.storage
+        .from('portfolio-images')
+        .getPublicUrl(row.image_path)
+
+    if (!publicData?.publicUrl) return
+
+    img.onerror = () => {
+      console.error('Failed image:', publicData.publicUrl)
+    }
+
+    img.src =
+      `${publicData.publicUrl}?v=${Date.now()}`
+  })
+}
+
+/* ==========================================
+INIT
+========================================== */
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+  initProjectImagePreview()
+
+  await loadProjectsContent()
+  await loadProjectImages()
+})
 
 /* ==========================================
    SKILLS SECTION INIT
