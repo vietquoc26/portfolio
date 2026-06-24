@@ -4045,8 +4045,9 @@ if (currentLang === 'en') {
 
 
 
+
 /* ==========================================
-ABOUT PROJECTS SECTION (FIXED STRUCTURE)
+ABOUT PROJECTS SECTION (FINAL CLEAN VERSION)
 ========================================== */
 
 let selectedAboutProjectFiles = {}
@@ -4061,7 +4062,7 @@ const aboutSaveProjectBtn =
   document.getElementById('saveProjectsBtn')
 
 /* ==========================================
-LANG SWITCH
+LANGUAGE SWITCH
 ========================================== */
 
 document.getElementById('lang-en')
@@ -4101,7 +4102,7 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
     el.classList.toggle('p-1', !isEditing)
   })
 
-  // SHOW/HIDE IMAGE LABELS
+  // show/hide image upload buttons
   const labels =
     aboutProjectSection.querySelectorAll('label[for$="ImageInput"]')
 
@@ -4136,14 +4137,14 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
 })
 
 /* ==========================================
-LOAD TEXT (FIXED)
+LOAD TEXT (about_section)
 ========================================== */
 
 async function loadAboutProjectsContent() {
 
   const { data, error } =
     await supabase
-      .from('projects_content')
+      .from('about_section')
       .select('*')
 
   if (error) {
@@ -4174,7 +4175,7 @@ async function loadAboutProjectsContent() {
 }
 
 /* ==========================================
-SAVE TEXT
+SAVE TEXT (about_section)
 ========================================== */
 
 async function saveAboutProjectsContent() {
@@ -4197,7 +4198,7 @@ async function saveAboutProjectsContent() {
 
     const { error } =
       await supabase
-        .from('projects_content')
+        .from('about_section')
         .upsert(payload, {
           onConflict: 'key'
         })
@@ -4209,54 +4210,7 @@ async function saveAboutProjectsContent() {
 }
 
 /* ==========================================
-IMAGE UPLOAD (FIXED PER PROJECT)
-========================================== */
-
-async function uploadAboutProjectImages() {
-
-  for (let i = 1; i <= 5; i++) {
-
-    const file =
-      selectedAboutProjectFiles[`project${i}`]
-
-    if (!file) continue
-
-    const ext = file.name.split('.').pop()
-
-    const filePath =
-      `projects/project${i}.${ext}`
-
-    const { error } =
-      await supabase.storage
-        .from('portfolio-images')
-        .upload(filePath, file, { upsert: true })
-
-    if (error) {
-      console.error(error)
-      continue
-    }
-
-    const { error: dbError } =
-      await supabase
-        .from('website_images')
-        .upsert({
-          section: 'projects',
-          image_key: `project${i}`,
-          image_path: filePath
-        }, {
-          onConflict: 'image_key'
-        })
-
-    if (dbError) {
-      console.error(dbError)
-    }
-  }
-
-  selectedAboutProjectFiles = {}
-}
-
-/* ==========================================
-IMAGE PREVIEW (FIXED)
+IMAGE PREVIEW
 ========================================== */
 
 function initAboutProjectImagePreview() {
@@ -4275,10 +4229,10 @@ function initAboutProjectImagePreview() {
       const img = card?.querySelector('img')
       if (!img) return
 
-      const key =
+      const imageKey =
         img.id.replace('Image', '') // project1
 
-      selectedAboutProjectFiles[key] = file
+      selectedAboutProjectFiles[imageKey] = file
 
       img.src = URL.createObjectURL(file)
     })
@@ -4286,7 +4240,55 @@ function initAboutProjectImagePreview() {
 }
 
 /* ==========================================
-LOAD IMAGES (FIXED)
+UPLOAD IMAGES (FIXED)
+========================================== */
+
+async function uploadAboutProjectImages() {
+
+  for (let i = 1; i <= 5; i++) {
+
+    const file =
+      selectedAboutProjectFiles[`project${i}`]
+
+    if (!file) continue
+
+    const ext = file.name.split('.').pop()
+
+    // storage path
+    const filePath =
+      `project1/project${i}.${ext}`
+
+    const { error: uploadError } =
+      await supabase.storage
+        .from('portfolio-images')
+        .upload(filePath, file, { upsert: true })
+
+    if (uploadError) {
+      console.error('Upload error:', uploadError)
+      continue
+    }
+
+    const { error: dbError } =
+      await supabase
+        .from('website_images')
+        .upsert({
+          section: 'projects1',
+          image_key: `project${i}`,
+          image_path: filePath
+        }, {
+          onConflict: 'image_key'
+        })
+
+    if (dbError) {
+      console.error('DB error:', dbError)
+    }
+  }
+
+  selectedAboutProjectFiles = {}
+}
+
+/* ==========================================
+LOAD IMAGES
 ========================================== */
 
 async function loadAboutProjectImages() {
@@ -4295,10 +4297,10 @@ async function loadAboutProjectImages() {
     await supabase
       .from('website_images')
       .select('*')
-      .eq('section', 'projects')
+      .eq('section', 'projects1')
 
   if (error) {
-    console.error(error)
+    console.error('Image load error:', error)
     return
   }
 
@@ -4332,7 +4334,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadAboutProjectsContent()
   await loadAboutProjectImages()
 })
-
 /* ==========================================
    SKILLS SECTION INIT
 ========================================== */
