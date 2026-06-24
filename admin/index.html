@@ -4239,7 +4239,7 @@ document
   })
 
 /* ==========================================
-   LOAD PROJECTS TEXT
+   LOAD PROJECTS CONTENT
 ========================================== */
 
 async function loadProjectsSection() {
@@ -4260,7 +4260,7 @@ async function loadProjectsSection() {
   if (error) {
 
     console.error(
-      '❌ Error loading projects:',
+      '❌ Error loading projects content:',
       error.message
     )
 
@@ -4290,7 +4290,7 @@ async function loadProjectsSection() {
 }
 
 /* ==========================================
-   SAVE PROJECTS TEXT
+   SAVE PROJECTS CONTENT
 ========================================== */
 
 async function saveProjectsSection() {
@@ -4382,7 +4382,7 @@ async function loadProjectImages() {
     const { data: publicUrlData } =
       supabase
         .storage
-        .from('portfolio-images')
+        .from('website-images')
         .getPublicUrl(
           item.image_path
         )
@@ -4460,7 +4460,7 @@ async function saveProjectImages() {
     const { error: uploadError } =
       await supabase
         .storage
-        .from('portfolio-images')
+        .from('website-images')
         .upload(
           filePath,
           file,
