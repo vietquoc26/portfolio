@@ -4044,13 +4044,7 @@ if (currentLang === 'en') {
 
 
 /* ==========================================
-   PROJECTS SECTION
-========================================== */
-
-let selectedProjectFiles = {}
-
-/* ==========================================
-   INIT PROJECTS SECTION
+   PROJECTS SECTION INIT
 ========================================== */
 
 function initProjectsSection() {
@@ -4061,11 +4055,7 @@ function initProjectsSection() {
   const saveBtn =
     document.getElementById('saveProjectsBtn')
 
-  if (!editBtn || !saveBtn) return
-
-  /* ==========================
-     EDIT / CANCEL
-  ========================== */
+  if (!editBtn) return
 
   editBtn.addEventListener('click', async () => {
 
@@ -4082,61 +4072,18 @@ function initProjectsSection() {
 
     editableElements.forEach(el => {
 
+      el.classList.add('editable')
+
       el.contentEditable =
         isEditing ? 'false' : 'true'
 
-      el.classList.add('editable')
-
-      el.classList.toggle(
-        'border',
-        !isEditing
-      )
-
-      el.classList.toggle(
-        'border-dashed',
-        !isEditing
-      )
-
-      el.classList.toggle(
-        'border-blue-500',
-        !isEditing
-      )
-
-      el.classList.toggle(
-        'p-1',
-        !isEditing
-      )
-
-      el.classList.toggle(
-        'rounded',
-        !isEditing
-      )
+      el.classList.toggle('border', !isEditing)
+      el.classList.toggle('border-dashed', !isEditing)
+      el.classList.toggle('border-blue-500', !isEditing)
+      el.classList.toggle('p-1', !isEditing)
+      el.classList.toggle('rounded', !isEditing)
 
     })
-
-    /* ==========================
-       IMAGE BUTTONS
-    ========================== */
-
-    document
-      .querySelectorAll(
-        'label[for$="ImageInput"]'
-      )
-      .forEach(label => {
-
-        if (isEditing) {
-
-          label.classList.add('hidden')
-          label.classList.remove('flex')
-
-        } else {
-
-          label.classList.remove('hidden')
-          label.classList.add('flex')
-
-        }
-
-      })
 
     if (isEditing) {
 
@@ -4146,7 +4093,6 @@ function initProjectsSection() {
         '<i class="fas fa-edit mr-1"></i> Edit'
 
       await loadProjectsSection()
-      await loadProjectImages()
 
     } else {
 
@@ -4159,18 +4105,17 @@ function initProjectsSection() {
 
   })
 
-  /* ==========================
-     SAVE
-  ========================== */
-
-  saveBtn.addEventListener('click', async () => {
+  saveBtn?.addEventListener('click', async () => {
 
     await saveProjectsSection()
 
-    await saveProjectImages()
+    saveBtn.classList.add('hidden')
+
+    editBtn.innerHTML =
+      '<i class="fas fa-edit mr-1"></i> Edit'
 
     const section =
-      document.getElementById('projects1')
+      document.getElementById('projects')
 
     const editableElements =
       section.querySelectorAll('[data-i18n]')
@@ -4189,38 +4134,15 @@ function initProjectsSection() {
 
     })
 
-    document
-      .querySelectorAll(
-        'label[for$="ImageInput"]'
-      )
-      .forEach(label => {
-
-        label.classList.add('hidden')
-
-        label.classList.remove('flex')
-
-      })
-
-    saveBtn.classList.add('hidden')
-
-    editBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit'
-
-    alert(
-      'Projects section saved successfully! ✅'
-    )
-
   })
 
 }
 
-/* ==========================================
-   LANGUAGE TOGGLE
-========================================== */
+// =============================
+  // LANGUAGE TOGGLE
+  // =============================
 
-document
-  .getElementById('lang-en')
-  ?.addEventListener('click', () => {
+  document.getElementById('lang-en')?.addEventListener('click', () => {
 
     currentLang = 'en'
 
@@ -4228,9 +4150,7 @@ document
 
   })
 
-document
-  .getElementById('lang-vi')
-  ?.addEventListener('click', () => {
+  document.getElementById('lang-vi')?.addEventListener('click', () => {
 
     currentLang = 'vi'
 
@@ -4239,7 +4159,7 @@ document
   })
 
 /* ==========================================
-   LOAD PROJECTS CONTENT
+   LOAD PROJECTS SECTION
 ========================================== */
 
 async function loadProjectsSection() {
@@ -4260,7 +4180,7 @@ async function loadProjectsSection() {
   if (error) {
 
     console.error(
-      '❌ Error loading projects content:',
+      '❌ Error loading projects_section:',
       error.message
     )
 
@@ -4274,9 +4194,7 @@ async function loadProjectsSection() {
       el.getAttribute('data-i18n')
 
     const row =
-      data.find(
-        item => item.key === key
-      )
+      data.find(item => item.key === key)
 
     if (!row) return
 
@@ -4290,7 +4208,7 @@ async function loadProjectsSection() {
 }
 
 /* ==========================================
-   SAVE PROJECTS CONTENT
+   SAVE PROJECTS SECTION
 ========================================== */
 
 async function saveProjectsSection() {
@@ -4345,185 +4263,19 @@ async function saveProjectsSection() {
 
   }
 
-}
-
-/* ==========================================
-   LOAD PROJECT IMAGES
-========================================== */
-
-async function loadProjectImages() {
-
-  const { data, error } =
-    await supabase
-      .from('website_images')
-      .select('*')
-      .eq('section', 'projects')
-
-  if (error) {
-
-    console.error(
-      '❌ Error loading images:',
-      error.message
-    )
-
-    return
-
-  }
-
-  data.forEach(item => {
-
-    const image =
-      document.getElementById(
-        `${item.image_key}Image`
-      )
-
-    if (!image) return
-
-    const { data: publicUrlData } =
-      supabase
-        .storage
-        .from('website-images')
-        .getPublicUrl(
-          item.image_path
-        )
-
-    image.src =
-      publicUrlData.publicUrl
-
-    image.alt =
-      item.alt_text || ''
-
-  })
-
-}
-
-/* ==========================================
-   IMAGE PREVIEW
-========================================== */
-
-for (let i = 1; i <= 5; i++) {
-
-  const input =
-    document.getElementById(
-      `project${i}ImageInput`
-    )
-
-  const image =
-    document.getElementById(
-      `project${i}Image`
-    )
-
-  if (!input || !image) continue
-
-  input.addEventListener(
-    'change',
-    e => {
-
-      const file =
-        e.target.files?.[0]
-
-      if (!file) return
-
-      selectedProjectFiles[
-        `project${i}`
-      ] = file
-
-      image.src =
-        URL.createObjectURL(file)
-
-    }
+  alert(
+    'Projects Section saved successfully! ✅'
   )
 
 }
 
 /* ==========================================
-   SAVE PROJECT IMAGES
+   INIT PROJECTS
 ========================================== */
 
-async function saveProjectImages() {
+initProjectsSection()
 
-  for (
-    const [imageKey, file]
-    of Object.entries(
-      selectedProjectFiles
-    )
-  ) {
-
-    const fileExt =
-      file.name
-        .split('.')
-        .pop()
-
-    const filePath =
-      `projects/${imageKey}.${fileExt}`
-
-    const { error: uploadError } =
-      await supabase
-        .storage
-        .from('website-images')
-        .upload(
-          filePath,
-          file,
-          {
-            upsert: true
-          }
-        )
-
-    if (uploadError) {
-
-      console.error(
-        uploadError.message
-      )
-
-      continue
-
-    }
-
-    const { error: dbError } =
-      await supabase
-        .from('website_images')
-        .update({
-          image_path: filePath
-        })
-        .eq(
-          'section',
-          'projects'
-        )
-        .eq(
-          'image_key',
-          imageKey
-        )
-
-    if (dbError) {
-
-      console.error(
-        dbError.message
-      )
-
-    }
-
-  }
-
-  selectedProjectFiles = {}
-
-}
-
-/* ==========================================
-   START
-========================================== */
-
-document.addEventListener(
-  'DOMContentLoaded',
-  () => {
-
-    initProjectsSection()
-
-    loadProjectsSection()
-
-    loadProjectImages()
-
-  }
-)
+loadProjectsSection()
 
 /* ==========================================
    SKILLS SECTION INIT
