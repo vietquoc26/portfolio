@@ -4044,8 +4044,9 @@ if (currentLang === 'en') {
 
 
 
+
 /* ==========================================
-ABOUT PROJECTS SECTION
+ABOUT PROJECTS SECTION (FIXED STRUCTURE)
 ========================================== */
 
 let selectedAboutProjectFiles = {}
@@ -4060,7 +4061,7 @@ const aboutSaveProjectBtn =
   document.getElementById('saveProjectsBtn')
 
 /* ==========================================
-LANGUAGE SWITCH
+LANG SWITCH
 ========================================== */
 
 document.getElementById('lang-en')
@@ -4086,7 +4087,7 @@ EDIT MODE
 aboutProjectEditBtn?.addEventListener('click', async () => {
 
   const editableElements =
-    aboutProjectSection.querySelectorAll('.editable')
+    aboutProjectSection.querySelectorAll('[data-i18n]')
 
   const isEditing =
     editableElements[0]?.contentEditable === 'true'
@@ -4100,10 +4101,9 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
     el.classList.toggle('p-1', !isEditing)
   })
 
+  // SHOW/HIDE IMAGE LABELS
   const labels =
-    aboutProjectSection.querySelectorAll(
-      'label[for$="ImageInput"]'
-    )
+    aboutProjectSection.querySelectorAll('label[for$="ImageInput"]')
 
   labels.forEach(label => {
 
@@ -4121,7 +4121,7 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
     aboutSaveProjectBtn.classList.add('hidden')
 
     aboutProjectEditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit Projects'
+      '<i class="fas fa-edit mr-1"></i> Edit'
 
     await loadAboutProjectsContent()
     await loadAboutProjectImages()
@@ -4136,63 +4136,14 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
 })
 
 /* ==========================================
-SAVE BUTTON
-========================================== */
-
-aboutSaveProjectBtn?.addEventListener('click', async () => {
-
-  try {
-
-    await saveAboutProjectsContent()
-    await uploadAboutProjectImages()
-    await loadAboutProjectImages()
-
-    const editableElements =
-      aboutProjectSection.querySelectorAll('.editable')
-
-    editableElements.forEach(el => {
-
-      el.contentEditable = false
-
-      el.classList.remove(
-        'border',
-        'border-dashed',
-        'p-1'
-      )
-    })
-
-    const labels =
-      aboutProjectSection.querySelectorAll(
-        'label[for$="ImageInput"]'
-      )
-
-    labels.forEach(label => {
-      label.classList.add('hidden')
-      label.classList.remove('flex')
-    })
-
-    aboutSaveProjectBtn.classList.add('hidden')
-
-    aboutProjectEditBtn.innerHTML =
-      '<i class="fas fa-edit mr-1"></i> Edit Projects'
-
-    alert('About Projects updated successfully.')
-
-  } catch (err) {
-    console.error(err)
-    alert('Failed to save about projects.')
-  }
-})
-
-/* ==========================================
-LOAD TEXT (FIXED: about_section)
+LOAD TEXT (FIXED)
 ========================================== */
 
 async function loadAboutProjectsContent() {
 
   const { data, error } =
     await supabase
-      .from('about_section')
+      .from('projects_content')
       .select('*')
 
   if (error) {
@@ -4200,10 +4151,10 @@ async function loadAboutProjectsContent() {
     return
   }
 
-  const editableElements =
-    aboutProjectSection.querySelectorAll('.editable')
+  const elements =
+    aboutProjectSection.querySelectorAll('[data-i18n]')
 
-  editableElements.forEach(el => {
+  elements.forEach(el => {
 
     const key = el.dataset.i18n
     if (!key) return
@@ -4213,7 +4164,7 @@ async function loadAboutProjectsContent() {
 
     if (!row) return
 
-    el.innerText =
+    el.innerHTML =
       currentLang === 'en'
         ? row.en_text || ''
         : row.vi_text || ''
@@ -4223,21 +4174,21 @@ async function loadAboutProjectsContent() {
 }
 
 /* ==========================================
-SAVE TEXT (about_section)
+SAVE TEXT
 ========================================== */
 
 async function saveAboutProjectsContent() {
 
-  const editableElements =
-    aboutProjectSection.querySelectorAll('.editable')
+  const elements =
+    aboutProjectSection.querySelectorAll('[data-i18n]')
 
-  for (const el of editableElements) {
+  for (const el of elements) {
 
     const key = el.dataset.i18n
     if (!key) continue
 
     const rowId = el.dataset.rowId
-    const text = el.innerText.trim()
+    const text = el.innerHTML.trim()
 
     const payload =
       currentLang === 'en'
@@ -4246,19 +4197,66 @@ async function saveAboutProjectsContent() {
 
     const { error } =
       await supabase
-        .from('about_section')
+        .from('projects_content')
         .upsert(payload, {
           onConflict: 'key'
         })
 
     if (error) {
-      console.error('Save failed:', key, error)
+      console.error('Save error:', key, error)
     }
   }
 }
 
 /* ==========================================
-IMAGE PREVIEW
+IMAGE UPLOAD (FIXED PER PROJECT)
+========================================== */
+
+async function uploadAboutProjectImages() {
+
+  for (let i = 1; i <= 5; i++) {
+
+    const file =
+      selectedAboutProjectFiles[`project${i}`]
+
+    if (!file) continue
+
+    const ext = file.name.split('.').pop()
+
+    const filePath =
+      `projects/project${i}.${ext}`
+
+    const { error } =
+      await supabase.storage
+        .from('portfolio-images')
+        .upload(filePath, file, { upsert: true })
+
+    if (error) {
+      console.error(error)
+      continue
+    }
+
+    const { error: dbError } =
+      await supabase
+        .from('website_images')
+        .upsert({
+          section: 'projects',
+          image_key: `project${i}`,
+          image_path: filePath
+        }, {
+          onConflict: 'image_key'
+        })
+
+    if (dbError) {
+      console.error(dbError)
+    }
+  }
+
+  selectedAboutProjectFiles = {}
+}
+
+/* ==========================================
+IMAGE PREVIEW (FIXED)
 ========================================== */
 
 function initAboutProjectImagePreview() {
@@ -4277,9 +4275,10 @@ function initAboutProjectImagePreview() {
       const img = card?.querySelector('img')
       if (!img) return
 
-      const imageKey = img.id.replace('Image', '')
+      const key =
+        img.id.replace('Image', '') // project1
 
-      selectedAboutProjectFiles[imageKey] = file
+      selectedAboutProjectFiles[key] = file
 
       img.src = URL.createObjectURL(file)
     })
@@ -4287,53 +4286,7 @@ function initAboutProjectImagePreview() {
 }
 
 /* ==========================================
-UPLOAD IMAGES
-========================================== */
-
-async function uploadAboutProjectImages() {
-
-  for (const imageKey in selectedAboutProjectFiles) {
-
-    const file = selectedAboutProjectFiles[imageKey]
-    if (!file) continue
-
-    const ext = file.name.split('.').pop()
-
-    const filePath =
-      `projects/${imageKey}.${ext}`
-
-    const { error: uploadError } =
-      await supabase.storage
-        .from('portfolio-images')
-        .upload(filePath, file, {
-          upsert: true
-        })
-
-    if (uploadError) {
-      console.error(uploadError)
-      continue
-    }
-
-    const { error: updateError } =
-      await supabase
-        .from('website_images')
-        .update({
-          image_path: filePath
-        })
-        .eq('section', 'projects1')
-        .eq('image_key', imageKey)
-
-    if (updateError) {
-      console.error(updateError)
-      continue
-    }
-  }
-
-  selectedAboutProjectFiles = {}
-}
-
-/* ==========================================
-LOAD IMAGES
+LOAD IMAGES (FIXED)
 ========================================== */
 
 async function loadAboutProjectImages() {
@@ -4342,10 +4295,10 @@ async function loadAboutProjectImages() {
     await supabase
       .from('website_images')
       .select('*')
-      .eq('section', 'projects1')
+      .eq('section', 'projects')
 
   if (error) {
-    console.error('Image load error:', error)
+    console.error(error)
     return
   }
 
