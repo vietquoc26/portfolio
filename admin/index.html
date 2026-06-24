@@ -4067,6 +4067,9 @@ function initProjectsSection() {
     const editableElements =
       section.querySelectorAll('[data-i18n]')
 
+    const images =
+      section.querySelectorAll('img[data-image="project"]')
+
     const isEditing =
       editableElements[0]?.contentEditable === 'true'
 
@@ -4083,6 +4086,12 @@ function initProjectsSection() {
       el.classList.toggle('p-1', !isEditing)
       el.classList.toggle('rounded', !isEditing)
 
+    })
+
+    // IMAGE EDIT MODE TOGGLE
+    images.forEach(img => {
+      img.classList.toggle('editable', !isEditing)
+      img.classList.toggle('cursor-pointer', !isEditing)
     })
 
     if (isEditing) {
@@ -4103,6 +4112,9 @@ function initProjectsSection() {
 
     }
 
+    // INIT IMAGE CLICK UPLOAD
+    initProjectImages()
+
   })
 
   saveBtn?.addEventListener('click', async () => {
@@ -4115,10 +4127,13 @@ function initProjectsSection() {
       '<i class="fas fa-edit mr-1"></i> Edit'
 
     const section =
-      document.getElementById('projects')
+      document.getElementById('projects1')
 
     const editableElements =
       section.querySelectorAll('[data-i18n]')
+
+    const images =
+      section.querySelectorAll('img[data-image="project"]')
 
     editableElements.forEach(el => {
 
@@ -4134,33 +4149,123 @@ function initProjectsSection() {
 
     })
 
+    images.forEach(img => {
+      img.classList.remove('editable', 'cursor-pointer')
+    })
+
   })
 
 }
 
+
 // =============================
-  // LANGUAGE TOGGLE
-  // =============================
+// IMAGE UPLOAD HANDLER
+// =============================
 
-  document.getElementById('lang-en')?.addEventListener('click', () => {
+function initProjectImages() {
 
-    currentLang = 'en'
+  const section =
+    document.getElementById('projects1')
 
-    loadProjectsSection()
+  if (!section) return
+
+  const images =
+    section.querySelectorAll('img[data-image="project"]')
+
+  images.forEach(img => {
+
+    img.onclick = async () => {
+
+      if (!img.classList.contains('editable')) return
+
+      const input =
+        document.createElement('input')
+
+      input.type = 'file'
+      input.accept = 'image/*'
+
+      input.click()
+
+      input.onchange = async (e) => {
+
+        const file =
+          e.target.files[0]
+
+        if (!file) return
+
+        const fileName =
+          `projects1/${Date.now()}-${file.name}`
+
+        // UPLOAD TO SUPABASE STORAGE
+        const { error: uploadError } =
+          await supabase.storage
+            .from('portfolio-images')
+            .upload(fileName, file)
+
+        if (uploadError) {
+          console.error('Upload error:', uploadError.message)
+          return
+        }
+
+        // GET PUBLIC URL
+        const { data: publicUrlData } =
+          supabase.storage
+            .from('portfolio-images')
+            .getPublicUrl(fileName)
+
+        const imageUrl =
+          publicUrlData.publicUrl
+
+        // UPDATE UI
+        img.src = imageUrl
+
+        // SAVE TO DATABASE
+        const { error } =
+          await supabase
+            .from('website_images')
+            .upsert({
+              section: 'projects1',
+              image_path: imageUrl,
+              alt_text: img.alt || ''
+            }, {
+              onConflict: 'section'
+            })
+
+        if (error) {
+          console.error('DB save error:', error.message)
+        }
+
+      }
+
+    }
 
   })
 
-  document.getElementById('lang-vi')?.addEventListener('click', () => {
+}
 
-    currentLang = 'vi'
 
-    loadProjectsSection()
+// =============================
+// LANGUAGE SWITCH
+// =============================
 
-  })
+document.getElementById('lang-en')?.addEventListener('click', () => {
 
-/* ==========================================
-   LOAD PROJECTS SECTION
-========================================== */
+  currentLang = 'en'
+  loadProjectsSection()
+
+})
+
+document.getElementById('lang-vi')?.addEventListener('click', () => {
+
+  currentLang = 'vi'
+  loadProjectsSection()
+
+})
+
+
+// =============================
+// LOAD PROJECTS SECTION
+// =============================
 
 async function loadProjectsSection() {
 
@@ -4172,20 +4277,18 @@ async function loadProjectsSection() {
   const editableElements =
     section.querySelectorAll('[data-i18n]')
 
+  const images =
+    section.querySelectorAll('img[data-image="project"]')
+
+  // LOAD TEXT
   const { data, error } =
     await supabase
       .from('about_section')
       .select('*')
 
   if (error) {
-
-    console.error(
-      '❌ Error loading projects_section:',
-      error.message
-    )
-
+    console.error('❌ Load text error:', error.message)
     return
-
   }
 
   editableElements.forEach(el => {
@@ -4205,11 +4308,35 @@ async function loadProjectsSection() {
 
   })
 
+  // LOAD IMAGE
+  const { data: imgData, error: imgError } =
+    await supabase
+      .from('website_images')
+      .select('*')
+      .eq('section', 'projects1')
+
+  if (imgError) {
+    console.error('❌ Load image error:', imgError.message)
+    return
+  }
+
+  images.forEach(img => {
+
+    const record =
+      imgData?.[0]
+
+    if (!record) return
+
+    img.src = record.image_path
+
+  })
+
 }
 
-/* ==========================================
-   SAVE PROJECTS SECTION
-========================================== */
+
+// =============================
+// SAVE TEXT ONLY
+// =============================
 
 async function saveProjectsSection() {
 
@@ -4226,47 +4353,28 @@ async function saveProjectsSection() {
     const key =
       el.getAttribute('data-i18n')
 
-    if (!key) continue
-
     const text =
       el.innerHTML.trim()
 
     const updates =
       currentLang === 'en'
-        ? {
-            key,
-            en_text: text
-          }
-        : {
-            key,
-            vi_text: text
-          }
+        ? { key, en_text: text }
+        : { key, vi_text: text }
 
     const { error } =
       await supabase
         .from('about_section')
-        .upsert(
-          updates,
-          {
-            onConflict: 'key'
-          }
-        )
+        .upsert(updates, {
+          onConflict: 'key'
+        })
 
     if (error) {
-
-      console.error(
-        `❌ Failed saving ${key}:`,
-        error.message
-      )
-
+      console.error(`❌ Save error ${key}:`, error.message)
     }
 
   }
 
-  alert(
-    'Projects Section saved successfully! ✅'
-  )
-
+  alert('Projects Section saved successfully! ✅')
 }
 
 /* ==========================================
