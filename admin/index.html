@@ -4044,21 +4044,19 @@ if (currentLang === 'en') {
 
 
 
-
-
 /* ==========================================
-ABOUT PROJECTS SECTION (FINAL CLEAN VERSION)
+PROJECTS1 SECTION (ABOUT PAGE FIXED VERSION)
 ========================================== */
 
 let selectedAboutProjectFiles = {}
 
-const aboutProjectSection =
+const projectSection =
   document.getElementById('projects1')
 
-const aboutProjectEditBtn =
+const projectEditBtn =
   document.getElementById('editProjectsBtn')
 
-const aboutSaveProjectBtn =
+const saveProjectBtn =
   document.getElementById('saveProjectsBtn')
 
 /* ==========================================
@@ -4069,26 +4067,26 @@ document.getElementById('lang-en')
 ?.addEventListener('click', async () => {
 
   currentLang = 'en'
-  await loadAboutProjectsContent()
-  await loadAboutProjectImages()
+  await loadProjectsContent()
+  await loadProjectImages()
 })
 
 document.getElementById('lang-vi')
 ?.addEventListener('click', async () => {
 
   currentLang = 'vi'
-  await loadAboutProjectsContent()
-  await loadAboutProjectImages()
+  await loadProjectsContent()
+  await loadProjectImages()
 })
 
 /* ==========================================
 EDIT MODE
 ========================================== */
 
-aboutProjectEditBtn?.addEventListener('click', async () => {
+projectEditBtn?.addEventListener('click', async () => {
 
   const editableElements =
-    aboutProjectSection.querySelectorAll('[data-i18n]')
+    projectSection.querySelectorAll('.editable')
 
   const isEditing =
     editableElements[0]?.contentEditable === 'true'
@@ -4102,11 +4100,10 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
     el.classList.toggle('p-1', !isEditing)
   })
 
-  // show/hide image upload buttons
-  const labels =
-    aboutProjectSection.querySelectorAll('label[for$="ImageInput"]')
+  const imageLabels =
+    projectSection.querySelectorAll('label[for$="ImageInput"]')
 
-  labels.forEach(label => {
+  imageLabels.forEach(label => {
 
     if (isEditing) {
       label.classList.add('hidden')
@@ -4119,28 +4116,28 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
 
   if (isEditing) {
 
-    aboutSaveProjectBtn.classList.add('hidden')
+    saveProjectBtn.classList.add('hidden')
 
-    aboutProjectEditBtn.innerHTML =
+    projectEditBtn.innerHTML =
       '<i class="fas fa-edit mr-1"></i> Edit'
 
-    await loadAboutProjectsContent()
-    await loadAboutProjectImages()
+    await loadProjectsContent()
+    await loadProjectImages()
 
   } else {
 
-    aboutSaveProjectBtn.classList.remove('hidden')
+    saveProjectBtn.classList.remove('hidden')
 
-    aboutProjectEditBtn.innerHTML =
+    projectEditBtn.innerHTML =
       '<i class="fas fa-times mr-1"></i> Cancel'
   }
 })
 
 /* ==========================================
-LOAD TEXT (about_section)
+LOAD CONTENT (FIXED → about_section)
 ========================================== */
 
-async function loadAboutProjectsContent() {
+async function loadProjectsContent() {
 
   const { data, error } =
     await supabase
@@ -4148,14 +4145,14 @@ async function loadAboutProjectsContent() {
       .select('*')
 
   if (error) {
-    console.error('Load text error:', error)
+    console.error('Load content error:', error)
     return
   }
 
-  const elements =
-    aboutProjectSection.querySelectorAll('[data-i18n]')
+  const editableElements =
+    projectSection.querySelectorAll('.editable')
 
-  elements.forEach(el => {
+  editableElements.forEach(el => {
 
     const key = el.dataset.i18n
     if (!key) return
@@ -4165,7 +4162,7 @@ async function loadAboutProjectsContent() {
 
     if (!row) return
 
-    el.innerHTML =
+    el.innerText =
       currentLang === 'en'
         ? row.en_text || ''
         : row.vi_text || ''
@@ -4175,21 +4172,21 @@ async function loadAboutProjectsContent() {
 }
 
 /* ==========================================
-SAVE TEXT (about_section)
+SAVE CONTENT (about_section)
 ========================================== */
 
-async function saveAboutProjectsContent() {
+async function saveProjectsContent() {
 
-  const elements =
-    aboutProjectSection.querySelectorAll('[data-i18n]')
+  const editableElements =
+    projectSection.querySelectorAll('.editable')
 
-  for (const el of elements) {
+  for (const el of editableElements) {
 
     const key = el.dataset.i18n
     if (!key) continue
 
     const rowId = el.dataset.rowId
-    const text = el.innerHTML.trim()
+    const text = el.innerText.trim()
 
     const payload =
       currentLang === 'en'
@@ -4210,15 +4207,15 @@ async function saveAboutProjectsContent() {
 }
 
 /* ==========================================
-IMAGE PREVIEW
+IMAGE PREVIEW (UNCHANGED LOGIC)
 ========================================== */
 
-function initAboutProjectImagePreview() {
+function initProjectImagePreview() {
 
-  const inputs =
-    aboutProjectSection.querySelectorAll('input[type="file"]')
+  const fileInputs =
+    projectSection.querySelectorAll('input[type="file"]')
 
-  inputs.forEach(input => {
+  fileInputs.forEach(input => {
 
     input.addEventListener('change', e => {
 
@@ -4230,7 +4227,7 @@ function initAboutProjectImagePreview() {
       if (!img) return
 
       const imageKey =
-        img.id.replace('Image', '') // project1
+        img.id.replace('Image', '')
 
       selectedAboutProjectFiles[imageKey] = file
 
@@ -4240,47 +4237,50 @@ function initAboutProjectImagePreview() {
 }
 
 /* ==========================================
-UPLOAD IMAGES (FIXED)
+UPLOAD IMAGES (FIXED → projects1)
 ========================================== */
 
-async function uploadAboutProjectImages() {
+async function uploadProjectImages() {
 
-  for (let i = 1; i <= 5; i++) {
+  for (const imageKey in selectedAboutProjectFiles) {
 
-    const file =
-      selectedAboutProjectFiles[`project${i}`]
-
+    const file = selectedAboutProjectFiles[imageKey]
     if (!file) continue
 
-    const ext = file.name.split('.').pop()
+    try {
 
-    // storage path
-    const filePath =
-      `project1/project${i}.${ext}`
+      const ext = file.name.split('.').pop()
 
-    const { error: uploadError } =
-      await supabase.storage
-        .from('portfolio-images')
-        .upload(filePath, file, { upsert: true })
+      const filePath =
+        `projects/${imageKey}.${ext}`
 
-    if (uploadError) {
-      console.error('Upload error:', uploadError)
-      continue
-    }
+      const { error: uploadError } =
+        await supabase.storage
+          .from('portfolio-images')
+          .upload(filePath, file, { upsert: true })
 
-    const { error: dbError } =
-      await supabase
-        .from('website_images')
-        .upsert({
-          section: 'projects1',
-          image_key: `project${i}`,
-          image_path: filePath
-        }, {
-          onConflict: 'image_key'
-        })
+      if (uploadError) {
+        console.error(uploadError)
+        continue
+      }
 
-    if (dbError) {
-      console.error('DB error:', dbError)
+      const { error: updateError } =
+        await supabase
+          .from('website_images')
+          .upsert({
+            section: 'projects1',   // ✅ FIXED
+            image_key: imageKey,
+            image_path: filePath
+          }, {
+            onConflict: 'image_key'
+          })
+
+      if (updateError) {
+        console.error(updateError)
+      }
+
+    } catch (err) {
+      console.error(err)
     }
   }
 
@@ -4288,10 +4288,10 @@ async function uploadAboutProjectImages() {
 }
 
 /* ==========================================
-LOAD IMAGES
+LOAD IMAGES (FIXED → projects1)
 ========================================== */
 
-async function loadAboutProjectImages() {
+async function loadProjectImages() {
 
   const { data, error } =
     await supabase
@@ -4300,7 +4300,7 @@ async function loadAboutProjectImages() {
       .eq('section', 'projects1')
 
   if (error) {
-    console.error('Image load error:', error)
+    console.error('Load image error:', error)
     return
   }
 
@@ -4329,11 +4329,14 @@ INIT
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  initAboutProjectImagePreview()
+  initProjectImagePreview()
 
-  await loadAboutProjectsContent()
-  await loadAboutProjectImages()
+  await loadProjectsContent()
+  await loadProjectImages()
 })
+
+
+
 /* ==========================================
    SKILLS SECTION INIT
 ========================================== */
