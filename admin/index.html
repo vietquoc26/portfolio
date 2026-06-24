@@ -4045,7 +4045,7 @@ if (currentLang === 'en') {
 
 
 /* ==========================================
-ABOUT PROJECTS SECTION (ISOLATED SYSTEM)
+ABOUT PROJECTS SECTION (CLEAN VERSION)
 ========================================== */
 
 let selectedAboutProjectFiles = {}
@@ -4060,7 +4060,7 @@ const aboutSaveProjectBtn =
   document.getElementById('saveProjectsBtn')
 
 /* ==========================================
-LANG SWITCH (INDEPENDENT)
+LANG SWITCH
 ========================================== */
 
 document.getElementById('lang-en')
@@ -4080,17 +4080,19 @@ document.getElementById('lang-vi')
 })
 
 /* ==========================================
-EDIT MODE (INDEPENDENT LOGIC)
+EDIT MODE
 ========================================== */
 
 aboutProjectEditBtn?.addEventListener('click', async () => {
 
-  const elements =
-    aboutProjectSection.querySelectorAll('[data-i18n]')
+  const section = aboutProjectSection
+  const elements = section.querySelectorAll('[data-i18n]')
+  const images = section.querySelectorAll('img[id$="Image"]')
 
   const isEditing =
     elements[0]?.contentEditable === 'true'
 
+  // TEXT EDIT MODE
   elements.forEach(el => {
 
     el.contentEditable = !isEditing
@@ -4100,17 +4102,21 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
     el.classList.toggle('p-1', !isEditing)
   })
 
+  // IMAGE EDIT MODE
+  images.forEach(img => {
+    img.classList.toggle('cursor-pointer', !isEditing)
+  })
+
+  // LABELS (camera icons)
   const labels =
-    aboutProjectSection.querySelectorAll('label[for$="ImageInput"]')
+    section.querySelectorAll('label[for$="ImageInput"]')
 
   labels.forEach(label => {
 
     if (isEditing) {
       label.classList.add('hidden')
-      label.classList.remove('flex')
     } else {
       label.classList.remove('hidden')
-      label.classList.add('flex')
     }
   })
 
@@ -4134,10 +4140,14 @@ aboutProjectEditBtn?.addEventListener('click', async () => {
 })
 
 /* ==========================================
-LOAD TEXT (INDEPENDENT TABLE)
+LOAD TEXT (about_section)
 ========================================== */
 
 async function loadAboutProjectsContent() {
+
+  const section = aboutProjectSection
+
+  if (!section) return
 
   const { data, error } =
     await supabase
@@ -4145,16 +4155,16 @@ async function loadAboutProjectsContent() {
       .select('*')
 
   if (error) {
-    console.error('About projects load error:', error)
+    console.error('Load text error:', error.message)
     return
   }
 
   const elements =
-    aboutProjectSection.querySelectorAll('[data-about-i18n]')
+    section.querySelectorAll('[data-i18n]')
 
   elements.forEach(el => {
 
-    const key = el.dataset.aboutI18n
+    const key = el.dataset.i18n
     if (!key) return
 
     const row =
@@ -4172,17 +4182,19 @@ async function loadAboutProjectsContent() {
 }
 
 /* ==========================================
-SAVE TEXT (INDEPENDENT TABLE)
+SAVE TEXT (about_section)
 ========================================== */
 
 async function saveAboutProjectsContent() {
 
+  const section = aboutProjectSection
+
   const elements =
-    aboutProjectSection.querySelectorAll('[data-about-i18n]')
+    section.querySelectorAll('[data-i18n]')
 
   for (const el of elements) {
 
-    const key = el.dataset.aboutI18n
+    const key = el.dataset.i18n
     if (!key) continue
 
     const rowId = el.dataset.rowId
@@ -4201,19 +4213,21 @@ async function saveAboutProjectsContent() {
         })
 
     if (error) {
-      console.error('About save error:', key, error)
+      console.error('Save error:', key, error.message)
     }
   }
 }
 
 /* ==========================================
-IMAGE PREVIEW (INDEPENDENT STATE)
+IMAGE PREVIEW
 ========================================== */
 
 function initAboutProjectImagePreview() {
 
+  const section = aboutProjectSection
+
   const inputs =
-    aboutProjectSection.querySelectorAll('input[type="file"]')
+    section.querySelectorAll('input[type="file"]')
 
   inputs.forEach(input => {
 
@@ -4224,6 +4238,7 @@ function initAboutProjectImagePreview() {
 
       const card = input.closest('.card')
       const img = card?.querySelector('img')
+
       if (!img) return
 
       const imageKey =
@@ -4237,7 +4252,7 @@ function initAboutProjectImagePreview() {
 }
 
 /* ==========================================
-UPLOAD IMAGES (INDEPENDENT TABLE)
+UPLOAD IMAGES (portfolio-images bucket)
 ========================================== */
 
 async function uploadAboutProjectImages() {
@@ -4250,15 +4265,15 @@ async function uploadAboutProjectImages() {
     const ext = file.name.split('.').pop()
 
     const filePath =
-      `about-projects/${imageKey}.${ext}`
+      `projects/${imageKey}.${ext}`
 
-    const { error } =
+    const { error: uploadError } =
       await supabase.storage
         .from('portfolio-images')
         .upload(filePath, file, { upsert: true })
 
-    if (error) {
-      console.error(error)
+    if (uploadError) {
+      console.error('Upload error:', uploadError.message)
       continue
     }
 
@@ -4274,7 +4289,7 @@ async function uploadAboutProjectImages() {
         })
 
     if (dbError) {
-      console.error(dbError)
+      console.error('DB error:', dbError.message)
     }
   }
 
@@ -4282,7 +4297,7 @@ async function uploadAboutProjectImages() {
 }
 
 /* ==========================================
-LOAD IMAGES (INDEPENDENT SECTION)
+LOAD IMAGES (website_images)
 ========================================== */
 
 async function loadAboutProjectImages() {
@@ -4294,7 +4309,7 @@ async function loadAboutProjectImages() {
       .eq('section', 'projects1')
 
   if (error) {
-    console.error('About image load error:', error)
+    console.error('Image load error:', error.message)
     return
   }
 
