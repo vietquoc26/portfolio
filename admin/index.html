@@ -4320,7 +4320,7 @@ async function uploadAboutProjectImages() {
         .update({
           image_path: filePath
         })
-        .eq('section', 'projects')
+        .eq('section', 'projects1')
         .eq('image_key', imageKey)
 
     if (updateError) {
@@ -4342,7 +4342,7 @@ async function loadAboutProjectImages() {
     await supabase
       .from('website_images')
       .select('*')
-      .eq('section', 'projects')
+      .eq('section', 'projects1')
 
   if (error) {
     console.error('Image load error:', error)
